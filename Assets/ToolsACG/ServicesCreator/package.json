@@ -1,0 +1,9 @@
+{
+    "name" "com.ACGTools.ServicesCreator",
+    "version" "1.0.0",
+    "description" "Agile Endpoints builder with editor tools",
+    "reutilizable",
+    "dependencies" {
+        "com.unity.nuget.newtonsoft-json" "3.2.1"
+    }
+}

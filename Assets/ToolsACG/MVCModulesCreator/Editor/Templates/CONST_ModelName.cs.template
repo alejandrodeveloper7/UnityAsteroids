@@ -1,0 +1,8 @@
+﻿
+namespace ToolsACG.Scenes.CONST_ModuleName
+{
+    public class CONST_ModelName : ModuleModel
+    {
+        // TODO: declare here public fields to persist module data
+    }
+}

@@ -1,0 +1,22 @@
+﻿
+namespace ToolsACG.Scenes.CONST_ModuleName
+{
+    public interface CONST_InterfaceName
+    {
+        // TODO: declare here view methods to call them from controller context
+    }
+
+    public class CONST_ViewName : ModuleView, CONST_InterfaceName
+    {   
+        #region Fields        
+        #endregion
+
+        #region View Methods
+        // TODO: define here view methods to call them from controller context
+        #endregion
+
+        #region Private Methods
+        // TODO: define here methods called from view methods
+        #endregion
+    }
+}
