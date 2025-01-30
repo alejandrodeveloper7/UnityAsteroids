@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 788c4ca3448af5f47b52b262407b92fd, type: 3}
+  m_Name: PoolSettings
+  m_EditorClassIdentifier: 
+  ParentName: PooledGameObjects
+  ParentPosition: {x: -30, y: 0, z: 0}
+  PoolConfigurations:
+  - Name: Ship
+    Prefab: {fileID: 0}
+    Escalation: 1
+    InitialSize: 1
+    MaxSize: 1
+  - Name: Asteroid
+    Prefab: {fileID: 0}
+    Escalation: 0
+    InitialSize: 0
+    MaxSize: 0
+  - Name: Bullet
+    Prefab: {fileID: 0}
+    Escalation: 0
+    InitialSize: 0
+    MaxSize: 0
+  - Name: AsteroidFragmentsParticleSystem
+    Prefab: {fileID: 0}
+    Escalation: 0
+    InitialSize: 0
+    MaxSize: 0
+  - Name: BulletImpactParticleSystem
+    Prefab: {fileID: 0}
+    Escalation: 0
+    InitialSize: 0
+    MaxSize: 0
+  - Name: ShipDestructionParticleSystem
+    Prefab: {fileID: 0}
+    Escalation: 1
+    InitialSize: 1
+    MaxSize: 1

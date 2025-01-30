@@ -1,0 +1,17 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "NewBullet", menuName = "ScriptableObjects/Elements/Bullet", order = 2)]
+public class SO_Bullet : ScriptableObject
+{
+    public int Id;
+    public bool IsActive = true;
+    [Space]
+    public Sprite Sprite;
+    [Space]
+    public float BetweenBulletsTime;
+    public float LifeDuration;
+    public float Speed;
+    [Space]
+    public List<ParticleSetup> DestuctionParticles;
+}
