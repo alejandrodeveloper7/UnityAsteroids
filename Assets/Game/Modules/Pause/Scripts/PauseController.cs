@@ -29,6 +29,8 @@ namespace ToolsACG.Scenes.Pause
             _view = GetComponent<IPauseView>();
             base.Awake();            
             _data = new PauseModel();
+
+            Initialize();
         }
 
         protected override void RegisterActions()
@@ -42,6 +44,23 @@ namespace ToolsACG.Scenes.Pause
             // TODO: call view methods to display data.
         }
 
-        #endregion           
+        #endregion
+
+        #region Monobehaviour
+              
+
+
+        #endregion
+
+        #region Bus callbacks
+
+
+
+        #endregion
+
+        private void Initialize()
+        {
+            _view.TurnGeneralContainer(false);
+        }
     }
 }

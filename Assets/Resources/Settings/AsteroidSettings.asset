@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21093a615eaa2934dbb524b242f64044, type: 3}
   m_Name: AsteroidSettings
   m_EditorClassIdentifier: 
+  PoolName: Asteroid
   Prefab: {fileID: 5961479663435248300, guid: 7dae3a082924bb646bee9fc9bdedd949, type: 3}
   BrokenAsteroidSpawnAngle: 30
   Asteroids:

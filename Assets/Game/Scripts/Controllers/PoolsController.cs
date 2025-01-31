@@ -1,13 +1,25 @@
+using System.Collections.Generic;
+using ToolsACG.Utils.Pooling;
 using UnityEngine;
+using static PoolSettings;
 
 public class PoolsController : MonoBehaviour
 {
+    #region Fields
+
+    private PoolSettings _poolSettings;
+    private Dictionary<string, SimplePool> _pools = new Dictionary<string, SimplePool>();
+    [Space]
+    private Transform _parentTransform;
+
+    #endregion
+
     #region Singleton
 
     private static PoolsController m_instance;
     public static PoolsController Instance => m_instance;
 
-    private void GenerateSingleton()
+    private void CreateSingleton()
     {
         if (m_instance != null)
             Destroy(this);
@@ -17,10 +29,55 @@ public class PoolsController : MonoBehaviour
 
     #endregion
 
+    #region Monobehaviour
+
     private void Awake()
     {
-        GenerateSingleton();
+        CreateSingleton();
+
+        _poolSettings = ResourcesManager.Instance.PoolSettings;
+        CreatePoolGameObjectsParent();
+        CreatePools();
     }
 
-  
+    #endregion
+
+    #region Pools Creation
+
+    private void CreatePoolGameObjectsParent()
+    {
+        _parentTransform = new GameObject(_poolSettings.ParentName).transform;
+        _parentTransform.position = _poolSettings.ParentPosition;
+    }
+
+    private void CreatePools()
+    {
+        foreach (PoolConfiguration poolConfiguration in _poolSettings.PoolConfigurations)
+            CreatePool(poolConfiguration);
+    }
+
+    private void CreatePool(PoolConfiguration pConfiguration)
+    {
+        SimplePool newPool = new SimplePool(pConfiguration.Prefab, _parentTransform, pConfiguration.InitialSize, pConfiguration.Escalation, pConfiguration.MaxSize);
+        _pools.Add(pConfiguration.Name, newPool);
+    }
+
+    #endregion
+
+    #region Pools Management
+
+    public GameObject GetInstance(string pPoolName)
+    {
+        _pools.TryGetValue(pPoolName, out SimplePool pool);
+        
+        if (pool is null) 
+        {
+            Debug.LogError(string.Format("Pool with the name {0} not found", pPoolName));
+            return null;
+        }
+
+        return pool.GetInstance();    
+    }
+
+    #endregion
 }

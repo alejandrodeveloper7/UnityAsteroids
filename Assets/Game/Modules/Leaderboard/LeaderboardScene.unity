@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 57698127}
   - component: {fileID: 57698132}
   - component: {fileID: 57698131}
+  - component: {fileID: 57698133}
   m_Layer: 5
   m_Name: LeaderboardCanvas
   m_TagString: Untagged
@@ -238,6 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7bf97a7d7800df4f8e819f3510eaf4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _generalContainer: {fileID: 1877198949}
 --- !u!114 &57698132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,6 +252,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b82aca4c20d8143bcbb7c772f96276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &57698133
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57698126}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1877198949
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1877198950
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1541,11 +1555,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1545249966251959033, guid: aa243e451397bb34ab76f18528334232, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1545249966251959033, guid: aa243e451397bb34ab76f18528334232, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1545249966251959033, guid: aa243e451397bb34ab76f18528334232, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1557,7 +1571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1545249966251959033, guid: aa243e451397bb34ab76f18528334232, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -420.08502
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1545249966638805378, guid: aa243e451397bb34ab76f18528334232, type: 3}
       propertyPath: m_Pivot.x
@@ -1593,7 +1607,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1545249966638805378, guid: aa243e451397bb34ab76f18528334232, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 840.17004
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1545249966638805378, guid: aa243e451397bb34ab76f18528334232, type: 3}
       propertyPath: m_LocalPosition.x

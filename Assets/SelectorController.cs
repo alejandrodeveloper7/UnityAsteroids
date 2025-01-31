@@ -9,11 +9,11 @@ public class SelectorController : MonoBehaviour
 
     private List<SO_BaseElement> _availableItems;
     private int _selectedIndex = 0;
-    public int SelectedIndex 
+    public int SelectedId 
     { 
         get {
             int validIndex = (_selectedIndex % _availableItems.Count + _availableItems.Count) % _availableItems.Count;
-            return validIndex; 
+            return _availableItems[validIndex].Id; 
         }
     }
 

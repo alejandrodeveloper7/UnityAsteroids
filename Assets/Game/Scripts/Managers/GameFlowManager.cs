@@ -7,6 +7,10 @@ public class GameFlowManager : MonoBehaviour
 
     [SerializeField] private string[] _sceneDependencys;
 
+    private bool _inMainMenu;
+    private bool _inMatch;
+    private bool _inPause;
+    private bool _inLeaderboard;
     #endregion
 
 
@@ -16,6 +20,16 @@ public class GameFlowManager : MonoBehaviour
     private void Start()
     {
         Initialize();
+    }
+
+    private void OnEnable()
+    {
+        EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
     }
 
     #endregion
@@ -29,13 +43,24 @@ public class GameFlowManager : MonoBehaviour
 
     private void OnAdditiveScenesLoadComplete()
     {
+        _inMainMenu = true;
         EventManager.GetUiBus().RaiseEvent(new StartGame());
+    }
+
+    #endregion
+
+    #region Bus Callbacks
+
+    private void OnStartMatch(StartMatch pStartMatch)
+    {
+        _inMainMenu = false;
+        _inMatch = true;
     }
 
     #endregion
 }
 
-public class StartGame : IEvent 
+public class StartGame : IEvent
 {
 
 }

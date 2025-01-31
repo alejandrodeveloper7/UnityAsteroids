@@ -1,3 +1,4 @@
+using ToolsACG.Utils.Events;
 using UnityEngine;
 
 namespace ToolsACG.Scenes.PlayerHealth
@@ -9,9 +10,9 @@ namespace ToolsACG.Scenes.PlayerHealth
 
         private IPlayerHealthView _view;
         private PlayerHealthModel _data;
-        
+
         #endregion
-        
+
         #region Properties
 
         public PlayerHealthModel Model
@@ -27,8 +28,10 @@ namespace ToolsACG.Scenes.PlayerHealth
         protected override void Awake()
         {
             _view = GetComponent<IPlayerHealthView>();
-            base.Awake();            
+            base.Awake();
             _data = new PlayerHealthModel();
+
+            Initialize();
         }
 
         protected override void RegisterActions()
@@ -42,6 +45,38 @@ namespace ToolsACG.Scenes.PlayerHealth
             // TODO: call view methods to display data.
         }
 
-        #endregion           
+        #endregion
+
+
+        #region Monobehaviour
+
+        private void OnEnable()
+        {
+            EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
+
+        }
+
+        private void OnDisable()
+        {
+            EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
+        }
+
+        #endregion
+
+        #region Bus callbacks
+
+        private void OnStartMatch(StartMatch pStartMatch)
+        {
+            _view.SetViewAlpha(0);
+            _view.TurnGeneralContainer(true);
+            _view.ViewFadeTransition(1, 0.3f);
+        }
+
+        #endregion
+
+        private void Initialize()
+        {
+            _view.TurnGeneralContainer(false);
+        }
     }
 }

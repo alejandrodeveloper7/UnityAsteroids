@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f87074f5ff8cf34b859178ca8c071d2, type: 3}
   m_Name: ShipSettings
   m_EditorClassIdentifier: 
+  PoolName: player
   Ships:
   - {fileID: 11400000, guid: 8e4ef5041d444594a801f9fcc0e6d47e, type: 2}
   - {fileID: 11400000, guid: d266e22db91f14c4db1ccc12fdc372dc, type: 2}

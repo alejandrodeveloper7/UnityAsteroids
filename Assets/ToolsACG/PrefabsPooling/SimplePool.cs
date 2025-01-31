@@ -165,7 +165,11 @@ namespace ToolsACG.Utils.Pooling
         {
             GameObject newInstance = UnityEngine.Object.Instantiate(_objectPooled, _parent);
             IPooleableItem pooleableItem = newInstance.GetComponent<IPooleableItem>();
-            //CONTROLAR NULL de la iterfaz
+            if(pooleableItem is null)
+            {
+                Debug.LogError(string.Format("{0} dont have a script with IPooleableITem",_objectPooled.name));
+                return null;
+            }
             pooleableItem.OriginPool = this;
 
             RecycleItem(newInstance);

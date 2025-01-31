@@ -3,8 +3,6 @@ using UnityEngine;
 using System;
 using ToolsACG.Utils.Events;
 
-
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -22,6 +20,7 @@ namespace ToolsACG.Scenes.MainMenu
 
         [SerializeField] private SelectorController _shipSelectorController;
         [SerializeField] private SelectorController _bulletSelectorController;
+  
         #endregion
 
         #region Properties
@@ -98,11 +97,13 @@ namespace ToolsACG.Scenes.MainMenu
 
         private void OnPlayButtonClick() 
         {
-            PersistentDataManager.SelectedBulletId = _bulletSelectorController.SelectedIndex;
-            PersistentDataManager.SelectedShipId = _shipSelectorController.SelectedIndex;
+            PersistentDataManager.SelectedBulletId = _bulletSelectorController.SelectedId;
+            PersistentDataManager.SelectedShipId = _shipSelectorController.SelectedId;
             PersistentDataManager.UserName =_view.UserName;
-        
-        //Lanzar inicio
+
+            _view.TurnGeneralContainer(false);
+
+            EventManager.GetGameplayBus().RaiseEvent(new StartMatch());
         }
 
 #endregion
@@ -115,4 +116,8 @@ namespace ToolsACG.Scenes.MainMenu
             _view.SetUserNameValue(Environment.UserName);
         }
     }
+}
+
+public class StartMatch : IEvent 
+{
 }

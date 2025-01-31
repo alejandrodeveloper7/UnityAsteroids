@@ -4,6 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AsteroidsSettings", menuName = "ScriptableObjects/Setting/AsteroidSettings", order = 2)]
 public class AsteroidSettings : ScriptableObject
 {
+    public string PoolName;
+    [Space]
     public GameObject Prefab;
     public float BrokenAsteroidSpawnAngle;
     [Space]

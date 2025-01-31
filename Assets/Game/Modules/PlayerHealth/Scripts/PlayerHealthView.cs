@@ -1,14 +1,22 @@
+using DG.Tweening;
+using UnityEngine;
 
 namespace ToolsACG.Scenes.PlayerHealth
 {
     public interface IPlayerHealthView
     {
-        // TODO: declare here view methods to call them from controller context
+        void TurnGeneralContainer(bool pState);
+
+        void SetViewAlpha(float pValue);
+        void ViewFadeTransition(float pDestinyValue, float pDuration);
     }
 
     public class PlayerHealthView : ModuleView, IPlayerHealthView
     {
         #region Fields        
+
+        [SerializeField] private GameObject _generalContainer;
+    
         #endregion
 
         #region Protected Methods     
@@ -21,7 +29,21 @@ namespace ToolsACG.Scenes.PlayerHealth
         #endregion
 
         #region View Methods
-        // TODO: define here view methods to call them from controller context
+        public void TurnGeneralContainer(bool pState)
+        {
+            _generalContainer.SetActive(pState);
+        }
+
+        public void SetViewAlpha(float pValue)
+        {
+            CanvasGroup.alpha = pValue;
+        }
+
+        public void ViewFadeTransition(float pDestinyValue, float pDuration)
+        {
+            CanvasGroup.DOKill();
+            CanvasGroup.DOFade(pDestinyValue, pDuration).SetEase(Ease.OutQuad);
+        }
         #endregion
 
         #region Private Methods

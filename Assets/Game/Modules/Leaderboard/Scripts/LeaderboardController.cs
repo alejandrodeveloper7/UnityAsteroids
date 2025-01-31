@@ -9,9 +9,9 @@ namespace ToolsACG.Scenes.Leaderboard
 
         private ILeaderboardView _view;
         private LeaderboardModel _data;
-        
+
         #endregion
-        
+
         #region Properties
 
         public LeaderboardModel Model
@@ -27,8 +27,10 @@ namespace ToolsACG.Scenes.Leaderboard
         protected override void Awake()
         {
             _view = GetComponent<ILeaderboardView>();
-            base.Awake();            
+            base.Awake();
             _data = new LeaderboardModel();
+
+            Initialize();
         }
 
         protected override void RegisterActions()
@@ -42,6 +44,23 @@ namespace ToolsACG.Scenes.Leaderboard
             // TODO: call view methods to display data.
         }
 
-        #endregion           
+        #endregion
+
+        #region Monobehaviour
+
+
+
+        #endregion
+
+        #region Bus callbacks
+
+
+
+        #endregion
+
+        private void Initialize()
+        {
+            _view.TurnGeneralContainer(false);
+        }
     }
 }

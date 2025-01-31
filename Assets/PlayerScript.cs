@@ -1,50 +1,42 @@
 using ToolsACG.Utils.Pooling;
 using UnityEngine;
 
-public class AsteroidScript : MonoBehaviour, IPooleableItem
+public class PlayerScript : MonoBehaviour, IPooleableItem
 {
     SimplePool _originPool;
     public SimplePool OriginPool { get { return _originPool; } set { _originPool = value; } }
     bool _readyToUse;
     public bool ReadyToUse { get { return _readyToUse; } set { _readyToUse = value; } }
 
-
-    private Vector2 _direction;
+    private SO_Ship _currentData;
 
     [Header("References")]
     private PolygonCollider2D _collider;
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidBody;
 
-    private SO_Asteroid _currentData;
-
     private void Awake()
     {
         GetReferences();
     }
 
-    private void GetReferences()
+    private void GetReferences() 
     {
         _collider = GetComponent<PolygonCollider2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidBody = GetComponent<Rigidbody2D>();
     }
 
-    public void Initialize(SO_Asteroid pData, Vector2 pDirection = default)
+    public void Initialize(SO_Ship pShipData)
     {
-        _currentData = pData;
+        _currentData = pShipData;
 
-        int spriteRandomValue = Random.Range(0, _currentData.possibleSprites.Length);
-        _spriteRenderer.sprite = _currentData.possibleSprites[spriteRandomValue];
+        _spriteRenderer.sprite = _currentData.Sprite;
         UpdateColliderShape();
 
-        if (pDirection == Vector2.zero)
-            pDirection = Random.insideUnitCircle.normalized;
-
-        transform.position = new Vector2(Random.Range(-6, 6), Random.Range(-6, 6));
+        transform.position = Vector2.zero;
 
         TurnDetection(true);
-        //_rigidBody.velocity = pDirection * _currentData.Speed * Time.fixedDeltaTime;
     }
 
     private void UpdateColliderShape()

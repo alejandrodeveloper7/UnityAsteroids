@@ -1,3 +1,4 @@
+using ToolsACG.Utils.Events;
 using UnityEngine;
 
 namespace ToolsACG.Scenes.Score
@@ -29,6 +30,8 @@ namespace ToolsACG.Scenes.Score
             _view = GetComponent<IScoreView>();
             base.Awake();            
             _data = new ScoreModel();
+
+            Initialize();
         }
 
         protected override void RegisterActions()
@@ -42,6 +45,38 @@ namespace ToolsACG.Scenes.Score
             // TODO: call view methods to display data.
         }
 
-        #endregion           
+        #endregion
+
+        #region Monobehaviour
+
+        private void OnEnable()
+        {
+            EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
+
+        }
+
+        private void OnDisable()
+        {
+            EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
+        }
+
+        #endregion
+
+        #region Bus callbacks
+
+        private void OnStartMatch(StartMatch pStartMatch) 
+        {
+            _view.SetViewAlpha(0);
+            _view.TurnGeneralContainer(true);
+            _view.ViewFadeTransition(1, 0.3f);
+        }
+
+        #endregion
+
+        private void Initialize() 
+        {
+            _view.SetScore(0);
+            _view.TurnGeneralContainer(false);
+        }
     }
 }
