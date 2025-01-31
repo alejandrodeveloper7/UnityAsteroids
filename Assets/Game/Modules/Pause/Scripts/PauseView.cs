@@ -7,8 +7,17 @@ namespace ToolsACG.Scenes.Pause
     }
 
     public class PauseView : ModuleView, IPauseView
-    {   
+    {
         #region Fields        
+        #endregion
+
+        #region Protected Methods     
+        
+        protected override void Awake()
+        {
+            base.Awake();
+        }
+
         #endregion
 
         #region View Methods

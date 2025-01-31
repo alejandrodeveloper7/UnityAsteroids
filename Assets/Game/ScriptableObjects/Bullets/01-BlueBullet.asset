@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe3f9afe629a5d4197b50f17f5d1e46, type: 3}
   m_Name: 01-BlueBullet
   m_EditorClassIdentifier: 
-  Id: 0
-  Sprite: {fileID: 0}
-  Color: {r: 0, g: 0, b: 0, a: 0}
-  BetweenBulletsTime: 0
-  LifeDuration: 0
-  Speed: 0
+  Id: 1
+  IsActive: 1
+  Sprite: {fileID: 21300000, guid: 474d85e8abc77364e961f54bdd67de14, type: 3}
+  BetweenBulletsTime: 0.2
+  LifeDuration: 2
+  Speed: 10
+  DestuctionParticles:
+  - particleEffectName: FX_BulletFragments
+    particleConfig: {fileID: 11400000, guid: 63080432c5fc710429c463db2b20bd12, type: 2}

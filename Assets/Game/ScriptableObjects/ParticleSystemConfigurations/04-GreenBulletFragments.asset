@@ -9,12 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e900ca7baf7fd5c4a890a7a27b060d28, type: 3}
-  m_Name: 04-Black
+  m_Script: {fileID: 11500000, guid: 71fcb984101520a4988fe5f085ba6fc7, type: 3}
+  m_Name: 04-GreenBulletFragments
   m_EditorClassIdentifier: 
-  Id: 0
-  Sprite: {fileID: 0}
-  BulletsSpawnPointsLocalPosition: {x: 0, y: 0, z: 0}
-  PropulsionFireLocalPosition: {x: 0, y: 0, z: 0}
-  movementSpeed: 0
-  rotationSpeed: 0
+  Color: {r: 0.09453201, g: 1, b: 0, a: 1}

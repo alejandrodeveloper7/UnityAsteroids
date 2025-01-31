@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,29 +8,35 @@ namespace ToolsACG.Scenes
 {
     public abstract class ModuleController : MonoBehaviour
     {
-        protected Dictionary<string, Action> m_actions = new Dictionary<string, Action>();
+        protected Dictionary<string, Action> Actions = new Dictionary<string, Action>();
 
         protected virtual void Awake()
         {
             RegisterActions();
         }
 
-        public virtual void OnClick(Button button)
+        public virtual void OnClick(Button pButton)
         {
-            if (m_actions.ContainsKey(button.name))
-                m_actions[button.name].Invoke();
+            if (Actions.ContainsKey(pButton.name))
+                Actions[pButton.name].Invoke();
         }
 
-        public virtual void OnValueChanged(Toggle toggle)
+        public virtual void OnValueChanged(Toggle pToggle)
         {
-            if (m_actions.ContainsKey(toggle.name))
-                m_actions[toggle.name].Invoke();
+            if (Actions.ContainsKey(pToggle.name))
+                Actions[pToggle.name].Invoke();
         }
 
-        public virtual void OnValueChanged(Slider slider)
+        public virtual void OnValueChanged(Slider pSlider)
         {
-            if (m_actions.ContainsKey(slider.name))
-                m_actions[slider.name].Invoke();
+            if (Actions.ContainsKey(pSlider.name))
+                Actions[pSlider.name].Invoke();
+        }
+
+        public virtual void OnValueChanged(TMP_InputField pInputField)
+        {
+            if (Actions.ContainsKey(pInputField.name))
+                Actions[pInputField.name].Invoke();
         }
 
         protected abstract void RegisterActions();

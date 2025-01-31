@@ -19,8 +19,8 @@ namespace ToolsACG.Utils.Pooling
 
         //QUICK IMPLEMENTATION
 
-        //PoolScript _originPool;
-        //public PoolScript OriginPool { get { return _originPool; } set { _originPool = value; } }
+        //SimplePool _originPool;
+        //public SimplePool OriginPool { get { return _originPool; } set { _originPool = value; } }
         //bool _readyToUse;
         //public bool ReadyToUse { get { return _readyToUse; } set { _readyToUse = value; } }
     }

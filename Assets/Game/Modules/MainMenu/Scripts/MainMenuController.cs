@@ -1,4 +1,14 @@
+using System.Linq;
 using UnityEngine;
+using System;
+using ToolsACG.Utils.Events;
+
+
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 
 namespace ToolsACG.Scenes.MainMenu
 {
@@ -9,9 +19,11 @@ namespace ToolsACG.Scenes.MainMenu
 
         private IMainMenuView _view;
         private MainMenuModel _data;
-        
+
+        [SerializeField] private SelectorController _shipSelectorController;
+        [SerializeField] private SelectorController _bulletSelectorController;
         #endregion
-        
+
         #region Properties
 
         public MainMenuModel Model
@@ -29,11 +41,14 @@ namespace ToolsACG.Scenes.MainMenu
             _view = GetComponent<IMainMenuView>();
             base.Awake();            
             _data = new MainMenuModel();
+
+            Initialize();
         }
 
         protected override void RegisterActions()
         {
-            // TODO: initialize dictionaries with actions for buttons, toggles and dropdowns.      
+            Actions.Add("BTN_Play", OnPlayButtonClick);
+            Actions.Add("BTN_ExitGame", OnExitGameButtonClick);
         }
 
         protected override void SetData()
@@ -42,6 +57,62 @@ namespace ToolsACG.Scenes.MainMenu
             // TODO: call view methods to display data.
         }
 
-        #endregion           
+        #endregion
+
+        #region Monobehaviour
+
+        private void OnEnable()
+        {
+            EventManager.GetUiBus().AddListener<StartGame>(OnStartGame);
+
+        }
+
+        private void OnDisable()
+        {
+            EventManager.GetUiBus().RemoveListener<StartGame>(OnStartGame);
+        }
+
+        #endregion
+
+        #region BusCallbacks
+
+        private void OnStartGame(StartGame pStartGame) 
+        {
+            _view.SetViewAlpha(0);
+            _view.TurnGeneralContainer(true);
+            _view.ViewFadeTransition(1, 0.3f);
+        }
+
+        #endregion
+
+        #region Button Callbacks
+
+        private void OnExitGameButtonClick() 
+        {
+#if UNITY_EDITOR
+            EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
+
+        private void OnPlayButtonClick() 
+        {
+            PersistentDataManager.SelectedBulletId = _bulletSelectorController.SelectedIndex;
+            PersistentDataManager.SelectedShipId = _shipSelectorController.SelectedIndex;
+            PersistentDataManager.UserName =_view.UserName;
+        
+        //Lanzar inicio
+        }
+
+#endregion
+
+        private void Initialize()
+        {
+            _bulletSelectorController.SetData(ResourcesManager.Instance.BulletSettings.Bullets.Cast<SO_BaseElement>().ToList(), 0);
+            _shipSelectorController.SetData(ResourcesManager.Instance.ShipSettings.Ships.Cast<SO_BaseElement>().ToList(), 0);
+            _view.TurnGeneralContainer(false);
+            _view.SetUserNameValue(Environment.UserName);
+        }
     }
 }

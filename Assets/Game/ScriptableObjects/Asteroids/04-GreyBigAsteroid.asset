@@ -12,10 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de9eac9aa7d1a9498d97365465a7c54, type: 3}
   m_Name: 04-GreyBigAsteroid
   m_EditorClassIdentifier: 
-  Id: 0
-  Prefab: {fileID: 0}
-  colorType: 
-  possibleSprites: []
-  Speed: 0
-  PointsValue: 0
-  fragmentTypes: []
+  Id: 4
+  IsActive: 1
+  Sprite: {fileID: 21300000, guid: 2bdff76c1045bd340853fa68162bb696, type: 3}
+  possibleSprites:
+  - {fileID: 21300000, guid: 2bdff76c1045bd340853fa68162bb696, type: 3}
+  - {fileID: 21300000, guid: 9034ad968e2d7ab4f97cf8b71b343df2, type: 3}
+  - {fileID: 21300000, guid: d4c5c48e6593578409f6ebc79881024e, type: 3}
+  - {fileID: 21300000, guid: 83965a0c5bcc7bd44b6e7ed5fcab8cb6, type: 3}
+  Speed: 2
+  PointsValue: 10
+  DestuctionParticles:
+  - particleEffectName: 
+    particleConfig: {fileID: 0}
+  - particleEffectName: FX_AsteroidFragments
+    particleConfig: {fileID: 11400000, guid: 1ea16350ffbd6d043bc7480adce714b0, type: 2}
+  fragmentTypes:
+  - {fileID: 11400000, guid: 327098821f7da8147a42c2f019d1aaa9, type: 2}

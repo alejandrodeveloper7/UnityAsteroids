@@ -10,11 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e900ca7baf7fd5c4a890a7a27b060d28, type: 3}
-  m_Name: 01-Blue
+  m_Name: 02-GreenShip
   m_EditorClassIdentifier: 
-  Id: 0
-  Sprite: {fileID: 0}
+  Id: 2
+  IsActive: 1
+  Sprite: {fileID: 21300000, guid: 4c01bb76511ad2449a17e2a7e14b08f6, type: 3}
   BulletsSpawnPointsLocalPosition: {x: 0, y: 0, z: 0}
   PropulsionFireLocalPosition: {x: 0, y: 0, z: 0}
   movementSpeed: 0
   rotationSpeed: 0
+  DestuctionParticles:
+  - particleEffectName: FX_ShipDestruction
+    particleConfig: {fileID: 0}

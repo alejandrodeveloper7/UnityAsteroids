@@ -10,6 +10,15 @@ namespace ToolsACG.Scenes.CONST_ModuleName
     {   
         #region Fields        
         #endregion
+                
+        #region Protected Methods     
+        
+        protected override void Awake()
+        {
+            base.Awake();
+        }
+
+        #endregion
 
         #region View Methods
         // TODO: define here view methods to call them from controller context

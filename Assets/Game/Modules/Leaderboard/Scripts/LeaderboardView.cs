@@ -7,8 +7,17 @@ namespace ToolsACG.Scenes.Leaderboard
     }
 
     public class LeaderboardView : ModuleView, ILeaderboardView
-    {   
+    {
         #region Fields        
+        #endregion
+
+        #region Protected Methods     
+
+        protected override void Awake()
+        {
+            base.Awake();
+        }
+
         #endregion
 
         #region View Methods

@@ -7,8 +7,17 @@ namespace ToolsACG.Scenes.Score
     }
 
     public class ScoreView : ModuleView, IScoreView
-    {   
+    {
         #region Fields        
+        #endregion
+
+        #region Protected Methods     
+
+        protected override void Awake()
+        {
+            base.Awake();
+        }
+
         #endregion
 
         #region View Methods
