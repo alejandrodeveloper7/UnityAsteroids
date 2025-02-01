@@ -15,14 +15,16 @@ MonoBehaviour:
   Id: 3
   IsActive: 1
   Sprite: {fileID: 21300000, guid: 8b986e58548e62842a6970e716ab9b20, type: 3}
+  IsInitialAsteroid: 0
+  PoolName: Asteroid
+  BrokenAsteroidSpawnAngle: 60
   possibleSprites:
   - {fileID: 21300000, guid: 8b986e58548e62842a6970e716ab9b20, type: 3}
   - {fileID: 21300000, guid: e3505f4085e8b2e44a701763827971ff, type: 3}
-  Speed: 2
+  Speed: 100
   PointsValue: 30
   DestuctionParticles:
-  - particleEffectName: 
-    particleConfig: {fileID: 0}
   - particleEffectName: FX_AsteroidFragments
     particleConfig: {fileID: 11400000, guid: a0549390e8ac70142bb07cda601523a8, type: 2}
+  FragmentsAmountGeneratedOnDestruction: 0
   fragmentTypes: []

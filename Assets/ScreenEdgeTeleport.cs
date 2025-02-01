@@ -8,6 +8,9 @@ public class ScreenEdgeTeleport : MonoBehaviour
     [Header("Settings")]
     private Camera _camera;
 
+    [SerializeField] private float _edgeOffset = 0.03f;
+    [SerializeField] private float _edgeRepositionOffset = 0.02f;
+
     private Coroutine _currentRelocationCoroutine;
 
     #endregion
@@ -55,21 +58,28 @@ public class ScreenEdgeTeleport : MonoBehaviour
         while (true)
         {
             Vector3 viewportPosition = _camera.WorldToViewportPoint(transform.position);
-            Vector3 newPosition;
+            Vector3 newPosition = transform.position;
 
-            if (viewportPosition.x > 1.025f || viewportPosition.x < -0.025f)
+            if (viewportPosition.x > 1+_edgeOffset)
             {
-                newPosition = transform.position;
-                newPosition.x *= -0.98f;
+                newPosition.x = _camera.ViewportToWorldPoint(new Vector2(-_edgeRepositionOffset, viewportPosition.y)).x;
                 transform.position = newPosition;
             }
-            else if (viewportPosition.y > 1.03f || viewportPosition.y < -0.03f)
+            else if (viewportPosition.x < 0 - _edgeOffset)
             {
-                newPosition = transform.position;
-                newPosition.y *= -0.98f;
+                newPosition.x = _camera.ViewportToWorldPoint(new Vector2(1+_edgeRepositionOffset, viewportPosition.y)).x;
                 transform.position = newPosition;
             }
-
+            else if (viewportPosition.y > 1 + _edgeOffset)
+            {
+                newPosition.y = _camera.ViewportToWorldPoint(new Vector2(viewportPosition.x ,- _edgeRepositionOffset)).y;
+                transform.position = newPosition;
+            }
+            else if (viewportPosition.y < 0- _edgeOffset)
+            {
+                newPosition.y = _camera.ViewportToWorldPoint(new Vector2(viewportPosition.x, 1+_edgeRepositionOffset)).y;
+                transform.position = newPosition;
+            }
             yield return new WaitForSeconds(0.05f);
         }
     }

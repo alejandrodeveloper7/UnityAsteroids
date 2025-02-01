@@ -11,6 +11,7 @@ namespace ToolsACG.Scenes.Score
         private IScoreView _view;
         private ScoreModel _data;
         
+        private int _score;
         #endregion
         
         #region Properties
@@ -52,12 +53,14 @@ namespace ToolsACG.Scenes.Score
         private void OnEnable()
         {
             EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
+            EventManager.GetGameplayBus().AddListener<AsteroidDestroyed>(OnAsteroidDestroyed);
 
         }
 
         private void OnDisable()
         {
             EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
+            EventManager.GetGameplayBus().AddListener<AsteroidDestroyed>(OnAsteroidDestroyed);
         }
 
         #endregion
@@ -71,11 +74,18 @@ namespace ToolsACG.Scenes.Score
             _view.ViewFadeTransition(1, 0.3f);
         }
 
+        private void OnAsteroidDestroyed(AsteroidDestroyed pAsteroidDestroyed) 
+        {
+            _score += pAsteroidDestroyed.AsteroidData.PointsValue;
+            _view.SetScore(_score);
+        }
+
         #endregion
 
         private void Initialize() 
         {
-            _view.SetScore(0);
+            _score = 0;
+            _view.SetScore(_score);
             _view.TurnGeneralContainer(false);
         }
     }

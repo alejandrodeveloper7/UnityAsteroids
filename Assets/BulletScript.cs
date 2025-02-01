@@ -1,7 +1,7 @@
 using ToolsACG.Utils.Pooling;
 using UnityEngine;
 
-public class BulletScript : MonoBehaviour,IPooleableItem
+public class BulletScript : MonoBehaviour, IPooleableItem
 {
     SimplePool _originPool;
     public SimplePool OriginPool { get { return _originPool; } set { _originPool = value; } }
@@ -28,30 +28,54 @@ public class BulletScript : MonoBehaviour,IPooleableItem
         _rigidBody = GetComponent<Rigidbody2D>();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        collision.TryGetComponent(out AsteroidScript detectedAsteroid);
+        if (detectedAsteroid != null)
+        {
+            CancelInvoke(nameof(CleanBullet));
+            GenerateDestructionParticles();
+            CleanBullet();
+        }
+    }
+
     public void Initialize(SO_Bullet pData)
     {
         _currentData = pData;
 
         _spriteRenderer.sprite = _currentData.Sprite;
-     
-        TurnBulletDetection(true);
+
+        TurnDetection(true);
         _rigidBody.velocity = _currentData.Speed * Time.fixedDeltaTime * -transform.up;
-        Invoke(nameof(RecycleBullet), _currentData.LifeDuration);
+        Invoke(nameof(CleanBullet), _currentData.LifeDuration);
     }
 
 
-    public void StopBullet()
+    public void StopMovement()
     {
         _rigidBody.velocity = Vector2.zero;
     }
 
-    public void TurnBulletDetection(bool pState)
+    public void TurnDetection(bool pState)
     {
         _collider.enabled = pState;
     }
 
-    private void RecycleBullet() 
+    private void CleanBullet()
     {
+        StopMovement();
+        TurnDetection(false);
         _originPool.RecycleItem(gameObject);
+    }
+
+    private void GenerateDestructionParticles()
+    {
+        foreach (ParticleSetup item in _currentData.DestuctionParticles)
+        {
+            ParticleSystem pooledParticlesystem = PoolsController.Instance.GetInstance(item.particleEffectName).GetComponent<ParticleSystem>();
+            item.particleConfig.ApplyConfig(pooledParticlesystem);
+            pooledParticlesystem.transform.position = transform.position;
+            pooledParticlesystem.GetComponent<PooledParticleSystem>().ExecuteBehaviour();
+        }
     }
 }

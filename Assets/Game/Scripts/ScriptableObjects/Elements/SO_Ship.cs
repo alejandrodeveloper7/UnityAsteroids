@@ -3,7 +3,9 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewShip", menuName = "ScriptableObjects/Elements/Ship", order = 1)]
 public class SO_Ship : SO_BaseElement
-{    
+{
+    [Space]
+    public string PoolName;
     [Space]
     public Vector3 BulletsSpawnPointsLocalPosition;
     public Vector3 PropulsionFireLocalPosition;

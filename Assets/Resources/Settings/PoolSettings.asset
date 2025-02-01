@@ -15,7 +15,7 @@ MonoBehaviour:
   ParentName: PooledGameObjects
   ParentPosition: {x: -30, y: 0, z: 0}
   PoolConfigurations:
-  - Name: player
+  - Name: Player
     Prefab: {fileID: 6392037772438142911, guid: 3a6d11e8e928a20468bca9791e570fcf, type: 3}
     Escalation: 1
     InitialSize: 1
@@ -31,12 +31,12 @@ MonoBehaviour:
     InitialSize: 30
     MaxSize: 300
   - Name: FX_AsteroidFragments
-    Prefab: {fileID: 2428115606408901077, guid: 1961a521906d9914e96763b873c89947, type: 3}
+    Prefab: {fileID: 9105732024619284605, guid: 15a0716d18e8ae8479958055637316d1, type: 3}
     Escalation: 2
     InitialSize: 5
     MaxSize: 50
   - Name: FX_BulletFragments
-    Prefab: {fileID: 9105732024619284605, guid: 15a0716d18e8ae8479958055637316d1, type: 3}
+    Prefab: {fileID: 2428115606408901077, guid: 1961a521906d9914e96763b873c89947, type: 3}
     Escalation: 2
     InitialSize: 5
     MaxSize: 50

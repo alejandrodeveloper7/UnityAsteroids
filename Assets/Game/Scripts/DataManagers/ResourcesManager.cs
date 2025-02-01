@@ -12,6 +12,7 @@ public class ResourcesManager
     public InputSettings InputSettings { get { return GetScriptableObject<InputSettings>("InputSettings"); } }
     public PoolSettings PoolSettings { get { return GetScriptableObject<PoolSettings>("PoolSettings"); } }
     public ShipSettings ShipSettings { get { return GetScriptableObject<ShipSettings>("ShipSettings"); } }
+    public StageSettings StageSettings { get { return GetScriptableObject<StageSettings>("StageSettings"); } }
 
     private ResourcesManager()
     {
