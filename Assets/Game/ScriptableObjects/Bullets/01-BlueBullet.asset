@@ -15,9 +15,10 @@ MonoBehaviour:
   Id: 1
   IsActive: 1
   Sprite: {fileID: 21300000, guid: 474d85e8abc77364e961f54bdd67de14, type: 3}
+  PoolName: Bullet
   BetweenBulletsTime: 0.2
-  LifeDuration: 2
-  Speed: 10
+  LifeDuration: 1
+  Speed: 600
   DestuctionParticles:
   - particleEffectName: FX_BulletFragments
     particleConfig: {fileID: 11400000, guid: 63080432c5fc710429c463db2b20bd12, type: 2}

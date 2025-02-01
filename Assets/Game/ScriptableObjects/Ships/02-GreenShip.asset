@@ -17,8 +17,8 @@ MonoBehaviour:
   Sprite: {fileID: 21300000, guid: 4c01bb76511ad2449a17e2a7e14b08f6, type: 3}
   BulletsSpawnPointsLocalPosition: {x: 0, y: 0, z: 0}
   PropulsionFireLocalPosition: {x: 0, y: 0, z: 0}
-  movementSpeed: 0
-  rotationSpeed: 0
+  movementSpeed: 6
+  rotationSpeed: 5
   DestuctionParticles:
   - particleEffectName: FX_ShipDestruction
     particleConfig: {fileID: 0}

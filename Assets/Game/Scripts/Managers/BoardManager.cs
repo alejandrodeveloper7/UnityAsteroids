@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using ToolsACG.Utils.Events;
 using UnityEngine;
 
@@ -10,7 +9,6 @@ public class BoardManager : MonoBehaviour
     [Space]
     private int _selectedShipId;
 
-    private PlayerScript _playerScript;
     private List<AsteroidScript> _currentasteroids;
 
     #region Monobehaviour
@@ -46,13 +44,17 @@ public class BoardManager : MonoBehaviour
 
     private void CreatePlayer() 
     {
-        _playerScript = PoolsController.Instance.GetInstance(_shipSettings.PoolName).GetComponent<PlayerScript>();
-        _playerScript.Initialize(_shipSettings.Ships.FirstOrDefault(x => x.Id == _selectedShipId));
-   }
+        PoolsController.Instance.GetInstance(_shipSettings.PoolName);
+        EventManager.GetGameplayBus().RaiseEvent(new PlayerPrepared());
+    }
 
     private void CreateAsteroids() 
     {
     
     }
 
+}
+
+public class PlayerPrepared : IEvent 
+{
 }

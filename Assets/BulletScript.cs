@@ -35,7 +35,8 @@ public class BulletScript : MonoBehaviour,IPooleableItem
         _spriteRenderer.sprite = _currentData.Sprite;
      
         TurnBulletDetection(true);
-        //_rigidBody.velocity = pDirection * _currentData.Speed * Time.fixedDeltaTime;
+        _rigidBody.velocity = _currentData.Speed * Time.fixedDeltaTime * -transform.up;
+        Invoke(nameof(RecycleBullet), _currentData.LifeDuration);
     }
 
 
@@ -47,5 +48,10 @@ public class BulletScript : MonoBehaviour,IPooleableItem
     public void TurnBulletDetection(bool pState)
     {
         _collider.enabled = pState;
+    }
+
+    private void RecycleBullet() 
+    {
+        _originPool.RecycleItem(gameObject);
     }
 }

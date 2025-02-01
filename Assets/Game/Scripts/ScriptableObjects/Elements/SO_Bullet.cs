@@ -5,6 +5,8 @@ using UnityEngine;
 public class SO_Bullet : SO_BaseElement
 { 
     [Space]
+    public string PoolName;
+    [Space]
     public float BetweenBulletsTime;
     public float LifeDuration;
     public float Speed;
