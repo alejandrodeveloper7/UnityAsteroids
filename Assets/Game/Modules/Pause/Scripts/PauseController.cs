@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using ToolsACG.Utils.Events;
 using UnityEngine;
 
@@ -10,6 +12,8 @@ namespace ToolsACG.Scenes.Pause
 
         private IPauseView _view;
         private PauseModel _data;
+
+        private bool _inPause;
 
         #endregion
 
@@ -36,7 +40,12 @@ namespace ToolsACG.Scenes.Pause
 
         protected override void RegisterActions()
         {
-            // TODO: initialize dictionaries with actions for buttons, toggles and dropdowns.      
+            Actions.Add("SLD_Music", OnMusicSliderValueChaged);
+            Actions.Add("SLD_Effects", OnEffectsSliderValueChaged);
+            Actions.Add("DPD_Resolution", OnResolutionDropdownValueChanged);
+            Actions.Add("TGL_FullScreen", OnFullScreenToggleValueChanged);
+            Actions.Add("BTN_LeaveGame", OnLeaveGameButtonClicked);
+            Actions.Add("BTN_Resume", OnResumeButtonClicked);
         }
 
         protected override void SetData()
@@ -65,16 +74,47 @@ namespace ToolsACG.Scenes.Pause
 
         private void OnPauseKeyClicked(PauseKeyClicked pPauseKeyClicked)
         {
-            if (pPauseKeyClicked.InPause)
-            {
+            _inPause = !_inPause;
+            EventManager.GetGameplayBus().RaiseEvent(new PauseStateChanged() { InPause = _inPause });
+            _view.TurnGeneralContainer(_inPause);
+
+            if (_inPause)
                 Time.timeScale = 0;
-                _view.TurnGeneralContainer(true);
-            }
             else
-            {
                 Time.timeScale = 1;
-                _view.TurnGeneralContainer(false);
-            }
+        }
+
+        #endregion
+
+        #region UI Elements Callbacks
+
+        private void OnMusicSliderValueChaged()
+        {
+            EventManager.GetUiBus().RaiseEvent(new MusicVolumeUpdated() { Value = _view.MusicVolume });
+        }
+
+        private void OnEffectsSliderValueChaged()
+        {
+            EventManager.GetUiBus().RaiseEvent(new EffectsVolumeUpdated() { Value = _view.EffectsVolume });
+        }
+
+        private void OnResolutionDropdownValueChanged()
+        {
+            EventManager.GetUiBus().RaiseEvent(new ResolutionUpdated() { Index = _view.ResolutionIndex });
+        }
+
+        private void OnFullScreenToggleValueChanged()
+        {
+            EventManager.GetUiBus().RaiseEvent(new FullScreenModeUpdated() { Active = _view.FullScreen });
+        }
+
+        private void OnLeaveGameButtonClicked()
+        {
+
+        }
+        private void OnResumeButtonClicked()
+        {
+            OnPauseKeyClicked(null);
         }
 
         #endregion
@@ -82,6 +122,38 @@ namespace ToolsACG.Scenes.Pause
         private void Initialize()
         {
             _view.TurnGeneralContainer(false);
+
+            List<Vector2Int> availableResolutions = Screen.resolutions.Select(res => new Vector2Int(res.width, res.height)).Distinct().ToList();
+
+            List<string> options = new List<string>();
+
+            foreach (Vector2Int resolution in availableResolutions)
+                options.Add(string.Format("{0}x{1}", resolution.x, resolution.y));
+
+            _view.SetResolutionsOptionsAndIndex(options, 0);
         }
     }
+}
+public class PauseStateChanged : IEvent
+{
+    public bool InPause { get; set; }
+}
+
+public class MusicVolumeUpdated : IEvent
+{
+    public float Value { get; set; }
+}
+
+public class EffectsVolumeUpdated : IEvent
+{
+    public float Value { get; set; }
+}
+
+public class ResolutionUpdated : IEvent
+{
+    public int Index { get; set; }
+}
+public class FullScreenModeUpdated : IEvent
+{
+    public bool Active { get; set; }
 }

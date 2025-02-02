@@ -33,7 +33,7 @@ public class PlayerMovementController : MonoBehaviour
         EventManager.GetGameplayBus().AddListener<RotationtKeyStateChange>(OnRotationtKeyStateChange);
         EventManager.GetGameplayBus().AddListener<MoveForwardKeyStateChange>(OnMoveForwardKeyStateChange);
         EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetGameplayBus().AddListener<PauseKeyClicked>(OnPauseKeyClicked);
+        EventManager.GetGameplayBus().AddListener<PauseStateChanged>(OnPauseStateChanged);
     }
 
     private void OnDisable()
@@ -42,7 +42,7 @@ public class PlayerMovementController : MonoBehaviour
         EventManager.GetGameplayBus().RemoveListener<RotationtKeyStateChange>(OnRotationtKeyStateChange);
         EventManager.GetGameplayBus().RemoveListener<MoveForwardKeyStateChange>(OnMoveForwardKeyStateChange);
         EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetGameplayBus().RemoveListener<PauseKeyClicked>(OnPauseKeyClicked);
+        EventManager.GetGameplayBus().RemoveListener<PauseStateChanged>(OnPauseStateChanged);
     }
 
     #endregion
@@ -72,9 +72,9 @@ public class PlayerMovementController : MonoBehaviour
         _movingForward = false;
     }
 
-    private void OnPauseKeyClicked(PauseKeyClicked pPauseKeyClicked)
+    private void OnPauseStateChanged(PauseStateChanged pPauseStateChanged)
     {
-        if (pPauseKeyClicked.InPause)
+        if (pPauseStateChanged.InPause)
         {
             _rotationValue = 0;
             _movingForward = false;

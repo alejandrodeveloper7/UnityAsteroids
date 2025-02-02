@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using ToolsACG.Utils.Pooling;
 using UnityEngine;
 
@@ -25,13 +24,12 @@ public class PooledParticleSystem : MonoBehaviour, IPooleableItem
     public async void ExecuteBehaviour()
     {
         ParticleSystem.MainModule mainModule = _particleSystem.main;
-
-        //Sound
-
         _particleSystem.Play();
+        Invoke(nameof(RecycleGameObject), mainModule.duration);
+    }
 
-        await Task.Delay((int)(mainModule.duration * 1000f));
-
+    private void RecycleGameObject()
+    {
         OriginPool.RecycleItem(gameObject);
     }
 }

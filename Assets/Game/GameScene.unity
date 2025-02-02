@@ -205,6 +205,7 @@ GameObject:
   - component: {fileID: 133741439}
   - component: {fileID: 133741438}
   - component: {fileID: 133741437}
+  - component: {fileID: 133741444}
   m_Layer: 0
   m_Name: _MANAGERS
   m_TagString: Untagged
@@ -224,6 +225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21d8f1b54d9fbd24da493c8a4126c66e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _musicMixer: {fileID: 24100000, guid: 17bc328ada3575b4b94acdc0eaa04775, type: 2}
+  _effectsMixer: {fileID: 24100000, guid: 6d0e2d0b6227f9a4f83dfa9d0bbe5a09, type: 2}
 --- !u!114 &133741438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,6 +306,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0b936b6832cc8042a9480998c8035d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &133741444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 133741436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c6a5b7038cf2684bb2c83dc73cf9857, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &753171571
@@ -432,7 +447,6 @@ GameObject:
   - component: {fileID: 1068588451}
   - component: {fileID: 1068588450}
   - component: {fileID: 1068588449}
-  - component: {fileID: 1068588448}
   m_Layer: 0
   m_Name: _CONTROLLERS
   m_TagString: Untagged
@@ -440,18 +454,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1068588448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1068588447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c6a5b7038cf2684bb2c83dc73cf9857, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1068588449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -488,6 +490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05995bbaa010b464b87089e671444b5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _configuration: {fileID: 11400000, guid: eacb28e68d527cd408c384823929ae7c, type: 2}
 --- !u!4 &1068588452
 Transform:
   m_ObjectHideFlags: 0

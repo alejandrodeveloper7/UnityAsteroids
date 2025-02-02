@@ -39,6 +39,12 @@ namespace ToolsACG.Scenes
                 Actions[pInputField.name].Invoke();
         }
 
+        public virtual void OnValueChanged(TMP_Dropdown pDropDown)
+        {
+            if (Actions.ContainsKey(pDropDown.name))
+                Actions[pDropDown.name].Invoke();
+        }
+
         protected abstract void RegisterActions();
         protected abstract void SetData();
 

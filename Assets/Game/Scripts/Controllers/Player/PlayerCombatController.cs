@@ -22,7 +22,7 @@ public class PlayerCombatController : MonoBehaviour
         EventManager.GetGameplayBus().AddListener<PlayerPrepared>(OnPlayerPrepared);
         EventManager.GetGameplayBus().AddListener<ShootKeyStateChange>(OnShootKeyStateChange);
         EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetGameplayBus().AddListener<PauseKeyClicked>(OnPauseKeyClicked);
+        EventManager.GetGameplayBus().AddListener<PauseStateChanged>(OnPauseStateChanged);
     }
 
     private void OnDisable()
@@ -30,7 +30,7 @@ public class PlayerCombatController : MonoBehaviour
         EventManager.GetGameplayBus().RemoveListener<PlayerPrepared>(OnPlayerPrepared);
         EventManager.GetGameplayBus().RemoveListener<ShootKeyStateChange>(OnShootKeyStateChange);
         EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetGameplayBus().RemoveListener<PauseKeyClicked>(OnPauseKeyClicked);
+        EventManager.GetGameplayBus().RemoveListener<PauseStateChanged>(OnPauseStateChanged);
     }
 
     #endregion
@@ -55,9 +55,9 @@ public class PlayerCombatController : MonoBehaviour
         _shooting = false;
     }
 
-    private void OnPauseKeyClicked(PauseKeyClicked pPauseKeyClicked)
+    private void OnPauseStateChanged(PauseStateChanged pPauseStateChanged)
     {
-        if (pPauseKeyClicked.InPause)
+        if (pPauseStateChanged.InPause)
             _shooting = false;
     }
 
