@@ -275,7 +275,7 @@ MonoBehaviour:
   _sceneDependencys:
   - MainMenuScene
   - ScoreScene
-  - PlayerHealthScene
+  - PlayerHealthBarScene
   - PauseScene
   - LeaderboardScene
 --- !u!4 &133741442

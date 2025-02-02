@@ -21,12 +21,16 @@ public class PlayerCombatController : MonoBehaviour
     {
         EventManager.GetGameplayBus().AddListener<PlayerPrepared>(OnPlayerPrepared);
         EventManager.GetGameplayBus().AddListener<ShootKeyStateChange>(OnShootKeyStateChange);
+        EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
+        EventManager.GetGameplayBus().AddListener<PauseKeyClicked>(OnPauseKeyClicked);
     }
 
     private void OnDisable()
     {
         EventManager.GetGameplayBus().RemoveListener<PlayerPrepared>(OnPlayerPrepared);
         EventManager.GetGameplayBus().RemoveListener<ShootKeyStateChange>(OnShootKeyStateChange);
+        EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
+        EventManager.GetGameplayBus().RemoveListener<PauseKeyClicked>(OnPauseKeyClicked);
     }
 
     #endregion
@@ -45,6 +49,18 @@ public class PlayerCombatController : MonoBehaviour
         if (_shooting)
             ShotBullet();
     }
+
+    private void OnPlayerDead(PlayerDead pPlayerDead)
+    {
+        _shooting = false;
+    }
+
+    private void OnPauseKeyClicked(PauseKeyClicked pPauseKeyClicked)
+    {
+        if (pPauseKeyClicked.InPause)
+            _shooting = false;
+    }
+
     #endregion
 
     #region Initialization
@@ -63,7 +79,7 @@ public class PlayerCombatController : MonoBehaviour
     {
         while (_shooting)
         {
-            BulletScript bulletscript = PoolsController.Instance.GetInstance(_bulletData.PoolName).GetComponent<BulletScript>();
+            BulletController bulletscript = PoolsManager.Instance.GetInstance(_bulletData.PoolName).GetComponent<BulletController>();
             bulletscript.transform.SetPositionAndRotation(_bulletSpawnPoint.position, _bulletSpawnPoint.rotation);
             bulletscript.Initialize(_bulletData);
             await Task.Delay((int)(_bulletData.BetweenBulletsTime * 1000));

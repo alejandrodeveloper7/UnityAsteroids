@@ -12,8 +12,9 @@ namespace ToolsACG.Scenes.Score
         private ScoreModel _data;
         
         private int _score;
+        private bool _alive;
         #endregion
-        
+
         #region Properties
 
         public ScoreModel Model
@@ -54,13 +55,15 @@ namespace ToolsACG.Scenes.Score
         {
             EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
             EventManager.GetGameplayBus().AddListener<AsteroidDestroyed>(OnAsteroidDestroyed);
-
+            EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
+            EventManager.GetUiBus().AddListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
         }
 
         private void OnDisable()
         {
             EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
-            EventManager.GetGameplayBus().AddListener<AsteroidDestroyed>(OnAsteroidDestroyed);
+            EventManager.GetGameplayBus().RemoveListener<AsteroidDestroyed>(OnAsteroidDestroyed);
+            EventManager.GetUiBus().RemoveListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
         }
 
         #endregion
@@ -69,6 +72,8 @@ namespace ToolsACG.Scenes.Score
 
         private void OnStartMatch(StartMatch pStartMatch) 
         {
+            _alive = true;
+            RestartScore();
             _view.SetViewAlpha(0);
             _view.TurnGeneralContainer(true);
             _view.ViewFadeTransition(1, 0.3f);
@@ -76,17 +81,35 @@ namespace ToolsACG.Scenes.Score
 
         private void OnAsteroidDestroyed(AsteroidDestroyed pAsteroidDestroyed) 
         {
+            if (_alive is false)
+                return;
+
             _score += pAsteroidDestroyed.AsteroidData.PointsValue;
             _view.SetScore(_score);
+        }
+
+        private void OnPlayerDead(PlayerDead pPlayerDead) 
+        {
+            _alive = false;
+            PersistentDataManager.LastScore = _score;
+        }
+
+        private void OnBackToMenuButtonClicked(BackToMenuButtonClicked pBackToMenuButtonClicked) 
+        {
+            _view.ViewFadeTransition(0, 0.3f);
         }
 
         #endregion
 
         private void Initialize() 
+        {   
+            _view.TurnGeneralContainer(false);
+        }
+
+        private void RestartScore() 
         {
             _score = 0;
             _view.SetScore(_score);
-            _view.TurnGeneralContainer(false);
         }
     }
 }

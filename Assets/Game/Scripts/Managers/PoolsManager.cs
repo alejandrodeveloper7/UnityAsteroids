@@ -3,7 +3,7 @@ using ToolsACG.Utils.Pooling;
 using UnityEngine;
 using static PoolSettings;
 
-public class PoolsController : MonoBehaviour
+public class PoolsManager : MonoBehaviour
 {
     #region Fields
 
@@ -16,8 +16,8 @@ public class PoolsController : MonoBehaviour
 
     #region Singleton
 
-    private static PoolsController m_instance;
-    public static PoolsController Instance => m_instance;
+    private static PoolsManager m_instance;
+    public static PoolsManager Instance => m_instance;
 
     private void CreateSingleton()
     {

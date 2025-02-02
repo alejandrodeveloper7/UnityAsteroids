@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ToolsACG.Utils.Events;
 using UnityEngine;
 
@@ -23,17 +24,21 @@ public class PlayerPhysicsController : MonoBehaviour
     {
         EventManager.GetGameplayBus().AddListener<PlayerPrepared>(OnPlayerPrepared);
         EventManager.GetGameplayBus().AddListener<PlayerAppearanceUpdated>(OnPlayerAppearanceUpdated);
+        EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
     }
 
     private void OnDisable()
     {
-        EventManager.GetGameplayBus().AddListener<PlayerPrepared>(OnPlayerPrepared);
+        EventManager.GetGameplayBus().RemoveListener<PlayerPrepared>(OnPlayerPrepared);
         EventManager.GetGameplayBus().RemoveListener<PlayerAppearanceUpdated>(OnPlayerAppearanceUpdated);
+        EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
+        collision.TryGetComponent(out AsteroidController detectedAsteroid);
+        if (detectedAsteroid != null)
+            EventManager.GetGameplayBus().RaiseEvent(new PlayerHitted());
     }
 
     #endregion
@@ -48,6 +53,11 @@ public class PlayerPhysicsController : MonoBehaviour
     private void OnPlayerAppearanceUpdated(PlayerAppearanceUpdated pPlayerAppearanceUpdated)
     {
         UpdateColliderShape();
+    }
+
+    private void OnPlayerDead(PlayerDead pPlayerDead)
+    {
+        TurnDetection(false);
     }
 
     #endregion
@@ -80,7 +90,7 @@ public class PlayerPhysicsController : MonoBehaviour
 
         for (int i = 0; i < _collider.pathCount; i++)
         {
-            var path = new System.Collections.Generic.List<Vector2>();
+            List<Vector2> path = new List<Vector2>();
             sprite.GetPhysicsShape(i, path);
             _collider.SetPath(i, path.ToArray());
         }
@@ -97,4 +107,8 @@ public class PlayerPhysicsController : MonoBehaviour
     }
 
     #endregion
+}
+
+public class PlayerHitted : IEvent
+{
 }

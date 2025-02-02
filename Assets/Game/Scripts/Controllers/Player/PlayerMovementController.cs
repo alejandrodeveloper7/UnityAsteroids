@@ -17,7 +17,6 @@ public class PlayerMovementController : MonoBehaviour
     private bool _playing;
 
     private int _rotationValue;
-    private bool _rotatingRight;
     private bool _movingForward;
     #endregion
 
@@ -33,6 +32,8 @@ public class PlayerMovementController : MonoBehaviour
         EventManager.GetGameplayBus().AddListener<PlayerPrepared>(OnPlayerPrepared);
         EventManager.GetGameplayBus().AddListener<RotationtKeyStateChange>(OnRotationtKeyStateChange);
         EventManager.GetGameplayBus().AddListener<MoveForwardKeyStateChange>(OnMoveForwardKeyStateChange);
+        EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
+        EventManager.GetGameplayBus().AddListener<PauseKeyClicked>(OnPauseKeyClicked);
     }
 
     private void OnDisable()
@@ -40,6 +41,8 @@ public class PlayerMovementController : MonoBehaviour
         EventManager.GetGameplayBus().RemoveListener<PlayerPrepared>(OnPlayerPrepared);
         EventManager.GetGameplayBus().RemoveListener<RotationtKeyStateChange>(OnRotationtKeyStateChange);
         EventManager.GetGameplayBus().RemoveListener<MoveForwardKeyStateChange>(OnMoveForwardKeyStateChange);
+        EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
+        EventManager.GetGameplayBus().RemoveListener<PauseKeyClicked>(OnPauseKeyClicked);
     }
 
     #endregion
@@ -62,6 +65,21 @@ public class PlayerMovementController : MonoBehaviour
         MoveForward();
     }
 
+    private void OnPlayerDead(PlayerDead pPlayerDead)
+    {
+        _playing = false;
+        _rotationValue = 0;
+        _movingForward = false;
+    }
+
+    private void OnPauseKeyClicked(PauseKeyClicked pPauseKeyClicked)
+    {
+        if (pPauseKeyClicked.InPause)
+        {
+            _rotationValue = 0;
+            _movingForward = false;
+        }
+    }
     #endregion
 
     #region Initilization
@@ -78,7 +96,7 @@ public class PlayerMovementController : MonoBehaviour
         _rotationSpeed = _shipData.rotationSpeed;
 
         _playing = true;
-        transform.SetPositionAndRotation(Vector2.zero,Quaternion.Euler(0,0,180));
+        transform.SetPositionAndRotation(Vector2.zero, Quaternion.Euler(0, 0, 180));
     }
 
     #endregion
@@ -109,15 +127,5 @@ public class PlayerMovementController : MonoBehaviour
     }
 
     #endregion
-
-
-
-
-
-
-
-
-
-
 
 }

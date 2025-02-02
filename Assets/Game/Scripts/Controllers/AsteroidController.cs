@@ -1,8 +1,9 @@
+using System.Collections.Generic;
 using ToolsACG.Utils.Events;
 using ToolsACG.Utils.Pooling;
 using UnityEngine;
 
-public class AsteroidScript : MonoBehaviour, IPooleableItem
+public class AsteroidController : MonoBehaviour, IPooleableItem
 {
     SimplePool _originPool;
     public SimplePool OriginPool { get { return _originPool; } set { _originPool = value; } }
@@ -33,7 +34,7 @@ public class AsteroidScript : MonoBehaviour, IPooleableItem
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        collision.TryGetComponent(out BulletScript detectedBullet);
+        collision.TryGetComponent(out BulletController detectedBullet);
         if (detectedBullet != null)
         {
             GenerateDestructionParticles();
@@ -73,13 +74,13 @@ public class AsteroidScript : MonoBehaviour, IPooleableItem
 
         for (int i = 0; i < _collider.pathCount; i++)
         {
-            var path = new System.Collections.Generic.List<Vector2>();
+            List<Vector2> path = new List<Vector2>();
             sprite.GetPhysicsShape(i, path);
             _collider.SetPath(i, path.ToArray());
         }
     }
 
-    private void CleanAsteroid()
+    public void CleanAsteroid()
     {
         StopMovement();
         TurnDetection(false);
@@ -90,8 +91,9 @@ public class AsteroidScript : MonoBehaviour, IPooleableItem
     {
         foreach (ParticleSetup item in _currentData.DestuctionParticles)
         {
-            ParticleSystem pooledParticlesystem = PoolsController.Instance.GetInstance(item.particleEffectName).GetComponent<ParticleSystem>();
-            item.particleConfig.ApplyConfig(pooledParticlesystem);
+            ParticleSystem pooledParticlesystem = PoolsManager.Instance.GetInstance(item.particleEffectName).GetComponent<ParticleSystem>();
+            if (item.particleConfig != null)
+                item.particleConfig.ApplyConfig(pooledParticlesystem);
             pooledParticlesystem.transform.position = transform.position;
             pooledParticlesystem.GetComponent<PooledParticleSystem>().ExecuteBehaviour();
         }
@@ -115,7 +117,7 @@ public class AsteroidScript : MonoBehaviour, IPooleableItem
 
 public class AsteroidDestroyed : IEvent
 {
-    public AsteroidScript AsteroidScript { get; set; }
+    public AsteroidController AsteroidScript { get; set; }
     public SO_Asteroid AsteroidData { get; set; }
     public Vector2 Position { get; set; }
     public Vector2 Direction { get; set; }

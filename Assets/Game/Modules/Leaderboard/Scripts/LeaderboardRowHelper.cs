@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using static ToolsACG.Services.DreamloLeaderboard.DreamloLeaderboardService;
 
 public class LeaderboardRowHelper : MonoBehaviour
 {
@@ -7,13 +8,15 @@ public class LeaderboardRowHelper : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private TextMeshProUGUI _scoreText;
 
-    public void SetData(int pPosition, string pName, int pScore, bool pIsYourScore)
+    public void SetData(int pPosition, LeaderboardEntry pData)
     {
         _positionText.text = string.Concat(pPosition, "#");
-        _nameText.text = pName;
-        _scoreText.text = pScore.ToString();
+        _nameText.text = pData.Name;
+        _scoreText.text = pData.Score.ToString();
 
-        if (pIsYourScore)
+        bool isYourScore = (pData.Name == PersistentDataManager.UserName);
+
+        if (isYourScore)
             TintTexts(Color.red);
         else
             TintTexts(Color.black);

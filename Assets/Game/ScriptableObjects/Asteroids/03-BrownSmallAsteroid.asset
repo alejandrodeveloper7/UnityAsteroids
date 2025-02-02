@@ -21,7 +21,7 @@ MonoBehaviour:
   possibleSprites:
   - {fileID: 21300000, guid: 8b986e58548e62842a6970e716ab9b20, type: 3}
   - {fileID: 21300000, guid: e3505f4085e8b2e44a701763827971ff, type: 3}
-  Speed: 100
+  Speed: 150
   PointsValue: 30
   DestuctionParticles:
   - particleEffectName: FX_AsteroidFragments

@@ -14,7 +14,7 @@ public class PlayerAppearanceController : MonoBehaviour
     #endregion
 
     #region Monobehaviour
-    
+
     private void Awake()
     {
         GetReferences();
@@ -23,11 +23,13 @@ public class PlayerAppearanceController : MonoBehaviour
     private void OnEnable()
     {
         EventManager.GetGameplayBus().AddListener<PlayerPrepared>(OnPlayerPrepared);
+        EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
     }
 
     private void OnDisable()
     {
         EventManager.GetGameplayBus().RemoveListener<PlayerPrepared>(OnPlayerPrepared);
+        EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
     }
 
     #endregion
@@ -39,15 +41,20 @@ public class PlayerAppearanceController : MonoBehaviour
         Initialize();
     }
 
+    private void OnPlayerDead(PlayerDead pPlayerDead)
+    {
+        GenerateDestructionParticles();
+    }
+
     #endregion
 
     #region Initialization
-    
+
     private void GetReferences()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
-     
+
     private void Initialize()
     {
         _shipData = ResourcesManager.Instance.ShipSettings.Ships.FirstOrDefault(x => x.Id == PersistentDataManager.SelectedShipId);
@@ -57,8 +64,20 @@ public class PlayerAppearanceController : MonoBehaviour
     }
 
     #endregion
+
+    private void GenerateDestructionParticles()
+    {
+        foreach (ParticleSetup item in _shipData.DestuctionParticles)
+        {
+            ParticleSystem pooledParticlesystem = PoolsManager.Instance.GetInstance(item.particleEffectName).GetComponent<ParticleSystem>();
+            if (item.particleConfig != null)
+                item.particleConfig.ApplyConfig(pooledParticlesystem);
+            pooledParticlesystem.transform.position = transform.position;
+            pooledParticlesystem.GetComponent<PooledParticleSystem>().ExecuteBehaviour();
+        }
+    }
 }
 
-public class PlayerAppearanceUpdated : IEvent 
+public class PlayerAppearanceUpdated : IEvent
 {
 }

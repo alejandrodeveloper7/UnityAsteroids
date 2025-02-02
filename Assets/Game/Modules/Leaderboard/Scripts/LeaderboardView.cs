@@ -1,6 +1,8 @@
 
 using DG.Tweening;
+using System.Collections.Generic;
 using UnityEngine;
+using static ToolsACG.Services.DreamloLeaderboard.DreamloLeaderboardService;
 
 namespace ToolsACG.Scenes.Leaderboard
 {
@@ -10,6 +12,11 @@ namespace ToolsACG.Scenes.Leaderboard
 
         void SetViewAlpha(float pValue);
         void ViewFadeTransition(float pDestinyValue, float pDuration);
+
+        void TurnLoadingSpinner(bool pState);
+        void TurnErrorMessage(bool pState);
+        void TurnRowsContainer(bool pState);
+        void SetLeaderboardData(List<LeaderboardEntry> pData);
     }
 
     public class LeaderboardView : ModuleView, ILeaderboardView
@@ -17,6 +24,11 @@ namespace ToolsACG.Scenes.Leaderboard
         #region Fields        
 
         [SerializeField] private GameObject _generalContainer;
+
+        [SerializeField] private GameObject _loadingSpinner;
+        [SerializeField] private GameObject _errorMessage;
+        [SerializeField] private GameObject _rowsContainer;
+        [SerializeField] private List<LeaderboardRowHelper> _rowHelpers;
 
         #endregion
 
@@ -45,6 +57,24 @@ namespace ToolsACG.Scenes.Leaderboard
         {
             CanvasGroup.DOKill();
             CanvasGroup.DOFade(pDestinyValue, pDuration).SetEase(Ease.OutQuad);
+        }
+
+        public void TurnLoadingSpinner(bool pState)
+        {
+            _loadingSpinner.SetActive(pState);
+        }
+        public void TurnErrorMessage(bool pState)
+        {
+            _errorMessage.SetActive(pState);
+        }
+        public void TurnRowsContainer(bool pState)
+        {
+            _rowsContainer.SetActive(pState);
+        }
+        public void SetLeaderboardData(List<LeaderboardEntry> pData)
+        {
+            for (int i = 0; i < pData.Count; i++)
+                _rowHelpers[i].SetData(i+1, pData[i]);
         }
 
         #endregion

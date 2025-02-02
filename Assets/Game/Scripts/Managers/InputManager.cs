@@ -18,11 +18,15 @@ public class InputManager : MonoBehaviour
     private void OnEnable()
     {
         EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
+        EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
+        EventManager.GetGameplayBus().AddListener<PauseKeyClicked>(OnPauseKeyClicked);
     }
 
     private void OnDisable()
     {
         EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
+        EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
+        EventManager.GetGameplayBus().RemoveListener<PauseKeyClicked>(OnPauseKeyClicked);
     }
 
     private void OnApplicationFocus(bool focus)
@@ -60,6 +64,29 @@ public class InputManager : MonoBehaviour
         _playing = true;
     }
 
+    private void OnPlayerDead(PlayerDead pPlayerDead)
+    {
+        _playing = false;
+    }
+
+    private void OnPauseKeyClicked(PauseKeyClicked pPauseKeyClicked)
+    {
+        if (pPauseKeyClicked.InPause is false)
+        {
+            if (Input.GetKey(_inputSettings.TurnLeftKey))
+                EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = 1 });
+
+            if (Input.GetKey(_inputSettings.TurnRightKey))
+                EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = -1 });
+
+            if (Input.GetKey(_inputSettings.MoveForwardKey))
+                EventManager.GetGameplayBus().RaiseEvent(new MoveForwardKeyStateChange() { State = true });
+
+            if (Input.GetKey(_inputSettings.ShootKey))
+                EventManager.GetGameplayBus().RaiseEvent(new ShootKeyStateChange() { State = true });
+        }
+    }
+
     #endregion
 
     #region Input checks
@@ -68,7 +95,7 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetKeyDown(_inputSettings.TurnLeftKey))
             EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = 1 });
-       
+
         if (Input.GetKeyDown(_inputSettings.TurnRightKey))
             EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = -1 });
 

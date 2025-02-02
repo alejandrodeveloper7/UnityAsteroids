@@ -1,7 +1,7 @@
 using ToolsACG.Utils.Pooling;
 using UnityEngine;
 
-public class BulletScript : MonoBehaviour, IPooleableItem
+public class BulletController : MonoBehaviour, IPooleableItem
 {
     SimplePool _originPool;
     public SimplePool OriginPool { get { return _originPool; } set { _originPool = value; } }
@@ -30,7 +30,7 @@ public class BulletScript : MonoBehaviour, IPooleableItem
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        collision.TryGetComponent(out AsteroidScript detectedAsteroid);
+        collision.TryGetComponent(out AsteroidController detectedAsteroid);
         if (detectedAsteroid != null)
         {
             CancelInvoke(nameof(CleanBullet));
@@ -72,8 +72,9 @@ public class BulletScript : MonoBehaviour, IPooleableItem
     {
         foreach (ParticleSetup item in _currentData.DestuctionParticles)
         {
-            ParticleSystem pooledParticlesystem = PoolsController.Instance.GetInstance(item.particleEffectName).GetComponent<ParticleSystem>();
-            item.particleConfig.ApplyConfig(pooledParticlesystem);
+            ParticleSystem pooledParticlesystem = PoolsManager.Instance.GetInstance(item.particleEffectName).GetComponent<ParticleSystem>();
+            if (item.particleConfig != null)
+                item.particleConfig.ApplyConfig(pooledParticlesystem);
             pooledParticlesystem.transform.position = transform.position;
             pooledParticlesystem.GetComponent<PooledParticleSystem>().ExecuteBehaviour();
         }

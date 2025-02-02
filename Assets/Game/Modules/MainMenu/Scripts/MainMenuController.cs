@@ -2,6 +2,8 @@ using System.Linq;
 using UnityEngine;
 using System;
 using ToolsACG.Utils.Events;
+using System.Threading.Tasks;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -63,12 +65,14 @@ namespace ToolsACG.Scenes.MainMenu
         private void OnEnable()
         {
             EventManager.GetUiBus().AddListener<StartGame>(OnStartGame);
+            EventManager.GetUiBus().AddListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
 
         }
 
         private void OnDisable()
         {
             EventManager.GetUiBus().RemoveListener<StartGame>(OnStartGame);
+            EventManager.GetUiBus().AddListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
         }
 
         #endregion
@@ -77,6 +81,14 @@ namespace ToolsACG.Scenes.MainMenu
 
         private void OnStartGame(StartGame pStartGame) 
         {
+            _view.SetViewAlpha(0);
+            _view.TurnGeneralContainer(true);
+            _view.ViewFadeTransition(1, 0.3f);
+        }
+
+        private async void OnBackToMenuButtonClicked(BackToMenuButtonClicked pBackToMenuButtonClicked) 
+        {
+            await Task.Delay(300);
             _view.SetViewAlpha(0);
             _view.TurnGeneralContainer(true);
             _view.ViewFadeTransition(1, 0.3f);

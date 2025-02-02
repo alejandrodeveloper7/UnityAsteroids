@@ -1,3 +1,6 @@
+using System.Threading.Tasks;
+using ToolsACG.Services.DreamloLeaderboard;
+using ToolsACG.Utils.Events;
 using UnityEngine;
 
 namespace ToolsACG.Scenes.Leaderboard
@@ -35,7 +38,7 @@ namespace ToolsACG.Scenes.Leaderboard
 
         protected override void RegisterActions()
         {
-            // TODO: initialize dictionaries with actions for buttons, toggles and dropdowns.      
+            Actions.Add("BTN_BackToMenu", OnBackToMenuButtonClick);
         }
 
         protected override void SetData()
@@ -48,13 +51,90 @@ namespace ToolsACG.Scenes.Leaderboard
 
         #region Monobehaviour
 
+        private void OnEnable()
+        {
+            EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
+        }
 
+        private void OnDisable()
+        {
+            EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
+        }
 
         #endregion
 
         #region Bus callbacks
 
+        private async void OnPlayerDead(PlayerDead pPlayerDead)
+        {
+            RestartView();
 
+            await Task.Delay(2000);
+            _view.TurnGeneralContainer(true);
+            _view.ViewFadeTransition(1, 0.3f);
+            await Task.Delay(300);
+
+            SetScore();
+
+        }
+
+        #endregion
+
+        #region Apis Management
+
+        private void SetScore()
+        {
+            DreamloLeaderboardService.Instance.SetScore(PersistentDataManager.UserName, PersistentDataManager.LastScore
+             ,
+                  pResponse =>
+                 {
+                     if (pResponse.Contains("OK"))
+                         GetScores();
+                     else
+                     {
+                         _view.TurnErrorMessage(true);
+                         _view.TurnRowsContainer(true);
+                     }
+                 }
+             ,
+                  pResponse =>
+                 {
+                     _view.TurnErrorMessage(true);
+                     _view.TurnRowsContainer(true);
+                 }
+             );
+        }
+
+        private void GetScores()
+        {
+            DreamloLeaderboardService.Instance.GetRangeScores(8
+             ,
+                 pResponse =>
+                 {
+                     _view.SetLeaderboardData(pResponse.Dreamlo.Leaderboard.Entry);
+                     _view.TurnRowsContainer(true);
+                     _view.TurnLoadingSpinner(false);
+                 }
+             ,
+                 pResponse =>
+                 {
+                     _view.TurnErrorMessage(true);
+                     _view.TurnRowsContainer(true);
+                 }
+             );
+        }
+
+        #endregion
+
+        #region Button callbacks
+
+        private async void OnBackToMenuButtonClick()
+        {
+            _view.ViewFadeTransition(0, 0.3f);
+            EventManager.GetUiBus().RaiseEvent(new BackToMenuButtonClicked());
+            await Task.Delay(300);
+            _view.TurnGeneralContainer(false);
+        }
 
         #endregion
 
@@ -62,5 +142,17 @@ namespace ToolsACG.Scenes.Leaderboard
         {
             _view.TurnGeneralContainer(false);
         }
+
+        private void RestartView()
+        {
+            _view.TurnErrorMessage(false);
+            _view.TurnRowsContainer(false);
+            _view.TurnLoadingSpinner(true);
+            _view.SetViewAlpha(0);
+        }
+
     }
 }
+
+public class BackToMenuButtonClicked : IEvent
+{ }

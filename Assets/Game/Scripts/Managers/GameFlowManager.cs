@@ -19,24 +19,28 @@ public class GameFlowManager : MonoBehaviour
 
     private void Start()
     {
-        Initialize();
+        InitializeGame();
     }
 
     private void OnEnable()
     {
         EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
+        EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
+        EventManager.GetUiBus().AddListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
     }
 
     private void OnDisable()
     {
         EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
+        EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
+        EventManager.GetUiBus().RemoveListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
     }
 
     #endregion
 
     #region Initialization
 
-    private void Initialize()
+    private void InitializeGame()
     {
         EventManager.GetUiBus().RaiseEvent(new LoadScenesAdditive() { ScenesName = _sceneDependencys, OnComplete = OnAdditiveScenesLoadComplete });
     }
@@ -55,6 +59,18 @@ public class GameFlowManager : MonoBehaviour
     {
         _inMainMenu = false;
         _inMatch = true;
+    }
+
+    private void OnPlayerDead(PlayerDead pPlayerDead)
+    {
+        _inMatch = false;
+        _inLeaderboard = true;
+    }
+
+    private void OnBackToMenuButtonClicked(BackToMenuButtonClicked pBackToMenuButtonClicked) 
+    {
+        _inLeaderboard = false;
+        _inMainMenu = true;
     }
 
     #endregion

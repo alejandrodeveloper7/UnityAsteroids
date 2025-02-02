@@ -1,3 +1,4 @@
+using ToolsACG.Utils.Events;
 using UnityEngine;
 
 namespace ToolsACG.Scenes.Pause
@@ -9,9 +10,9 @@ namespace ToolsACG.Scenes.Pause
 
         private IPauseView _view;
         private PauseModel _data;
-        
+
         #endregion
-        
+
         #region Properties
 
         public PauseModel Model
@@ -27,7 +28,7 @@ namespace ToolsACG.Scenes.Pause
         protected override void Awake()
         {
             _view = GetComponent<IPauseView>();
-            base.Awake();            
+            base.Awake();
             _data = new PauseModel();
 
             Initialize();
@@ -47,14 +48,34 @@ namespace ToolsACG.Scenes.Pause
         #endregion
 
         #region Monobehaviour
-              
 
+        private void OnEnable()
+        {
+            EventManager.GetGameplayBus().AddListener<PauseKeyClicked>(OnPauseKeyClicked);
+        }
+
+        private void OnDisable()
+        {
+            EventManager.GetGameplayBus().RemoveListener<PauseKeyClicked>(OnPauseKeyClicked);
+        }
 
         #endregion
 
         #region Bus callbacks
 
-
+        private void OnPauseKeyClicked(PauseKeyClicked pPauseKeyClicked)
+        {
+            if (pPauseKeyClicked.InPause)
+            {
+                Time.timeScale = 0;
+                _view.TurnGeneralContainer(true);
+            }
+            else
+            {
+                Time.timeScale = 1;
+                _view.TurnGeneralContainer(false);
+            }
+        }
 
         #endregion
 

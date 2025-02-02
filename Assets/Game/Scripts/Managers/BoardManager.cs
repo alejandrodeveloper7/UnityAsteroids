@@ -12,7 +12,7 @@ public class BoardManager : MonoBehaviour
     private StageSettings _stageSettings;
     private List<SO_Asteroid> _initialPosibleAsteroids;
     [Space]
-    private List<AsteroidScript> _currentAsteroids = new List<AsteroidScript>();
+    private List<AsteroidController> _currentAsteroids = new List<AsteroidController>();
 
     private int _currentRound = 0;
 
@@ -27,12 +27,14 @@ public class BoardManager : MonoBehaviour
 
     private void OnEnable()
     {
+        EventManager.GetUiBus().AddListener<StartGame>(OnStartGame);
         EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
         EventManager.GetGameplayBus().AddListener<AsteroidDestroyed>(OnAsteroidDestroyed);
     }
 
     private void OnDisable()
     {
+        EventManager.GetUiBus().AddListener<StartGame>(OnStartGame);
         EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
         EventManager.GetGameplayBus().RemoveListener<AsteroidDestroyed>(OnAsteroidDestroyed);
     }
@@ -41,12 +43,19 @@ public class BoardManager : MonoBehaviour
 
     #region Bus Callbacks
 
+    private void OnStartGame(StartGame pStartGame) 
+    {
+        CreateAsteroids(0, _initialPosibleAsteroids, _stageSettings.InitialAsteroids);
+    }
+
     private void OnStartMatch(StartMatch pStartMatch)
     {
+        CleanCurrentAsteroids();
+
         _currentRound = 0;
         _selectedShip = ResourcesManager.Instance.ShipSettings.Ships.FirstOrDefault(x => x.Id == PersistentDataManager.SelectedShipId);
         CreatePlayer();
-        CreateAsteroids(_stageSettings.DelayBeforeFirstRound_MS, _initialPosibleAsteroids, 2);
+        CreateAsteroids(_stageSettings.DelayBeforeFirstRound_MS, _initialPosibleAsteroids, _stageSettings.InitialAsteroids);
     }
 
     private void OnAsteroidDestroyed(AsteroidDestroyed pAsteroidDestroyed)
@@ -64,7 +73,7 @@ public class BoardManager : MonoBehaviour
 
     private void CreatePlayer()
     {
-        PoolsController.Instance.GetInstance(_selectedShip.PoolName);
+        PoolsManager.Instance.GetInstance(_selectedShip.PoolName);
         EventManager.GetGameplayBus().RaiseEvent(new PlayerPrepared());
     }
 
@@ -88,9 +97,17 @@ public class BoardManager : MonoBehaviour
 
     private void CreateAsteroid(SO_Asteroid pData, Vector2 pOriginPosition = default, Vector2 pDirection = default)
     {
-        AsteroidScript newAsteroid = PoolsController.Instance.GetInstance(pData.PoolName).GetComponent<AsteroidScript>();
+        AsteroidController newAsteroid = PoolsManager.Instance.GetInstance(pData.PoolName).GetComponent<AsteroidController>();
         _currentAsteroids.Add(newAsteroid);
         newAsteroid.Initialize(pData, pOriginPosition, pDirection);
+    }
+
+    private void CleanCurrentAsteroids() 
+    {
+        foreach (AsteroidController item in _currentAsteroids)
+            item.CleanAsteroid();
+
+        _currentAsteroids.Clear();
     }
 
     private void CheckAllAsteroidsDestroyed()
@@ -98,8 +115,8 @@ public class BoardManager : MonoBehaviour
         if (_currentAsteroids.Count > 0)
             return;
 
-        Debug.Log(string.Format("Round {0} Complete", _currentRound));
         _currentRound++;
+        Debug.Log(string.Format("Round {0} Complete", _currentRound));
         int asteroidsToSpawn = _stageSettings.InitialAsteroids + _currentRound;
         if (asteroidsToSpawn > _stageSettings.MaxPosibleAsteroids)
             asteroidsToSpawn = _stageSettings.MaxPosibleAsteroids;

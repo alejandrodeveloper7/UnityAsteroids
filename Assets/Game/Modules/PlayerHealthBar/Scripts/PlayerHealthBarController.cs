@@ -3,19 +3,21 @@ using UnityEngine;
 
 namespace ToolsACG.Scenes.PlayerHealth
 {
-    [RequireComponent(typeof(PlayerHealthView))]
-    public class PlayerHealthController : ModuleController
+    [RequireComponent(typeof(PlayerHealthBarView))]
+    public class PlayerHealthBarController : ModuleController
     {
         #region Private Fields
 
-        private IPlayerHealthView _view;
-        private PlayerHealthModel _data;
+        private IPlayerHealthBarView _view;
+        private PlayerHealthBarModel _data;
+
+        private PlayerSettings _playersettings;
 
         #endregion
 
         #region Properties
 
-        public PlayerHealthModel Model
+        public PlayerHealthBarModel Model
         {
             get { return _data; }
             set { _data = value; }
@@ -27,9 +29,9 @@ namespace ToolsACG.Scenes.PlayerHealth
 
         protected override void Awake()
         {
-            _view = GetComponent<IPlayerHealthView>();
+            _view = GetComponent<IPlayerHealthBarView>();
             base.Awake();
-            _data = new PlayerHealthModel();
+            _data = new PlayerHealthBarModel();
 
             Initialize();
         }
@@ -47,18 +49,21 @@ namespace ToolsACG.Scenes.PlayerHealth
 
         #endregion
 
-
         #region Monobehaviour
 
         private void OnEnable()
         {
             EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
+            EventManager.GetGameplayBus().AddListener<PlayerHealthUpdated>(OnPlayerHealthUpdated);
+            EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
 
         }
 
         private void OnDisable()
         {
             EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
+            EventManager.GetGameplayBus().RemoveListener<PlayerHealthUpdated>(OnPlayerHealthUpdated);
+            EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
         }
 
         #endregion
@@ -67,16 +72,32 @@ namespace ToolsACG.Scenes.PlayerHealth
 
         private void OnStartMatch(StartMatch pStartMatch)
         {
+            _view.SetCurrentHealth(_playersettings.HealthPoints);
             _view.SetViewAlpha(0);
             _view.TurnGeneralContainer(true);
             _view.ViewFadeTransition(1, 0.3f);
+        }
+
+        private void OnPlayerHealthUpdated(PlayerHealthUpdated pPlayerHealthUpdated)
+        {
+            _view.SetCurrentHealth(pPlayerHealthUpdated.Health);
+        }
+
+        private void OnPlayerDead(PlayerDead pPlayerDead) 
+        {
+            _view.ViewFadeTransition(0, 0.3f);
         }
 
         #endregion
 
         private void Initialize()
         {
+            _playersettings = ResourcesManager.Instance.PlayerSettings;
             _view.TurnGeneralContainer(false);
+
+            _view.SetHealthPointsSprites(_playersettings.HealthPointSprite, _playersettings.emptyHealtPointSprite);
+            _view.SetShieldSliderSprites(_playersettings.ShieldBarSprite, _playersettings.FullShieldBarSprite);
+            _view.SetMaxHealth(_playersettings.HealthPoints);
         }
     }
 }

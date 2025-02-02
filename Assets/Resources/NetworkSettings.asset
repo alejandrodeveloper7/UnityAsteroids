@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: NetworkSettings
   m_EditorClassIdentifier: 
   _environment: 0
-  _developmentUrl: 
-  _productionUrl: 
-  _integrationUrl: 
+  _developmentUrl: http://dreamlo.com/lb/
+  _productionUrl: http://dreamlo.com/lb/
+  _integrationUrl: http://dreamlo.com/lb/
   _localhostUrl: 
-  _privateKey: 
-  _publicKey: 
-  _timeOut: 0
+  _privateKey: kHcV5NX4T0OSDn4ydNlS6w6AsTT2YiHE-YWx8MyaTGRQ
+  _publicKey: 679892348f40bb16d8afe811
+  _timeOut: 10
