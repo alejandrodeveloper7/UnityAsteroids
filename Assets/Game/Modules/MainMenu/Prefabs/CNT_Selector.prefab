@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 1031659658029154344}
   - component: {fileID: 1031659658029154345}
   - component: {fileID: 1031659658029154350}
+  - component: {fileID: 9190101259480502064}
   m_Layer: 5
   m_Name: BTN_NextElement
   m_TagString: Untagged
@@ -208,6 +209,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &9190101259480502064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031659658029154348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44a02d146cb4394fa85f9b2c3a7ca68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound: {fileID: 11400000, guid: 7cd3d0a9306794b4688aecbe97605fec, type: 2}
+  hoverSound: {fileID: 11400000, guid: d9e511271bbdcc848a9e1ee4288c6e40, type: 2}
 --- !u!1 &1031659658247589970
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,6 +389,7 @@ GameObject:
   - component: {fileID: 1031659658990153720}
   - component: {fileID: 1031659658990153721}
   - component: {fileID: 1031659658990153726}
+  - component: {fileID: 4262293030170330636}
   m_Layer: 5
   m_Name: BTN_PreviousElement
   m_TagString: Untagged
@@ -494,3 +510,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4262293030170330636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031659658990153724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44a02d146cb4394fa85f9b2c3a7ca68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound: {fileID: 11400000, guid: 7cd3d0a9306794b4688aecbe97605fec, type: 2}
+  hoverSound: {fileID: 11400000, guid: d9e511271bbdcc848a9e1ee4288c6e40, type: 2}

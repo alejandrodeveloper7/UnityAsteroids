@@ -43,8 +43,9 @@ public class BoardManager : MonoBehaviour
 
     #region Bus Callbacks
 
-    private void OnStartGame(StartGame pStartGame) 
+    private async void OnStartGame(StartGame pStartGame) 
     {
+        await Task.Delay(700);
         CreateAsteroids(0, _initialPosibleAsteroids, _stageSettings.InitialAsteroids);
     }
 

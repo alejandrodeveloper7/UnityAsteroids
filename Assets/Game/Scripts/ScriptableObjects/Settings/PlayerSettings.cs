@@ -13,9 +13,10 @@ public class PlayerSettings : ScriptableObject
     public Sprite ShieldBarSprite;
     public Sprite FullShieldBarSprite;
     [Space]
-    public int ShieldRecoveryTime;
+    public float ShieldSliderMinValue;
+    public float ShieldRecoveryTime;
     [Space]
-    public Color Color;
+    public Color ShieldColor;
     [Space]
     public float FadeInDuration;
     public float FadeOutDuration;

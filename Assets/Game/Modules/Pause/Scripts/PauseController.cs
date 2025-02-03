@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ToolsACG.Utils.Events;
@@ -32,10 +33,9 @@ namespace ToolsACG.Scenes.Pause
         protected override void Awake()
         {
             _view = GetComponent<IPauseView>();
+            Initialize();
             base.Awake();
             _data = new PauseModel();
-
-            Initialize();
         }
 
         protected override void RegisterActions()
@@ -91,25 +91,32 @@ namespace ToolsACG.Scenes.Pause
         private void OnMusicSliderValueChaged()
         {
             EventManager.GetUiBus().RaiseEvent(new MusicVolumeUpdated() { Value = _view.MusicVolume });
+            PlayerPrefsManager.SetFloat(PlayerPrefsKeys.MUSIC_VOLUME_KEY, _view.MusicVolume);
         }
 
         private void OnEffectsSliderValueChaged()
         {
             EventManager.GetUiBus().RaiseEvent(new EffectsVolumeUpdated() { Value = _view.EffectsVolume });
+            PlayerPrefsManager.SetFloat(PlayerPrefsKeys.EFFECTS_VOLUME_KEY, _view.EffectsVolume);
         }
 
         private void OnResolutionDropdownValueChanged()
         {
+            ScreenController.UpdateResolution(_view.ResolutionIndex);
             EventManager.GetUiBus().RaiseEvent(new ResolutionUpdated() { Index = _view.ResolutionIndex });
+            PlayerPrefsManager.SetInt(PlayerPrefsKeys.RESOLUTION_INDEX_KEY, _view.ResolutionIndex);
         }
 
         private void OnFullScreenToggleValueChanged()
         {
+            ScreenController.UpdateFullScreenMode(_view.FullScreen);
             EventManager.GetUiBus().RaiseEvent(new FullScreenModeUpdated() { Active = _view.FullScreen });
+            PlayerPrefsManager.SetInt(PlayerPrefsKeys.FULL_SCREEN_MODE_KEY, _view.FullScreen ? 1 : 0);
         }
 
         private void OnLeaveGameButtonClicked()
         {
+            EventManager.GetUiBus().RaiseEvent(new GameLeaved());
 
         }
         private void OnResumeButtonClicked()
@@ -122,7 +129,13 @@ namespace ToolsACG.Scenes.Pause
         private void Initialize()
         {
             _view.TurnGeneralContainer(false);
+            InitializeAvailableResolutions();
+            InitializeVolumeSliders();
+            InitializeToggles();
+        }
 
+        private void InitializeAvailableResolutions()
+        {
             List<Vector2Int> availableResolutions = Screen.resolutions.Select(res => new Vector2Int(res.width, res.height)).Distinct().ToList();
 
             List<string> options = new List<string>();
@@ -130,7 +143,27 @@ namespace ToolsACG.Scenes.Pause
             foreach (Vector2Int resolution in availableResolutions)
                 options.Add(string.Format("{0}x{1}", resolution.x, resolution.y));
 
-            _view.SetResolutionsOptionsAndIndex(options, 0);
+            int resolutionIndex = PlayerPrefsManager.GetInt(PlayerPrefsKeys.RESOLUTION_INDEX_KEY, 0);
+            ScreenController.UpdateResolution(resolutionIndex);
+            _view.SetResolutionsOptionsAndIndex(options, resolutionIndex);
+        }
+
+        private void InitializeVolumeSliders()
+        {
+            float musicVolume = PlayerPrefsManager.GetFloat(PlayerPrefsKeys.MUSIC_VOLUME_KEY, 1);
+            EventManager.GetUiBus().RaiseEvent(new MusicVolumeUpdated() { Value = musicVolume });
+            _view.SetMusicVolume(musicVolume);
+          
+            float effectsVolume = PlayerPrefsManager.GetFloat(PlayerPrefsKeys.EFFECTS_VOLUME_KEY, 1);
+            EventManager.GetUiBus().RaiseEvent(new EffectsVolumeUpdated() { Value = effectsVolume });
+            _view.SetEffectsVolume(effectsVolume);
+        }
+
+        private void InitializeToggles()
+        {
+            bool fullScreen = Convert.ToBoolean(PlayerPrefsManager.GetInt(PlayerPrefsKeys.FULL_SCREEN_MODE_KEY, 0));
+            ScreenController.UpdateFullScreenMode(fullScreen);
+            _view.SetFullScreenMode(fullScreen);
         }
     }
 }
@@ -156,4 +189,7 @@ public class ResolutionUpdated : IEvent
 public class FullScreenModeUpdated : IEvent
 {
     public bool Active { get; set; }
+}
+public class GameLeaved : IEvent
+{
 }

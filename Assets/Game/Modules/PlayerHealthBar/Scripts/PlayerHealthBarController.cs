@@ -1,4 +1,7 @@
+using DG.Tweening;
+using System.Runtime.CompilerServices;
 using ToolsACG.Utils.Events;
+using UnityEditor;
 using UnityEngine;
 
 namespace ToolsACG.Scenes.PlayerHealth
@@ -12,7 +15,7 @@ namespace ToolsACG.Scenes.PlayerHealth
         private PlayerHealthBarModel _data;
 
         private PlayerSettings _playersettings;
-
+        private Tween _shieldChargeTween;
         #endregion
 
         #region Properties
@@ -54,16 +57,18 @@ namespace ToolsACG.Scenes.PlayerHealth
         private void OnEnable()
         {
             EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
-            EventManager.GetGameplayBus().AddListener<PlayerHealthUpdated>(OnPlayerHealthUpdated);
+            EventManager.GetGameplayBus().AddListener<PlayerDamaged>(OnPlayerDamaged);
             EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
+            EventManager.GetGameplayBus().AddListener<ShieldStateChanged>(OnShieldStateChanged);
 
         }
 
         private void OnDisable()
         {
             EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
-            EventManager.GetGameplayBus().RemoveListener<PlayerHealthUpdated>(OnPlayerHealthUpdated);
+            EventManager.GetGameplayBus().RemoveListener<PlayerDamaged>(OnPlayerDamaged);
             EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
+            EventManager.GetGameplayBus().RemoveListener<ShieldStateChanged>(OnShieldStateChanged);
         }
 
         #endregion
@@ -74,18 +79,43 @@ namespace ToolsACG.Scenes.PlayerHealth
         {
             _view.SetCurrentHealth(_playersettings.HealthPoints);
             _view.SetViewAlpha(0);
+            _view.SetShieldSliderValue(100);
             _view.TurnGeneralContainer(true);
             _view.ViewFadeTransition(1, 0.3f);
         }
 
-        private void OnPlayerHealthUpdated(PlayerHealthUpdated pPlayerHealthUpdated)
+        private void OnPlayerDamaged(PlayerDamaged pPlayerDamaged)
         {
-            _view.SetCurrentHealth(pPlayerHealthUpdated.Health);
+            _view.SetCurrentHealth(pPlayerDamaged.Health);
         }
 
-        private void OnPlayerDead(PlayerDead pPlayerDead) 
+        private void OnPlayerDead(PlayerDead pPlayerDead)
         {
+            _shieldChargeTween?.Kill();
             _view.ViewFadeTransition(0, 0.3f);
+        }
+
+        private void OnShieldStateChanged(ShieldStateChanged pShieldStateChanged)
+        {
+            if (pShieldStateChanged.Active)
+                return;
+
+            _view.DoShielSliderTransition(_playersettings.ShieldSliderMinValue, 0.8f);
+
+            float currentValue = _playersettings.ShieldSliderMinValue;
+
+            _shieldChargeTween = DOTween.To(() => currentValue, x => currentValue = x, 100, _playersettings.ShieldRecoveryTime)
+                .SetEase(Ease.Linear)
+                .OnUpdate(() =>
+                {
+                    _view.SetShieldSliderValue(currentValue);
+                })
+                .OnComplete(() =>
+                {
+                    _view.SetShieldSliderValue(100);
+                    EventManager.GetGameplayBus().RaiseEvent(new ShieldStateChanged() { Active = true });
+                });
+
         }
 
         #endregion

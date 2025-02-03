@@ -13,6 +13,7 @@ public class SO_Asteroid : SO_BaseElement
     [Space]
     public int Speed;
     public int PointsValue;
+    public SO_Sound[] SoundsOnDestruction;
     [Space]
     public List<ParticleSetup> DestuctionParticles;
     [Space]

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,9 @@ namespace ToolsACG.Scenes.PlayerHealth
         void SetCurrentHealth(int pAmount);
         void SetHealthPointsSprites(Sprite pHealthPointSprite, Sprite pEmptyHealthPointSprite);
         void SetShieldSliderSprites(Sprite pShieldBarSprite, Sprite pFullShieldBarSprite);
+
+        void SetShieldSliderValue(float pValue);
+        void DoShielSliderTransition(float pValue, float pDuration);
     }
 
     public class PlayerHealthBarView : ModuleView, IPlayerHealthBarView
@@ -27,7 +31,7 @@ namespace ToolsACG.Scenes.PlayerHealth
         [Header("Healt Points")]
         [SerializeField] private GameObject _healthPointPrefab;
         [SerializeField] private Transform _healthPointsContainer;
-        private List<Image> _currentHealtPoints= new List<Image>();
+        private List<Image> _currentHealtPoints = new List<Image>();
         [Space]
         private Sprite _healthPointSprite;
         private Sprite _emptyHealthPointSprite;
@@ -104,10 +108,28 @@ namespace ToolsACG.Scenes.PlayerHealth
             _fullShieldBarSprite = pFullShieldBarSprite;
         }
 
+        public void SetShieldSliderValue(float pValue)
+        {
+            _shieldSlider.value = pValue;
+            UpdateSliderSprite();
+        }
+
+        public void DoShielSliderTransition(float pValue, float pDuration)
+        {
+            _shieldSlider.DOValue(pValue, pDuration);
+            UpdateSliderSprite();
+        }
+
         #endregion
 
         #region Private Methods
-        // TODO: define here methods called from view methods
+        private void UpdateSliderSprite()
+        {
+            if (_shieldSlider.value == _shieldSlider.maxValue)
+                _shieldSliderImage.sprite = _fullShieldBarSprite;
+            else
+                _shieldSliderImage.sprite = _shieldBarSprite;
+        }
         #endregion
     }
 }

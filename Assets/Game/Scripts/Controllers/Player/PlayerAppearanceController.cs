@@ -43,8 +43,9 @@ public class PlayerAppearanceController : MonoBehaviour
 
     private void OnPlayerDead(PlayerDead pPlayerDead)
     {
-        GenerateDestructionParticles();
+        PlayerDead();
     }
+
 
     #endregion
 
@@ -65,6 +66,11 @@ public class PlayerAppearanceController : MonoBehaviour
 
     #endregion
 
+    private void PlayerDead() 
+    {
+        GenerateDestructionParticles();
+    }
+
     private void GenerateDestructionParticles()
     {
         foreach (ParticleSetup item in _shipData.DestuctionParticles)
@@ -73,7 +79,7 @@ public class PlayerAppearanceController : MonoBehaviour
             if (item.particleConfig != null)
                 item.particleConfig.ApplyConfig(pooledParticlesystem);
             pooledParticlesystem.transform.position = transform.position;
-            pooledParticlesystem.GetComponent<PooledParticleSystem>().ExecuteBehaviour();
+            pooledParticlesystem.GetComponent<ParticleSystemController>().Play();
         }
     }
 }

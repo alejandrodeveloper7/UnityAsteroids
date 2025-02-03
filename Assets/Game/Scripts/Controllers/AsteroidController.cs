@@ -95,7 +95,8 @@ public class AsteroidController : MonoBehaviour, IPooleableItem
             if (item.particleConfig != null)
                 item.particleConfig.ApplyConfig(pooledParticlesystem);
             pooledParticlesystem.transform.position = transform.position;
-            pooledParticlesystem.GetComponent<PooledParticleSystem>().ExecuteBehaviour();
+            pooledParticlesystem.GetComponent<ParticleSystemController>().Play();
+            EventManager.GetGameplayBus().RaiseEvent(new GenerateSound() { SoundsData = _currentData.SoundsOnDestruction });
         }
     }
 

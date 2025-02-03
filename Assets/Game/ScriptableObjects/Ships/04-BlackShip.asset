@@ -16,8 +16,16 @@ MonoBehaviour:
   IsActive: 1
   Sprite: {fileID: 21300000, guid: 15d9f07d37d7cff4abe4b4dc2daade76, type: 3}
   PoolName: Player
-  BulletsSpawnPointsLocalPosition: {x: 0, y: 0, z: 0}
-  PropulsionFireLocalPosition: {x: 0, y: 0, z: 0}
+  BulletsSpawnPointsLocalPosition: {x: 0, y: -0.329, z: 0}
+  PropulsionFireLocalPosition: {x: 0, y: 0.608, z: 0}
+  SoundsOnShieldUp:
+  - {fileID: 11400000, guid: 18c7d7f41cc34d349bb6090fdebb1992, type: 2}
+  SoundsOnShieldDown:
+  - {fileID: 11400000, guid: 8f7ccfb784c725744990b060b550abaa, type: 2}
+  SoundsOnDamage:
+  - {fileID: 11400000, guid: 2dde092e8c9aa864ea44abbceaa442f2, type: 2}
+  SoundsOnDestruction:
+  - {fileID: 11400000, guid: 559df086fef25ba41a24fd4405876342, type: 2}
   movementSpeed: 6
   rotationSpeed: 5
   DestuctionParticles:

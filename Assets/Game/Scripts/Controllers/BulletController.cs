@@ -1,3 +1,4 @@
+using ToolsACG.Utils.Events;
 using ToolsACG.Utils.Pooling;
 using UnityEngine;
 
@@ -44,7 +45,7 @@ public class BulletController : MonoBehaviour, IPooleableItem
         _currentData = pData;
 
         _spriteRenderer.sprite = _currentData.Sprite;
-
+        EventManager.GetGameplayBus().RaiseEvent(new GenerateSound() { SoundsData = _currentData.SoundsOnShoot });
         TurnDetection(true);
         _rigidBody.velocity = _currentData.Speed * Time.fixedDeltaTime * -transform.up;
         Invoke(nameof(CleanBullet), _currentData.LifeDuration);
@@ -76,7 +77,7 @@ public class BulletController : MonoBehaviour, IPooleableItem
             if (item.particleConfig != null)
                 item.particleConfig.ApplyConfig(pooledParticlesystem);
             pooledParticlesystem.transform.position = transform.position;
-            pooledParticlesystem.GetComponent<PooledParticleSystem>().ExecuteBehaviour();
+            pooledParticlesystem.GetComponent<ParticleSystemController>().Play();
         }
     }
 }

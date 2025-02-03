@@ -18,7 +18,11 @@ namespace ToolsACG.Scenes.Pause
         int ResolutionIndex { get; }
         bool FullScreen { get; }
 
+
+        void SetMusicVolume(float pValue);
+        void SetEffectsVolume(float pValue);
         void SetResolutionsOptionsAndIndex(List<string> pOptions, int pSelectedIndex);
+        void SetFullScreenMode(bool pState);
     }
 
     public class PauseView : ModuleView, IPauseView
@@ -69,11 +73,25 @@ namespace ToolsACG.Scenes.Pause
             CanvasGroup.DOFade(pDestinyValue, pDuration).SetEase(Ease.OutQuad);
         }
 
-        public void SetResolutionsOptionsAndIndex(List<string> pOptions, int pSelectedIndex) 
+
+        public void SetMusicVolume(float pValue)
+        {
+            _musicSlider.value = pValue;
+        }
+        public void SetEffectsVolume(float pValue)
+        {
+            _effectsSlider.value = pValue;
+        }
+        public void SetFullScreenMode(bool pState)
+        {
+            _fullScreenToggle.isOn = pState;
+        }
+
+        public void SetResolutionsOptionsAndIndex(List<string> pOptions, int pSelectedIndex)
         {
             _resolutionDropdown.ClearOptions();
             _resolutionDropdown.AddOptions(pOptions);
-            _resolutionDropdown.value=pSelectedIndex;
+            _resolutionDropdown.value = pSelectedIndex;
             _resolutionDropdown.RefreshShownValue();
         }
 

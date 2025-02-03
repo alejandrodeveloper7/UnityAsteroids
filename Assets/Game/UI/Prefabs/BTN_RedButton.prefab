@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 556107409562460604}
   - component: {fileID: 556107409562460605}
   - component: {fileID: 556107409562460594}
+  - component: {fileID: 8082249895829631962}
   m_Layer: 5
   m_Name: BTN_RedButton
   m_TagString: Untagged
@@ -33,7 +34,6 @@ RectTransform:
   m_Children:
   - {fileID: 891851539715468937}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -122,11 +122,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8082249895829631962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556107409562460592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44a02d146cb4394fa85f9b2c3a7ca68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound: {fileID: 11400000, guid: 7cd3d0a9306794b4688aecbe97605fec, type: 2}
+  hoverSound: {fileID: 11400000, guid: d9e511271bbdcc848a9e1ee4288c6e40, type: 2}
 --- !u!1001 &6062557339949526567
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 556107409562460595}
     m_Modifications:
     - target: {fileID: 6359919984952524961, guid: ea15446ef7c44004091a71c9fdecf4f1, type: 3}
@@ -218,6 +233,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea15446ef7c44004091a71c9fdecf4f1, type: 3}
 --- !u!224 &891851539715468937 stripped
 RectTransform:

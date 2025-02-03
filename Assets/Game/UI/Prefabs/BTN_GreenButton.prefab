@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6467275704213697842}
   - component: {fileID: 6467275704213697841}
   - component: {fileID: 6467275704213697840}
+  - component: {fileID: 313141362017533285}
   m_Layer: 5
   m_Name: BTN_GreenButton
   m_TagString: Untagged
@@ -33,7 +34,6 @@ RectTransform:
   m_Children:
   - {fileID: 6145030267808141502}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -122,11 +122,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &313141362017533285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6467275704213697870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44a02d146cb4394fa85f9b2c3a7ca68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound: {fileID: 11400000, guid: 7cd3d0a9306794b4688aecbe97605fec, type: 2}
+  hoverSound: {fileID: 11400000, guid: d9e511271bbdcc848a9e1ee4288c6e40, type: 2}
 --- !u!1001 &938281438107308048
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 6467275704213697871}
     m_Modifications:
     - target: {fileID: 6359919984952524961, guid: ea15446ef7c44004091a71c9fdecf4f1, type: 3}
@@ -218,6 +233,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea15446ef7c44004091a71c9fdecf4f1, type: 3}
 --- !u!224 &6145030267808141502 stripped
 RectTransform:

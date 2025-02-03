@@ -194,7 +194,7 @@ namespace ToolsACG.Utils.Pooling
             else
             {
                 pIncrement = maxPosibleScalation;
-                Debug.LogWarning(string.Format("{0}'s pool expanded in {1} units. POOL AT MAX SIZE", _objectPooled.name, pIncrement));
+                Debug.Log(string.Format("{0}'s pool expanded in {1} units. POOL AT MAX SIZE", _objectPooled.name, pIncrement));
             }
 
             int firstPosition = _availableInstances.Length;

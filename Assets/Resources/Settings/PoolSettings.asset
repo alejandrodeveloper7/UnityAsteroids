@@ -45,3 +45,8 @@ MonoBehaviour:
     Escalation: 1
     InitialSize: 1
     MaxSize: 1
+  - Name: Sound
+    Prefab: {fileID: 4096864735999064139, guid: a02ec3454c3504c428d23b87c11e28e1, type: 3}
+    Escalation: 2
+    InitialSize: 10
+    MaxSize: 100

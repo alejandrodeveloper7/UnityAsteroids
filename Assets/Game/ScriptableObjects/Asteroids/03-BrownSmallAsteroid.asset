@@ -23,6 +23,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e3505f4085e8b2e44a701763827971ff, type: 3}
   Speed: 150
   PointsValue: 30
+  SoundsOnDestruction:
+  - {fileID: 11400000, guid: e9ec574fd32bf724cbb3a2502f6008df, type: 2}
   DestuctionParticles:
   - particleEffectName: FX_AsteroidFragments
     particleConfig: {fileID: 11400000, guid: a0549390e8ac70142bb07cda601523a8, type: 2}

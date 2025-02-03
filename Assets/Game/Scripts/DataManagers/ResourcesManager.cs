@@ -10,7 +10,6 @@ public class ResourcesManager
     public AsteroidSettings AsteroidSettings { get { return GetScriptableObject<AsteroidSettings>("AsteroidSettings"); } }
     public BulletSettings BulletSettings { get { return GetScriptableObject<BulletSettings>("BulletSettings"); } }
     public InputSettings InputSettings { get { return GetScriptableObject<InputSettings>("InputSettings"); } }
-    public PoolSettings PoolSettings { get { return GetScriptableObject<PoolSettings>("PoolSettings"); } }
     public ShipSettings ShipSettings { get { return GetScriptableObject<ShipSettings>("ShipSettings"); } }
     public StageSettings StageSettings { get { return GetScriptableObject<StageSettings>("StageSettings"); } }
     public PlayerSettings PlayerSettings { get { return GetScriptableObject<PlayerSettings>("PlayerSettings"); } }
@@ -20,7 +19,7 @@ public class ResourcesManager
         Initialize();
     }
 
-    public void Initialize()
+    private void Initialize()
     {
         ScriptableObject[] loadedObjects = Resources.LoadAll<ScriptableObject>("Settings");
         foreach (var obj in loadedObjects)        

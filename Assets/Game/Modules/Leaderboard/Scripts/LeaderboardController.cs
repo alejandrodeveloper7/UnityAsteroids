@@ -131,7 +131,7 @@ namespace ToolsACG.Scenes.Leaderboard
         private async void OnBackToMenuButtonClick()
         {
             _view.ViewFadeTransition(0, 0.3f);
-            EventManager.GetUiBus().RaiseEvent(new BackToMenuButtonClicked());
+            _=EventManager.GetUiBus().RaiseEvent(new BackToMenuButtonClicked());
             await Task.Delay(300);
             _view.TurnGeneralContainer(false);
         }

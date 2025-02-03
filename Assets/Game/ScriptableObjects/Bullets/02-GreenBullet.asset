@@ -16,6 +16,8 @@ MonoBehaviour:
   IsActive: 1
   Sprite: {fileID: 21300000, guid: d6d25343cf79c7a4ca42c6bb88bbbb48, type: 3}
   PoolName: Bullet
+  SoundsOnShoot:
+  - {fileID: 11400000, guid: 70f77bfcb6b55eb44b1f9cb3fe69eb51, type: 2}
   BetweenBulletsTime: 0.2
   LifeDuration: 1
   Speed: 600

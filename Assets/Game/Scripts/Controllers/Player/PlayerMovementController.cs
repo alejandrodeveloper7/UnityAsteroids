@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Linq;
 using System.Threading.Tasks;
 using ToolsACG.Utils.Events;
@@ -9,12 +10,12 @@ public class PlayerMovementController : MonoBehaviour
 
     [Header("References")]
     private Rigidbody2D _rigidBody;
-    [SerializeField] private Transform _propulsionFireFX;
+    [SerializeField] private SpriteRenderer _propulsionFireFX;
 
     private SO_Ship _shipData;
     private float _movementSpeed;
     private float _rotationSpeed;
-    private bool _playing;
+    private bool _isAlive;
 
     private int _rotationValue;
     private bool _movingForward;
@@ -57,17 +58,22 @@ public class PlayerMovementController : MonoBehaviour
     private void OnRotationtKeyStateChange(RotationtKeyStateChange pRotationtKeyStateChange)
     {
         _rotationValue = pRotationtKeyStateChange.Value;
-        RotateAround();
+
+        if (_rotationValue != 0)
+            RotateAround();
     }
     private void OnMoveForwardKeyStateChange(MoveForwardKeyStateChange pMoveForwardKeyStateChange)
     {
         _movingForward = pMoveForwardKeyStateChange.State;
-        MoveForward();
+        UpdatePropulsionFire();
+
+        if (_movingForward)
+            MoveForward();
     }
 
     private void OnPlayerDead(PlayerDead pPlayerDead)
     {
-        _playing = false;
+        _isAlive = false;
         _rotationValue = 0;
         _movingForward = false;
     }
@@ -91,17 +97,29 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Initialize()
     {
+        _isAlive = true;
+        transform.SetPositionAndRotation(Vector2.zero, Quaternion.Euler(0, 0, 180));
+
         _shipData = ResourcesManager.Instance.ShipSettings.Ships.FirstOrDefault(x => x.Id == PersistentDataManager.SelectedShipId);
         _movementSpeed = _shipData.movementSpeed;
         _rotationSpeed = _shipData.rotationSpeed;
-
-        _playing = true;
-        transform.SetPositionAndRotation(Vector2.zero, Quaternion.Euler(0, 0, 180));
+        _propulsionFireFX.transform.localPosition = _shipData.PropulsionFireLocalPosition;
+        _propulsionFireFX.color = new Color(_propulsionFireFX.color.r, _propulsionFireFX.color.g, _propulsionFireFX.color.b, 0f);
     }
 
     #endregion
 
     #region Funcionality
+
+    private void UpdatePropulsionFire()
+    {
+        _propulsionFireFX.DOKill();
+
+        if (_movingForward)
+            _propulsionFireFX.DOFade(1, 0.5f);
+        else
+            _propulsionFireFX.DOFade(0, 0.5f);
+    }
 
     public void StopMovement()
     {
@@ -110,6 +128,9 @@ public class PlayerMovementController : MonoBehaviour
 
     public async void MoveForward()
     {
+        if (_isAlive is false)
+            return;
+
         while (_movingForward)
         {
             _rigidBody.AddForce(-transform.up * _movementSpeed * Time.deltaTime, ForceMode2D.Impulse);
@@ -119,6 +140,9 @@ public class PlayerMovementController : MonoBehaviour
 
     public async void RotateAround()
     {
+        if (_isAlive is false)
+            return;
+
         while (_rotationValue != 0)
         {
             transform.Rotate(0, 0, _rotationValue * _rotationSpeed * Time.fixedDeltaTime);

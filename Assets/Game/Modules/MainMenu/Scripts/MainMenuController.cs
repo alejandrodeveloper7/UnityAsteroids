@@ -79,10 +79,11 @@ namespace ToolsACG.Scenes.MainMenu
 
         #region BusCallbacks
 
-        private void OnStartGame(StartGame pStartGame) 
+        private async void OnStartGame(StartGame pStartGame) 
         {
             _view.SetViewAlpha(0);
             _view.TurnGeneralContainer(true);
+            await Task.Delay(700);
             _view.ViewFadeTransition(1, 0.3f);
         }
 

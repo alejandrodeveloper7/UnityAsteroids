@@ -1,25 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using ToolsACG.Utils.Events;
 using UnityEngine;
 
-public class ScreenController : MonoBehaviour
+public static class ScreenController
 {
-    private void OnEnable()
+    public static void UpdateFullScreenMode(bool pActive)
     {
-        EventManager.GetUiBus().AddListener<FullScreenModeUpdated>(OnFullScreenModeupdated);
-        EventManager.GetUiBus().AddListener<ResolutionUpdated>(OnResolutionUpdated);
-    }
-
-    private void OnDisable()
-    {
-        EventManager.GetUiBus().RemoveListener<FullScreenModeUpdated>(OnFullScreenModeupdated);
-        EventManager.GetUiBus().RemoveListener<ResolutionUpdated>(OnResolutionUpdated);
-    }
-
-    private void OnFullScreenModeupdated(FullScreenModeUpdated pFullScreenModeupdated)
-    {
-        if (pFullScreenModeupdated.Active)
+        if (pActive)
             Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
         else
             Screen.fullScreenMode = FullScreenMode.Windowed;
@@ -27,10 +14,10 @@ public class ScreenController : MonoBehaviour
         Debug.Log(string.Format("Full screen mode is {0}", Screen.fullScreenMode));
     }
 
-    private void OnResolutionUpdated(ResolutionUpdated pResolutionUpdated)
+    public static void UpdateResolution(int pIndex)
     {
         List<Vector2Int> availableResolutions = Screen.resolutions.Select(res => new Vector2Int(res.width, res.height)).Distinct().ToList();
-        Screen.SetResolution(availableResolutions[pResolutionUpdated.Index].x, availableResolutions[pResolutionUpdated.Index].y,Screen.fullScreenMode);
+        Screen.SetResolution(availableResolutions[pIndex].x, availableResolutions[pIndex].y,Screen.fullScreenMode);
 
         Debug.Log(string.Format("Resolution is {0}x{1}", Screen.currentResolution.width, Screen.currentResolution.height));
     }

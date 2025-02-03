@@ -3,44 +3,27 @@ using ToolsACG.Utils.Pooling;
 using UnityEngine;
 using static PoolSettings;
 
-public class PoolsManager : MonoBehaviour
+public class PoolsManager
 {
-    #region Fields
+    public static PoolsManager Instance { get; } = new PoolsManager();
 
-    private PoolSettings _poolSettings;
-    private Dictionary<string, SimplePool> _pools = new Dictionary<string, SimplePool>();
+    private static PoolSettings _poolSettings;
+    private static Dictionary<string, SimplePool> _pools;
     [Space]
-    private Transform _parentTransform;
+    private static Transform _parentTransform;
+      
 
-    #endregion
-
-    #region Singleton
-
-    private static PoolsManager m_instance;
-    public static PoolsManager Instance => m_instance;
-
-    private void CreateSingleton()
+    private PoolsManager()
     {
-        if (m_instance != null)
-            Destroy(this);
-        else
-            m_instance = this;
+        Initialize();
     }
 
-    #endregion
-
-    #region Monobehaviour
-
-    private void Awake()
+    public void Initialize()
     {
-        CreateSingleton();
-
-        _poolSettings = ResourcesManager.Instance.PoolSettings;
+        _poolSettings = Resources.Load<PoolSettings>("Settings/PoolSettings");
         CreatePoolGameObjectsParent();
         CreatePools();
     }
-
-    #endregion
 
     #region Pools Creation
 
@@ -52,6 +35,8 @@ public class PoolsManager : MonoBehaviour
 
     private void CreatePools()
     {
+        _pools = new Dictionary<string, SimplePool>();
+
         foreach (PoolConfiguration poolConfiguration in _poolSettings.PoolConfigurations)
             CreatePool(poolConfiguration);
     }
