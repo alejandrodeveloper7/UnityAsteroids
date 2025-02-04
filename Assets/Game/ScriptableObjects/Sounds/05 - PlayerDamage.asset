@@ -17,4 +17,4 @@ MonoBehaviour:
   Clip: {fileID: 8300000, guid: cc334829ad85a9045a6b0529832299f9, type: 3}
   AudioMixerGroup: {fileID: 24300002, guid: 6d0e2d0b6227f9a4f83dfa9d0bbe5a09, type: 2}
   Volume: 1
-  PitchVariation: 0.1
+  PitchVariation: 0.2

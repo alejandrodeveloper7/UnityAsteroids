@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public abstract class SO_BaseElement : ScriptableObject
+public abstract class SO_Selectable : SO_Base
 {
-    public int Id;
     public bool IsActive = true;
     public Sprite Sprite;
 }

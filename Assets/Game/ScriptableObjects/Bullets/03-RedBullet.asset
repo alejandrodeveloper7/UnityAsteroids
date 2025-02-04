@@ -23,4 +23,4 @@ MonoBehaviour:
   Speed: 600
   DestuctionParticles:
   - particleEffectName: FX_BulletFragments
-    particleConfig: {fileID: 11400000, guid: 933cfeaa7baafa04a8b90f8d39c7510d, type: 2}
+    particleConfig: {fileID: 11400000, guid: 5ab636097482de147acffaa269d254cf, type: 2}

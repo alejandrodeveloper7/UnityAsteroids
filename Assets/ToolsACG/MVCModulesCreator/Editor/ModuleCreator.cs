@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -30,8 +31,8 @@ namespace ToolsACG.Editor
         public static void OpenEditorWindow()
         {
             _window = EditorWindow.GetWindow<ModuleCreator>(true, "MVC Module Creator");
-            _window.minSize = new Vector2(300, 125);
-            _window.maxSize = new Vector2(300, 125);
+            _window.minSize = new Vector2(300, 160);
+            _window.maxSize = new Vector2(300, 160);
         }
 
         private void OnGUI()
@@ -56,6 +57,12 @@ namespace ToolsACG.Editor
             GUI.enabled = true;
 
             EditorGUILayout.Space();
+
+            GUI.enabled = !string.IsNullOrEmpty(_moduleName);
+            DrawButton("Create Scriptable", CreateAssetFromScript);
+            GUI.enabled = true;
+
+            EditorGUILayout.Space();
             EditorGUILayout.EndVertical();
         }
 
@@ -69,8 +76,8 @@ namespace ToolsACG.Editor
 
             DirectoryInfo newModuleDirectory = Directory.CreateDirectory(Path.Combine(outputCompletePath, _moduleName));
             DirectoryInfo newScriptsDirectory = Directory.CreateDirectory(Path.Combine(newModuleDirectory.FullName, "Scripts"));
-            DirectoryInfo newDesignDirectory = Directory.CreateDirectory(Path.Combine(newModuleDirectory.FullName, "Design"));
-            DirectoryInfo newPrefabsDirectory = Directory.CreateDirectory(Path.Combine(newModuleDirectory.FullName, "Prefabs"));
+            Directory.CreateDirectory(Path.Combine(newModuleDirectory.FullName, "Design"));
+            Directory.CreateDirectory(Path.Combine(newModuleDirectory.FullName, "Prefabs"));
 
             string templatesCompletePath = Path.Combine(Application.dataPath, _templatesPath);
 
@@ -105,6 +112,30 @@ namespace ToolsACG.Editor
             File.WriteAllText(newSceneOutputPath, newSceneText);
 
             AssetDatabase.Refresh();
+        }
+
+        private void CreateAssetFromScript()
+        {
+            string className = string.Concat(_moduleName, "Model");
+            string outputCompletePath = string.Concat("Assets/", _outputPath, _moduleName, "/");
+            string fileName = string.Concat(_moduleName, "Model.asset");
+            string path = string.Concat(outputCompletePath, fileName);
+
+            Type scriptableObjectType = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()).FirstOrDefault(t => t.Name == className);
+
+            if (scriptableObjectType == null || typeof(ScriptableObject).IsAssignableFrom(scriptableObjectType) is false)
+            {
+                Debug.LogError(string.Format("ScriptableObject class called {0} not found", className));
+                return;
+            }
+
+            ScriptableObject instance = ScriptableObject.CreateInstance(scriptableObjectType);
+
+            AssetDatabase.CreateAsset(instance, path);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            Debug.Log(string.Format("ScriptableObject {0} created in {1}", className, path));
         }
 
         private string ReplaceConstantsInFiles(string pPath)

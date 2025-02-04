@@ -22,6 +22,22 @@ public class BulletController : MonoBehaviour, IPooleableItem
         GetReferences();
     }
 
+    private void OnEnable()
+    {
+        EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
+    }
+
+    private void OnGameLeaved(GameLeaved pGameLeaved)
+    {
+        CancelInvoke(nameof(CleanBullet));
+        CleanBullet();
+    }
+
     private void GetReferences()
     {
         _collider = GetComponent<BoxCollider2D>();

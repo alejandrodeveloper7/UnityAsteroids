@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _generalContainer: {fileID: 1877198949}
-  _loadingSpinner: {fileID: 8363866379104023062}
+  _loadingSpinner: {fileID: 8363866379104023049}
   _errorMessage: {fileID: 8363866377119958362}
   _rowsContainer: {fileID: 8363866377322877666}
   _rowHelpers:
@@ -264,6 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b82aca4c20d8143bcbb7c772f96276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _data: {fileID: 11400000, guid: 7f3c63f8827e3c54eb556e7e3c94198f, type: 2}
 --- !u!225 &57698133
 CanvasGroup:
   m_ObjectHideFlags: 0

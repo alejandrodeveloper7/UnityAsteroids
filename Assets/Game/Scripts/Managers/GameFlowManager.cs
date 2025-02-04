@@ -16,7 +16,7 @@ public class GameFlowManager : MonoBehaviour
 
 
     #region Monobehaviour
-
+    
     private void Start()
     {
         InitializeGame();
@@ -27,6 +27,7 @@ public class GameFlowManager : MonoBehaviour
         EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
         EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
         EventManager.GetUiBus().AddListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
+        EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnDisable()
@@ -34,6 +35,7 @@ public class GameFlowManager : MonoBehaviour
         EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
         EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
         EventManager.GetUiBus().RemoveListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
+        EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
     }
 
     #endregion
@@ -42,6 +44,7 @@ public class GameFlowManager : MonoBehaviour
 
     private void InitializeGame()
     {
+        ScreenController.FixFrameRate(60);
         EventManager.GetUiBus().RaiseEvent(new LoadScenesAdditive() { ScenesName = _sceneDependencys, OnComplete = OnAdditiveScenesLoadComplete });
     }
 
@@ -70,6 +73,13 @@ public class GameFlowManager : MonoBehaviour
     private void OnBackToMenuButtonClicked(BackToMenuButtonClicked pBackToMenuButtonClicked) 
     {
         _inLeaderboard = false;
+        _inMainMenu = true;
+    }
+
+    private void OnGameLeaved(GameLeaved pGameLeaved) 
+    {
+        _inMatch = false;
+        _inPause = false;
         _inMainMenu = true;
     }
 

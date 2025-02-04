@@ -18,7 +18,8 @@ public class PlayerMovementController : MonoBehaviour
     private bool _isAlive;
 
     private int _rotationValue;
-    private bool _movingForward;
+    private bool _isRotating;
+    private bool _isMovingForward;
     #endregion
 
     #region Monobehaviour
@@ -35,6 +36,7 @@ public class PlayerMovementController : MonoBehaviour
         EventManager.GetGameplayBus().AddListener<MoveForwardKeyStateChange>(OnMoveForwardKeyStateChange);
         EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
         EventManager.GetGameplayBus().AddListener<PauseStateChanged>(OnPauseStateChanged);
+        EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnDisable()
@@ -44,6 +46,7 @@ public class PlayerMovementController : MonoBehaviour
         EventManager.GetGameplayBus().RemoveListener<MoveForwardKeyStateChange>(OnMoveForwardKeyStateChange);
         EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
         EventManager.GetGameplayBus().RemoveListener<PauseStateChanged>(OnPauseStateChanged);
+        EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
     }
 
     #endregion
@@ -57,17 +60,19 @@ public class PlayerMovementController : MonoBehaviour
 
     private void OnRotationtKeyStateChange(RotationtKeyStateChange pRotationtKeyStateChange)
     {
-        _rotationValue = pRotationtKeyStateChange.Value;
-
-        if (_rotationValue != 0)
+        _rotationValue = pRotationtKeyStateChange.Value;        
+        if (_isRotating is false)
             RotateAround();
+        
+        _isRotating = _rotationValue != 0;
     }
+
     private void OnMoveForwardKeyStateChange(MoveForwardKeyStateChange pMoveForwardKeyStateChange)
     {
-        _movingForward = pMoveForwardKeyStateChange.State;
+        _isMovingForward = pMoveForwardKeyStateChange.State;
         UpdatePropulsionFire();
 
-        if (_movingForward)
+        if (_isMovingForward)
             MoveForward();
     }
 
@@ -75,7 +80,8 @@ public class PlayerMovementController : MonoBehaviour
     {
         _isAlive = false;
         _rotationValue = 0;
-        _movingForward = false;
+        _isRotating = false;
+        _isMovingForward = false;
     }
 
     private void OnPauseStateChanged(PauseStateChanged pPauseStateChanged)
@@ -83,8 +89,17 @@ public class PlayerMovementController : MonoBehaviour
         if (pPauseStateChanged.InPause)
         {
             _rotationValue = 0;
-            _movingForward = false;
+            _isRotating = false;
+            _isMovingForward = false;
         }
+    }
+ 
+    private void OnGameLeaved(GameLeaved pGameLeaved) 
+    {
+        _isAlive = false;
+        _rotationValue = 0;
+        _isRotating = false;
+        _isMovingForward = false;
     }
     #endregion
 
@@ -115,7 +130,7 @@ public class PlayerMovementController : MonoBehaviour
     {
         _propulsionFireFX.DOKill();
 
-        if (_movingForward)
+        if (_isMovingForward)
             _propulsionFireFX.DOFade(1, 0.5f);
         else
             _propulsionFireFX.DOFade(0, 0.5f);
@@ -131,7 +146,7 @@ public class PlayerMovementController : MonoBehaviour
         if (_isAlive is false)
             return;
 
-        while (_movingForward)
+        while (_isMovingForward)
         {
             _rigidBody.AddForce(-transform.up * _movementSpeed * Time.deltaTime, ForceMode2D.Impulse);
             await Task.Yield();

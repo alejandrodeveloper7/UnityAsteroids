@@ -62,7 +62,10 @@ public class AsteroidController : MonoBehaviour, IPooleableItem
 
         transform.position = pPosition;
         _rigidBody.velocity = _direction * _currentData.Speed * Time.fixedDeltaTime;
+        _rigidBody.AddTorque(Random.Range(-_currentData.PosibleTorque,_currentData.PosibleTorque));
     }
+
+   
 
     private void UpdateColliderShape()
     {

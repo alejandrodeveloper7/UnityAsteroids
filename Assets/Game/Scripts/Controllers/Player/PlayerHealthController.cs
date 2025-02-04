@@ -1,5 +1,3 @@
-using DG.Tweening;
-using System.Linq;
 using ToolsACG.Utils.Events;
 using UnityEngine;
 
@@ -8,13 +6,11 @@ public class PlayerHealthController : MonoBehaviour
     #region Fields
 
     private PlayerSettings _playerSettings;
-    [SerializeField] private SpriteRenderer _shieldFX;
 
     private int _health;
     private bool _shieldActive;
     private bool _isAlive;
 
-    private Sequence _blinkSequence;
 
     #endregion
 
@@ -53,7 +49,6 @@ public class PlayerHealthController : MonoBehaviour
         if (_shieldActive)
         {
             _shieldActive = false;
-            DeactivateShield();
             EventManager.GetGameplayBus().RaiseEvent(new ShieldStateChanged() { Active = _shieldActive });
             return;
         }
@@ -69,65 +64,22 @@ public class PlayerHealthController : MonoBehaviour
 
     private void OnShieldStateChanged(ShieldStateChanged pShieldStateChanged)
     {
-        if (pShieldStateChanged.Active is false)
-            return;
-
-        _shieldActive = true;
-        ActivateShield();
+        if (pShieldStateChanged.Active)
+            _shieldActive = true;
     }
 
     #endregion
 
-    public void ActivateShield()
-    {
-        _shieldFX.enabled = true;
 
-        if (_blinkSequence != null)
-            _blinkSequence.Kill();
-
-        _shieldFX.DOFade(_playerSettings.BlinkMaxAlpha, _playerSettings.FadeInDuration).OnComplete(() =>
-        {
-            StartBlink();
-        });
-    }
-
-    public void DeactivateShield()
-    {
-        if (_blinkSequence != null)
-            _blinkSequence?.Kill();
-
-        _shieldFX.DOFade(0f, _playerSettings.FadeOutDuration).OnComplete(() =>
-        {
-            _shieldFX.enabled = false;
-        });
-    }
-
-    private void StartBlink()
-    {
-        _blinkSequence = DOTween.Sequence()
-            .Append(_shieldFX.DOFade(_playerSettings.BlinkMinAlpha, _playerSettings.BlickDuration).SetEase(Ease.InOutSine))
-            .Append(_shieldFX.DOFade(_playerSettings.BlinkMaxAlpha, _playerSettings.BlickDuration).SetEase(Ease.InOutSine))
-            .SetLoops(-1, LoopType.Yoyo);
-    }
-
-    private void SetShieldAlpha(float pAlpha)
-    {
-        var color = _shieldFX.color;
-        color.a = pAlpha;
-        _shieldFX.color = color;
-    }
 
     #region Initialization
 
     private void Initialize()
     {
         _health = _playerSettings.HealthPoints;
-        _isAlive = true;
 
+        _isAlive = true;
         _shieldActive = true;
-        _shieldFX.enabled = true;
-        _shieldFX.color =_playerSettings.ShieldColor;
-        StartBlink();
     }
 
     private void GetReferences()

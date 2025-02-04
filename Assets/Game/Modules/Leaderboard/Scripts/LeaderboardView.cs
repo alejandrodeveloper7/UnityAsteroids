@@ -1,4 +1,3 @@
-
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +8,6 @@ namespace ToolsACG.Scenes.Leaderboard
     public interface ILeaderboardView
     {
         void TurnGeneralContainer(bool pState);
-
-        void SetViewAlpha(float pValue);
-        void ViewFadeTransition(float pDestinyValue, float pDuration);
 
         void TurnLoadingSpinner(bool pState);
         void TurnErrorMessage(bool pState);
@@ -25,7 +21,7 @@ namespace ToolsACG.Scenes.Leaderboard
 
         [SerializeField] private GameObject _generalContainer;
 
-        [SerializeField] private GameObject _loadingSpinner;
+        [SerializeField] private RectTransform _loadingSpinner;
         [SerializeField] private GameObject _errorMessage;
         [SerializeField] private GameObject _rowsContainer;
         [SerializeField] private List<LeaderboardRowHelper> _rowHelpers;
@@ -48,20 +44,22 @@ namespace ToolsACG.Scenes.Leaderboard
             _generalContainer.SetActive(pState);
         }
 
-        public void SetViewAlpha(float pValue)
-        {
-            CanvasGroup.alpha = pValue;
-        }
-
-        public void ViewFadeTransition(float pDestinyValue, float pDuration)
-        {
-            CanvasGroup.DOKill();
-            CanvasGroup.DOFade(pDestinyValue, pDuration).SetEase(Ease.OutQuad);
-        }
-
         public void TurnLoadingSpinner(bool pState)
         {
-            _loadingSpinner.SetActive(pState);
+            if (pState)
+            {
+                _loadingSpinner.gameObject.SetActive(true);
+                _loadingSpinner.transform
+                    .DOLocalRotate(new Vector3(0, 0, -360), 1f, RotateMode.FastBeyond360)
+                    .SetLoops(-1)
+                    .SetEase(Ease.Linear);                    
+            }
+            else
+            {
+                _loadingSpinner.transform.DOKill();
+                _loadingSpinner.gameObject.SetActive(false);
+            }
+
         }
         public void TurnErrorMessage(bool pState)
         {
@@ -74,7 +72,7 @@ namespace ToolsACG.Scenes.Leaderboard
         public void SetLeaderboardData(List<LeaderboardEntry> pData)
         {
             for (int i = 0; i < pData.Count; i++)
-                _rowHelpers[i].SetData(i+1, pData[i]);
+                _rowHelpers[i].SetData(i + 1, pData[i]);
         }
 
         #endregion

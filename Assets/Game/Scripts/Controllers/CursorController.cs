@@ -1,10 +1,12 @@
+using System.Threading.Tasks;
+using ToolsACG.Utils.Events;
 using UnityEngine;
 
 public class CursorController : MonoBehaviour
 {
     #region Fields
 
-    [SerializeField]private CursorConfiguration _configuration;
+    [SerializeField] private CursorConfiguration _configuration;
     [Space]
     private bool _isClicked = false;
     private bool _isLocked = false;
@@ -40,12 +42,42 @@ public class CursorController : MonoBehaviour
 
     private void OnEnable()
     {
-        
+        EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
+        EventManager.GetGameplayBus().AddListener<PauseStateChanged>(OnPauseStateChanged);
+        EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
+        EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnDisable()
     {
-        
+        EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
+        EventManager.GetGameplayBus().RemoveListener<PauseStateChanged>(OnPauseStateChanged);
+        EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
+        EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
+    }
+
+    #endregion
+
+    #region Bus Callbacks
+    private void OnPlayerDead(PlayerDead pPlayerDead)
+    {
+        TurnCursor(true);
+    }
+    private void OnStartMatch(StartMatch pStartMatch)
+    {
+        TurnCursor(false);
+    }
+    private void OnPauseStateChanged(PauseStateChanged pPauseStateChanged)
+    {
+        if (pPauseStateChanged.InPause)
+            TurnCursor(true);
+        else
+            TurnCursor(false);
+    }
+    private async void OnGameLeaved(GameLeaved pGameLeaved) 
+    {
+        await Task.Yield();
+        TurnCursor(true);
     }
 
     #endregion
@@ -55,6 +87,12 @@ public class CursorController : MonoBehaviour
     private void SetCursorTexture(Texture2D pImage)
     {
         Cursor.SetCursor(pImage, _configuration.Hotspot, CursorMode.Auto);
+    }
+
+    private void TurnCursor(bool pState)
+    {
+        SetCursorVisibility(pState);
+        LockCursor(!pState);
     }
 
     private void SetCursorVisibility(bool pState)

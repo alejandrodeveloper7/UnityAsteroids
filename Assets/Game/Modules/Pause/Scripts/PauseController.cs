@@ -12,20 +12,12 @@ namespace ToolsACG.Scenes.Pause
         #region Private Fields
 
         private IPauseView _view;
-        private PauseModel _data;
+        [SerializeField] private PauseModel _data;
 
         private bool _inPause;
 
-        #endregion
-
-        #region Properties
-
-        public PauseModel Model
-        {
-            get { return _data; }
-            set { _data = value; }
-        }
-
+        [SerializeField] private SliderEventsHandler _musicVolumeSliderEventHandler;
+        [SerializeField] private SliderEventsHandler _effectsVolumeSliderEventHandler;
         #endregion
 
         #region Protected Methods
@@ -35,7 +27,6 @@ namespace ToolsACG.Scenes.Pause
             _view = GetComponent<IPauseView>();
             Initialize();
             base.Awake();
-            _data = new PauseModel();
         }
 
         protected override void RegisterActions()
@@ -61,11 +52,16 @@ namespace ToolsACG.Scenes.Pause
         private void OnEnable()
         {
             EventManager.GetGameplayBus().AddListener<PauseKeyClicked>(OnPauseKeyClicked);
+            EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
+
+            _musicVolumeSliderEventHandler.OnEndDrag += SaveMusicVolume;
+            _effectsVolumeSliderEventHandler.OnEndDrag += SaveEffectsVolume;
         }
 
         private void OnDisable()
         {
             EventManager.GetGameplayBus().RemoveListener<PauseKeyClicked>(OnPauseKeyClicked);
+            EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
         }
 
         #endregion
@@ -84,6 +80,15 @@ namespace ToolsACG.Scenes.Pause
                 Time.timeScale = 1;
         }
 
+        private void OnGameLeaved(GameLeaved pGameLeaved)
+        {
+            _inPause = false;
+            EventManager.GetGameplayBus().RaiseEvent(new PauseStateChanged() { InPause = _inPause });
+            _view.TurnGeneralContainer(_inPause);
+
+            Time.timeScale = 1;
+        }
+
         #endregion
 
         #region UI Elements Callbacks
@@ -91,13 +96,11 @@ namespace ToolsACG.Scenes.Pause
         private void OnMusicSliderValueChaged()
         {
             EventManager.GetUiBus().RaiseEvent(new MusicVolumeUpdated() { Value = _view.MusicVolume });
-            PlayerPrefsManager.SetFloat(PlayerPrefsKeys.MUSIC_VOLUME_KEY, _view.MusicVolume);
         }
 
         private void OnEffectsSliderValueChaged()
         {
             EventManager.GetUiBus().RaiseEvent(new EffectsVolumeUpdated() { Value = _view.EffectsVolume });
-            PlayerPrefsManager.SetFloat(PlayerPrefsKeys.EFFECTS_VOLUME_KEY, _view.EffectsVolume);
         }
 
         private void OnResolutionDropdownValueChanged()
@@ -134,6 +137,16 @@ namespace ToolsACG.Scenes.Pause
             InitializeToggles();
         }
 
+        private void SaveMusicVolume()
+        {
+            PlayerPrefsManager.SetFloat(PlayerPrefsKeys.MUSIC_VOLUME_KEY, _view.MusicVolume);
+
+        }
+        private void SaveEffectsVolume()
+        {
+            PlayerPrefsManager.SetFloat(PlayerPrefsKeys.EFFECTS_VOLUME_KEY, _view.EffectsVolume);
+        }
+
         private void InitializeAvailableResolutions()
         {
             List<Vector2Int> availableResolutions = Screen.resolutions.Select(res => new Vector2Int(res.width, res.height)).Distinct().ToList();
@@ -153,7 +166,7 @@ namespace ToolsACG.Scenes.Pause
             float musicVolume = PlayerPrefsManager.GetFloat(PlayerPrefsKeys.MUSIC_VOLUME_KEY, 1);
             EventManager.GetUiBus().RaiseEvent(new MusicVolumeUpdated() { Value = musicVolume });
             _view.SetMusicVolume(musicVolume);
-          
+
             float effectsVolume = PlayerPrefsManager.GetFloat(PlayerPrefsKeys.EFFECTS_VOLUME_KEY, 1);
             EventManager.GetUiBus().RaiseEvent(new EffectsVolumeUpdated() { Value = effectsVolume });
             _view.SetEffectsVolume(effectsVolume);

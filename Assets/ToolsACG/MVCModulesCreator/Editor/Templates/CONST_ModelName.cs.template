@@ -1,8 +1,7 @@
-﻿
-namespace ToolsACG.Scenes.CONST_ModuleName
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "CONST_ModelName", menuName = "ScriptableObjects/ToolsACG/MVCModuleCreator/CONST_ModelName")]
+public class CONST_ModelName : ModuleModel
 {
-    public class CONST_ModelName : ModuleModel
-    {
-        // TODO: declare here public fields to persist module data
-    }
+   
 }

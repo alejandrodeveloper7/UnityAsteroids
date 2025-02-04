@@ -1,5 +1,3 @@
-
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,9 +7,6 @@ namespace ToolsACG.Scenes.MainMenu
     public interface IMainMenuView
     {
         void TurnGeneralContainer(bool pState);
-
-        void SetViewAlpha(float pValue);
-        void ViewFadeTransition(float pDestinyValue, float pDuration);
 
         void SetUserNameValue(string pValue);
         string UserName { get; }
@@ -59,17 +54,6 @@ namespace ToolsACG.Scenes.MainMenu
         public void TurnGeneralContainer(bool pState)
         {
             _generalContainer.SetActive(pState);
-        }
-
-        public void SetViewAlpha(float pValue)
-        {
-            CanvasGroup.alpha = pValue;
-        }
-
-        public void ViewFadeTransition(float pDestinyValue, float pDuration)
-        {
-            CanvasGroup.DOKill();
-            CanvasGroup.DOFade(pDestinyValue, pDuration).SetEase(Ease.OutQuad);
         }
 
         public void SetUserNameValue(string pValue)

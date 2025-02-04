@@ -9,10 +9,12 @@ namespace ToolsACG.Scenes
     public abstract class ModuleController : MonoBehaviour
     {
         protected Dictionary<string, Action> Actions = new Dictionary<string, Action>();
+        protected ModuleView View;
 
         protected virtual void Awake()
         {
             RegisterActions();
+            View = GetComponent<ModuleView>();
         }
 
         public virtual void OnClick(Button pButton)
@@ -47,6 +49,5 @@ namespace ToolsACG.Scenes
 
         protected abstract void RegisterActions();
         protected abstract void SetData();
-
     }
 }

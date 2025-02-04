@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewAsteroid", menuName = "ScriptableObjects/Elements/Asteroid", order = 0)]
-public class SO_Asteroid : SO_BaseElement
+public class SO_Asteroid : SO_Base
 {
     public bool IsInitialAsteroid;
     [Space]
@@ -13,6 +13,7 @@ public class SO_Asteroid : SO_BaseElement
     [Space]
     public int Speed;
     public int PointsValue;
+    public float PosibleTorque;
     public SO_Sound[] SoundsOnDestruction;
     [Space]
     public List<ParticleSetup> DestuctionParticles;

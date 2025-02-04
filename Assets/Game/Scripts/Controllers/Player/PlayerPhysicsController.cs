@@ -11,6 +11,8 @@ public class PlayerPhysicsController : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidBody;
 
+    private bool _inCollisionCooldown;
+
     #endregion
 
     #region Monobehaviour
@@ -25,6 +27,7 @@ public class PlayerPhysicsController : MonoBehaviour
         EventManager.GetGameplayBus().AddListener<PlayerPrepared>(OnPlayerPrepared);
         EventManager.GetGameplayBus().AddListener<PlayerAppearanceUpdated>(OnPlayerAppearanceUpdated);
         EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
+        EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnDisable()
@@ -32,17 +35,28 @@ public class PlayerPhysicsController : MonoBehaviour
         EventManager.GetGameplayBus().RemoveListener<PlayerPrepared>(OnPlayerPrepared);
         EventManager.GetGameplayBus().RemoveListener<PlayerAppearanceUpdated>(OnPlayerAppearanceUpdated);
         EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
+        EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (_inCollisionCooldown)
+            return;
+
         collision.TryGetComponent(out AsteroidController detectedAsteroid);
         if (detectedAsteroid != null)
+        {
             EventManager.GetGameplayBus().RaiseEvent(new PlayerHitted());
+            _inCollisionCooldown = true;
+            Invoke(nameof(ResetCollisionCooldown), 5);
+        }
     }
 
     #endregion
-
+    void ResetCollisionCooldown()
+    {
+        _inCollisionCooldown = false;
+    }
     #region Bus callbacks
 
     private void OnPlayerPrepared(PlayerPrepared pPlayerPrepared)
@@ -57,6 +71,13 @@ public class PlayerPhysicsController : MonoBehaviour
 
     private void OnPlayerDead(PlayerDead pPlayerDead)
     {
+        CancelInvoke(nameof(ResetCollisionCooldown));
+        TurnDetection(false);
+    }
+
+    private void OnGameLeaved(GameLeaved opGameLeaved)
+    {
+        CancelInvoke(nameof(ResetCollisionCooldown));
         TurnDetection(false);
     }
 
@@ -73,6 +94,7 @@ public class PlayerPhysicsController : MonoBehaviour
 
     private void Initialize()
     {
+        _inCollisionCooldown = false;
         TurnDetection(true);
     }
 

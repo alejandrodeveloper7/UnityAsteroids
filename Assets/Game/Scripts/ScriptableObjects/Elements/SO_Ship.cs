@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewShip", menuName = "ScriptableObjects/Elements/Ship", order = 1)]
-public class SO_Ship : SO_BaseElement
+public class SO_Ship : SO_Selectable
 {
     [Space]
     public string PoolName;
@@ -18,4 +18,14 @@ public class SO_Ship : SO_BaseElement
     public float rotationSpeed;
     [Space]
     public List<ParticleSetup> DestuctionParticles;
+    [Space]
+    public Color ShieldColor;
+    [Space]
+    public float FadeInDuration;
+    public float FadeOutDuration;
+    [Space]
+    public float BlickDuration;
+    [Space]
+    public float BlinkMinAlpha;
+    public float BlinkMaxAlpha;
 }

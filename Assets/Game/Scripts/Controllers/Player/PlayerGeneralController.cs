@@ -13,16 +13,23 @@ public class PlayerGeneralController : MonoBehaviour, IPooleableItem
     private void OnEnable()
     {
         EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
+        EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnDisable()
     {
         EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
+        EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
     }
 
     private async void OnPlayerDead(PlayerDead pPlayerDead) 
     {
         await Task.Delay(400);
+        _originPool.RecycleItem(gameObject);
+    }
+
+    private void OnGameLeaved(GameLeaved pGameLeaved) 
+    {
         _originPool.RecycleItem(gameObject);
     }
 }

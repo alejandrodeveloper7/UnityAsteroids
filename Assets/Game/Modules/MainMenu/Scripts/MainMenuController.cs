@@ -4,7 +4,6 @@ using System;
 using ToolsACG.Utils.Events;
 using System.Threading.Tasks;
 
-
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -18,21 +17,11 @@ namespace ToolsACG.Scenes.MainMenu
         #region Private Fields
 
         private IMainMenuView _view;
-        private MainMenuModel _data;
+        [SerializeField] private MainMenuModel _data;
 
         [SerializeField] private SelectorController _shipSelectorController;
         [SerializeField] private SelectorController _bulletSelectorController;
   
-        #endregion
-
-        #region Properties
-
-        public MainMenuModel Model
-        {
-            get { return _data; }
-            set { _data = value; }
-        }
-
         #endregion
 
         #region Protected Methods
@@ -41,7 +30,6 @@ namespace ToolsACG.Scenes.MainMenu
         {
             _view = GetComponent<IMainMenuView>();
             base.Awake();            
-            _data = new MainMenuModel();
 
             Initialize();
         }
@@ -66,13 +54,14 @@ namespace ToolsACG.Scenes.MainMenu
         {
             EventManager.GetUiBus().AddListener<StartGame>(OnStartGame);
             EventManager.GetUiBus().AddListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
-
+            EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
         }
 
         private void OnDisable()
         {
             EventManager.GetUiBus().RemoveListener<StartGame>(OnStartGame);
             EventManager.GetUiBus().AddListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
+            EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
         }
 
         #endregion
@@ -81,18 +70,26 @@ namespace ToolsACG.Scenes.MainMenu
 
         private async void OnStartGame(StartGame pStartGame) 
         {
-            _view.SetViewAlpha(0);
+            View.SetViewAlpha(0);
             _view.TurnGeneralContainer(true);
             await Task.Delay(700);
-            _view.ViewFadeTransition(1, 0.3f);
+            View.DoFadeTransition(1, 0.3f);
         }
 
         private async void OnBackToMenuButtonClicked(BackToMenuButtonClicked pBackToMenuButtonClicked) 
         {
             await Task.Delay(300);
-            _view.SetViewAlpha(0);
+            View.SetViewAlpha(0);
             _view.TurnGeneralContainer(true);
-            _view.ViewFadeTransition(1, 0.3f);
+            View.DoFadeTransition(1, 0.3f);
+        }
+
+        private async void OnGameLeaved(GameLeaved pGameLeaved) 
+        {
+            await Task.Delay(300);
+            View.SetViewAlpha(0);
+            _view.TurnGeneralContainer(true);
+            View.DoFadeTransition(1, 0.3f);
         }
 
         #endregion
@@ -123,8 +120,8 @@ namespace ToolsACG.Scenes.MainMenu
 
         private void Initialize()
         {
-            _bulletSelectorController.SetData(ResourcesManager.Instance.BulletSettings.Bullets.Cast<SO_BaseElement>().ToList(), 0);
-            _shipSelectorController.SetData(ResourcesManager.Instance.ShipSettings.Ships.Cast<SO_BaseElement>().ToList(), 0);
+            _bulletSelectorController.SetData(ResourcesManager.Instance.BulletSettings.Bullets.Cast<SO_Selectable>().ToList(), 0);
+            _shipSelectorController.SetData(ResourcesManager.Instance.ShipSettings.Ships.Cast<SO_Selectable>().ToList(), 0);
             _view.TurnGeneralContainer(false);
             _view.SetUserNameValue(Environment.UserName);
         }

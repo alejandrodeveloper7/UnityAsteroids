@@ -7,7 +7,7 @@ public class SelectorController : MonoBehaviour
 {
     [SerializeField] private Image _itemDisplay;
 
-    private List<SO_BaseElement> _availableItems;
+    private List<SO_Selectable> _availableItems;
     private int _selectedIndex = 0;
     public int SelectedId 
     { 
@@ -18,7 +18,7 @@ public class SelectorController : MonoBehaviour
     }
 
 
-    public void SetData(List<SO_BaseElement> pItems, int pInitialIndex = 0)
+    public void SetData(List<SO_Selectable> pItems, int pInitialIndex = 0)
     {
         _availableItems = pItems;
         _selectedIndex = pInitialIndex;

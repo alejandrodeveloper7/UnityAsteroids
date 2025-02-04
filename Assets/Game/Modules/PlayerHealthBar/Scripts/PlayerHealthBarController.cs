@@ -12,20 +12,10 @@ namespace ToolsACG.Scenes.PlayerHealth
         #region Private Fields
 
         private IPlayerHealthBarView _view;
-        private PlayerHealthBarModel _data;
+        [SerializeField] private PlayerHealthBarModel _data;
 
         private PlayerSettings _playersettings;
         private Tween _shieldChargeTween;
-        #endregion
-
-        #region Properties
-
-        public PlayerHealthBarModel Model
-        {
-            get { return _data; }
-            set { _data = value; }
-        }
-
         #endregion
 
         #region Protected Methods
@@ -34,14 +24,13 @@ namespace ToolsACG.Scenes.PlayerHealth
         {
             _view = GetComponent<IPlayerHealthBarView>();
             base.Awake();
-            _data = new PlayerHealthBarModel();
 
             Initialize();
         }
 
         protected override void RegisterActions()
         {
-            // TODO: initialize dictionaries with actions for buttons, toggles and dropdowns.      
+            // TODO: initialize dictionaries with actions for buttons, toggles, sliders, input fields and dropdowns.      
         }
 
         protected override void SetData()
@@ -60,6 +49,7 @@ namespace ToolsACG.Scenes.PlayerHealth
             EventManager.GetGameplayBus().AddListener<PlayerDamaged>(OnPlayerDamaged);
             EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
             EventManager.GetGameplayBus().AddListener<ShieldStateChanged>(OnShieldStateChanged);
+            EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
 
         }
 
@@ -69,6 +59,7 @@ namespace ToolsACG.Scenes.PlayerHealth
             EventManager.GetGameplayBus().RemoveListener<PlayerDamaged>(OnPlayerDamaged);
             EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
             EventManager.GetGameplayBus().RemoveListener<ShieldStateChanged>(OnShieldStateChanged);
+            EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
         }
 
         #endregion
@@ -78,10 +69,10 @@ namespace ToolsACG.Scenes.PlayerHealth
         private void OnStartMatch(StartMatch pStartMatch)
         {
             _view.SetCurrentHealth(_playersettings.HealthPoints);
-            _view.SetViewAlpha(0);
+            View.SetViewAlpha(0);
             _view.SetShieldSliderValue(100);
             _view.TurnGeneralContainer(true);
-            _view.ViewFadeTransition(1, 0.3f);
+            View.DoFadeTransition(1, 0.3f);
         }
 
         private void OnPlayerDamaged(PlayerDamaged pPlayerDamaged)
@@ -92,7 +83,7 @@ namespace ToolsACG.Scenes.PlayerHealth
         private void OnPlayerDead(PlayerDead pPlayerDead)
         {
             _shieldChargeTween?.Kill();
-            _view.ViewFadeTransition(0, 0.3f);
+            View.DoFadeTransition(0, 0.3f);
         }
 
         private void OnShieldStateChanged(ShieldStateChanged pShieldStateChanged)
@@ -116,6 +107,12 @@ namespace ToolsACG.Scenes.PlayerHealth
                     EventManager.GetGameplayBus().RaiseEvent(new ShieldStateChanged() { Active = true });
                 });
 
+        }
+
+        private void OnGameLeaved(GameLeaved pGameLeaved)
+        {
+            _shieldChargeTween?.Kill();
+            View.DoFadeTransition(0, 0.3f);
         }
 
         #endregion

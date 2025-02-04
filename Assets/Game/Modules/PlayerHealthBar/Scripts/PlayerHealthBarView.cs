@@ -1,5 +1,4 @@
 using DG.Tweening;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,10 +8,7 @@ namespace ToolsACG.Scenes.PlayerHealth
     public interface IPlayerHealthBarView
     {
         void TurnGeneralContainer(bool pState);
-
-        void SetViewAlpha(float pValue);
-        void ViewFadeTransition(float pDestinyValue, float pDuration);
-
+    
         void SetMaxHealth(int pAmount);
         void SetCurrentHealth(int pAmount);
         void SetHealthPointsSprites(Sprite pHealthPointSprite, Sprite pEmptyHealthPointSprite);
@@ -57,17 +53,6 @@ namespace ToolsACG.Scenes.PlayerHealth
         public void TurnGeneralContainer(bool pState)
         {
             _generalContainer.SetActive(pState);
-        }
-
-        public void SetViewAlpha(float pValue)
-        {
-            CanvasGroup.alpha = pValue;
-        }
-
-        public void ViewFadeTransition(float pDestinyValue, float pDuration)
-        {
-            CanvasGroup.DOKill();
-            CanvasGroup.DOFade(pDestinyValue, pDuration).SetEase(Ease.OutQuad);
         }
 
         public void SetMaxHealth(int pAmount)

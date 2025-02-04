@@ -1,8 +1,10 @@
+using UnityEngine;
 
 namespace ToolsACG.Scenes.Leaderboard
 {
+    [CreateAssetMenu(fileName = "LeaderboardModel", menuName = "ScriptableObjects/ToolsACG/MVCModuleCreator/LeaderboardModel")]
     public class LeaderboardModel : ModuleModel
     {
-        // TODO: declare here public fields to persist module data
+
     }
 }

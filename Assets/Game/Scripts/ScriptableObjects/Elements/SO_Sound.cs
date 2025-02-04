@@ -2,9 +2,8 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 [CreateAssetMenu(fileName = "NewSound", menuName = "ScriptableObjects/Sound", order = 0)]
-public class SO_Sound : ScriptableObject
+public class SO_Sound : SO_Base
 {
-    public int Id;
     [Space]
     public string PoolName;
     public AudioClip Clip;

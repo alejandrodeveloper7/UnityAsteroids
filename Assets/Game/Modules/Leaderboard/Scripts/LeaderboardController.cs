@@ -11,17 +11,7 @@ namespace ToolsACG.Scenes.Leaderboard
         #region Private Fields
 
         private ILeaderboardView _view;
-        private LeaderboardModel _data;
-
-        #endregion
-
-        #region Properties
-
-        public LeaderboardModel Model
-        {
-            get { return _data; }
-            set { _data = value; }
-        }
+        [SerializeField] private LeaderboardModel _data;
 
         #endregion
 
@@ -31,7 +21,6 @@ namespace ToolsACG.Scenes.Leaderboard
         {
             _view = GetComponent<ILeaderboardView>();
             base.Awake();
-            _data = new LeaderboardModel();
 
             Initialize();
         }
@@ -71,7 +60,7 @@ namespace ToolsACG.Scenes.Leaderboard
 
             await Task.Delay(2000);
             _view.TurnGeneralContainer(true);
-            _view.ViewFadeTransition(1, 0.3f);
+            View.DoFadeTransition(1, 0.3f);
             await Task.Delay(300);
 
             SetScore();
@@ -130,7 +119,7 @@ namespace ToolsACG.Scenes.Leaderboard
 
         private async void OnBackToMenuButtonClick()
         {
-            _view.ViewFadeTransition(0, 0.3f);
+            View.DoFadeTransition(0, 0.3f);
             _=EventManager.GetUiBus().RaiseEvent(new BackToMenuButtonClicked());
             await Task.Delay(300);
             _view.TurnGeneralContainer(false);
@@ -148,7 +137,7 @@ namespace ToolsACG.Scenes.Leaderboard
             _view.TurnErrorMessage(false);
             _view.TurnRowsContainer(false);
             _view.TurnLoadingSpinner(true);
-            _view.SetViewAlpha(0);
+            View.SetViewAlpha(0);
         }
 
     }

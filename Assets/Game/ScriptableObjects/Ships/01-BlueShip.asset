@@ -27,7 +27,13 @@ MonoBehaviour:
   SoundsOnDestruction:
   - {fileID: 11400000, guid: 559df086fef25ba41a24fd4405876342, type: 2}
   movementSpeed: 6
-  rotationSpeed: 5
+  rotationSpeed: 75
   DestuctionParticles:
   - particleEffectName: FX_ShipDestruction
     particleConfig: {fileID: 0}
+  ShieldColor: {r: 0, g: 0.67058825, b: 1, a: 1}
+  FadeInDuration: 0.5
+  FadeOutDuration: 0.5
+  BlickDuration: 0.3
+  BlinkMinAlpha: 0.5
+  BlinkMaxAlpha: 0.8

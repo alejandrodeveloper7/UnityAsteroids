@@ -254,6 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a186897038973804d8d5925b705cf822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _data: {fileID: 11400000, guid: 5792eef9c54fbfb469a29e74fe48b63f, type: 2}
   _shipSelectorController: {fileID: 2862698283069039588}
   _bulletSelectorController: {fileID: 3020622418584631748}
 --- !u!225 &57698133

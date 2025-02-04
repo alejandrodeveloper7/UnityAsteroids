@@ -1,7 +1,6 @@
+using UnityEngine;
 
-namespace ToolsACG.Scenes
+public abstract class ModuleModel : ScriptableObject
 {
-    public abstract class ModuleModel
-    {
-    }
+ 
 }

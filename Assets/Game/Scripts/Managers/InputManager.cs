@@ -20,6 +20,7 @@ public class InputManager : MonoBehaviour
         EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
         EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
         EventManager.GetGameplayBus().AddListener<PauseStateChanged>(OnPauseStateChanged);
+        EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnDisable()
@@ -27,6 +28,7 @@ public class InputManager : MonoBehaviour
         EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
         EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
         EventManager.GetGameplayBus().RemoveListener<PauseStateChanged>(OnPauseStateChanged);
+        EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnApplicationFocus(bool focus)
@@ -75,6 +77,9 @@ public class InputManager : MonoBehaviour
 
         if (_inPause)
             return;
+        if (_playing is false)
+            return;
+
 
         if (Input.GetKey(_inputSettings.TurnLeftKey))
             EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = 1 });
@@ -87,6 +92,11 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKey(_inputSettings.ShootKey))
             EventManager.GetGameplayBus().RaiseEvent(new ShootKeyStateChange() { State = true });
+    }
+
+    private void OnGameLeaved(GameLeaved pGameLeaved) 
+    {
+        _playing = false;
     }
 
     #endregion
@@ -102,10 +112,20 @@ public class InputManager : MonoBehaviour
             EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = -1 });
 
         if (Input.GetKeyUp(_inputSettings.TurnLeftKey))
-            EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = 0 });
+        {
+            if (Input.GetKey(_inputSettings.TurnRightKey))
+                EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = -1 });
+            else
+                EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = 0 });
+        }
 
         if (Input.GetKeyUp(_inputSettings.TurnRightKey))
-            EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = 0 });
+        {
+            if (Input.GetKey(_inputSettings.TurnLeftKey))
+                EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = 1 });
+            else
+                EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = 0 });
+        }
     }
 
     private void CheckMovementInput()
@@ -128,8 +148,8 @@ public class InputManager : MonoBehaviour
 
     private void CheckPauseInput()
     {
-        if (Input.GetKeyDown(_inputSettings.PauseKey))        
-            EventManager.GetGameplayBus().RaiseEvent(new PauseKeyClicked());        
+        if (Input.GetKeyDown(_inputSettings.PauseKey))
+            EventManager.GetGameplayBus().RaiseEvent(new PauseKeyClicked());
     }
 
     #endregion

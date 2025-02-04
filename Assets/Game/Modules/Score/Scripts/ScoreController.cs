@@ -9,20 +9,10 @@ namespace ToolsACG.Scenes.Score
         #region Private Fields
 
         private IScoreView _view;
-        private ScoreModel _data;
+        [SerializeField] private ScoreModel _data;
         
         private int _score;
         private bool _alive;
-        #endregion
-
-        #region Properties
-
-        public ScoreModel Model
-        {
-            get { return _data; }
-            set { _data = value; }
-        }
-
         #endregion
 
         #region Protected Methods
@@ -31,14 +21,13 @@ namespace ToolsACG.Scenes.Score
         {
             _view = GetComponent<IScoreView>();
             base.Awake();            
-            _data = new ScoreModel();
 
             Initialize();
         }
 
         protected override void RegisterActions()
         {
-            // TODO: initialize dictionaries with actions for buttons, toggles and dropdowns.      
+            // TODO: initialize dictionaries with actions for buttons, toggles, sliders, input fields and dropdowns.      
         }
 
         protected override void SetData()
@@ -57,13 +46,16 @@ namespace ToolsACG.Scenes.Score
             EventManager.GetGameplayBus().AddListener<AsteroidDestroyed>(OnAsteroidDestroyed);
             EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
             EventManager.GetUiBus().AddListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
+            EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
         }
 
         private void OnDisable()
         {
             EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
             EventManager.GetGameplayBus().RemoveListener<AsteroidDestroyed>(OnAsteroidDestroyed);
+            EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
             EventManager.GetUiBus().RemoveListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
+            EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
         }
 
         #endregion
@@ -74,9 +66,9 @@ namespace ToolsACG.Scenes.Score
         {
             _alive = true;
             RestartScore();
-            _view.SetViewAlpha(0);
+            View.SetViewAlpha(0);
             _view.TurnGeneralContainer(true);
-            _view.ViewFadeTransition(1, 0.3f);
+            View.DoFadeTransition(1, 0.3f);
         }
 
         private void OnAsteroidDestroyed(AsteroidDestroyed pAsteroidDestroyed) 
@@ -96,7 +88,13 @@ namespace ToolsACG.Scenes.Score
 
         private void OnBackToMenuButtonClicked(BackToMenuButtonClicked pBackToMenuButtonClicked) 
         {
-            _view.ViewFadeTransition(0, 0.3f);
+            View.DoFadeTransition(0, 0.3f);
+        }
+
+        private void OnGameLeaved(GameLeaved pGameLeaved) 
+        {
+            _alive = false;
+            View.DoFadeTransition(0, 0.3f);
         }
 
         #endregion

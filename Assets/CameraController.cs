@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    [SerializeField]private CameraConfiguration _cameraConfiguration;
     private Vector3 _originalPosition;
 
     private void Awake()
@@ -27,16 +28,16 @@ public class CameraController : MonoBehaviour
 
     private void OnPlayerDead(PlayerDead pPlayerDead)
     {
-        StartCoroutine(ShakeCoroutine(0.4f, 0.3f));
+        StartCoroutine(ShakeCoroutine(_cameraConfiguration.DeadShakeDuration, _cameraConfiguration.DeadShakeMagnitude));
     }
     private void OnPlayerDamaged(PlayerDamaged pPlayerDamaged)
     {
-        StartCoroutine(ShakeCoroutine(0.3f, 0.2f));
+        StartCoroutine(ShakeCoroutine(_cameraConfiguration.DamageShakeDuration, _cameraConfiguration.DamageShakeMagnitude));
     }
     private void OnShieldStateChanged(ShieldStateChanged pShieldStateChanged)
     {
         if (pShieldStateChanged.Active is false)
-            StartCoroutine(ShakeCoroutine(0.2f, 0.1f));
+            StartCoroutine(ShakeCoroutine(_cameraConfiguration.ShieldShakeDuration, _cameraConfiguration.ShieldShakeMagnitude));
     }
 
     private IEnumerator ShakeCoroutine(float pDuration, float pMagnitude)
@@ -45,15 +46,13 @@ public class CameraController : MonoBehaviour
 
         while (elapsed < pDuration)
         {
-            float offsetX = Random.Range(-1f, 1f) * pMagnitude;
-            float offsetY = Random.Range(-1f, 1f) * pMagnitude;
-
+            float offsetX = Random.Range(_cameraConfiguration.MinDistance, _cameraConfiguration.MaxDistance) * pMagnitude;
+            float offsetY = Random.Range(_cameraConfiguration.MinDistance, _cameraConfiguration.MaxDistance) * pMagnitude;
             transform.localPosition = _originalPosition + new Vector3(offsetX, offsetY, 0);
 
             elapsed += Time.deltaTime;
             yield return null;
         }
-
         transform.localPosition = _originalPosition;
     }
 }

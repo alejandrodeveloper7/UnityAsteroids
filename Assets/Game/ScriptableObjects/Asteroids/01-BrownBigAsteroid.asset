@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: 01-BrownBigAsteroid
   m_EditorClassIdentifier: 
   Id: 1
-  IsActive: 1
-  Sprite: {fileID: 21300000, guid: c61adb1038e41f149841a90af8f09e63, type: 3}
   IsInitialAsteroid: 1
   PoolName: Asteroid
   BrokenAsteroidSpawnAngle: 60
@@ -25,6 +23,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: fd615d6885e6d364e9d098950619e098, type: 3}
   Speed: 100
   PointsValue: 10
+  PosibleTorque: 80
   SoundsOnDestruction:
   - {fileID: 11400000, guid: e9ec574fd32bf724cbb3a2502f6008df, type: 2}
   DestuctionParticles:

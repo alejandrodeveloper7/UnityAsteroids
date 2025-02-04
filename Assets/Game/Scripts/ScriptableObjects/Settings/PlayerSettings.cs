@@ -15,14 +15,4 @@ public class PlayerSettings : ScriptableObject
     [Space]
     public float ShieldSliderMinValue;
     public float ShieldRecoveryTime;
-    [Space]
-    public Color ShieldColor;
-    [Space]
-    public float FadeInDuration;
-    public float FadeOutDuration;
-    [Space]
-    public float BlickDuration;
-    [Space]
-    public float BlinkMinAlpha;
-    public float BlinkMaxAlpha;
 }

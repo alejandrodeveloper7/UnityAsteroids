@@ -26,7 +26,6 @@ public class AudioSourceController : MonoBehaviour, IPooleableItem
     {
         EventManager.GetGameplayBus().RemoveListener<PauseStateChanged>(OnPauseStateChanged);
         EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
-
     }
 
     private void OnPauseStateChanged(PauseStateChanged pPauseStateChanged)

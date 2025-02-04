@@ -1,4 +1,3 @@
-using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,9 +8,6 @@ namespace ToolsACG.Scenes.Pause
     public interface IPauseView
     {
         void TurnGeneralContainer(bool pState);
-
-        void SetViewAlpha(float pValue);
-        void ViewFadeTransition(float pDestinyValue, float pDuration);
 
         float MusicVolume { get; }
         float EffectsVolume { get; }
@@ -61,18 +57,6 @@ namespace ToolsACG.Scenes.Pause
         {
             _generalContainer.SetActive(pState);
         }
-
-        public void SetViewAlpha(float pValue)
-        {
-            CanvasGroup.alpha = pValue;
-        }
-
-        public void ViewFadeTransition(float pDestinyValue, float pDuration)
-        {
-            CanvasGroup.DOKill();
-            CanvasGroup.DOFade(pDestinyValue, pDuration).SetEase(Ease.OutQuad);
-        }
-
 
         public void SetMusicVolume(float pValue)
         {

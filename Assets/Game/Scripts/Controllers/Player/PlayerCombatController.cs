@@ -13,6 +13,8 @@ public class PlayerCombatController : MonoBehaviour
 
     private bool _isAlive;
     private bool _shooting;
+
+    private float _nextShootTime;
     #endregion
 
     #region Monobehaviour
@@ -23,6 +25,7 @@ public class PlayerCombatController : MonoBehaviour
         EventManager.GetGameplayBus().AddListener<ShootKeyStateChange>(OnShootKeyStateChange);
         EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
         EventManager.GetGameplayBus().AddListener<PauseStateChanged>(OnPauseStateChanged);
+        EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnDisable()
@@ -31,6 +34,7 @@ public class PlayerCombatController : MonoBehaviour
         EventManager.GetGameplayBus().RemoveListener<ShootKeyStateChange>(OnShootKeyStateChange);
         EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
         EventManager.GetGameplayBus().RemoveListener<PauseStateChanged>(OnPauseStateChanged);
+        EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
     }
 
     #endregion
@@ -63,6 +67,12 @@ public class PlayerCombatController : MonoBehaviour
             _shooting = false;
     }
 
+    private void OnGameLeaved(GameLeaved pGameLeaved) 
+    {
+        _isAlive = false;
+        _shooting = false;
+    }
+
     #endregion
 
     #region Initialization
@@ -86,9 +96,17 @@ public class PlayerCombatController : MonoBehaviour
         if (_shooting is false)
             return;
 
+        if (Time.time < _nextShootTime) 
+        {
+            Invoke(nameof(ShootBullet), _nextShootTime - Time.time);
+            return;
+        }
+
         BulletController bulletscript = PoolsManager.Instance.GetInstance(_bulletData.PoolName).GetComponent<BulletController>();
         bulletscript.transform.SetPositionAndRotation(_bulletSpawnPoint.position, _bulletSpawnPoint.rotation);
         bulletscript.Initialize(_bulletData);
         Invoke(nameof(ShootBullet), _bulletData.BetweenBulletsTime);
+
+        _nextShootTime = Time.time + _bulletData.BetweenBulletsTime;
     }
 }
