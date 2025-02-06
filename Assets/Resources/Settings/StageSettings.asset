@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4db8546d7a132924bb33ec26db4ce63a, type: 3}
   m_Name: StageSettings
   m_EditorClassIdentifier: 
-  InitialAsteroids: 4
+  InitialAsteroids: 2
   AsteroidsIncrementPerRound: 1
-  MaxPosibleAsteroids: 6
+  MaxPosibleAsteroids: 7
   DelayBeforeDecorationAsteroids: 0.7
   DelayBeforeFirstRound: 1.8
   DelayBetweenRounds: 2.5
