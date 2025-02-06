@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using UnityEditor;
 #endif
 
-
 namespace ToolsACG.Scenes.MainMenu
 {
     [RequireComponent(typeof(MainMenuView))]
@@ -18,7 +17,7 @@ namespace ToolsACG.Scenes.MainMenu
 
         private IMainMenuView _view;
         [SerializeField] private MainMenuModel _data;
-
+        [Space]
         [SerializeField] private SelectorController _shipSelectorController;
         [SerializeField] private SelectorController _bulletSelectorController;
   
@@ -29,9 +28,7 @@ namespace ToolsACG.Scenes.MainMenu
         protected override void Awake()
         {
             _view = GetComponent<IMainMenuView>();
-            base.Awake();            
-
-            Initialize();
+            base.Awake();
         }
 
         protected override void RegisterActions()
@@ -40,10 +37,13 @@ namespace ToolsACG.Scenes.MainMenu
             Actions.Add("BTN_ExitGame", OnExitGameButtonClick);
         }
 
-        protected override void SetData()
+        protected override void Initialize()
         {
-            // TODO: initialize model with services data (if it's not initialized externally using Data property).
-            // TODO: call view methods to display data.
+            _bulletSelectorController.SetData(ResourcesManager.Instance.BulletsConfiguration.Bullets.Cast<SO_Selectable>().ToList(), 0);
+            _shipSelectorController.SetData(ResourcesManager.Instance.ShipsConfiguration.Ships.Cast<SO_Selectable>().ToList(), 0);
+
+            _view.TurnGeneralContainer(false);
+            _view.SetUserNameValue(Environment.UserName);
         }
 
         #endregion
@@ -60,39 +60,30 @@ namespace ToolsACG.Scenes.MainMenu
         private void OnDisable()
         {
             EventManager.GetUiBus().RemoveListener<StartGame>(OnStartGame);
-            EventManager.GetUiBus().AddListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
-            EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
+            EventManager.GetUiBus().RemoveListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
+            EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
         }
 
         #endregion
 
         #region BusCallbacks
 
-        private async void OnStartGame(StartGame pStartGame) 
+        private void OnStartGame(StartGame pStartGame) 
         {
-            View.SetViewAlpha(0);
-            _view.TurnGeneralContainer(true);
-            await Task.Delay(700);
-            View.DoFadeTransition(1, 0.3f);
+            DoEntranceWithDelay(_data.DelayBeforeEnter);
         }
 
-        private async void OnBackToMenuButtonClicked(BackToMenuButtonClicked pBackToMenuButtonClicked) 
+        private void OnBackToMenuButtonClicked(BackToMenuButtonClicked pBackToMenuButtonClicked) 
         {
-            await Task.Delay(300);
-            View.SetViewAlpha(0);
-            _view.TurnGeneralContainer(true);
-            View.DoFadeTransition(1, 0.3f);
+            DoEntranceWithDelay(_data.DelayBeforeEnter);
         }
 
-        private async void OnGameLeaved(GameLeaved pGameLeaved) 
+        private void OnGameLeaved(GameLeaved pGameLeaved) 
         {
-            await Task.Delay(300);
-            View.SetViewAlpha(0);
-            _view.TurnGeneralContainer(true);
-            View.DoFadeTransition(1, 0.3f);
+            DoEntranceWithDelay(_data.DelayBeforeEnter);
         }
 
-        #endregion
+        #endregion    
 
         #region Button Callbacks
 
@@ -116,15 +107,21 @@ namespace ToolsACG.Scenes.MainMenu
             EventManager.GetGameplayBus().RaiseEvent(new StartMatch());
         }
 
-#endregion
+        #endregion
 
-        private void Initialize()
+        #region Navigation
+
+        private async void DoEntranceWithDelay(float pDelay, Action pOnComplete = null)
         {
-            _bulletSelectorController.SetData(ResourcesManager.Instance.BulletSettings.Bullets.Cast<SO_Selectable>().ToList(), 0);
-            _shipSelectorController.SetData(ResourcesManager.Instance.ShipSettings.Ships.Cast<SO_Selectable>().ToList(), 0);
-            _view.TurnGeneralContainer(false);
-            _view.SetUserNameValue(Environment.UserName);
+            await Task.Delay((int)(pDelay * 1000));
+            View.SetViewAlpha(0);
+            _view.TurnGeneralContainer(true);
+            View.DoFadeTransition(1, _data.FadeTransitionDuration);
+            await Task.Delay((int)(_data.FadeTransitionDuration * 1000));
+            pOnComplete?.Invoke();
         }
+
+        #endregion
     }
 }
 

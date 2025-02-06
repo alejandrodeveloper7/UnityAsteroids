@@ -6,7 +6,6 @@ namespace ToolsACG.Scenes.Score
     public interface IScoreView
     {
         void TurnGeneralContainer(bool pState);
-
         void SetScore(int pValue);
     }
 
@@ -16,14 +15,6 @@ namespace ToolsACG.Scenes.Score
 
         [SerializeField] private GameObject _generalContainer;
         [SerializeField] private TextMeshProUGUI _scoreText;
-        #endregion
-
-        #region Protected Methods     
-
-        protected override void Awake()
-        {
-            base.Awake();
-        }
 
         #endregion
 
@@ -38,10 +29,6 @@ namespace ToolsACG.Scenes.Score
         {
             _scoreText.text = pvalue.ToString();
         }
-
-        #endregion
-
-        #region Private Methods
 
         #endregion
     }

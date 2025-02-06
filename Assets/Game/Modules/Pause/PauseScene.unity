@@ -241,7 +241,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _generalContainer: {fileID: 2128533700}
   _musicSlider: {fileID: 8812250993973272759}
+  _musicVolumeSliderEventHandler: {fileID: 8812250993973272761}
   _effectsSlider: {fileID: 1471909233709195520}
+  _effectsVolumeSliderEventHandler: {fileID: 1471909233709195522}
   _resolutionDropdown: {fileID: 830662285308562961}
   _fullScreenToggle: {fileID: 6247238829704109828}
 --- !u!114 &57698132
@@ -257,8 +259,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 3e98cd29ff1a2d345b4bc6aa01391d8f, type: 2}
-  _musicVolumeSliderEventHandler: {fileID: 8812250993973272761}
-  _effectsVolumeSliderEventHandler: {fileID: 1471909233709195522}
 --- !u!225 &57698133
 CanvasGroup:
   m_ObjectHideFlags: 0

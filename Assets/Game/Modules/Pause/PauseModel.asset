@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea777a76fe768da429bae018330d2f53, type: 3}
   m_Name: PauseModel
   m_EditorClassIdentifier: 
+  FadeTransitionDuration: 0.3

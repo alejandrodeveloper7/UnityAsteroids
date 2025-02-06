@@ -8,14 +8,14 @@ namespace ToolsACG.Scenes.PlayerHealth
     public interface IPlayerHealthBarView
     {
         void TurnGeneralContainer(bool pState);
-    
+
         void SetMaxHealth(int pAmount);
         void SetCurrentHealth(int pAmount);
         void SetHealthPointsSprites(Sprite pHealthPointSprite, Sprite pEmptyHealthPointSprite);
-        void SetShieldSliderSprites(Sprite pShieldBarSprite, Sprite pFullShieldBarSprite);
 
         void SetShieldSliderValue(float pValue);
         void DoShielSliderTransition(float pValue, float pDuration);
+        void SetShieldSliderSprites(Sprite pShieldBarSprite, Sprite pFullShieldBarSprite);
     }
 
     public class PlayerHealthBarView : ModuleView, IPlayerHealthBarView
@@ -26,6 +26,7 @@ namespace ToolsACG.Scenes.PlayerHealth
 
         [Header("Healt Points")]
         [SerializeField] private GameObject _healthPointPrefab;
+        [Space]
         [SerializeField] private Transform _healthPointsContainer;
         private List<Image> _currentHealtPoints = new List<Image>();
         [Space]
@@ -38,18 +39,11 @@ namespace ToolsACG.Scenes.PlayerHealth
         [Space]
         private Sprite _shieldBarSprite;
         private Sprite _fullShieldBarSprite;
-        #endregion
-
-        #region Protected Methods     
-
-        protected override void Awake()
-        {
-            base.Awake();
-        }
 
         #endregion
 
         #region View Methods
+
         public void TurnGeneralContainer(bool pState)
         {
             _generalContainer.SetActive(pState);
@@ -101,13 +95,20 @@ namespace ToolsACG.Scenes.PlayerHealth
 
         public void DoShielSliderTransition(float pValue, float pDuration)
         {
-            _shieldSlider.DOValue(pValue, pDuration);
-            UpdateSliderSprite();
+            if (pValue < _shieldSlider.maxValue)
+                _shieldSliderImage.sprite = _shieldBarSprite;
+
+            _shieldSlider.DOValue(pValue, pDuration)
+                .OnComplete(() =>
+            {
+                UpdateSliderSprite();
+            });
         }
 
         #endregion
 
         #region Private Methods
+
         private void UpdateSliderSprite()
         {
             if (_shieldSlider.value == _shieldSlider.maxValue)
@@ -115,6 +116,7 @@ namespace ToolsACG.Scenes.PlayerHealth
             else
                 _shieldSliderImage.sprite = _shieldBarSprite;
         }
+
         #endregion
     }
 }

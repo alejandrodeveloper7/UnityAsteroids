@@ -12,7 +12,9 @@ namespace ToolsACG.Scenes.Leaderboard
         void TurnLoadingSpinner(bool pState);
         void TurnErrorMessage(bool pState);
         void TurnRowsContainer(bool pState);
-        void SetLeaderboardData(List<LeaderboardEntry> pData);
+
+        void SetLeaderboardData(List<LeaderboardEntry> pData, Color pPlayerColor);
+        void RestartLeaderboardRows();
     }
 
     public class LeaderboardView : ModuleView, ILeaderboardView
@@ -20,20 +22,12 @@ namespace ToolsACG.Scenes.Leaderboard
         #region Fields        
 
         [SerializeField] private GameObject _generalContainer;
-
+        [Space]
         [SerializeField] private RectTransform _loadingSpinner;
         [SerializeField] private GameObject _errorMessage;
         [SerializeField] private GameObject _rowsContainer;
+        [Space]
         [SerializeField] private List<LeaderboardRowHelper> _rowHelpers;
-
-        #endregion
-
-        #region Protected Methods     
-
-        protected override void Awake()
-        {
-            base.Awake();
-        }
 
         #endregion
 
@@ -52,14 +46,13 @@ namespace ToolsACG.Scenes.Leaderboard
                 _loadingSpinner.transform
                     .DOLocalRotate(new Vector3(0, 0, -360), 1f, RotateMode.FastBeyond360)
                     .SetLoops(-1)
-                    .SetEase(Ease.Linear);                    
+                    .SetEase(Ease.Linear);
             }
             else
             {
                 _loadingSpinner.transform.DOKill();
                 _loadingSpinner.gameObject.SetActive(false);
             }
-
         }
         public void TurnErrorMessage(bool pState)
         {
@@ -69,16 +62,18 @@ namespace ToolsACG.Scenes.Leaderboard
         {
             _rowsContainer.SetActive(pState);
         }
-        public void SetLeaderboardData(List<LeaderboardEntry> pData)
+      
+        public void SetLeaderboardData(List<LeaderboardEntry> pData, Color pPlayerColor)
         {
             for (int i = 0; i < pData.Count; i++)
-                _rowHelpers[i].SetData(i + 1, pData[i]);
+                _rowHelpers[i].SetData(i + 1, pData[i], pPlayerColor);
+        }
+        public void RestartLeaderboardRows()
+        {
+            foreach (LeaderboardRowHelper row in _rowHelpers)
+                row.Restart();
         }
 
-        #endregion
-
-        #region Private Methods
-        // TODO: define here methods called from view methods
         #endregion
     }
 }

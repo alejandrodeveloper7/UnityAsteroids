@@ -11,7 +11,8 @@ public class SelectorController : MonoBehaviour
     private int _selectedIndex = 0;
     public int SelectedId 
     { 
-        get {
+        get 
+        {
             int validIndex = (_selectedIndex % _availableItems.Count + _availableItems.Count) % _availableItems.Count;
             return _availableItems[validIndex].Id; 
         }

@@ -5,6 +5,6 @@ namespace ToolsACG.Scenes.Pause
     [CreateAssetMenu(fileName = "PauseModel", menuName = "ScriptableObjects/ToolsACG/MVCModuleCreator/PauseModel")]
     public class PauseModel : ModuleModel
     {
-
+        public float FadeTransitionDuration;
     }
 }

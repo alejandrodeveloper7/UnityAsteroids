@@ -321,6 +321,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8363866377322877669}
     m_Modifications:
+    - target: {fileID: 9176562693775618248, guid: c35b00c36308e6f4db9286386c759fcc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 825a5f7ef27b7714b80ae7fe099f2cc4, type: 3}
     - target: {fileID: 9176562693775618254, guid: c35b00c36308e6f4db9286386c759fcc, type: 3}
       propertyPath: m_Name
       value: IMG_LeaderboardRow 1
@@ -599,6 +603,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8363866377322877669}
     m_Modifications:
+    - target: {fileID: 9176562693775618248, guid: c35b00c36308e6f4db9286386c759fcc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 825a5f7ef27b7714b80ae7fe099f2cc4, type: 3}
     - target: {fileID: 9176562693775618254, guid: c35b00c36308e6f4db9286386c759fcc, type: 3}
       propertyPath: m_Name
       value: IMG_LeaderboardRow 5
@@ -768,7 +776,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a0e3f863f08e26d47a1463ed1c8efbf1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 825a5f7ef27b7714b80ae7fe099f2cc4, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -814,6 +822,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8363866377322877669}
     m_Modifications:
+    - target: {fileID: 9176562693775618248, guid: c35b00c36308e6f4db9286386c759fcc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 825a5f7ef27b7714b80ae7fe099f2cc4, type: 3}
     - target: {fileID: 9176562693775618254, guid: c35b00c36308e6f4db9286386c759fcc, type: 3}
       propertyPath: m_Name
       value: IMG_LeaderboardRow 4
@@ -931,6 +943,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8363866377322877669}
     m_Modifications:
+    - target: {fileID: 9176562693775618248, guid: c35b00c36308e6f4db9286386c759fcc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 825a5f7ef27b7714b80ae7fe099f2cc4, type: 3}
     - target: {fileID: 9176562693775618254, guid: c35b00c36308e6f4db9286386c759fcc, type: 3}
       propertyPath: m_Name
       value: IMG_LeaderboardRow 3
@@ -1319,6 +1335,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8363866377322877669}
     m_Modifications:
+    - target: {fileID: 9176562693775618248, guid: c35b00c36308e6f4db9286386c759fcc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 825a5f7ef27b7714b80ae7fe099f2cc4, type: 3}
     - target: {fileID: 9176562693775618254, guid: c35b00c36308e6f4db9286386c759fcc, type: 3}
       propertyPath: m_Name
       value: IMG_LeaderboardRow 7
@@ -1436,6 +1456,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8363866377322877669}
     m_Modifications:
+    - target: {fileID: 9176562693775618248, guid: c35b00c36308e6f4db9286386c759fcc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 825a5f7ef27b7714b80ae7fe099f2cc4, type: 3}
     - target: {fileID: 9176562693775618254, guid: c35b00c36308e6f4db9286386c759fcc, type: 3}
       propertyPath: m_Name
       value: IMG_LeaderboardRow 6
@@ -1553,6 +1577,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8363866377322877669}
     m_Modifications:
+    - target: {fileID: 9176562693775618248, guid: c35b00c36308e6f4db9286386c759fcc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 825a5f7ef27b7714b80ae7fe099f2cc4, type: 3}
     - target: {fileID: 9176562693775618254, guid: c35b00c36308e6f4db9286386c759fcc, type: 3}
       propertyPath: m_Name
       value: IMG_LeaderboardRow 2
@@ -1854,6 +1882,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8363866377322877669}
     m_Modifications:
+    - target: {fileID: 9176562693775618248, guid: c35b00c36308e6f4db9286386c759fcc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 825a5f7ef27b7714b80ae7fe099f2cc4, type: 3}
     - target: {fileID: 9176562693775618254, guid: c35b00c36308e6f4db9286386c759fcc, type: 3}
       propertyPath: m_Name
       value: IMG_LeaderboardRow 8

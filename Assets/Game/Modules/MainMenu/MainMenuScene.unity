@@ -1344,6 +1344,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3020622417342690529}
     m_Modifications:
+    - target: {fileID: 1575302349120723764, guid: 09f01062591c1a045803dc22d0bbb5b3, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575302349120723764, guid: 09f01062591c1a045803dc22d0bbb5b3, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575302349120723764, guid: 09f01062591c1a045803dc22d0bbb5b3, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575302349120723764, guid: 09f01062591c1a045803dc22d0bbb5b3, type: 3}
+      propertyPath: m_Colors.m_DisabledColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2421993446366880384, guid: 09f01062591c1a045803dc22d0bbb5b3, type: 3}
       propertyPath: m_text
       value: Enter your username...

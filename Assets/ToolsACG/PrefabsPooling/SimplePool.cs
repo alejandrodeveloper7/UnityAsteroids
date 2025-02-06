@@ -110,7 +110,7 @@ namespace ToolsACG.Utils.Pooling
 
             if (instance == null)
             {
-                Debug.LogError(string.Format("{0}'s pool is at max size and there are not ready instances available", _objectPooled.name));
+                Debug.LogError(string.Format("- POOL - {0}'s pool is at max size and there are not ready instances available", _objectPooled.name));
                 return instance;
             }
 
@@ -129,12 +129,12 @@ namespace ToolsACG.Utils.Pooling
 
             if (poleableItem == null)
             {
-                Debug.LogError(string.Format("{0} is not Pooled with IPooleableItem", pInstance.name));
+                Debug.LogError(string.Format("- POOL - {0} is not Pooled with IPooleableItem", pInstance.name));
                 return;
             }
             if (poleableItem.OriginPool != this)
             {
-                Debug.LogError(string.Format("{0} is not an Instance of this pool", pInstance.name));
+                Debug.LogError(string.Format("- POOL - {0} is not an Instance of this pool", pInstance.name));
                 return;
             }
 
@@ -167,7 +167,7 @@ namespace ToolsACG.Utils.Pooling
             IPooleableItem pooleableItem = newInstance.GetComponent<IPooleableItem>();
             if(pooleableItem is null)
             {
-                Debug.LogError(string.Format("{0} dont have a script with IPooleableITem",_objectPooled.name));
+                Debug.LogError(string.Format("- POOL - {0} dont have a script with IPooleableITem", _objectPooled.name));
                 return null;
             }
             pooleableItem.OriginPool = this;
@@ -183,18 +183,18 @@ namespace ToolsACG.Utils.Pooling
 
             if (maxPosibleScalation == 0)
             {
-                Debug.LogError(string.Format("{0}'s pool at max size, can´t be expanded more", _objectPooled.name));
+                Debug.LogError(string.Format("- POOL - {0}'s pool at max size, can´t be expanded more", _objectPooled.name));
                 return;
             }
 
             if (pIncrement < maxPosibleScalation)
             {
-                Debug.Log(string.Format("{0}'s pool expanded in {1} units", _objectPooled.name, pIncrement));
+                Debug.Log(string.Format("- POOL - {0}'s pool expanded in {1} units", _objectPooled.name, pIncrement));
             }
             else
             {
                 pIncrement = maxPosibleScalation;
-                Debug.Log(string.Format("{0}'s pool expanded in {1} units. POOL AT MAX SIZE", _objectPooled.name, pIncrement));
+                Debug.Log(string.Format("- POOL - {0}'s pool expanded in {1} units. POOL AT MAX SIZE", _objectPooled.name, pIncrement));
             }
 
             int firstPosition = _availableInstances.Length;

@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using ToolsACG.Services.DreamloLeaderboard;
 using ToolsACG.Utils.Events;
@@ -21,8 +22,6 @@ namespace ToolsACG.Scenes.Leaderboard
         {
             _view = GetComponent<ILeaderboardView>();
             base.Awake();
-
-            Initialize();
         }
 
         protected override void RegisterActions()
@@ -30,10 +29,9 @@ namespace ToolsACG.Scenes.Leaderboard
             Actions.Add("BTN_BackToMenu", OnBackToMenuButtonClick);
         }
 
-        protected override void SetData()
+        protected override void Initialize()
         {
-            // TODO: initialize model with services data (if it's not initialized externally using Data property).
-            // TODO: call view methods to display data.
+            _view.TurnGeneralContainer(false);
         }
 
         #endregion
@@ -54,31 +52,34 @@ namespace ToolsACG.Scenes.Leaderboard
 
         #region Bus callbacks
 
-        private async void OnPlayerDead(PlayerDead pPlayerDead)
+        private void OnPlayerDead(PlayerDead pPlayerDead)
         {
             RestartView();
+            DoEntranceWithDelay(_data.DelayBeforeEnter, SetScoreToAPI);
+        }
 
-            await Task.Delay(2000);
-            _view.TurnGeneralContainer(true);
-            View.DoFadeTransition(1, 0.3f);
-            await Task.Delay(300);
+        #endregion
 
-            SetScore();
+        #region Button callbacks
 
+        private void OnBackToMenuButtonClick()
+        {
+            _ = EventManager.GetUiBus().RaiseEvent(new BackToMenuButtonClicked());
+            DoExitWithDelay(0);
         }
 
         #endregion
 
         #region Apis Management
 
-        private void SetScore()
+        private void SetScoreToAPI()
         {
             DreamloLeaderboardService.Instance.SetScore(PersistentDataManager.UserName, PersistentDataManager.LastScore
              ,
                   pResponse =>
                  {
                      if (pResponse.Contains("OK"))
-                         GetScores();
+                         GetScoresFromApi();
                      else
                      {
                          _view.TurnErrorMessage(true);
@@ -94,13 +95,13 @@ namespace ToolsACG.Scenes.Leaderboard
              );
         }
 
-        private void GetScores()
+        private void GetScoresFromApi()
         {
-            DreamloLeaderboardService.Instance.GetRangeScores(8
+            DreamloLeaderboardService.Instance.GetRangeScores(_data.LeaderboardPositionsAmount
              ,
                  pResponse =>
                  {
-                     _view.SetLeaderboardData(pResponse.Dreamlo.Leaderboard.Entry);
+                     _view.SetLeaderboardData(pResponse.Dreamlo.Leaderboard.Entry, _data.LeaderboardPlayerColor);
                      _view.TurnRowsContainer(true);
                      _view.TurnLoadingSpinner(false);
                  }
@@ -115,31 +116,38 @@ namespace ToolsACG.Scenes.Leaderboard
 
         #endregion
 
-        #region Button callbacks
-
-        private async void OnBackToMenuButtonClick()
-        {
-            View.DoFadeTransition(0, 0.3f);
-            _=EventManager.GetUiBus().RaiseEvent(new BackToMenuButtonClicked());
-            await Task.Delay(300);
-            _view.TurnGeneralContainer(false);
-        }
-
-        #endregion
-
-        private void Initialize()
-        {
-            _view.TurnGeneralContainer(false);
-        }
+        #region Navigation
 
         private void RestartView()
         {
             _view.TurnErrorMessage(false);
             _view.TurnRowsContainer(false);
             _view.TurnLoadingSpinner(true);
+            _view.RestartLeaderboardRows();
             View.SetViewAlpha(0);
         }
 
+        private async void DoEntranceWithDelay(float pDelay, Action pOnComplete = null)
+        {
+            await Task.Delay((int)(pDelay * 1000));
+            View.SetViewAlpha(0);
+            _view.TurnGeneralContainer(true);
+            View.DoFadeTransition(1, _data.FadeTransitionDuration);
+            await Task.Delay((int)(_data.FadeTransitionDuration * 1000));
+            pOnComplete?.Invoke();
+        }
+
+        private async void DoExitWithDelay(float pDelay, Action pOnComplete = null)
+        {
+            await Task.Delay((int)(pDelay * 1000));
+            View.SetViewAlpha(1);
+            View.DoFadeTransition(0, _data.FadeTransitionDuration);
+            await Task.Delay((int)(_data.FadeTransitionDuration * 1000));
+            _view.TurnGeneralContainer(false);
+            pOnComplete?.Invoke();
+        }
+
+        #endregion
     }
 }
 

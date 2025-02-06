@@ -13,8 +13,9 @@ namespace ToolsACG.Scenes
 
         protected virtual void Awake()
         {
-            RegisterActions();
             View = GetComponent<ModuleView>();
+            Initialize();
+            RegisterActions();
         }
 
         public virtual void OnClick(Button pButton)
@@ -48,6 +49,6 @@ namespace ToolsACG.Scenes
         }
 
         protected abstract void RegisterActions();
-        protected abstract void SetData();
+        protected abstract void Initialize();
     }
 }

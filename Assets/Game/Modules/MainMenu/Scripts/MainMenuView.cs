@@ -19,24 +19,13 @@ namespace ToolsACG.Scenes.MainMenu
         [SerializeField] private GameObject _generalContainer;
         [Space]
         [SerializeField] private TMP_InputField _userNameInputField;
-        public string UserName
-        {
-            get
-            {
-                return _userNameInputField.text;
-            }
-        }
+        public string UserName { get { return _userNameInputField.text; } }
         [Space]
         [SerializeField] private Button _playButton;
 
         #endregion
 
         #region Protected Methods     
-
-        protected override void Awake()
-        {
-            base.Awake();
-        }
 
         private void OnEnable()
         {
@@ -47,6 +36,7 @@ namespace ToolsACG.Scenes.MainMenu
         {
             _userNameInputField.onValueChanged.RemoveListener(OnUserNameInputValueChanged);
         }
+
         #endregion
 
         #region View Methods

@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b4e746e23ad7374daf067d08cc38225, type: 3}
+  m_Name: PoolsConfiguration
+  m_EditorClassIdentifier: 
+  ParentName: PooledGameObjects
+  ParentPosition: {x: -30, y: 0, z: 0}
+  PoolsData:
+  - Name: Player
+    Prefab: {fileID: 6392037772438142911, guid: 3a6d11e8e928a20468bca9791e570fcf, type: 3}
+    Escalation: 1
+    InitialSize: 1
+    MaxSize: 1
+  - Name: Asteroid
+    Prefab: {fileID: 5961479663435248300, guid: 7dae3a082924bb646bee9fc9bdedd949, type: 3}
+    Escalation: 2
+    InitialSize: 24
+    MaxSize: 36
+  - Name: Bullet
+    Prefab: {fileID: 5441447190849063564, guid: 71f697faf6ac6cc45b6b1916c32ea00c, type: 3}
+    Escalation: 2
+    InitialSize: 8
+    MaxSize: 12
+  - Name: FX_AsteroidFragments
+    Prefab: {fileID: 9105732024619284605, guid: 15a0716d18e8ae8479958055637316d1, type: 3}
+    Escalation: 2
+    InitialSize: 8
+    MaxSize: 24
+  - Name: FX_BulletFragments
+    Prefab: {fileID: 2428115606408901077, guid: 1961a521906d9914e96763b873c89947, type: 3}
+    Escalation: 2
+    InitialSize: 8
+    MaxSize: 24
+  - Name: FX_ShipDestruction
+    Prefab: {fileID: 537336933992516676, guid: 9cc9d7dc0f95acf4396b7cbc6d73cbb5, type: 3}
+    Escalation: 1
+    InitialSize: 1
+    MaxSize: 1
+  - Name: Sound
+    Prefab: {fileID: 4096864735999064139, guid: a02ec3454c3504c428d23b87c11e28e1, type: 3}
+    Escalation: 2
+    InitialSize: 20
+    MaxSize: 80

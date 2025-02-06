@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d263aaf7a7cb92d4fa62884e3c07792c, type: 3}
   m_Name: MainMenuModel
   m_EditorClassIdentifier: 
+  DelayBeforeEnter: 0.7
+  FadeTransitionDuration: 0.3

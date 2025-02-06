@@ -1,6 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using ToolsACG.Utils.Events;
 using UnityEngine;
 
@@ -13,11 +12,9 @@ namespace ToolsACG.Scenes.Pause
 
         private IPauseView _view;
         [SerializeField] private PauseModel _data;
-
+        [Space]
         private bool _inPause;
 
-        [SerializeField] private SliderEventsHandler _musicVolumeSliderEventHandler;
-        [SerializeField] private SliderEventsHandler _effectsVolumeSliderEventHandler;
         #endregion
 
         #region Protected Methods
@@ -25,7 +22,6 @@ namespace ToolsACG.Scenes.Pause
         protected override void Awake()
         {
             _view = GetComponent<IPauseView>();
-            Initialize();
             base.Awake();
         }
 
@@ -37,12 +33,18 @@ namespace ToolsACG.Scenes.Pause
             Actions.Add("TGL_FullScreen", OnFullScreenToggleValueChanged);
             Actions.Add("BTN_LeaveGame", OnLeaveGameButtonClicked);
             Actions.Add("BTN_Resume", OnResumeButtonClicked);
+
+            _view.OnMusicSliderEndEdit += SaveMusicVolume;
+            _view.OnEffectsSliderEndEdit += SaveEffectsVolume;
         }
 
-        protected override void SetData()
+        protected override void Initialize()
         {
-            // TODO: initialize model with services data (if it's not initialized externally using Data property).
-            // TODO: call view methods to display data.
+            _view.TurnGeneralContainer(false);
+
+            InitializeAvailableResolutions();
+            InitializeVolumeSliders();
+            InitializeToggles();
         }
 
         #endregion
@@ -53,9 +55,6 @@ namespace ToolsACG.Scenes.Pause
         {
             EventManager.GetGameplayBus().AddListener<PauseKeyClicked>(OnPauseKeyClicked);
             EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
-
-            _musicVolumeSliderEventHandler.OnEndDrag += SaveMusicVolume;
-            _effectsVolumeSliderEventHandler.OnEndDrag += SaveEffectsVolume;
         }
 
         private void OnDisable()
@@ -72,21 +71,30 @@ namespace ToolsACG.Scenes.Pause
         {
             _inPause = !_inPause;
             EventManager.GetGameplayBus().RaiseEvent(new PauseStateChanged() { InPause = _inPause });
+
             _view.TurnGeneralContainer(_inPause);
 
             if (_inPause)
+            {
+                View.SetViewAlpha(1);
                 Time.timeScale = 0;
+            }
             else
+            {
                 Time.timeScale = 1;
+            }
+
+            Debug.Log(string.Format("- PAUSE - Pause state changed to {0}", _inPause));
         }
 
         private void OnGameLeaved(GameLeaved pGameLeaved)
         {
             _inPause = false;
             EventManager.GetGameplayBus().RaiseEvent(new PauseStateChanged() { InPause = _inPause });
-            _view.TurnGeneralContainer(_inPause);
+            DoExitWithDelay(0);
 
             Time.timeScale = 1;
+            Debug.Log(string.Format("- PAUSE - Pause state changed to {0}", _inPause));
         }
 
         #endregion
@@ -97,7 +105,6 @@ namespace ToolsACG.Scenes.Pause
         {
             EventManager.GetUiBus().RaiseEvent(new MusicVolumeUpdated() { Value = _view.MusicVolume });
         }
-
         private void OnEffectsSliderValueChaged()
         {
             EventManager.GetUiBus().RaiseEvent(new EffectsVolumeUpdated() { Value = _view.EffectsVolume });
@@ -105,15 +112,13 @@ namespace ToolsACG.Scenes.Pause
 
         private void OnResolutionDropdownValueChanged()
         {
-            ScreenController.UpdateResolution(_view.ResolutionIndex);
-            EventManager.GetUiBus().RaiseEvent(new ResolutionUpdated() { Index = _view.ResolutionIndex });
+            ScreenManager.UpdateResolution(_view.ResolutionIndex);
             PlayerPrefsManager.SetInt(PlayerPrefsKeys.RESOLUTION_INDEX_KEY, _view.ResolutionIndex);
         }
 
         private void OnFullScreenToggleValueChanged()
         {
-            ScreenController.UpdateFullScreenMode(_view.FullScreen);
-            EventManager.GetUiBus().RaiseEvent(new FullScreenModeUpdated() { Active = _view.FullScreen });
+            ScreenManager.UpdateFullScreenMode(_view.FullScreen);
             PlayerPrefsManager.SetInt(PlayerPrefsKeys.FULL_SCREEN_MODE_KEY, _view.FullScreen ? 1 : 0);
         }
 
@@ -127,38 +132,24 @@ namespace ToolsACG.Scenes.Pause
             OnPauseKeyClicked(null);
         }
 
+        private void SaveMusicVolume(float pValue)
+        {
+            PlayerPrefsManager.SetFloat(PlayerPrefsKeys.MUSIC_VOLUME_KEY, pValue);
+        }
+        private void SaveEffectsVolume(float pValue)
+        {
+            PlayerPrefsManager.SetFloat(PlayerPrefsKeys.EFFECTS_VOLUME_KEY, pValue);
+        }
+
         #endregion
 
-        private void Initialize()
-        {
-            _view.TurnGeneralContainer(false);
-            InitializeAvailableResolutions();
-            InitializeVolumeSliders();
-            InitializeToggles();
-        }
-
-        private void SaveMusicVolume()
-        {
-            PlayerPrefsManager.SetFloat(PlayerPrefsKeys.MUSIC_VOLUME_KEY, _view.MusicVolume);
-
-        }
-        private void SaveEffectsVolume()
-        {
-            PlayerPrefsManager.SetFloat(PlayerPrefsKeys.EFFECTS_VOLUME_KEY, _view.EffectsVolume);
-        }
+        #region initialization
 
         private void InitializeAvailableResolutions()
         {
-            List<Vector2Int> availableResolutions = Screen.resolutions.Select(res => new Vector2Int(res.width, res.height)).Distinct().ToList();
-
-            List<string> options = new List<string>();
-
-            foreach (Vector2Int resolution in availableResolutions)
-                options.Add(string.Format("{0}x{1}", resolution.x, resolution.y));
-
             int resolutionIndex = PlayerPrefsManager.GetInt(PlayerPrefsKeys.RESOLUTION_INDEX_KEY, 0);
-            ScreenController.UpdateResolution(resolutionIndex);
-            _view.SetResolutionsOptionsAndIndex(options, resolutionIndex);
+            ScreenManager.UpdateResolution(resolutionIndex);
+            _view.SetResolutionsOptionsAndIndex(ScreenManager.AvailableResolutionsOptions, resolutionIndex);
         }
 
         private void InitializeVolumeSliders()
@@ -175,11 +166,30 @@ namespace ToolsACG.Scenes.Pause
         private void InitializeToggles()
         {
             bool fullScreen = Convert.ToBoolean(PlayerPrefsManager.GetInt(PlayerPrefsKeys.FULL_SCREEN_MODE_KEY, 0));
-            ScreenController.UpdateFullScreenMode(fullScreen);
+            ScreenManager.UpdateFullScreenMode(fullScreen);
             _view.SetFullScreenMode(fullScreen);
         }
+
+        #endregion
+
+        #region Navigation
+
+        private async void DoExitWithDelay(float pDelay, Action pOnComplete = null)
+        {
+            await Task.Delay((int)(pDelay * 1000));
+            View.SetViewAlpha(1);
+            View.DoFadeTransition(0, _data.FadeTransitionDuration);
+            await Task.Delay((int)(_data.FadeTransitionDuration * 1000));
+            _view.TurnGeneralContainer(false);
+            pOnComplete?.Invoke();
+        }
+
+        #endregion
     }
 }
+
+#region IEvents
+
 public class PauseStateChanged : IEvent
 {
     public bool InPause { get; set; }
@@ -194,15 +204,9 @@ public class EffectsVolumeUpdated : IEvent
 {
     public float Value { get; set; }
 }
-
-public class ResolutionUpdated : IEvent
-{
-    public int Index { get; set; }
-}
-public class FullScreenModeUpdated : IEvent
-{
-    public bool Active { get; set; }
-}
 public class GameLeaved : IEvent
 {
+
 }
+
+#endregion

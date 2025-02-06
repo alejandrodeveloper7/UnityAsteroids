@@ -13,15 +13,4 @@ MonoBehaviour:
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
   HealthPoints: 3
-  HealthPointSprite: {fileID: 21300000, guid: 9e35a99cab03a18438ff64d63d4f0d34, type: 3}
-  emptyHealtPointSprite: {fileID: 21300000, guid: 6377f62c0a062444bbe6098be6e64562, type: 3}
-  ShieldBarSprite: {fileID: 21300000, guid: 15fef4b2d89d3ae4d994847203617c77, type: 3}
-  FullShieldBarSprite: {fileID: 21300000, guid: aa08c377db2f15a429e91bc58d788b30, type: 3}
-  ShieldSliderMinValue: 20
-  ShieldRecoveryTime: 10
-  ShieldColor: {r: 0, g: 0.6712427, b: 1, a: 1}
-  FadeInDuration: 0.5
-  FadeOutDuration: 0.5
-  BlickDuration: 0.3
-  BlinkMinAlpha: 0.5
-  BlinkMaxAlpha: 0.8
+  ShieldRecoveryTime: 40

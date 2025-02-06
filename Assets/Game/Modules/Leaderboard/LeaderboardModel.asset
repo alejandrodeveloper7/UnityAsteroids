@@ -12,3 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2a3f166e3684914caee24da049eeef9, type: 3}
   m_Name: LeaderboardModel
   m_EditorClassIdentifier: 
+  DelayBeforeEnter: 2
+  FadeTransitionDuration: 0.3
+  LeaderboardPositionsAmount: 8
+  LeaderboardPlayerColor: {r: 0, g: 0.6192715, b: 1, a: 1}

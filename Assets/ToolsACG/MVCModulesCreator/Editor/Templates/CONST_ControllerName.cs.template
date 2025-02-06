@@ -25,10 +25,9 @@ namespace ToolsACG.Scenes.CONST_ModuleName
             // TODO: initialize dictionaries with actions for buttons, toggles, sliders, input fields and dropdowns.      
         }
 
-        protected override void SetData()
+        protected override void Initialize()
         {
-            // TODO: initialize model with services data (if it's not initialized externally using Data property).
-            // TODO: call view methods to display data.
+            // TODO: initialize view and controller
         }
 
         #endregion           

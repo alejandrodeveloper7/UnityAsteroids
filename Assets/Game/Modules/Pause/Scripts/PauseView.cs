@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,16 +10,20 @@ namespace ToolsACG.Scenes.Pause
     {
         void TurnGeneralContainer(bool pState);
 
+        void SetMusicVolume(float pValue);
         float MusicVolume { get; }
+       
+        void SetEffectsVolume(float pValue);
         float EffectsVolume { get; }
+       
+        void SetResolutionsOptionsAndIndex(List<string> pOptions, int pSelectedIndex);
         int ResolutionIndex { get; }
+     
+        void SetFullScreenMode(bool pState);
         bool FullScreen { get; }
 
-
-        void SetMusicVolume(float pValue);
-        void SetEffectsVolume(float pValue);
-        void SetResolutionsOptionsAndIndex(List<string> pOptions, int pSelectedIndex);
-        void SetFullScreenMode(bool pState);
+        Action<float> OnMusicSliderEndEdit { get; set; }
+        Action<float> OnEffectsSliderEndEdit { get; set; }
     }
 
     public class PauseView : ModuleView, IPauseView
@@ -30,9 +35,13 @@ namespace ToolsACG.Scenes.Pause
 
         [SerializeField] private Slider _musicSlider;
         public float MusicVolume { get { return _musicSlider.value; } }
+        [SerializeField] private SliderEventsHandler _musicVolumeSliderEventHandler;
+        public Action<float> OnMusicSliderEndEdit { get; set; }
         [Space]
         [SerializeField] private Slider _effectsSlider;
         public float EffectsVolume { get { return _effectsSlider.value; } }
+        [SerializeField] private SliderEventsHandler _effectsVolumeSliderEventHandler;
+        public Action<float> OnEffectsSliderEndEdit { get; set; }
         [Space]
         [SerializeField] private TMP_Dropdown _resolutionDropdown;
         public int ResolutionIndex { get { return _resolutionDropdown.value; } }
@@ -44,11 +53,17 @@ namespace ToolsACG.Scenes.Pause
 
         #region Protected Methods     
 
-        protected override void Awake()
+        private void OnEnable()
         {
-            base.Awake();
+            _musicVolumeSliderEventHandler.OnEndDrag += MusicSliderEndEdit;
+            _effectsVolumeSliderEventHandler.OnEndDrag += EffectsSliderEndEdit;
         }
 
+        private void OnDisable()
+        {
+            _musicVolumeSliderEventHandler.OnEndDrag -= MusicSliderEndEdit;
+            _effectsVolumeSliderEventHandler.OnEndDrag -= EffectsSliderEndEdit;
+        }
         #endregion
 
         #region View Methods
@@ -82,7 +97,17 @@ namespace ToolsACG.Scenes.Pause
         #endregion
 
         #region Private Methods
-        // TODO: define here methods called from view methods
+
+        private void MusicSliderEndEdit()
+        {
+            OnMusicSliderEndEdit?.Invoke(_musicSlider.value);
+        }
+
+        private void EffectsSliderEndEdit()
+        {
+            OnEffectsSliderEndEdit?.Invoke(_effectsSlider.value);
+        }
+
         #endregion
     }
 }

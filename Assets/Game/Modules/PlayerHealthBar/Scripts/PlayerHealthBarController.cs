@@ -1,7 +1,7 @@
 using DG.Tweening;
-using System.Runtime.CompilerServices;
+using System;
+using System.Threading.Tasks;
 using ToolsACG.Utils.Events;
-using UnityEditor;
 using UnityEngine;
 
 namespace ToolsACG.Scenes.PlayerHealth
@@ -13,9 +13,10 @@ namespace ToolsACG.Scenes.PlayerHealth
 
         private IPlayerHealthBarView _view;
         [SerializeField] private PlayerHealthBarModel _data;
-
+        [Space]
         private PlayerSettings _playersettings;
         private Tween _shieldChargeTween;
+
         #endregion
 
         #region Protected Methods
@@ -24,8 +25,6 @@ namespace ToolsACG.Scenes.PlayerHealth
         {
             _view = GetComponent<IPlayerHealthBarView>();
             base.Awake();
-
-            Initialize();
         }
 
         protected override void RegisterActions()
@@ -33,10 +32,15 @@ namespace ToolsACG.Scenes.PlayerHealth
             // TODO: initialize dictionaries with actions for buttons, toggles, sliders, input fields and dropdowns.      
         }
 
-        protected override void SetData()
+        protected override void Initialize()
         {
-            // TODO: initialize model with services data (if it's not initialized externally using Data property).
-            // TODO: call view methods to display data.
+            _playersettings = ResourcesManager.Instance.PlayerSettings;
+
+            _view.SetHealthPointsSprites(_data.HealthPointSprite, _data.emptyHealtPointSprite);
+            _view.SetShieldSliderSprites(_data.ShieldBarSprite, _data.FullShieldBarSprite);
+
+            _view.SetMaxHealth(_playersettings.HealthPoints);
+            _view.TurnGeneralContainer(false);
         }
 
         #endregion
@@ -50,7 +54,6 @@ namespace ToolsACG.Scenes.PlayerHealth
             EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
             EventManager.GetGameplayBus().AddListener<ShieldStateChanged>(OnShieldStateChanged);
             EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
-
         }
 
         private void OnDisable()
@@ -59,7 +62,7 @@ namespace ToolsACG.Scenes.PlayerHealth
             EventManager.GetGameplayBus().RemoveListener<PlayerDamaged>(OnPlayerDamaged);
             EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
             EventManager.GetGameplayBus().RemoveListener<ShieldStateChanged>(OnShieldStateChanged);
-            EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
+            EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
         }
 
         #endregion
@@ -68,11 +71,8 @@ namespace ToolsACG.Scenes.PlayerHealth
 
         private void OnStartMatch(StartMatch pStartMatch)
         {
-            _view.SetCurrentHealth(_playersettings.HealthPoints);
-            View.SetViewAlpha(0);
-            _view.SetShieldSliderValue(100);
-            _view.TurnGeneralContainer(true);
-            View.DoFadeTransition(1, 0.3f);
+            RestartHealthAndShield();
+            DoEntranceWithDelay(0);
         }
 
         private void OnPlayerDamaged(PlayerDamaged pPlayerDamaged)
@@ -83,7 +83,7 @@ namespace ToolsACG.Scenes.PlayerHealth
         private void OnPlayerDead(PlayerDead pPlayerDead)
         {
             _shieldChargeTween?.Kill();
-            View.DoFadeTransition(0, 0.3f);
+            DoExitWithDelay(0);
         }
 
         private void OnShieldStateChanged(ShieldStateChanged pShieldStateChanged)
@@ -91,9 +91,55 @@ namespace ToolsACG.Scenes.PlayerHealth
             if (pShieldStateChanged.Active)
                 return;
 
-            _view.DoShielSliderTransition(_playersettings.ShieldSliderMinValue, 0.8f);
+            StartLostAndRecoveryShieldProcess();
+        }
 
-            float currentValue = _playersettings.ShieldSliderMinValue;
+        private void OnGameLeaved(GameLeaved pGameLeaved)
+        {
+            _shieldChargeTween?.Kill();
+            DoExitWithDelay(0);
+        }
+
+        #endregion
+
+        #region Navigation
+
+        private async void DoEntranceWithDelay(float pDelay, Action pOnComplete = null)
+        {
+            await Task.Delay((int)(pDelay * 1000));
+            View.SetViewAlpha(0);
+            _view.TurnGeneralContainer(true);
+            View.DoFadeTransition(1, _data.FadeTransitionDuration);
+            await Task.Delay((int)(_data.FadeTransitionDuration * 1000));
+            pOnComplete?.Invoke();
+        }
+
+        private async void DoExitWithDelay(float pDelay, Action pOnComplete = null)
+        {
+            await Task.Delay((int)(pDelay * 1000));
+            View.SetViewAlpha(1);
+            View.DoFadeTransition(0, _data.FadeTransitionDuration);
+            await Task.Delay((int)(_data.FadeTransitionDuration * 1000));
+            _view.TurnGeneralContainer(false);
+            pOnComplete?.Invoke();
+        }
+
+        #endregion
+
+        #region Functionality
+
+        private void RestartHealthAndShield()
+        {
+            _view.SetCurrentHealth(_playersettings.HealthPoints);
+            _view.SetShieldSliderValue(100);
+        }
+
+        private async void StartLostAndRecoveryShieldProcess()
+        {
+            _view.DoShielSliderTransition(_data.ShieldLostSliderMinValue, _data.ShieldSliderTransitionDuration);
+            await Task.Delay((int)(_data.ShieldSliderTransitionDuration * 1000));
+
+            float currentValue = _data.ShieldLostSliderMinValue;
 
             _shieldChargeTween = DOTween.To(() => currentValue, x => currentValue = x, 100, _playersettings.ShieldRecoveryTime)
                 .SetEase(Ease.Linear)
@@ -106,25 +152,8 @@ namespace ToolsACG.Scenes.PlayerHealth
                     _view.SetShieldSliderValue(100);
                     EventManager.GetGameplayBus().RaiseEvent(new ShieldStateChanged() { Active = true });
                 });
-
-        }
-
-        private void OnGameLeaved(GameLeaved pGameLeaved)
-        {
-            _shieldChargeTween?.Kill();
-            View.DoFadeTransition(0, 0.3f);
         }
 
         #endregion
-
-        private void Initialize()
-        {
-            _playersettings = ResourcesManager.Instance.PlayerSettings;
-            _view.TurnGeneralContainer(false);
-
-            _view.SetHealthPointsSprites(_playersettings.HealthPointSprite, _playersettings.emptyHealtPointSprite);
-            _view.SetShieldSliderSprites(_playersettings.ShieldBarSprite, _playersettings.FullShieldBarSprite);
-            _view.SetMaxHealth(_playersettings.HealthPoints);
-        }
     }
 }

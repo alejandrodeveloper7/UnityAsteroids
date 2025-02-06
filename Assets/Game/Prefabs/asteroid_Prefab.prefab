@@ -197,5 +197,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.03
-  _edgeRepositionOffset: 0.02
+  _edgeOffset: 0.09
+  _edgeRepositionOffset: 0.08
