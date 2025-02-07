@@ -1,13 +1,13 @@
 using ToolsACG.Utils.Pooling;
 using UnityEngine;
 
-public class ParticleSystemController : MonoBehaviour, IPooleableItem
+public class ParticleSystemController : MonoBehaviour, IPooleableGameObject
 {
     #region Fields
 
     [Header("IPooleableItem")]
-    SimplePool _originPool;
-    public SimplePool OriginPool { get { return _originPool; } set { _originPool = value; } }
+    SimpleGameObjectPool _originPool;
+    public SimpleGameObjectPool OriginPool { get { return _originPool; } set { _originPool = value; } }
     bool _readyToUse;
     public bool ReadyToUse { get { return _readyToUse; } set { _readyToUse = value; } }
 

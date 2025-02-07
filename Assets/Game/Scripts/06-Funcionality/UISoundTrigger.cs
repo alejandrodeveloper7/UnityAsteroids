@@ -4,8 +4,8 @@ using UnityEngine.EventSystems;
 
 public class UISoundTrigger : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 {
-    [SerializeField]private SO_Sound clickSound;
-    [SerializeField] private SO_Sound hoverSound;
+    [SerializeField]private SO_Sound[] clickSound;
+    [SerializeField] private SO_Sound[] hoverSound;
 
     #region Interface Handlers
 
@@ -15,13 +15,13 @@ public class UISoundTrigger : MonoBehaviour, IPointerClickHandler, IPointerEnter
             return;
 
         if (clickSound != null)
-            EventManager.GetUiBus().RaiseEvent(new GenerateUISound() { SoundsData = clickSound });
+            EventManager.GetGameplayBus().RaiseEvent(new Generate2DSound() { SoundsData = clickSound });
     }
 
     public void OnPointerEnter(PointerEventData pEventData)
     {
         if (hoverSound != null)
-            EventManager.GetUiBus().RaiseEvent(new GenerateUISound() { SoundsData = hoverSound });
+            EventManager.GetGameplayBus().RaiseEvent(new Generate2DSound() { SoundsData = hoverSound });
     }
 
     #endregion

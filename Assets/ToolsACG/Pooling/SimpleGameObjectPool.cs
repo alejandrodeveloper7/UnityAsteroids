@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace ToolsACG.Utils.Pooling
 {
-    public interface IPooleableItem
+    public interface IPooleableGameObject
     {
-        SimplePool OriginPool
+        SimpleGameObjectPool OriginPool
         {
             get;
             set;
@@ -19,13 +19,13 @@ namespace ToolsACG.Utils.Pooling
 
         //QUICK IMPLEMENTATION
 
-        //SimplePool _originPool;
-        //public SimplePool OriginPool { get { return _originPool; } set { _originPool = value; } }
+        //SimpleGameObjectPool _originPool;
+        //public SimpleGameObjectPool OriginPool { get { return _originPool; } set { _originPool = value; } }
         //bool _readyToUse;
         //public bool ReadyToUse { get { return _readyToUse; } set { _readyToUse = value; } }
     }
 
-    public class SimplePool
+    public class SimpleGameObjectPool
     {
         #region Variables
 
@@ -60,22 +60,22 @@ namespace ToolsACG.Utils.Pooling
 
         #region Constuctors
 
-        public SimplePool(GameObject objectCopied, Transform parent)
+        public SimpleGameObjectPool(GameObject objectCopied, Transform parent)
             : this(objectCopied, parent, 0, 1, int.MaxValue)
         {
         }
 
-        public SimplePool(GameObject objectCopied, Transform parent, int initialSize)
+        public SimpleGameObjectPool(GameObject objectCopied, Transform parent, int initialSize)
             : this(objectCopied, parent, initialSize, 1, int.MaxValue)
         {
         }
 
-        public SimplePool(GameObject objectCopied, Transform parent, int initialSize, int scalation)
+        public SimpleGameObjectPool(GameObject objectCopied, Transform parent, int initialSize, int scalation)
             : this(objectCopied, parent, initialSize, scalation, int.MaxValue)
         {
         }
 
-        public SimplePool(GameObject objectPooled, Transform parent, int initialSize, int scalation, int poolMaxSize)
+        public SimpleGameObjectPool(GameObject objectPooled, Transform parent, int initialSize, int scalation, int poolMaxSize)
         {
             if (scalation <= 0)
                 scalation = 1;
@@ -116,7 +116,7 @@ namespace ToolsACG.Utils.Pooling
 
             instance.transform.SetParent(null);
             instance.SetActive(true);
-            instance.GetComponent<IPooleableItem>().ReadyToUse = false;
+            instance.GetComponent<IPooleableGameObject>().ReadyToUse = false;
 
             return instance;
         }
@@ -125,7 +125,7 @@ namespace ToolsACG.Utils.Pooling
 
         public void RecycleItem(GameObject pInstance)
         {
-            IPooleableItem poleableItem = pInstance.GetComponent<IPooleableItem>();
+            IPooleableGameObject poleableItem = pInstance.GetComponent<IPooleableGameObject>();
 
             if (poleableItem == null)
             {
@@ -155,7 +155,7 @@ namespace ToolsACG.Utils.Pooling
         private GameObject ObteinReadyInstance()
         {
             for (int i = 0; i < _availableInstances.Length; i++)
-                if (_availableInstances[i].GetComponent<IPooleableItem>().ReadyToUse)
+                if (_availableInstances[i].GetComponent<IPooleableGameObject>().ReadyToUse)
                     return _availableInstances[i];
 
             return null;
@@ -164,7 +164,7 @@ namespace ToolsACG.Utils.Pooling
         internal GameObject CreateNewInstance()
         {
             GameObject newInstance = UnityEngine.Object.Instantiate(_objectPooled, _parent);
-            IPooleableItem pooleableItem = newInstance.GetComponent<IPooleableItem>();
+            IPooleableGameObject pooleableItem = newInstance.GetComponent<IPooleableGameObject>();
             if(pooleableItem is null)
             {
                 Debug.LogError(string.Format("- POOL - {0} dont have a script with IPooleableITem", _objectPooled.name));

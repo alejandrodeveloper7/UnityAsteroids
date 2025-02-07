@@ -35,20 +35,20 @@ public class PlayerSoundController : MonoBehaviour
 
     private void OnPlayerDead(PlayerDead pPlayerDead)
     {
-        EventManager.GetGameplayBus().RaiseEvent(new GenerateSound() { SoundsData = _shipData.SoundsOnDestruction });
+        EventManager.GetGameplayBus().RaiseEvent(new Generate2DSound() { SoundsData = _shipData.SoundsOnDestruction });
     }
 
     private void OnPlayerDamaged(PlayerDamaged pPlayerDamaged)
     {
-        EventManager.GetGameplayBus().RaiseEvent(new GenerateSound() { SoundsData = _shipData.SoundsOnDamage });
+        EventManager.GetGameplayBus().RaiseEvent(new Generate2DSound() { SoundsData = _shipData.SoundsOnDamage });
     }
 
     private void OnShieldStateChanged(ShieldStateChanged pShieldStateChanged) 
     {
         if(pShieldStateChanged.Active)
-            EventManager.GetGameplayBus().RaiseEvent(new GenerateSound() { SoundsData = _shipData.SoundsOnShieldUp });
+            EventManager.GetGameplayBus().RaiseEvent(new Generate2DSound() { SoundsData = _shipData.SoundsOnShieldUp });
         else
-            EventManager.GetGameplayBus().RaiseEvent(new GenerateSound() { SoundsData = _shipData.SoundsOnShieldDown });
+            EventManager.GetGameplayBus().RaiseEvent(new Generate2DSound() { SoundsData = _shipData.SoundsOnShieldDown });
     }
 
     #endregion

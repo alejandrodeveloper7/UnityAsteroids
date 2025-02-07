@@ -2,13 +2,13 @@ using ToolsACG.Utils.Events;
 using ToolsACG.Utils.Pooling;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour, IPooleableItem
+public class BulletController : MonoBehaviour, IPooleableGameObject
 {
     #region Fields
 
     [Header("IPooleableItem")]
-    SimplePool _originPool;
-    public SimplePool OriginPool { get { return _originPool; } set { _originPool = value; } }
+    SimpleGameObjectPool _originPool;
+    public SimpleGameObjectPool OriginPool { get { return _originPool; } set { _originPool = value; } }
     bool _readyToUse;
     public bool ReadyToUse { get { return _readyToUse; } set { _readyToUse = value; } }
 
@@ -88,7 +88,7 @@ public class BulletController : MonoBehaviour, IPooleableItem
         _screenEdgeTeleporter.EdgeOffsetY = _bulletData.EdgeOffsetY;
         _screenEdgeTeleporter.EdgeRepositionOffsetY = _bulletData.EdgeRepositionOffsetY;
         
-        EventManager.GetGameplayBus().RaiseEvent(new GenerateSound() { SoundsData = _bulletData.SoundsOnShoot });
+        EventManager.GetGameplayBus().RaiseEvent(new Generate2DSound() { SoundsData = _bulletData.SoundsOnShoot });
         Invoke(nameof(CleanBullet), _bulletData.LifeDuration);
     }
 
@@ -100,7 +100,7 @@ public class BulletController : MonoBehaviour, IPooleableItem
     {
         foreach (ParticleSetup item in _bulletData.DestuctionParticles)
         {
-            ParticleSystem pooledParticlesystem = PoolsManager.Instance.GetInstance(item.particleEffectName).GetComponent<ParticleSystem>();
+            ParticleSystem pooledParticlesystem = PoolsManager.Instance.GetGameObjectInstance(item.particleEffectName).GetComponent<ParticleSystem>();
             if (item.particleConfig != null)
                 item.particleConfig.ApplyConfig(pooledParticlesystem);
     

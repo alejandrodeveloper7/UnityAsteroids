@@ -3,13 +3,13 @@ using ToolsACG.Utils.Events;
 using ToolsACG.Utils.Pooling;
 using UnityEngine;
 
-public class AsteroidController : MonoBehaviour, IPooleableItem
+public class AsteroidController : MonoBehaviour, IPooleableGameObject
 {
     #region Fields
     
     [Header("IPooleableItem")]
-    SimplePool _originPool;
-    public SimplePool OriginPool { get { return _originPool; } set { _originPool = value; } }
+    SimpleGameObjectPool _originPool;
+    public SimpleGameObjectPool OriginPool { get { return _originPool; } set { _originPool = value; } }
     bool _readyToUse;
     public bool ReadyToUse { get { return _readyToUse; } set { _readyToUse = value; } }
 
@@ -137,12 +137,12 @@ public class AsteroidController : MonoBehaviour, IPooleableItem
     {
         foreach (ParticleSetup item in _asteroidData.DestuctionParticles)
         {
-            ParticleSystem pooledParticlesystem = PoolsManager.Instance.GetInstance(item.particleEffectName).GetComponent<ParticleSystem>();
+            ParticleSystem pooledParticlesystem = PoolsManager.Instance.GetGameObjectInstance(item.particleEffectName).GetComponent<ParticleSystem>();
             if (item.particleConfig != null)
                 item.particleConfig.ApplyConfig(pooledParticlesystem);
             pooledParticlesystem.transform.position = transform.position;
             pooledParticlesystem.GetComponent<ParticleSystemController>().Play();
-            EventManager.GetGameplayBus().RaiseEvent(new GenerateSound() { SoundsData = _asteroidData.SoundsOnDestruction });
+            EventManager.GetGameplayBus().RaiseEvent(new Generate2DSound() { SoundsData = _asteroidData.SoundsOnDestruction });
         }
     }
 

@@ -108,7 +108,7 @@ public class PlayerCombatController : MonoBehaviour
             return;
         }
 
-        BulletController bulletscript = PoolsManager.Instance.GetInstance(_bulletData.PoolName).GetComponent<BulletController>();
+        BulletController bulletscript = PoolsManager.Instance.GetGameObjectInstance(_bulletData.PoolName).GetComponent<BulletController>();
         bulletscript.transform.SetPositionAndRotation(_bulletSpawnPoint.position, _bulletSpawnPoint.rotation);
         bulletscript.Initialize(_bulletData);
         Invoke(nameof(ShootBullet), _bulletData.BetweenBulletsTime);

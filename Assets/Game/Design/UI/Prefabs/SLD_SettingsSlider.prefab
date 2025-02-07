@@ -288,5 +288,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d44a02d146cb4394fa85f9b2c3a7ca68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickSound: {fileID: 11400000, guid: 7cd3d0a9306794b4688aecbe97605fec, type: 2}
-  hoverSound: {fileID: 0}
+  clickSound:
+  - {fileID: 11400000, guid: 7cd3d0a9306794b4688aecbe97605fec, type: 2}
+  hoverSound: []

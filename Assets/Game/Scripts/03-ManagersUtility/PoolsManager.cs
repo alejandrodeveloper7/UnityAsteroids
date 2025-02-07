@@ -5,13 +5,14 @@ using UnityEngine;
 public class PoolsManager
 {
     #region Fields
-    
+
     public static PoolsManager Instance { get; } = new PoolsManager();
 
-    private static PoolsConfiguration _poolsConfiguration;
-    private static Dictionary<string, SimplePool> _pools;
+    private PoolsConfiguration _poolsConfiguration;
+    private Dictionary<string, SimpleGameObjectPool> _pools;
+    private AudioSourcePool _2DAudioSourcesPool;
     [Space]
-    private static Transform _parentTransform;
+    private Transform _parentTransform;
 
     #endregion
 
@@ -25,6 +26,9 @@ public class PoolsManager
     public void Initialize()
     {
         _poolsConfiguration = ResourcesManager.Instance.PoolsConfiguration;
+
+        Create2DAudioSourcePool();
+
         CreatePoolGameObjectsParent();
         CreatePools();
     }
@@ -32,6 +36,12 @@ public class PoolsManager
     #endregion
 
     #region Pools Creation
+
+    private void Create2DAudioSourcePool()
+    {
+        _2DAudioSourcesPool= new AudioSourcePool(_poolsConfiguration.AudiSourcesPoolInitialSize, _poolsConfiguration.AudiSourcesPoolEscalation, _poolsConfiguration.AudiSourcesPoolMaxSize);
+    }
+
 
     private void CreatePoolGameObjectsParent()
     {
@@ -41,7 +51,7 @@ public class PoolsManager
 
     private void CreatePools()
     {
-        _pools = new Dictionary<string, SimplePool>();
+        _pools = new Dictionary<string, SimpleGameObjectPool>();
 
         foreach (PoolData poolConfiguration in _poolsConfiguration.PoolsData)
             CreatePool(poolConfiguration);
@@ -49,7 +59,7 @@ public class PoolsManager
 
     private void CreatePool(PoolData pConfiguration)
     {
-        SimplePool newPool = new SimplePool(pConfiguration.Prefab, _parentTransform, pConfiguration.InitialSize, pConfiguration.Escalation, pConfiguration.MaxSize);
+        SimpleGameObjectPool newPool = new SimpleGameObjectPool(pConfiguration.Prefab, _parentTransform, pConfiguration.InitialSize, pConfiguration.Escalation, pConfiguration.MaxSize);
         _pools.Add(pConfiguration.Name, newPool);
     }
 
@@ -57,17 +67,22 @@ public class PoolsManager
 
     #region Pools Management
 
-    public GameObject GetInstance(string pPoolName)
+    public AudioSource Get2DAudioSource() 
     {
-        _pools.TryGetValue(pPoolName, out SimplePool pool);
-        
-        if (pool is null) 
+        return _2DAudioSourcesPool.GetInstance();
+    }
+
+    public GameObject GetGameObjectInstance(string pPoolName)
+    {
+        _pools.TryGetValue(pPoolName, out SimpleGameObjectPool pool);
+
+        if (pool is null)
         {
             Debug.LogError(string.Format("Pool with the name {0} not found", pPoolName));
             return null;
         }
 
-        return pool.GetInstance();    
+        return pool.GetInstance();
     }
 
     #endregion

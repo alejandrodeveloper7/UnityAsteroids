@@ -89,7 +89,7 @@ public class BoardManager : MonoBehaviour
 
     private void CreatePlayer()
     {
-        PoolsManager.Instance.GetInstance(_ShipData.PoolName);
+        PoolsManager.Instance.GetGameObjectInstance(_ShipData.PoolName);
         EventManager.GetGameplayBus().RaiseEvent(new PlayerPrepared());
     }
 
@@ -113,7 +113,7 @@ public class BoardManager : MonoBehaviour
     }
     private void CreateAsteroid(SO_Asteroid pData, Vector2 pOriginPosition = default, Vector2 pDirection = default)
     {
-        AsteroidController newAsteroid = PoolsManager.Instance.GetInstance(pData.PoolName).GetComponent<AsteroidController>();
+        AsteroidController newAsteroid = PoolsManager.Instance.GetGameObjectInstance(pData.PoolName).GetComponent<AsteroidController>();
         _currentAsteroids.Add(newAsteroid);
         newAsteroid.Initialize(pData, pOriginPosition, pDirection);
     }

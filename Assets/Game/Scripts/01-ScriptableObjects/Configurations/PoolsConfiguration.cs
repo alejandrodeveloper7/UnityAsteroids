@@ -5,7 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PoolConfiguration", menuName = "ScriptableObjects/Configurations/PoolConfiguration")]
 public class PoolsConfiguration : ScriptableObject
 {
-    [Header("GeneralConfiguration")]
+    [Header("2D AudioSources Configuration")]
+    public int AudiSourcesPoolInitialSize;
+    public int AudiSourcesPoolEscalation;
+    public int AudiSourcesPoolMaxSize;
+
+    [Header("General Configuration")]
     public string ParentName;
     public Vector3 ParentPosition;
 
@@ -19,7 +24,7 @@ public class PoolData
     public string Name;
     public GameObject Prefab;
     [Space]
-    public int Escalation;
     public int InitialSize;
+    public int Escalation;
     public int MaxSize;
 }

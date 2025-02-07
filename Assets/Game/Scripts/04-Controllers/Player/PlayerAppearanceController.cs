@@ -152,7 +152,7 @@ public class PlayerAppearanceController : MonoBehaviour
     {
         foreach (ParticleSetup item in _shipData.DestuctionParticles)
         {
-            ParticleSystem pooledParticlesystem = PoolsManager.Instance.GetInstance(item.particleEffectName).GetComponent<ParticleSystem>();
+            ParticleSystem pooledParticlesystem = PoolsManager.Instance.GetGameObjectInstance(item.particleEffectName).GetComponent<ParticleSystem>();
             if (item.particleConfig != null)
                 item.particleConfig.ApplyConfig(pooledParticlesystem);
             pooledParticlesystem.transform.position = transform.position;
