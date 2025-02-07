@@ -60,7 +60,7 @@ public class ResourcesManager
         if (_scriptableObjects.TryGetValue(pName, out ScriptableObject obj))
             return obj as T;
 
-        Debug.LogError(string.Format("{0} not found", pName));
+        Debug.LogError(string.Format("{0} scriptableobject not found", pName));
         return null;
     }
 

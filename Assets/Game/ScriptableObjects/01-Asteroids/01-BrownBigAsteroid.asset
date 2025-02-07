@@ -21,8 +21,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2cf2067bb04929340963c501ce307756, type: 3}
   - {fileID: 21300000, guid: fd615d6885e6d364e9d098950619e098, type: 3}
   AsteroidSpawnAngle: 60
-  Speed: 100
   PosibleTorque: 80
+  Speed: 100
   PointsValue: 10
   EdgeOffsetY: 0.11
   EdgeRepositionOffsetY: 0.1

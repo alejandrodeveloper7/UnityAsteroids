@@ -379,8 +379,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &40768464
 Rigidbody2D:
   serializedVersion: 4
@@ -578,8 +580,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &52668004
 Rigidbody2D:
   serializedVersion: 4
@@ -777,8 +781,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &116033783
 Rigidbody2D:
   serializedVersion: 4
@@ -10863,8 +10869,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &229169154
 Rigidbody2D:
   serializedVersion: 4
@@ -11062,8 +11070,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &249417227
 Rigidbody2D:
   serializedVersion: 4
@@ -11261,8 +11271,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &250735953
 Rigidbody2D:
   serializedVersion: 4
@@ -11460,8 +11472,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.03
-  _edgeRepositionOffset: 0.02
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &269087367
 Rigidbody2D:
   serializedVersion: 4
@@ -11646,8 +11660,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &333363166
 Rigidbody2D:
   serializedVersion: 4
@@ -21731,8 +21747,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.03
-  _edgeRepositionOffset: 0.02
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &467299764
 Rigidbody2D:
   serializedVersion: 4
@@ -26709,8 +26727,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &533084900
 Rigidbody2D:
   serializedVersion: 4
@@ -31628,8 +31648,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &552598672
 Rigidbody2D:
   serializedVersion: 4
@@ -36728,8 +36750,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.03
-  _edgeRepositionOffset: 0.02
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &681574614
 Rigidbody2D:
   serializedVersion: 4
@@ -36946,8 +36970,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &753588485
 Rigidbody2D:
   serializedVersion: 4
@@ -37145,8 +37171,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &765232601
 Rigidbody2D:
   serializedVersion: 4
@@ -37344,8 +37372,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &809753914
 Rigidbody2D:
   serializedVersion: 4
@@ -37543,8 +37573,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &857978852
 Rigidbody2D:
   serializedVersion: 4
@@ -37883,8 +37915,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.03
-  _edgeRepositionOffset: 0.02
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &871319934
 Rigidbody2D:
   serializedVersion: 4
@@ -43252,8 +43286,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.03
-  _edgeRepositionOffset: 0.02
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &907393063
 Rigidbody2D:
   serializedVersion: 4
@@ -53413,7 +53449,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4267d1bd89d7b4c43985322898dff1b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraConfiguration: {fileID: 11400000, guid: 6ff2c10ef750b7d4ebf86cb42f426687, type: 2}
 --- !u!1 &1034432261
 GameObject:
   m_ObjectHideFlags: 0
@@ -63431,8 +63466,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.03
-  _edgeRepositionOffset: 0.02
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!114 &1057763449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68489,8 +68526,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.03
-  _edgeRepositionOffset: 0.02
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &1067255356
 Rigidbody2D:
   serializedVersion: 4
@@ -68657,7 +68696,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4321c92fd559a3f4d9dbb2a57ce25973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _configuration: {fileID: 11400000, guid: 5ba58abcd11ee9f4d818218d91e916fe, type: 2}
   _backgroundSprite: {fileID: 2096259591}
 --- !u!114 &1068588451
 MonoBehaviour:
@@ -68671,7 +68709,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05995bbaa010b464b87089e671444b5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _configuration: {fileID: 11400000, guid: eacb28e68d527cd408c384823929ae7c, type: 2}
 --- !u!4 &1068588452
 Transform:
   m_ObjectHideFlags: 0
@@ -88792,8 +88829,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &1454048737
 Rigidbody2D:
   serializedVersion: 4
@@ -89414,8 +89453,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &1517872992
 Rigidbody2D:
   serializedVersion: 4
@@ -89613,8 +89654,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.03
-  _edgeRepositionOffset: 0.02
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &1625247391
 Rigidbody2D:
   serializedVersion: 4
@@ -89799,8 +89842,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &1633435161
 Rigidbody2D:
   serializedVersion: 4
@@ -94899,8 +94944,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &1687436788
 Rigidbody2D:
   serializedVersion: 4
@@ -95098,8 +95145,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &1695633990
 Rigidbody2D:
   serializedVersion: 4
@@ -95438,8 +95487,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &1752694775
 Rigidbody2D:
   serializedVersion: 4
@@ -95637,8 +95688,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &1770410275
 Rigidbody2D:
   serializedVersion: 4
@@ -105709,8 +105762,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &1999646526
 Rigidbody2D:
   serializedVersion: 4
@@ -110809,8 +110864,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &2065687538
 Rigidbody2D:
   serializedVersion: 4
@@ -111233,8 +111290,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b2224fbf9cc3a41892daff269830eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgeOffset: 0.09
-  _edgeRepositionOffset: 0.08
+  _EdgeOffsetY: 0
+  _EdgeRepositionOffsetY: 0
+  _EdgeOffsetX: 0
+  _EdgeRepositionOffsetX: 0
 --- !u!50 &2116367444
 Rigidbody2D:
   serializedVersion: 4
