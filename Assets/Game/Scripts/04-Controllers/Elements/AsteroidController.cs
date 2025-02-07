@@ -18,6 +18,7 @@ public class AsteroidController : MonoBehaviour, IPooleableItem
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidBody;
     private ScreenEdgeTeleport _screenEdgeTeleporter;
+    private Destructible _destructible;
 
     [Header("Data")]
     private SO_Asteroid _asteroidData;
@@ -30,18 +31,7 @@ public class AsteroidController : MonoBehaviour, IPooleableItem
     private void Awake()
     {
         GetReferences();
-    }
-    
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        collision.TryGetComponent(out BulletController detectedBullet);
-        if (detectedBullet != null)
-        {
-            GenerateDestructionParticles();
-            EventManager.GetGameplayBus().RaiseEvent(new AsteroidDestroyed() { AsteroidScript = this, AsteroidData = _asteroidData, Position = transform.position, Direction = _direction });
-            CleanAsteroid();
-        }
-    }
+    }   
 
     #endregion
 
@@ -53,12 +43,15 @@ public class AsteroidController : MonoBehaviour, IPooleableItem
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidBody = GetComponent<Rigidbody2D>();
         _screenEdgeTeleporter = GetComponent<ScreenEdgeTeleport>();
+        _destructible = GetComponent<Destructible>();
     }
 
     public void Initialize(SO_Asteroid pData, Vector2 pPosition = default, Vector2 pDirection = default)
     {
         _asteroidData = pData;
         _direction = pDirection;
+
+        _destructible.OnDestroyed += AsteroidDestroyed;
 
         int spriteRandomValue = Random.Range(0, _asteroidData.possibleSprites.Length);
         _spriteRenderer.sprite = _asteroidData.possibleSprites[spriteRandomValue];
@@ -84,7 +77,7 @@ public class AsteroidController : MonoBehaviour, IPooleableItem
         _screenEdgeTeleporter.EdgeRepositionOffsetY = _asteroidData.EdgeRepositionOffsetY;
     }
 
-    #endregion
+    #endregion    
 
     #region Movement and Detection
 
@@ -152,9 +145,18 @@ public class AsteroidController : MonoBehaviour, IPooleableItem
             EventManager.GetGameplayBus().RaiseEvent(new GenerateSound() { SoundsData = _asteroidData.SoundsOnDestruction });
         }
     }
-   
+
+    private void AsteroidDestroyed()
+    {
+        GenerateDestructionParticles();
+        EventManager.GetGameplayBus().RaiseEvent(new AsteroidDestroyed() { AsteroidScript = this, AsteroidData = _asteroidData, Position = transform.position, Direction = _direction });
+        CleanAsteroid();
+    }
+
     public void CleanAsteroid()
     {
+        _destructible.OnDestroyed -= AsteroidDestroyed;
+
         StopMovement();
         TurnDetection(false);
         _originPool.RecycleItem(gameObject);
