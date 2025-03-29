@@ -16,6 +16,7 @@ MonoBehaviour:
   IsActive: 1
   Sprite: {fileID: 21300000, guid: b5b582aca19ea6543b1f1169d34626b8, type: 3}
   PoolName: Bullet
+  Color: {r: 1, g: 1, b: 1, a: 1}
   Speed: 600
   LifeDuration: 1
   BetweenBulletsTime: 0.2

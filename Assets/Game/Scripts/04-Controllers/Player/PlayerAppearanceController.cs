@@ -15,7 +15,9 @@ public class PlayerAppearanceController : MonoBehaviour
     [Header("DoTween")]
     private Sequence _blinkSequence;
     private Sequence _CollisionCooldownSequence;
-    
+
+
+    private Color _storedColor;
     #endregion
 
     #region Monobehaviour
@@ -76,6 +78,7 @@ public class PlayerAppearanceController : MonoBehaviour
     private void GetReferences()
     {
         _shipSpriteRenderer = GetComponent<SpriteRenderer>();
+        _storedColor = _shipSpriteRenderer.color;
     }
 
     private void Initialize()
@@ -88,7 +91,7 @@ public class PlayerAppearanceController : MonoBehaviour
         StartBlink();
 
         _CollisionCooldownSequence?.Kill();
-        _shipSpriteRenderer.color = Color.white;
+        _shipSpriteRenderer.color = _storedColor;
 
         EventManager.GetGameplayBus().RaiseEvent(new PlayerAppearanceUpdated());
     }

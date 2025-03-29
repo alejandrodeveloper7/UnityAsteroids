@@ -78,6 +78,7 @@ public class BulletController : MonoBehaviour, IPooleableGameObject
         _bulletData = pData;
 
         _spriteRenderer.sprite = _bulletData.Sprite;
+        _spriteRenderer.color=_bulletData.Color;
         _rigidBody.velocity = _bulletData.Speed * Time.fixedDeltaTime * -transform.up;
 
         TurnDetection(true);

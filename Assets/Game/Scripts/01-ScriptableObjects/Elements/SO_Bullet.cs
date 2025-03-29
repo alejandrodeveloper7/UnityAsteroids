@@ -8,6 +8,7 @@ public class SO_Bullet : SO_Selectable
     public string PoolName;
 
     [Header("Configuration")]
+    public Color Color;
     public float Speed;
     public float LifeDuration;
     public float BetweenBulletsTime;
