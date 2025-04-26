@@ -31,6 +31,7 @@ MonoBehaviour:
   EdgeOffsetX: 0.04
   EdgeRepositionOffsetX: 0.03
   InvulnerabilityDuration: 4
+  InvulnerabilityBlinksPerSecond: 2
   ShieldColor: {r: 0, g: 0.67058825, b: 1, a: 1}
   FadeInDuration: 0.5
   FadeOutDuration: 0.5

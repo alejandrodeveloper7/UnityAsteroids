@@ -13,6 +13,16 @@ public class BackgroundController : MonoBehaviour
 
     #endregion
 
+    #region Initialization
+
+    private void GetReferences()
+    {
+        _backgroundConfiguration = ResourcesManager.Instance.GetScriptableObject<BackgroundConfiguration>(ScriptableObjectKeys.BACKGROUND_CONFIGURATION_KEY);
+        _backgroundTransform = _backgroundSprite.transform;
+    }
+
+    #endregion
+
     #region Monobehaviour
 
     private void Awake()
@@ -23,12 +33,12 @@ public class BackgroundController : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.GetUiBus().AddListener<StartGame>(OnStartGame);
+        EventManager.UIBus.AddListener<StartGame>(OnStartGame);
     }
 
     private void OnDisable()
     {
-        EventManager.GetUiBus().RemoveListener<StartGame>(OnStartGame);
+        EventManager.UIBus.RemoveListener<StartGame>(OnStartGame);
     }
 
     #endregion
@@ -42,17 +52,7 @@ public class BackgroundController : MonoBehaviour
     }
 
     #endregion
-
-    #region Initialization
-
-    private void GetReferences()
-    {
-        _backgroundConfiguration = ResourcesManager.Instance.BackgroundConfiguration;
-        _backgroundTransform = _backgroundSprite.transform;
-    }
-
-    #endregion
-
+     
     #region Alpha Management
 
     private void SetAlphaValue(float pValue)

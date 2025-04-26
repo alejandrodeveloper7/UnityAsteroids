@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d81ef758a8c415e4a9dd7de31e41e106, type: 3}
   m_Name: 04-GreenBulletFragments
   m_EditorClassIdentifier: 
-  Texture: {fileID: 2800000, guid: ec878ece4bb909c4a8666c41fb22641f, type: 3}
+  Material: {fileID: 2100000, guid: 6b1977b3f1f5906488031ba3ecd807fa, type: 2}

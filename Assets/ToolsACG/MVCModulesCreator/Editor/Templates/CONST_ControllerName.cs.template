@@ -16,18 +16,31 @@ namespace ToolsACG.Scenes.CONST_ModuleName
 
         protected override void Awake()
         {
-            _view = GetComponent<CONST_InterfaceName>();
-            base.Awake();            
+            base.Awake();
+            
+            GetReferences();
+            Initialize();
+            RegisterActions();
         }
 
         protected override void RegisterActions()
         {
-            // TODO: initialize dictionaries with actions for buttons, toggles, sliders, input fields and dropdowns.      
+            // TODO: Initialize listeners and dictionaries with actions for buttons, toggles, sliders, input fields and dropdowns.      
+        }
+        
+        protected override void UnRegisterActions()
+        {
+            // TODO: Unregister listeners and dictionarie actions.      
+        }
+        
+        protected override void GetReferences()
+        {
+            _view = GetComponent<CONST_InterfaceName>();
         }
 
         protected override void Initialize()
         {
-            // TODO: initialize view and controller
+            // TODO: Initialize view and controller
         }
 
         #endregion           

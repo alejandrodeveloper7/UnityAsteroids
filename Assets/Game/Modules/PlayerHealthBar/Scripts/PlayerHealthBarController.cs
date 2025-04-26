@@ -23,8 +23,10 @@ namespace ToolsACG.Scenes.PlayerHealth
 
         protected override void Awake()
         {
-            _view = GetComponent<IPlayerHealthBarView>();
             base.Awake();
+
+            GetReferences();
+            Initialize();
         }
 
         protected override void RegisterActions()
@@ -32,9 +34,19 @@ namespace ToolsACG.Scenes.PlayerHealth
             // TODO: initialize dictionaries with actions for buttons, toggles, sliders, input fields and dropdowns.      
         }
 
+        protected override void UnRegisterActions()
+        {
+            // TODO: Unregister listeners and dictionarie actions.      
+        }
+
+        protected override void GetReferences()
+        {
+            _view = GetComponent<IPlayerHealthBarView>();
+        }
+
         protected override void Initialize()
         {
-            _playersettings = ResourcesManager.Instance.PlayerSettings;
+            _playersettings = ResourcesManager.Instance.GetScriptableObject<PlayerSettings>(ScriptableObjectKeys.PLAYER_SETTINGS_KEY);
 
             _view.SetHealthPointsSprites(_data.HealthPointSprite, _data.emptyHealtPointSprite);
             _view.SetShieldSliderSprites(_data.ShieldBarSprite, _data.FullShieldBarSprite);
@@ -49,20 +61,20 @@ namespace ToolsACG.Scenes.PlayerHealth
 
         private void OnEnable()
         {
-            EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
-            EventManager.GetGameplayBus().AddListener<PlayerDamaged>(OnPlayerDamaged);
-            EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
-            EventManager.GetGameplayBus().AddListener<ShieldStateChanged>(OnShieldStateChanged);
-            EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
+            EventManager.GameplayBus.AddListener<StartMatch>(OnStartMatch);
+            EventManager.GameplayBus.AddListener<PlayerDamaged>(OnPlayerDamaged);
+            EventManager.GameplayBus.AddListener<PlayerDead>(OnPlayerDead);
+            EventManager.GameplayBus.AddListener<ShieldStateChanged>(OnShieldStateChanged);
+            EventManager.UIBus.AddListener<GameLeaved>(OnGameLeaved);
         }
 
         private void OnDisable()
         {
-            EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
-            EventManager.GetGameplayBus().RemoveListener<PlayerDamaged>(OnPlayerDamaged);
-            EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
-            EventManager.GetGameplayBus().RemoveListener<ShieldStateChanged>(OnShieldStateChanged);
-            EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
+            EventManager.GameplayBus.RemoveListener<StartMatch>(OnStartMatch);
+            EventManager.GameplayBus.RemoveListener<PlayerDamaged>(OnPlayerDamaged);
+            EventManager.GameplayBus.RemoveListener<PlayerDead>(OnPlayerDead);
+            EventManager.GameplayBus.RemoveListener<ShieldStateChanged>(OnShieldStateChanged);
+            EventManager.UIBus.RemoveListener<GameLeaved>(OnGameLeaved);
         }
 
         #endregion
@@ -150,7 +162,7 @@ namespace ToolsACG.Scenes.PlayerHealth
                 .OnComplete(() =>
                 {
                     _view.SetShieldSliderValue(100);
-                    EventManager.GetGameplayBus().RaiseEvent(new ShieldStateChanged() { Active = true });
+                    EventManager.GameplayBus.RaiseEvent(new ShieldStateChanged() { Active = true });
                 });
         }
 

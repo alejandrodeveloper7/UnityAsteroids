@@ -16,7 +16,7 @@ public class PlayerCombatController : MonoBehaviour
     private float _nextShootTime;
     
     [Header("Data")]
-    private SO_Ship _shipsConfiguration;
+    private SO_Ship _shipData;
     private SO_Bullet _bulletData;
 
     #endregion
@@ -25,20 +25,20 @@ public class PlayerCombatController : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.GetGameplayBus().AddListener<PlayerPrepared>(OnPlayerPrepared);
-        EventManager.GetGameplayBus().AddListener<ShootKeyStateChange>(OnShootKeyStateChange);
-        EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetGameplayBus().AddListener<PauseStateChanged>(OnPauseStateChanged);
-        EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
+        EventManager.GameplayBus.AddListener<PlayerPrepared>(OnPlayerPrepared);
+        EventManager.InputBus.AddListener<ShootKeyStateChange>(OnShootKeyStateChange);
+        EventManager.GameplayBus.AddListener<PlayerDead>(OnPlayerDead);
+        EventManager.GameplayBus.AddListener<PauseStateChanged>(OnPauseStateChanged);
+        EventManager.UIBus.AddListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnDisable()
     {
-        EventManager.GetGameplayBus().RemoveListener<PlayerPrepared>(OnPlayerPrepared);
-        EventManager.GetGameplayBus().RemoveListener<ShootKeyStateChange>(OnShootKeyStateChange);
-        EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetGameplayBus().RemoveListener<PauseStateChanged>(OnPauseStateChanged);
-        EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
+        EventManager.GameplayBus.RemoveListener<PlayerPrepared>(OnPlayerPrepared);
+        EventManager.InputBus.RemoveListener<ShootKeyStateChange>(OnShootKeyStateChange);
+        EventManager.GameplayBus.RemoveListener<PlayerDead>(OnPlayerDead);
+        EventManager.GameplayBus.RemoveListener<PauseStateChanged>(OnPauseStateChanged);
+        EventManager.UIBus.RemoveListener<GameLeaved>(OnGameLeaved);
     }
 
     #endregion
@@ -85,10 +85,10 @@ public class PlayerCombatController : MonoBehaviour
     {
         _isAlive = true;
 
-        _bulletData = ResourcesManager.Instance.BulletsConfiguration.Bullets.FirstOrDefault(x => x.Id == PersistentDataManager.SelectedBulletId);
-        _shipsConfiguration = ResourcesManager.Instance.ShipsConfiguration.Ships.FirstOrDefault(x => x.Id == PersistentDataManager.SelectedShipId);
+        _bulletData = ResourcesManager.Instance.GetScriptableObject<BulletsCollection>(ScriptableObjectKeys.BULLET_COLLECTION_KEY).Bullets.FirstOrDefault(x => x.Id == PersistentDataManager.SelectedBulletId);
+        _shipData = ResourcesManager.Instance.GetScriptableObject<ShipsCollection>(ScriptableObjectKeys.SHIP_COLLECTION_KEY).Ships.FirstOrDefault(x => x.Id == PersistentDataManager.SelectedShipId);
 
-        _bulletSpawnPoint.transform.localPosition = _shipsConfiguration.BulletsSpawnPointsLocalPosition;
+        _bulletSpawnPoint.transform.localPosition = _shipData.BulletsSpawnPointsLocalPosition;
     }
 
     #endregion
@@ -108,7 +108,7 @@ public class PlayerCombatController : MonoBehaviour
             return;
         }
 
-        BulletController bulletscript = PoolsManager.Instance.GetGameObjectInstance(_bulletData.PoolName).GetComponent<BulletController>();
+        BulletController bulletscript = FactoryManager.Instance.GetGameObjectInstance(_bulletData.PoolName).GetComponent<BulletController>();
         bulletscript.transform.SetPositionAndRotation(_bulletSpawnPoint.position, _bulletSpawnPoint.rotation);
         bulletscript.Initialize(_bulletData);
         Invoke(nameof(ShootBullet), _bulletData.BetweenBulletsTime);

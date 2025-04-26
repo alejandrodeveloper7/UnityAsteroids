@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d81ef758a8c415e4a9dd7de31e41e106, type: 3}
   m_Name: 03-BlueBulletFragments
   m_EditorClassIdentifier: 
-  Texture: {fileID: 2800000, guid: 2f5618721f440254d873e63aee713e00, type: 3}
+  Material: {fileID: 2100000, guid: 65d87829f6fe0f14392877561290b745, type: 2}

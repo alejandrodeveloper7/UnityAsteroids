@@ -7,7 +7,7 @@ public class SoundManager : MonoBehaviour
 {
     #region Fields
 
-    private MusicConfiguration _musicConfiguration;
+    private MusicCollection _musicCollection;
     [Space]
     [SerializeField] private AudioMixer _musicMixer;
     [SerializeField] private AudioMixer _effectsMixer;
@@ -27,18 +27,18 @@ public class SoundManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.GetUiBus().AddListener<StartGame>(OnStartGame);
-        EventManager.GetUiBus().AddListener<MusicVolumeUpdated>(OnMusicVolumeUpdated);
-        EventManager.GetUiBus().AddListener<EffectsVolumeUpdated>(OnEffectsVolumeUpdated);
-        EventManager.GetGameplayBus().AddListener<Generate2DSound>(OnGenerateSound);
+        EventManager.UIBus.AddListener<StartGame>(OnStartGame);
+        EventManager.UIBus.AddListener<MusicVolumeUpdated>(OnMusicVolumeUpdated);
+        EventManager.UIBus.AddListener<EffectsVolumeUpdated>(OnEffectsVolumeUpdated);
+        EventManager.SoundBus.AddListener<Generate2DSound>(OnGenerateSound);
     }
 
     private void OnDisable()
     {
-        EventManager.GetUiBus().RemoveListener<StartGame>(OnStartGame);
-        EventManager.GetUiBus().RemoveListener<MusicVolumeUpdated>(OnMusicVolumeUpdated);
-        EventManager.GetUiBus().RemoveListener<EffectsVolumeUpdated>(OnEffectsVolumeUpdated);
-        EventManager.GetGameplayBus().RemoveListener<Generate2DSound>(OnGenerateSound);
+        EventManager.UIBus.RemoveListener<StartGame>(OnStartGame);
+        EventManager.UIBus.RemoveListener<MusicVolumeUpdated>(OnMusicVolumeUpdated);
+        EventManager.UIBus.RemoveListener<EffectsVolumeUpdated>(OnEffectsVolumeUpdated);
+        EventManager.SoundBus.RemoveListener<Generate2DSound>(OnGenerateSound);
     }
 
     #endregion
@@ -75,7 +75,7 @@ public class SoundManager : MonoBehaviour
 
     private void GetReferences()
     {
-        _musicConfiguration = ResourcesManager.Instance.MusicConfiguration;
+        _musicCollection = ResourcesManager.Instance.GetScriptableObject<MusicCollection>(ScriptableObjectKeys.MUSIC_COLLECTION_KEY);
         _musicSource = (AudioSource)gameObject.AddComponent(typeof(AudioSource));
     }
     
@@ -85,6 +85,9 @@ public class SoundManager : MonoBehaviour
 
     private async void PlayMusicLoop()
     {
+        if (_musicCollection.Musics.Count == 0)
+            return;
+
         while (this)
         {
             PlayRandomTrack();
@@ -96,11 +99,11 @@ public class SoundManager : MonoBehaviour
     {
         int newTrackIndex;
         do
-            newTrackIndex = Random.Range(0, _musicConfiguration.Musics.Count);
-        while (newTrackIndex == _currentMusicIndex);
+            newTrackIndex = Random.Range(0, _musicCollection.Musics.Count);
+        while (newTrackIndex == _currentMusicIndex && _musicCollection.Musics.Count>1);
 
         _currentMusicIndex = newTrackIndex;
-        SO_Sound currentMusicData = _musicConfiguration.Musics[_currentMusicIndex];
+        SO_Sound currentMusicData = _musicCollection.Musics[_currentMusicIndex];
         currentMusicData.ApplyConfig(_musicSource);
 
         _musicSource.Play();
@@ -118,7 +121,7 @@ public class SoundManager : MonoBehaviour
 
     private void Create2DSound(SO_Sound pData)
     {
-        AudioSource audioSource = PoolsManager.Instance.Get2DAudioSource();
+        AudioSource audioSource = FactoryManager.Instance.Get2DAudioSource();
         pData.ApplyConfig(audioSource);
         audioSource.Play();
     }

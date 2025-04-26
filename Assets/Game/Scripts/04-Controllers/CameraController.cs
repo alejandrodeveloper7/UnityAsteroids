@@ -16,16 +16,16 @@ public class CameraController : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetGameplayBus().AddListener<PlayerDamaged>(OnPlayerDamaged);
-        EventManager.GetGameplayBus().AddListener<ShieldStateChanged>(OnShieldStateChanged);
+        EventManager.GameplayBus.AddListener<PlayerDead>(OnPlayerDead);
+        EventManager.GameplayBus.AddListener<PlayerDamaged>(OnPlayerDamaged);
+        EventManager.GameplayBus.AddListener<ShieldStateChanged>(OnShieldStateChanged);
     }
 
     private void OnDisable()
     {
-        EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetGameplayBus().RemoveListener<PlayerDamaged>(OnPlayerDamaged);
-        EventManager.GetGameplayBus().RemoveListener<ShieldStateChanged>(OnShieldStateChanged);
+        EventManager.GameplayBus.RemoveListener<PlayerDead>(OnPlayerDead);
+        EventManager.GameplayBus.RemoveListener<PlayerDamaged>(OnPlayerDamaged);
+        EventManager.GameplayBus.RemoveListener<ShieldStateChanged>(OnShieldStateChanged);
     }
 
     #endregion
@@ -52,7 +52,7 @@ public class CameraController : MonoBehaviour
 
     private void GetReferences() 
     {
-        _cameraConfiguration = ResourcesManager.Instance.CameraConfiguration;
+        _cameraConfiguration = ResourcesManager.Instance.GetScriptableObject<CameraConfiguration>(ScriptableObjectKeys.CAMERA_CONFIGURATION_KEY);
         _originalPosition = transform.position;
     }
 

@@ -22,13 +22,25 @@ namespace ToolsACG.Scenes.Score
 
         protected override void Awake()
         {
-            _view = GetComponent<IScoreView>();
             base.Awake();
+
+            GetReferences();
+            Initialize();
         }
 
         protected override void RegisterActions()
         {
             // TODO: initialize dictionaries with actions for buttons, toggles, sliders, input fields and dropdowns.      
+        }
+
+        protected override void UnRegisterActions()
+        {
+            // TODO: Unregister listeners and dictionarie actions.      
+        }
+
+        protected override void GetReferences()
+        {
+            _view = GetComponent<IScoreView>();
         }
 
         protected override void Initialize()
@@ -42,20 +54,20 @@ namespace ToolsACG.Scenes.Score
 
         private void OnEnable()
         {
-            EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
-            EventManager.GetGameplayBus().AddListener<AsteroidDestroyed>(OnAsteroidDestroyed);
-            EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
-            EventManager.GetUiBus().AddListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
-            EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
+            EventManager.GameplayBus.AddListener<StartMatch>(OnStartMatch);
+            EventManager.GameplayBus.AddListener<AsteroidDestroyed>(OnAsteroidDestroyed);
+            EventManager.GameplayBus.AddListener<PlayerDead>(OnPlayerDead);
+            EventManager.UIBus.AddListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
+            EventManager.UIBus.AddListener<GameLeaved>(OnGameLeaved);
         }
 
         private void OnDisable()
         {
-            EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
-            EventManager.GetGameplayBus().RemoveListener<AsteroidDestroyed>(OnAsteroidDestroyed);
-            EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
-            EventManager.GetUiBus().RemoveListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
-            EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
+            EventManager.GameplayBus.RemoveListener<StartMatch>(OnStartMatch);
+            EventManager.GameplayBus.RemoveListener<AsteroidDestroyed>(OnAsteroidDestroyed);
+            EventManager.GameplayBus.RemoveListener<PlayerDead>(OnPlayerDead);
+            EventManager.UIBus.RemoveListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
+            EventManager.UIBus.RemoveListener<GameLeaved>(OnGameLeaved);
         }
 
         #endregion

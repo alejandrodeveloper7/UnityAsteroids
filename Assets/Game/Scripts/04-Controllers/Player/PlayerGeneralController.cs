@@ -11,18 +11,26 @@ public class PlayerGeneralController : MonoBehaviour, IPooleableGameObject
     bool _readyToUse;
     public bool ReadyToUse { get { return _readyToUse; } set { _readyToUse = value; } }
 
+    [Header("Data")]
+    private PlayerSettings _playerSettings;
+
     #region Monobehavior
+
+    private void Awake()
+    {
+        _playerSettings = ResourcesManager.Instance.GetScriptableObject<PlayerSettings>(ScriptableObjectKeys.PLAYER_SETTINGS_KEY);
+    }
 
     private void OnEnable()
     {
-        EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
+        EventManager.GameplayBus.AddListener<PlayerDead>(OnPlayerDead);
+        EventManager.UIBus.AddListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnDisable()
     {
-        EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
+        EventManager.GameplayBus.RemoveListener<PlayerDead>(OnPlayerDead);
+        EventManager.UIBus.AddListener<GameLeaved>(OnGameLeaved);
     }
 
     #endregion
@@ -31,13 +39,13 @@ public class PlayerGeneralController : MonoBehaviour, IPooleableGameObject
 
     private async void OnPlayerDead(PlayerDead pPlayerDead) 
     {
-        await Task.Delay(400);
-        _originPool.RecycleItem(gameObject);
+        await Task.Delay((int)(_playerSettings.TimeBeforeReciclePlayer*1000));
+        _originPool.RecycleGameObject(gameObject);
     }
 
     private void OnGameLeaved(GameLeaved pGameLeaved) 
     {
-        _originPool.RecycleItem(gameObject);
+        _originPool.RecycleGameObject(gameObject);
     }
 
     #endregion

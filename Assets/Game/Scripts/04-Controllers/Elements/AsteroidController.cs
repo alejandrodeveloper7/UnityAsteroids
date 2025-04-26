@@ -3,7 +3,7 @@ using ToolsACG.Utils.Events;
 using ToolsACG.Utils.Pooling;
 using UnityEngine;
 
-public class AsteroidController : MonoBehaviour, IPooleableGameObject
+public class AsteroidController : MonoBehaviour,ICollisionable, IDamageable, IPooleableGameObject
 {
     #region Fields
     
@@ -13,12 +13,16 @@ public class AsteroidController : MonoBehaviour, IPooleableGameObject
     bool _readyToUse;
     public bool ReadyToUse { get { return _readyToUse; } set { _readyToUse = value; } }
 
+    //[Header("IDamageable")]
+    public int MaxHP { get; set; }
+    public int CurrentHP { get; set; }
+    public bool Alive { get; set; }
+
     [Header("References")]
     private PolygonCollider2D _collider;
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidBody;
     private ScreenEdgeTeleport _screenEdgeTeleporter;
-    private Destructible _destructible;
 
     [Header("Data")]
     private SO_Asteroid _asteroidData;
@@ -43,7 +47,6 @@ public class AsteroidController : MonoBehaviour, IPooleableGameObject
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidBody = GetComponent<Rigidbody2D>();
         _screenEdgeTeleporter = GetComponent<ScreenEdgeTeleport>();
-        _destructible = GetComponent<Destructible>();
     }
 
     public void Initialize(SO_Asteroid pData, Vector2 pPosition = default, Vector2 pDirection = default)
@@ -51,7 +54,9 @@ public class AsteroidController : MonoBehaviour, IPooleableGameObject
         _asteroidData = pData;
         _direction = pDirection;
 
-        _destructible.OnDestroyed += AsteroidDestroyed;
+        Alive = true;
+        MaxHP = pData.MaxHP;
+        CurrentHP = pData.MaxHP;
 
         int spriteRandomValue = Random.Range(0, _asteroidData.possibleSprites.Length);
         _spriteRenderer.sprite = _asteroidData.possibleSprites[spriteRandomValue];
@@ -137,31 +142,54 @@ public class AsteroidController : MonoBehaviour, IPooleableGameObject
     {
         foreach (ParticleSetup item in _asteroidData.DestuctionParticles)
         {
-            ParticleSystem pooledParticlesystem = PoolsManager.Instance.GetGameObjectInstance(item.particleEffectName).GetComponent<ParticleSystem>();
+            ParticleSystem pooledParticlesystem = FactoryManager.Instance.GetGameObjectInstance(item.particleEffectName).GetComponent<ParticleSystem>();
             if (item.particleConfig != null)
                 item.particleConfig.ApplyConfig(pooledParticlesystem);
             pooledParticlesystem.transform.position = transform.position;
             pooledParticlesystem.GetComponent<ParticleSystemController>().Play();
-            EventManager.GetGameplayBus().RaiseEvent(new Generate2DSound() { SoundsData = _asteroidData.SoundsOnDestruction });
+            EventManager.SoundBus.RaiseEvent(new Generate2DSound() { SoundsData = _asteroidData.SoundsOnDestruction });
         }
     }
 
     private void AsteroidDestroyed()
     {
         GenerateDestructionParticles();
-        EventManager.GetGameplayBus().RaiseEvent(new AsteroidDestroyed() { AsteroidScript = this, AsteroidData = _asteroidData, Position = transform.position, Direction = _direction });
+        EventManager.GameplayBus.RaiseEvent(new AsteroidDestroyed() { AsteroidScript = this, AsteroidData = _asteroidData, Position = transform.position, Direction = _direction });
         CleanAsteroid();
     }
 
     public void CleanAsteroid()
     {
-        _destructible.OnDestroyed -= AsteroidDestroyed;
-
         StopMovement();
         TurnDetection(false);
-        _originPool.RecycleItem(gameObject);
+        _originPool.RecycleGameObject(gameObject);
     }
-    
+
+    #endregion
+
+    #region IDamageable
+
+    public void TakeDamage(int pDamage)
+    {
+        if (Alive is false)
+            return;
+
+        CurrentHP-=pDamage;
+        if (CurrentHP <= 0)
+            Die();
+    }
+
+    public void Die()
+    {
+        Alive = false;
+        AsteroidDestroyed();
+    }
+
+    public void Collisioned()
+    {
+        GenerateDestructionParticles();
+    }
+
     #endregion
 }
 

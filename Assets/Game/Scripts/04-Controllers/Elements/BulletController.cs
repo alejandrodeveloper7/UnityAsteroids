@@ -32,19 +32,22 @@ public class BulletController : MonoBehaviour, IPooleableGameObject
 
     private void OnEnable()
     {
-        EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
+        EventManager.UIBus.AddListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnDisable()
     {
-        EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
+        EventManager.UIBus.RemoveListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        collision.TryGetComponent(out AsteroidController detectedAsteroid);
-        if (detectedAsteroid != null)
+        collision.TryGetComponent(out IDamageable detectedDamageable);
+
+        if (detectedDamageable != null)
         {
+            detectedDamageable.TakeDamage(_bulletData.Damage);
+
             CancelInvoke(nameof(CleanBullet));
             GenerateDestructionParticles();
             CleanBullet();
@@ -89,7 +92,7 @@ public class BulletController : MonoBehaviour, IPooleableGameObject
         _screenEdgeTeleporter.EdgeOffsetY = _bulletData.EdgeOffsetY;
         _screenEdgeTeleporter.EdgeRepositionOffsetY = _bulletData.EdgeRepositionOffsetY;
         
-        EventManager.GetGameplayBus().RaiseEvent(new Generate2DSound() { SoundsData = _bulletData.SoundsOnShoot });
+        EventManager.SoundBus.RaiseEvent(new Generate2DSound() { SoundsData = _bulletData.SoundsOnShoot });
         Invoke(nameof(CleanBullet), _bulletData.LifeDuration);
     }
 
@@ -101,7 +104,7 @@ public class BulletController : MonoBehaviour, IPooleableGameObject
     {
         foreach (ParticleSetup item in _bulletData.DestuctionParticles)
         {
-            ParticleSystem pooledParticlesystem = PoolsManager.Instance.GetGameObjectInstance(item.particleEffectName).GetComponent<ParticleSystem>();
+            ParticleSystem pooledParticlesystem = FactoryManager.Instance.GetGameObjectInstance(item.particleEffectName).GetComponent<ParticleSystem>();
             if (item.particleConfig != null)
                 item.particleConfig.ApplyConfig(pooledParticlesystem);
     
@@ -124,7 +127,7 @@ public class BulletController : MonoBehaviour, IPooleableGameObject
     {
         StopMovement();
         TurnDetection(false);
-        _originPool.RecycleItem(gameObject);
+        _originPool.RecycleGameObject(gameObject);
     }
 
     #endregion

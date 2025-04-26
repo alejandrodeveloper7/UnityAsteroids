@@ -18,7 +18,7 @@ public class CursorController : MonoBehaviour
 
     private void Awake()
     {
-        GetReferences();
+        _cursorConfiguration = ResourcesManager.Instance.GetScriptableObject<CursorConfiguration>(ScriptableObjectKeys.CURSOR_CONFIGURATION_KEY);
     }
 
     private void Start()
@@ -45,25 +45,20 @@ public class CursorController : MonoBehaviour
         }
     }
 
-    private void GetReferences() 
-    {
-        _cursorConfiguration = ResourcesManager.Instance.CursorConfiguration;
-    }
-
     private void OnEnable()
     {
-        EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
-        EventManager.GetGameplayBus().AddListener<PauseStateChanged>(OnPauseStateChanged);
-        EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
+        EventManager.GameplayBus.AddListener<StartMatch>(OnStartMatch);
+        EventManager.GameplayBus.AddListener<PauseStateChanged>(OnPauseStateChanged);
+        EventManager.GameplayBus.AddListener<PlayerDead>(OnPlayerDead);
+        EventManager.UIBus.AddListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnDisable()
     {
-        EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
-        EventManager.GetGameplayBus().RemoveListener<PauseStateChanged>(OnPauseStateChanged);
-        EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
+        EventManager.GameplayBus.RemoveListener<StartMatch>(OnStartMatch);
+        EventManager.GameplayBus.RemoveListener<PauseStateChanged>(OnPauseStateChanged);
+        EventManager.GameplayBus.RemoveListener<PlayerDead>(OnPlayerDead);
+        EventManager.UIBus.RemoveListener<GameLeaved>(OnGameLeaved);
     }
 
     #endregion

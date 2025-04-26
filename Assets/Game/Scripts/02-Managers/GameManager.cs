@@ -23,18 +23,18 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
-        EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetUiBus().AddListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
-        EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
+        EventManager.GameplayBus.AddListener<StartMatch>(OnStartMatch);
+        EventManager.GameplayBus.AddListener<PlayerDead>(OnPlayerDead);
+        EventManager.UIBus.AddListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
+        EventManager.UIBus.AddListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnDisable()
     {
-        EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
-        EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetUiBus().RemoveListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
-        EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
+        EventManager.GameplayBus.RemoveListener<StartMatch>(OnStartMatch);
+        EventManager.GameplayBus.RemoveListener<PlayerDead>(OnPlayerDead);
+        EventManager.UIBus.RemoveListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
+        EventManager.UIBus.RemoveListener<GameLeaved>(OnGameLeaved);
     }
 
     #endregion
@@ -75,15 +75,15 @@ public class GameManager : MonoBehaviour
 
     private void InitializeGame()
     {
-        _gameSettings = ResourcesManager.Instance.GameSettings;
+        _gameSettings = ResourcesManager.Instance.GetScriptableObject<GameSettings>(ScriptableObjectKeys.GAME_SETTINGS_KEY);
 
-        ScreenManager.FixFrameRate(_gameSettings.TargetFrameRate);
-        ScenesManager.Instance.LoadScenesAdditive(_gameSettings._sceneDependencys, OnAdditiveScenesLoadComplete);
+        ScreenManager.SetTargetFrameRate(_gameSettings.TargetFrameRate);
+        AdditiveScenesManager.Instance.LoadScenesAdditive(_gameSettings._sceneDependencys, OnAdditiveScenesLoadComplete);
     }
 
     private void OnAdditiveScenesLoadComplete()
     {
-        EventManager.GetUiBus().RaiseEvent(new StartGame());
+        EventManager.UIBus.RaiseEvent(new StartGame());
         _inMainMenu = true;
     }
 
@@ -93,5 +93,4 @@ public class GameManager : MonoBehaviour
 
 public class StartGame : IEvent
 {
-
 }

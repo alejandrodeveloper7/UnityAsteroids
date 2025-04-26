@@ -19,7 +19,7 @@ public static class ScreenManager
 
     #region Functionality
 
-    public static void FixFrameRate(int pValue)
+    public static void SetTargetFrameRate(int pValue)
     {
         Application.targetFrameRate = pValue;
     }

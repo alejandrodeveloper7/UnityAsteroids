@@ -1,82 +1,56 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ToolsACG.Utils.Events
 {
-    public interface IEvent
-    {
-    }
-
     public class EventManager
     {
-        static readonly EventManager busUI = new EventManager();
-        static readonly EventManager busNetwork = new EventManager();
-        static readonly EventManager busGameplay = new EventManager();
+        #region Fields
 
-        public delegate void EventDelegate<T>(T pEvent) where T : IEvent;
-        private delegate void EventDelegate(IEvent pEvent);
+        public static readonly EventManager UIBus = new EventManager();
+        public static readonly EventManager NetworkBus = new EventManager();
+        public static readonly EventManager GameplayBus = new EventManager();
+        public static readonly EventManager InputBus = new EventManager();
+        public static readonly EventManager SoundBus = new EventManager();
 
-        private readonly Dictionary<Type, EventDelegate> delegates = new Dictionary<Type, EventDelegate>();
-        private readonly Dictionary<Delegate, EventDelegate> delegateLookup = new Dictionary<Delegate, EventDelegate>();
+        private Dictionary<Type, Delegate> _events = new();
 
-        public static EventManager GetUiBus()
+        #endregion
+
+        #region EventsManagement
+
+        public void AddListener<T>(Action<T> pCalback) where T : IEvent
         {
-            return busUI;
+            Type type = typeof(T);
+
+            if (!_events.ContainsKey(type))
+                _events[type] = null;
+
+            _events[type] = (Action<T>)_events[type] + pCalback;
         }
 
-        public static EventManager GetNetworkBus()
+        public void RemoveListener<T>(Action<T> pCallback) where T : IEvent
         {
-            return busNetwork;
-        }
-
-        public static EventManager GetGameplayBus()
-        {
-            return busGameplay;
-        }
-
-        public void AddListener<T>(EventDelegate<T> pDelegate) where T : IEvent
-        {
-            if (delegateLookup.ContainsKey(pDelegate))
-                return;
-
-            EventDelegate internalDelegate = e => pDelegate((T)e);
-            delegateLookup[pDelegate] = internalDelegate;
-
-            EventDelegate temporalDelegate;
-            if (delegates.TryGetValue(typeof(T), out temporalDelegate))
-                delegates[typeof(T)] = temporalDelegate += internalDelegate;
-            else
-                delegates[typeof(T)] = internalDelegate;
-        }
-
-        public void RemoveListener<T>(EventDelegate<T> pDelegate) where T : IEvent
-        {
-            EventDelegate internalDelegate;
-            if (delegateLookup.TryGetValue(pDelegate, out internalDelegate))
+            Type type = typeof(T);
+            if (_events.TryGetValue(type, out var existingDelegate))
             {
-                EventDelegate temporalDelegate;
-                if (delegates.TryGetValue(typeof(T), out temporalDelegate))
-                {
-                    temporalDelegate -= internalDelegate;
-                    if (temporalDelegate == null)
-                        delegates.Remove(typeof(T));
-                    else
-                        delegates[typeof(T)] = temporalDelegate;
-                }
-                delegateLookup.Remove(pDelegate);
+                _events[type] = (Action<T>)existingDelegate - pCallback;
+                if (_events[type] == null) _events.Remove(type);
             }
         }
 
-        public Task RaiseEvent(IEvent pEvent)
+        public void RaiseEvent<T>(T pData) where T : IEvent
         {
-            EventDelegate temporalDelegate;
-            if (delegates.TryGetValue(pEvent.GetType(), out temporalDelegate))
-            {
-                temporalDelegate.Invoke(pEvent);
-            }
+            Type type = typeof(T);
 
-            return Task.CompletedTask;
+            if (_events.TryGetValue(type, out var existingDelegate) && existingDelegate is Action<T> action)
+                action.Invoke(pData);
         }
+
+        #endregion
+    }
+
+    public interface IEvent
+    {
     }
 }

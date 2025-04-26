@@ -25,36 +25,13 @@ namespace ToolsACG.Utils.Pooling
         //public bool ReadyToUse { get { return _readyToUse; } set { _readyToUse = value; } }
     }
 
-    public class SimpleGameObjectPool
+    public class SimpleGameObjectPool:BasePool<GameObject>
     {
-        #region Variables
+        #region Fields
 
         [Header("Fields")]
-        private GameObject[] _availableInstances;
         private readonly GameObject _objectPooled;
         private readonly Transform _parent;
-
-        [Header("Properties")]
-        private int _scalation;
-        public int Scalation
-        {
-            get => _scalation;
-            set => _scalation = value;
-        }
-
-        private int _poolMaxSize;
-        public int PoolMaxSize
-        {
-            get => _poolMaxSize;
-            set => _poolMaxSize = value;
-        }
-
-        private int _poolCurrentSize;
-        public int PoolCurrentSize
-        {
-            get => _poolCurrentSize;
-            private set => _poolCurrentSize = value;
-        }
 
         #endregion
 
@@ -96,9 +73,9 @@ namespace ToolsACG.Utils.Pooling
 
         #endregion
 
-        #region public Methods
+        #region Abstract Methods
 
-        public GameObject GetInstance()
+        public override GameObject GetInstance()
         {
             GameObject instance = ObteinReadyInstance();
 
@@ -121,38 +98,7 @@ namespace ToolsACG.Utils.Pooling
             return instance;
         }
 
-
-
-        public void RecycleItem(GameObject pInstance)
-        {
-            IPooleableGameObject poleableItem = pInstance.GetComponent<IPooleableGameObject>();
-
-            if (poleableItem == null)
-            {
-                Debug.LogError(string.Format("- POOL - {0} is not Pooled with IPooleableItem", pInstance.name));
-                return;
-            }
-            if (poleableItem.OriginPool != this)
-            {
-                Debug.LogError(string.Format("- POOL - {0} is not an Instance of this pool", pInstance.name));
-                return;
-            }
-
-            poleableItem.ReadyToUse = true;
-            pInstance.SetActive(false);
-            if (_parent != null)
-            {
-                pInstance.transform.SetParent(_parent);
-                pInstance.transform.localPosition = Vector3.zero;
-                pInstance.transform.localRotation = Quaternion.identity;
-            }
-        }
-
-        #endregion
-
-        #region Internal Logic
-
-        private GameObject ObteinReadyInstance()
+        protected override GameObject ObteinReadyInstance()
         {
             for (int i = 0; i < _availableInstances.Length; i++)
                 if (_availableInstances[i].GetComponent<IPooleableGameObject>().ReadyToUse)
@@ -161,23 +107,23 @@ namespace ToolsACG.Utils.Pooling
             return null;
         }
 
-        internal GameObject CreateNewInstance()
+        protected override GameObject CreateNewInstance()
         {
             GameObject newInstance = UnityEngine.Object.Instantiate(_objectPooled, _parent);
             IPooleableGameObject pooleableItem = newInstance.GetComponent<IPooleableGameObject>();
-            if(pooleableItem is null)
+            if (pooleableItem is null)
             {
                 Debug.LogError(string.Format("- POOL - {0} dont have a script with IPooleableITem", _objectPooled.name));
                 return null;
             }
             pooleableItem.OriginPool = this;
 
-            RecycleItem(newInstance);
+            RecycleGameObject(newInstance);
 
             return newInstance;
         }
 
-        internal void ExpandPoolSize(int pIncrement)
+        protected override void ExpandPoolSize(int pIncrement)
         {
             int maxPosibleScalation = PoolMaxSize - _availableInstances.Length;
 
@@ -204,6 +150,35 @@ namespace ToolsACG.Utils.Pooling
                 _availableInstances[i] = CreateNewInstance();
 
             PoolCurrentSize = _availableInstances.Length;
+        }
+
+        #endregion
+
+        #region Own Methods
+
+        public void RecycleGameObject(GameObject pInstance)
+        {
+            IPooleableGameObject poleableItem = pInstance.GetComponent<IPooleableGameObject>();
+
+            if (poleableItem == null)
+            {
+                Debug.LogError(string.Format("- POOL - {0} is not Pooled with IPooleableItem", pInstance.name));
+                return;
+            }
+            if (poleableItem.OriginPool != this)
+            {
+                Debug.LogError(string.Format("- POOL - {0} is not an Instance of this pool", pInstance.name));
+                return;
+            }
+
+            poleableItem.ReadyToUse = true;
+            pInstance.SetActive(false);
+            if (_parent != null)
+            {
+                pInstance.transform.SetParent(_parent);
+                pInstance.transform.localPosition = Vector3.zero;
+                pInstance.transform.localRotation = Quaternion.identity;
+            }
         }
 
         #endregion

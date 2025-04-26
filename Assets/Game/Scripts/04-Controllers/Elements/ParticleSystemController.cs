@@ -18,17 +18,12 @@ public class ParticleSystemController : MonoBehaviour, IPooleableGameObject
 
     private void Awake()
     {
-        GetReferences();
-    }
-
-    private void GetReferences()
-    {
         _particleSystem = GetComponent<ParticleSystem>();
     }
 
     private void RecycleGameObject()
     {
-        OriginPool.RecycleItem(gameObject);
+        OriginPool.RecycleGameObject(gameObject);
     }
     
     public void Play()

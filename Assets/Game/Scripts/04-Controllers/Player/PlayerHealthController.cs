@@ -26,16 +26,16 @@ public class PlayerHealthController : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.GetGameplayBus().AddListener<PlayerPrepared>(OnPlayerPrepared);
-        EventManager.GetGameplayBus().AddListener<PlayerHitted>(OnPlayerHitted);
-        EventManager.GetGameplayBus().AddListener<ShieldStateChanged>(OnShieldStateChanged);
+        EventManager.GameplayBus.AddListener<PlayerPrepared>(OnPlayerPrepared);
+        EventManager.GameplayBus.AddListener<PlayerHitted>(OnPlayerHitted);
+        EventManager.GameplayBus.AddListener<ShieldStateChanged>(OnShieldStateChanged);
     }
 
     private void OnDisable()
     {
-        EventManager.GetGameplayBus().RemoveListener<PlayerPrepared>(OnPlayerPrepared);
-        EventManager.GetGameplayBus().RemoveListener<PlayerHitted>(OnPlayerHitted);
-        EventManager.GetGameplayBus().RemoveListener<ShieldStateChanged>(OnShieldStateChanged);
+        EventManager.GameplayBus.RemoveListener<PlayerPrepared>(OnPlayerPrepared);
+        EventManager.GameplayBus.RemoveListener<PlayerHitted>(OnPlayerHitted);
+        EventManager.GameplayBus.RemoveListener<ShieldStateChanged>(OnShieldStateChanged);
     }
 
     #endregion
@@ -64,7 +64,7 @@ public class PlayerHealthController : MonoBehaviour
 
     private void GetReferences()
     {
-        _playerSettings = ResourcesManager.Instance.PlayerSettings;
+        _playerSettings = ResourcesManager.Instance.GetScriptableObject<PlayerSettings>(ScriptableObjectKeys.PLAYER_SETTINGS_KEY);
     }
 
     private void RestartStats()
@@ -84,16 +84,16 @@ public class PlayerHealthController : MonoBehaviour
         if (_shieldActive)
         {
             _shieldActive = false;
-            EventManager.GetGameplayBus().RaiseEvent(new ShieldStateChanged() { Active = _shieldActive });
+            EventManager.GameplayBus.RaiseEvent(new ShieldStateChanged() { Active = _shieldActive });
             return;
         }
 
         _health--;
-        EventManager.GetGameplayBus().RaiseEvent(new PlayerDamaged() { Health = _health });
+        EventManager.GameplayBus.RaiseEvent(new PlayerDamaged() { Health = _health });
         if (_isAlive && _health <= 0)
         {
             _isAlive = false;
-            EventManager.GetGameplayBus().RaiseEvent(new PlayerDead());
+            EventManager.GameplayBus.RaiseEvent(new PlayerDead());
         }
     }
 

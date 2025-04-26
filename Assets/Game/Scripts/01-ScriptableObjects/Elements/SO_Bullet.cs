@@ -10,6 +10,7 @@ public class SO_Bullet : SO_Selectable
     [Header("Configuration")]
     public Color Color;
     public float Speed;
+    public int Damage;
     public float LifeDuration;
     public float BetweenBulletsTime;
     [Space]

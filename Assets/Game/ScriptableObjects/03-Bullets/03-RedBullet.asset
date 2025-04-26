@@ -18,6 +18,7 @@ MonoBehaviour:
   PoolName: Bullet
   Color: {r: 1, g: 1, b: 1, a: 1}
   Speed: 600
+  Damage: 1
   LifeDuration: 1
   BetweenBulletsTime: 0.2
   DestuctionParticles:

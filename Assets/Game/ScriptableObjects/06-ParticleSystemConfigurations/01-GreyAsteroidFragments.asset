@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d81ef758a8c415e4a9dd7de31e41e106, type: 3}
   m_Name: 01-GreyAsteroidFragments
   m_EditorClassIdentifier: 
-  Texture: {fileID: 2800000, guid: d0eeef14ef716d44ea02fb6750cc9bb5, type: 3}
+  Material: {fileID: 2100000, guid: 57f4a9d99c1576c47a0035d4c0efa490, type: 2}

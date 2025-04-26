@@ -12,7 +12,7 @@ public class BoardManager : MonoBehaviour
     private List<AsteroidController> _currentAsteroids = new List<AsteroidController>();
 
     [Header("Data")]
-    private AsteroidsConfiguration _asteroidSettings;
+    private AsteroidsCollection _asteroidsCollection;
     private StageSettings _stageSettings;
     private SO_Ship _ShipData;
     [Space]
@@ -29,16 +29,16 @@ public class BoardManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.GetUiBus().AddListener<StartGame>(OnStartGame);
-        EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
-        EventManager.GetGameplayBus().AddListener<AsteroidDestroyed>(OnAsteroidDestroyed);
+        EventManager.UIBus.AddListener<StartGame>(OnStartGame);
+        EventManager.GameplayBus.AddListener<StartMatch>(OnStartMatch);
+        EventManager.GameplayBus.AddListener<AsteroidDestroyed>(OnAsteroidDestroyed);
     }
 
     private void OnDisable()
     {
-        EventManager.GetUiBus().AddListener<StartGame>(OnStartGame);
-        EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
-        EventManager.GetGameplayBus().RemoveListener<AsteroidDestroyed>(OnAsteroidDestroyed);
+        EventManager.UIBus.AddListener<StartGame>(OnStartGame);
+        EventManager.GameplayBus.RemoveListener<StartMatch>(OnStartMatch);
+        EventManager.GameplayBus.RemoveListener<AsteroidDestroyed>(OnAsteroidDestroyed);
     }
 
     #endregion
@@ -53,7 +53,7 @@ public class BoardManager : MonoBehaviour
 
     private void OnStartMatch(StartMatch pStartMatch)
     {
-        _ShipData = ResourcesManager.Instance.ShipsConfiguration.Ships.FirstOrDefault(x => x.Id == PersistentDataManager.SelectedShipId);
+        _ShipData = ResourcesManager.Instance.GetScriptableObject<ShipsCollection>(ScriptableObjectKeys.SHIP_COLLECTION_KEY).Ships.FirstOrDefault(x => x.Id == PersistentDataManager.SelectedShipId);
         
         _currentRound = 0;
 
@@ -78,9 +78,9 @@ public class BoardManager : MonoBehaviour
 
     private void GetReferences() 
     {
-        _asteroidSettings = ResourcesManager.Instance.AsteroidsConfiguration;
-        _stageSettings = ResourcesManager.Instance.StageSettings;
-        _initialPosibleAsteroids = _asteroidSettings.Asteroids.Where(x => x.IsInitialAsteroid is true).ToList();
+        _asteroidsCollection = ResourcesManager.Instance.GetScriptableObject<AsteroidsCollection>(ScriptableObjectKeys.ASTEROID_COLLECTION_KEY);
+        _stageSettings = ResourcesManager.Instance.GetScriptableObject<StageSettings>(ScriptableObjectKeys.STAGE_SETTINGS_KEY);
+        _initialPosibleAsteroids = _asteroidsCollection.Asteroids.Where(x => x.IsInitialAsteroid is true).ToList();
     }
 
     #endregion
@@ -89,8 +89,8 @@ public class BoardManager : MonoBehaviour
 
     private void CreatePlayer()
     {
-        PoolsManager.Instance.GetGameObjectInstance(_ShipData.PoolName);
-        EventManager.GetGameplayBus().RaiseEvent(new PlayerPrepared());
+        FactoryManager.Instance.GetGameObjectInstance(_ShipData.PoolName);
+        EventManager.GameplayBus.RaiseEvent(new PlayerPrepared());
     }
 
     private async void CreateAsteroids(float pDelay, List<SO_Asteroid> pPosibleAsteroids, int pAmount, Vector2 pOriginPosition = default, Vector2 pOriginDirection = default)
@@ -113,7 +113,7 @@ public class BoardManager : MonoBehaviour
     }
     private void CreateAsteroid(SO_Asteroid pData, Vector2 pOriginPosition = default, Vector2 pDirection = default)
     {
-        AsteroidController newAsteroid = PoolsManager.Instance.GetGameObjectInstance(pData.PoolName).GetComponent<AsteroidController>();
+        AsteroidController newAsteroid = FactoryManager.Instance.GetGameObjectInstance(pData.PoolName).GetComponent<AsteroidController>();
         _currentAsteroids.Add(newAsteroid);
         newAsteroid.Initialize(pData, pOriginPosition, pDirection);
     }

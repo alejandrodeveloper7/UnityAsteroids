@@ -21,8 +21,11 @@ namespace ToolsACG.Scenes.Pause
 
         protected override void Awake()
         {
-            _view = GetComponent<IPauseView>();
             base.Awake();
+
+            GetReferences();
+            Initialize();
+            RegisterActions();
         }
 
         protected override void RegisterActions()
@@ -36,6 +39,16 @@ namespace ToolsACG.Scenes.Pause
 
             _view.OnMusicSliderEndEdit += SaveMusicVolume;
             _view.OnEffectsSliderEndEdit += SaveEffectsVolume;
+        }
+
+        protected override void UnRegisterActions()
+        {
+            // TODO: Unregister listeners and dictionarie actions.      
+        }
+
+        protected override void GetReferences()
+        {
+            _view = GetComponent<IPauseView>();
         }
 
         protected override void Initialize()
@@ -53,14 +66,14 @@ namespace ToolsACG.Scenes.Pause
 
         private void OnEnable()
         {
-            EventManager.GetGameplayBus().AddListener<PauseKeyClicked>(OnPauseKeyClicked);
-            EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
+            EventManager.InputBus.AddListener<PauseKeyClicked>(OnPauseKeyClicked);
+            EventManager.UIBus.AddListener<GameLeaved>(OnGameLeaved);
         }
 
         private void OnDisable()
         {
-            EventManager.GetGameplayBus().RemoveListener<PauseKeyClicked>(OnPauseKeyClicked);
-            EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
+            EventManager.InputBus.RemoveListener<PauseKeyClicked>(OnPauseKeyClicked);
+            EventManager.UIBus.RemoveListener<GameLeaved>(OnGameLeaved);
         }
 
         #endregion
@@ -70,7 +83,7 @@ namespace ToolsACG.Scenes.Pause
         private void OnPauseKeyClicked(PauseKeyClicked pPauseKeyClicked)
         {
             _inPause = !_inPause;
-            EventManager.GetGameplayBus().RaiseEvent(new PauseStateChanged() { InPause = _inPause });
+            EventManager.GameplayBus.RaiseEvent(new PauseStateChanged() { InPause = _inPause });
 
             _view.TurnGeneralContainer(_inPause);
 
@@ -90,7 +103,7 @@ namespace ToolsACG.Scenes.Pause
         private void OnGameLeaved(GameLeaved pGameLeaved)
         {
             _inPause = false;
-            EventManager.GetGameplayBus().RaiseEvent(new PauseStateChanged() { InPause = _inPause });
+            EventManager.GameplayBus.RaiseEvent(new PauseStateChanged() { InPause = _inPause });
             DoExitWithDelay(0);
 
             Time.timeScale = 1;
@@ -103,11 +116,11 @@ namespace ToolsACG.Scenes.Pause
 
         private void OnMusicSliderValueChaged()
         {
-            EventManager.GetUiBus().RaiseEvent(new MusicVolumeUpdated() { Value = _view.MusicVolume });
+            EventManager.UIBus.RaiseEvent(new MusicVolumeUpdated() { Value = _view.MusicVolume });
         }
         private void OnEffectsSliderValueChaged()
         {
-            EventManager.GetUiBus().RaiseEvent(new EffectsVolumeUpdated() { Value = _view.EffectsVolume });
+            EventManager.UIBus.RaiseEvent(new EffectsVolumeUpdated() { Value = _view.EffectsVolume });
         }
 
         private void OnResolutionDropdownValueChanged()
@@ -124,7 +137,7 @@ namespace ToolsACG.Scenes.Pause
 
         private void OnLeaveGameButtonClicked()
         {
-            EventManager.GetUiBus().RaiseEvent(new GameLeaved());
+            EventManager.UIBus.RaiseEvent(new GameLeaved());
 
         }
         private void OnResumeButtonClicked()
@@ -155,11 +168,11 @@ namespace ToolsACG.Scenes.Pause
         private void InitializeVolumeSliders()
         {
             float musicVolume = PlayerPrefsManager.GetFloat(PlayerPrefsKeys.MUSIC_VOLUME_KEY, 1);
-            EventManager.GetUiBus().RaiseEvent(new MusicVolumeUpdated() { Value = musicVolume });
+            EventManager.UIBus.RaiseEvent(new MusicVolumeUpdated() { Value = musicVolume });
             _view.SetMusicVolume(musicVolume);
 
             float effectsVolume = PlayerPrefsManager.GetFloat(PlayerPrefsKeys.EFFECTS_VOLUME_KEY, 1);
-            EventManager.GetUiBus().RaiseEvent(new EffectsVolumeUpdated() { Value = effectsVolume });
+            EventManager.UIBus.RaiseEvent(new EffectsVolumeUpdated() { Value = effectsVolume });
             _view.SetEffectsVolume(effectsVolume);
         }
 

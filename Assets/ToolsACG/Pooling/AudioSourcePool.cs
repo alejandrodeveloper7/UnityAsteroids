@@ -4,32 +4,16 @@ using UnityEngine;
 
 namespace ToolsACG.Utils.Pooling
 {
-    public class AudioSourcePool
+    public class AudioSourcePool:BasePool<AudioSource>
     {
-        private AudioSource[] _availableInstances;
+        #region Fields
+        
         private Transform _parent;
+        
+        #endregion
 
-        [Header("Properties")]
-        private int _scalation;
-        public int Scalation
-        {
-            get => _scalation;
-            set => _scalation = value;
-        }
+        #region Constructors
 
-        private int _poolMaxSize;
-        public int PoolMaxSize
-        {
-            get => _poolMaxSize;
-            set => _poolMaxSize = value;
-        }
-
-        private int _poolCurrentSize;
-        public int PoolCurrentSize
-        {
-            get => _poolCurrentSize;
-            private set => _poolCurrentSize = value;
-        }
 
         public AudioSourcePool()
               : this(1)
@@ -66,10 +50,11 @@ namespace ToolsACG.Utils.Pooling
                 ExpandPoolSize(initialSize);
         }
 
+        #endregion
 
-        #region public Methods
+        #region Abstract Methods
 
-        public AudioSource GetInstance()
+        public override AudioSource GetInstance()
         {
             AudioSource instance = ObteinReadyInstance();
 
@@ -81,23 +66,15 @@ namespace ToolsACG.Utils.Pooling
 
             if (instance == null)
             {
-                Debug.LogError("AudioSource pool is at max size and there are not ready instances available");
+                Debug.LogError("- POOL - AudioSource pool is at max size and there are not ready instances available");
                 return instance;
             }
 
             return instance;
         }
 
-        #endregion
 
-        #region Internal Logic
-
-        private void CreateParent() 
-        {
-            _parent = new GameObject("Pooled2DAudioSources").transform;
-        }
-
-        private AudioSource ObteinReadyInstance()
+        protected override AudioSource ObteinReadyInstance()
         {
             foreach (AudioSource audioSource in _availableInstances)
                 if (audioSource.isPlaying is false)
@@ -106,13 +83,13 @@ namespace ToolsACG.Utils.Pooling
             return null;
         }
 
-        internal AudioSource CreateNewInstance()
+        protected override AudioSource CreateNewInstance()
         {
             AudioSource newInstance = _parent.AddComponent<AudioSource>();
             return newInstance;
         }
 
-        internal void ExpandPoolSize(int pIncrement)
+        protected override void ExpandPoolSize(int pIncrement)
         {
             int maxPosibleScalation = PoolMaxSize - _availableInstances.Length;
 
@@ -141,7 +118,16 @@ namespace ToolsACG.Utils.Pooling
             PoolCurrentSize = _availableInstances.Length;
         }
 
+
         #endregion
 
+        #region Own Methods
+
+        private void CreateParent() 
+        {
+            _parent = new GameObject("Pooled_2D_AudioSources").transform;
+        }
+
+        #endregion
     }
 }

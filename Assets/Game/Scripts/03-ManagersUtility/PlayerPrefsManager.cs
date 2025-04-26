@@ -29,24 +29,39 @@ public static class PlayerPrefsManager
 
     public static float GetFloat(string pKey, float pDefaultValue = 0f)
     {
-        if (PlayerPrefs.HasKey(pKey))
+        if (PlayerPrefs.HasKey(pKey)) 
+        {
             return PlayerPrefs.GetFloat(pKey);
+        }
         else
+        {
+            SetFloat(pKey, pDefaultValue);
             return pDefaultValue;
+        }
     }
     public static int GetInt(string pKey, int pDefaultValue = 0)
     {
         if (PlayerPrefs.HasKey(pKey))
+        { 
             return PlayerPrefs.GetInt(pKey);
+        }
         else
+        { 
+            SetInt(pKey, pDefaultValue);
             return pDefaultValue;
+        }
     }
     public static string GetString(string pKey, string pDefaultValue = "")
     {
         if (PlayerPrefs.HasKey(pKey))
+        {
             return PlayerPrefs.GetString(pKey);
+        }
         else
+        {
+            SetString(pKey, pDefaultValue);
             return pDefaultValue;
+        }
     }
     
     #endregion

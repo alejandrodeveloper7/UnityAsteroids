@@ -14,9 +14,12 @@ namespace ToolsACG.Scenes
         protected virtual void Awake()
         {
             View = GetComponent<ModuleView>();
-            Initialize();
-            RegisterActions();
         }
+
+        protected abstract void RegisterActions();
+        protected abstract void UnRegisterActions();
+        protected abstract void GetReferences();
+        protected abstract void Initialize();
 
         public virtual void OnClick(Button pButton)
         {
@@ -47,8 +50,5 @@ namespace ToolsACG.Scenes
             if (Actions.ContainsKey(pDropDown.name))
                 Actions[pDropDown.name].Invoke();
         }
-
-        protected abstract void RegisterActions();
-        protected abstract void Initialize();
     }
 }

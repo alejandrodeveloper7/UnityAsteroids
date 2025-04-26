@@ -37,22 +37,22 @@ public class PlayerMovementController : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.GetGameplayBus().AddListener<PlayerPrepared>(OnPlayerPrepared);
-        EventManager.GetGameplayBus().AddListener<RotationtKeyStateChange>(OnRotationtKeyStateChange);
-        EventManager.GetGameplayBus().AddListener<MoveForwardKeyStateChange>(OnMoveForwardKeyStateChange);
-        EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetGameplayBus().AddListener<PauseStateChanged>(OnPauseStateChanged);
-        EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
+        EventManager.GameplayBus.AddListener<PlayerPrepared>(OnPlayerPrepared);
+        EventManager.InputBus.AddListener<RotationtKeyStateChange>(OnRotationtKeyStateChange);
+        EventManager.InputBus.AddListener<MoveForwardKeyStateChange>(OnMoveForwardKeyStateChange);
+        EventManager.GameplayBus.AddListener<PlayerDead>(OnPlayerDead);
+        EventManager.GameplayBus.AddListener<PauseStateChanged>(OnPauseStateChanged);
+        EventManager.UIBus.AddListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnDisable()
     {
-        EventManager.GetGameplayBus().RemoveListener<PlayerPrepared>(OnPlayerPrepared);
-        EventManager.GetGameplayBus().RemoveListener<RotationtKeyStateChange>(OnRotationtKeyStateChange);
-        EventManager.GetGameplayBus().RemoveListener<MoveForwardKeyStateChange>(OnMoveForwardKeyStateChange);
-        EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetGameplayBus().RemoveListener<PauseStateChanged>(OnPauseStateChanged);
-        EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
+        EventManager.GameplayBus.RemoveListener<PlayerPrepared>(OnPlayerPrepared);
+        EventManager.InputBus.RemoveListener<RotationtKeyStateChange>(OnRotationtKeyStateChange);
+        EventManager.InputBus.RemoveListener<MoveForwardKeyStateChange>(OnMoveForwardKeyStateChange);
+        EventManager.GameplayBus.RemoveListener<PlayerDead>(OnPlayerDead);
+        EventManager.GameplayBus.RemoveListener<PauseStateChanged>(OnPauseStateChanged);
+        EventManager.UIBus.RemoveListener<GameLeaved>(OnGameLeaved);
     }
 
     #endregion
@@ -119,7 +119,7 @@ public class PlayerMovementController : MonoBehaviour
 
     private void Initialize()
     {
-        _shipData = ResourcesManager.Instance.ShipsConfiguration.Ships.FirstOrDefault(x => x.Id == PersistentDataManager.SelectedShipId);
+        _shipData = ResourcesManager.Instance.GetScriptableObject<ShipsCollection>(ScriptableObjectKeys.SHIP_COLLECTION_KEY).Ships.FirstOrDefault(x => x.Id == PersistentDataManager.SelectedShipId);
         
         _isAlive = true;
         transform.SetPositionAndRotation(_shipData.InitialPostion, Quaternion.Euler(_shipData.InitialRotation));

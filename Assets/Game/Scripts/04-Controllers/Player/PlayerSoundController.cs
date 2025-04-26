@@ -10,18 +10,18 @@ public class PlayerSoundController : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.GetGameplayBus().AddListener<PlayerPrepared>(OnPlayerPrepared);
-        EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetGameplayBus().AddListener<PlayerDamaged>(OnPlayerDamaged);
-        EventManager.GetGameplayBus().AddListener<ShieldStateChanged>(OnShieldStateChanged);
+        EventManager.GameplayBus.AddListener<PlayerPrepared>(OnPlayerPrepared);
+        EventManager.GameplayBus.AddListener<PlayerDead>(OnPlayerDead);
+        EventManager.GameplayBus.AddListener<PlayerDamaged>(OnPlayerDamaged);
+        EventManager.GameplayBus.AddListener<ShieldStateChanged>(OnShieldStateChanged);
     }
 
     private void OnDisable()
     {
-        EventManager.GetGameplayBus().RemoveListener<PlayerPrepared>(OnPlayerPrepared);
-        EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetGameplayBus().RemoveListener<PlayerDamaged>(OnPlayerDamaged);
-        EventManager.GetGameplayBus().RemoveListener<ShieldStateChanged>(OnShieldStateChanged);
+        EventManager.GameplayBus.RemoveListener<PlayerPrepared>(OnPlayerPrepared);
+        EventManager.GameplayBus.RemoveListener<PlayerDead>(OnPlayerDead);
+        EventManager.GameplayBus.RemoveListener<PlayerDamaged>(OnPlayerDamaged);
+        EventManager.GameplayBus.RemoveListener<ShieldStateChanged>(OnShieldStateChanged);
     }
 
     #endregion
@@ -30,25 +30,25 @@ public class PlayerSoundController : MonoBehaviour
 
     private void OnPlayerPrepared(PlayerPrepared pPlayerPrepared)
     {
-        _shipData = ResourcesManager.Instance.ShipsConfiguration.Ships.FirstOrDefault(x => x.Id == PersistentDataManager.SelectedShipId);
+        _shipData = ResourcesManager.Instance.GetScriptableObject<ShipsCollection>(ScriptableObjectKeys.SHIP_COLLECTION_KEY).Ships.FirstOrDefault(x => x.Id == PersistentDataManager.SelectedShipId);
     }
 
     private void OnPlayerDead(PlayerDead pPlayerDead)
     {
-        EventManager.GetGameplayBus().RaiseEvent(new Generate2DSound() { SoundsData = _shipData.SoundsOnDestruction });
+        EventManager.SoundBus.RaiseEvent(new Generate2DSound() { SoundsData = _shipData.SoundsOnDestruction });
     }
 
     private void OnPlayerDamaged(PlayerDamaged pPlayerDamaged)
     {
-        EventManager.GetGameplayBus().RaiseEvent(new Generate2DSound() { SoundsData = _shipData.SoundsOnDamage });
+        EventManager.SoundBus.RaiseEvent(new Generate2DSound() { SoundsData = _shipData.SoundsOnDamage });
     }
 
     private void OnShieldStateChanged(ShieldStateChanged pShieldStateChanged) 
     {
         if(pShieldStateChanged.Active)
-            EventManager.GetGameplayBus().RaiseEvent(new Generate2DSound() { SoundsData = _shipData.SoundsOnShieldUp });
+            EventManager.SoundBus.RaiseEvent(new Generate2DSound() { SoundsData = _shipData.SoundsOnShieldUp });
         else
-            EventManager.GetGameplayBus().RaiseEvent(new Generate2DSound() { SoundsData = _shipData.SoundsOnShieldDown });
+            EventManager.SoundBus.RaiseEvent(new Generate2DSound() { SoundsData = _shipData.SoundsOnShieldDown });
     }
 
     #endregion

@@ -39,7 +39,7 @@ namespace ToolsACG.Services
 
         protected void LogGetRequest(string pUrl)
         {
-            Debug.LogFormat("<color=Cyan>GET REQUEST --- {0} ---</color>", pUrl);
+            Debug.LogFormat("<color=Cyan>GET REQUEST --- {0} </color>", pUrl);
         }
 
         protected void LogRequest(object pRequest, string pUrl)
@@ -54,7 +54,7 @@ namespace ToolsACG.Services
 
         protected void LogError(string pText)
         {
-            Debug.LogErrorFormat("<color=red>[ERROR] --- {0} --- </color>", pText);
+            Debug.LogErrorFormat("<color=red>[ERROR] --- {0} </color>", pText);
         }
 
         protected void LogReponseTime(string pUrl, float pTime)
@@ -70,10 +70,9 @@ namespace ToolsACG.Services
         {
             IsSending = true;
 
-            if (NetworkManager.Instance.NetworkSetting.Environment is NetworkManager.Environment.LocalHost && pPort != 0)
-            {
+            if (NetworkManager.Instance.NetworkSetting.Environment is NetworkManager.Environment.LocalHost && pPort != 0)            
                 pEndPoint = string.Format("{0}/{1}", pPort, pEndPoint);
-            }
+            
 
             string completeUrl = string.Concat(NetworkManager.Instance.NetworkSetting.Url, pEndPoint);
             string completeUrlWithParameters = BuildUrl(completeUrl, pParameter);
@@ -159,10 +158,8 @@ namespace ToolsACG.Services
 
             IsSending = true;
 
-            if (NetworkManager.Instance.NetworkSetting.Environment is NetworkManager.Environment.LocalHost && pPort != 0)
-            {
-                pEndPoint = string.Format("{0}/{1}", pPort, pEndPoint);
-            }
+            if (NetworkManager.Instance.NetworkSetting.Environment is NetworkManager.Environment.LocalHost && pPort != 0)            
+                pEndPoint = string.Format("{0}/{1}", pPort, pEndPoint);            
 
             LogAPI(pEndPoint);
 
@@ -255,10 +252,8 @@ namespace ToolsACG.Services
         {
             IsSending = true;
 
-            if (NetworkManager.Instance.NetworkSetting.Environment is NetworkManager.Environment.LocalHost && pPort != 0)
-            {
-                pEndPoint = string.Format("{0}/{1}", pPort, pEndPoint);
-            }
+            if (NetworkManager.Instance.NetworkSetting.Environment is NetworkManager.Environment.LocalHost && pPort != 0)            
+                pEndPoint = string.Format("{0}/{1}", pPort, pEndPoint);            
 
             LogAPI(pEndPoint);
 
@@ -387,8 +382,8 @@ namespace ToolsACG.Services
         {
             if (pParameters != null && pParameters.Count > 0)
             {
-                string queryString = string.Join("&", pParameters.Select(p =>
-                  Uri.EscapeDataString(p.Key) + "=" + Uri.EscapeDataString(p.Value)));
+                string queryString = string.Join("&", pParameters.Select(pair =>
+                  Uri.EscapeDataString(pair.Key) + "=" + Uri.EscapeDataString(pair.Value)));
 
                 pUrl += (pUrl.Contains("?") ? "&" : "?") + queryString;
             }

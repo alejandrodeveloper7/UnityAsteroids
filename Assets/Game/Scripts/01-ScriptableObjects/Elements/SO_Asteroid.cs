@@ -10,6 +10,7 @@ public class SO_Asteroid : SO_Base
     public Sprite[] possibleSprites;
 
     [Header("Configuration")]
+    public int MaxHP;
     public float AsteroidSpawnAngle;
     public float PosibleTorque;
     public int Speed;

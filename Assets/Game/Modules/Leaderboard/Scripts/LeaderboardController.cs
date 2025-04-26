@@ -20,13 +20,26 @@ namespace ToolsACG.Scenes.Leaderboard
 
         protected override void Awake()
         {
-            _view = GetComponent<ILeaderboardView>();
             base.Awake();
+
+            GetReferences();
+            Initialize();
+            RegisterActions();
         }
 
         protected override void RegisterActions()
         {
             Actions.Add("BTN_BackToMenu", OnBackToMenuButtonClick);
+        }
+
+        protected override void UnRegisterActions()
+        {
+            // TODO: Unregister listeners and dictionarie actions.      
+        }
+
+        protected override void GetReferences()
+        {
+            _view = GetComponent<ILeaderboardView>();
         }
 
         protected override void Initialize()
@@ -40,12 +53,12 @@ namespace ToolsACG.Scenes.Leaderboard
 
         private void OnEnable()
         {
-            EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
+            EventManager.GameplayBus.AddListener<PlayerDead>(OnPlayerDead);
         }
 
         private void OnDisable()
         {
-            EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
+            EventManager.GameplayBus.RemoveListener<PlayerDead>(OnPlayerDead);
         }
 
         #endregion
@@ -64,7 +77,7 @@ namespace ToolsACG.Scenes.Leaderboard
 
         private void OnBackToMenuButtonClick()
         {
-            _ = EventManager.GetUiBus().RaiseEvent(new BackToMenuButtonClicked());
+            EventManager.UIBus.RaiseEvent(new BackToMenuButtonClicked());
             DoExitWithDelay(0);
         }
 

@@ -12,23 +12,23 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
-        _inputSettings = ResourcesManager.Instance.InputSettings;
+        _inputSettings = ResourcesManager.Instance.GetScriptableObject<InputSettings>(ScriptableObjectKeys.INPUT_SETTINGS_KEY);
     }
 
     private void OnEnable()
     {
-        EventManager.GetGameplayBus().AddListener<StartMatch>(OnStartMatch);
-        EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetGameplayBus().AddListener<PauseStateChanged>(OnPauseStateChanged);
-        EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
+        EventManager.GameplayBus.AddListener<StartMatch>(OnStartMatch);
+        EventManager.GameplayBus.AddListener<PlayerDead>(OnPlayerDead);
+        EventManager.GameplayBus.AddListener<PauseStateChanged>(OnPauseStateChanged);
+        EventManager.UIBus.AddListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnDisable()
     {
-        EventManager.GetGameplayBus().RemoveListener<StartMatch>(OnStartMatch);
-        EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetGameplayBus().RemoveListener<PauseStateChanged>(OnPauseStateChanged);
-        EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
+        EventManager.GameplayBus.RemoveListener<StartMatch>(OnStartMatch);
+        EventManager.GameplayBus.RemoveListener<PlayerDead>(OnPlayerDead);
+        EventManager.GameplayBus.RemoveListener<PauseStateChanged>(OnPauseStateChanged);
+        EventManager.UIBus.RemoveListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnApplicationFocus(bool focus)
@@ -36,9 +36,9 @@ public class InputManager : MonoBehaviour
         if (focus)
             return;
 
-        EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = 0 });
-        EventManager.GetGameplayBus().RaiseEvent(new ShootKeyStateChange() { State = false });
-        EventManager.GetGameplayBus().RaiseEvent(new MoveForwardKeyStateChange() { State = false });
+        EventManager.InputBus.RaiseEvent(new RotationtKeyStateChange() { Value = 0 });
+        EventManager.InputBus.RaiseEvent(new ShootKeyStateChange() { State = false });
+        EventManager.InputBus.RaiseEvent(new MoveForwardKeyStateChange() { State = false });
     }
 
 
@@ -80,18 +80,17 @@ public class InputManager : MonoBehaviour
         if (_playing is false)
             return;
 
-
         if (Input.GetKey(_inputSettings.TurnLeftKey))
-            EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = 1 });
+            EventManager.InputBus.RaiseEvent(new RotationtKeyStateChange() { Value = 1 });
 
         if (Input.GetKey(_inputSettings.TurnRightKey))
-            EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = -1 });
+            EventManager.InputBus.RaiseEvent(new RotationtKeyStateChange() { Value = -1 });
 
         if (Input.GetKey(_inputSettings.MoveForwardKey))
-            EventManager.GetGameplayBus().RaiseEvent(new MoveForwardKeyStateChange() { State = true });
+            EventManager.InputBus.RaiseEvent(new MoveForwardKeyStateChange() { State = true });
 
         if (Input.GetKey(_inputSettings.ShootKey))
-            EventManager.GetGameplayBus().RaiseEvent(new ShootKeyStateChange() { State = true });
+            EventManager.InputBus.RaiseEvent(new ShootKeyStateChange() { State = true });
     }
 
     private void OnGameLeaved(GameLeaved pGameLeaved) 
@@ -106,50 +105,50 @@ public class InputManager : MonoBehaviour
     private void CheckRotationInput()
     {
         if (Input.GetKeyDown(_inputSettings.TurnLeftKey))
-            EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = 1 });
+            EventManager.InputBus.RaiseEvent(new RotationtKeyStateChange() { Value = 1 });
 
         if (Input.GetKeyDown(_inputSettings.TurnRightKey))
-            EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = -1 });
+            EventManager.InputBus.RaiseEvent(new RotationtKeyStateChange() { Value = -1 });
 
         if (Input.GetKeyUp(_inputSettings.TurnLeftKey))
         {
             if (Input.GetKey(_inputSettings.TurnRightKey))
-                EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = -1 });
+                EventManager.InputBus.RaiseEvent(new RotationtKeyStateChange() { Value = -1 });
             else
-                EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = 0 });
+                EventManager.InputBus.RaiseEvent(new RotationtKeyStateChange() { Value = 0 });
         }
 
         if (Input.GetKeyUp(_inputSettings.TurnRightKey))
         {
             if (Input.GetKey(_inputSettings.TurnLeftKey))
-                EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = 1 });
+                EventManager.InputBus.RaiseEvent(new RotationtKeyStateChange() { Value = 1 });
             else
-                EventManager.GetGameplayBus().RaiseEvent(new RotationtKeyStateChange() { Value = 0 });
+                EventManager.InputBus.RaiseEvent(new RotationtKeyStateChange() { Value = 0 });
         }
     }
 
     private void CheckMovementInput()
     {
         if (Input.GetKeyDown(_inputSettings.MoveForwardKey))
-            EventManager.GetGameplayBus().RaiseEvent(new MoveForwardKeyStateChange() { State = true });
+            EventManager.InputBus.RaiseEvent(new MoveForwardKeyStateChange() { State = true });
 
         if (Input.GetKeyUp(_inputSettings.MoveForwardKey))
-            EventManager.GetGameplayBus().RaiseEvent(new MoveForwardKeyStateChange() { State = false });
+            EventManager.InputBus.RaiseEvent(new MoveForwardKeyStateChange() { State = false });
     }
 
     private void CheckShootInput()
     {
         if (Input.GetKeyDown(_inputSettings.ShootKey))
-            EventManager.GetGameplayBus().RaiseEvent(new ShootKeyStateChange() { State = true });
+            EventManager.InputBus.RaiseEvent(new ShootKeyStateChange() { State = true });
 
         if (Input.GetKeyUp(_inputSettings.ShootKey))
-            EventManager.GetGameplayBus().RaiseEvent(new ShootKeyStateChange() { State = false });
+            EventManager.InputBus.RaiseEvent(new ShootKeyStateChange() { State = false });
     }
 
     private void CheckPauseInput()
     {
         if (Input.GetKeyDown(_inputSettings.PauseKey))
-            EventManager.GetGameplayBus().RaiseEvent(new PauseKeyClicked());
+            EventManager.InputBus.RaiseEvent(new PauseKeyClicked());
     }
 
     #endregion

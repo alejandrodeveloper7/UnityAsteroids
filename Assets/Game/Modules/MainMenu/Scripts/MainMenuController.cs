@@ -27,8 +27,11 @@ namespace ToolsACG.Scenes.MainMenu
 
         protected override void Awake()
         {
-            _view = GetComponent<IMainMenuView>();
             base.Awake();
+
+            GetReferences();
+            Initialize();
+            RegisterActions();
         }
 
         protected override void RegisterActions()
@@ -37,10 +40,20 @@ namespace ToolsACG.Scenes.MainMenu
             Actions.Add("BTN_ExitGame", OnExitGameButtonClick);
         }
 
+        protected override void UnRegisterActions()
+        {
+            // TODO: Unregister listeners and dictionarie actions.      
+        }
+
+        protected override void GetReferences()
+        {
+            _view = GetComponent<IMainMenuView>();
+        }
+
         protected override void Initialize()
         {
-            _bulletSelectorController.SetData(ResourcesManager.Instance.BulletsConfiguration.Bullets.Cast<SO_Selectable>().ToList(), 0);
-            _shipSelectorController.SetData(ResourcesManager.Instance.ShipsConfiguration.Ships.Cast<SO_Selectable>().ToList(), 0);
+            _bulletSelectorController.SetData(ResourcesManager.Instance.GetScriptableObject<BulletsCollection>(ScriptableObjectKeys.BULLET_COLLECTION_KEY).Bullets.Cast<SO_Selectable>().ToList(), 0);
+            _shipSelectorController.SetData(ResourcesManager.Instance.GetScriptableObject<ShipsCollection>(ScriptableObjectKeys.SHIP_COLLECTION_KEY).Ships.Cast<SO_Selectable>().ToList(), 0);
 
             _view.TurnGeneralContainer(false);
             _view.SetUserNameValue(Environment.UserName);
@@ -52,16 +65,16 @@ namespace ToolsACG.Scenes.MainMenu
 
         private void OnEnable()
         {
-            EventManager.GetUiBus().AddListener<StartGame>(OnStartGame);
-            EventManager.GetUiBus().AddListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
-            EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
+            EventManager.UIBus.AddListener<StartGame>(OnStartGame);
+            EventManager.UIBus.AddListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
+            EventManager.UIBus.AddListener<GameLeaved>(OnGameLeaved);
         }
 
         private void OnDisable()
         {
-            EventManager.GetUiBus().RemoveListener<StartGame>(OnStartGame);
-            EventManager.GetUiBus().RemoveListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
-            EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
+            EventManager.UIBus.RemoveListener<StartGame>(OnStartGame);
+            EventManager.UIBus.RemoveListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
+            EventManager.UIBus.RemoveListener<GameLeaved>(OnGameLeaved);
         }
 
         #endregion
@@ -104,7 +117,7 @@ namespace ToolsACG.Scenes.MainMenu
 
             _view.TurnGeneralContainer(false);
 
-            EventManager.GetGameplayBus().RaiseEvent(new StartMatch());
+            EventManager.GameplayBus.RaiseEvent(new StartMatch());
         }
 
         #endregion

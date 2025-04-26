@@ -29,18 +29,18 @@ public class PlayerPhysicsController : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.GetGameplayBus().AddListener<PlayerPrepared>(OnPlayerPrepared);
-        EventManager.GetGameplayBus().AddListener<PlayerAppearanceUpdated>(OnPlayerAppearanceUpdated);
-        EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetUiBus().AddListener<GameLeaved>(OnGameLeaved);
+        EventManager.GameplayBus.AddListener<PlayerPrepared>(OnPlayerPrepared);
+        EventManager.GameplayBus.AddListener<PlayerAppearanceUpdated>(OnPlayerAppearanceUpdated);
+        EventManager.GameplayBus.AddListener<PlayerDead>(OnPlayerDead);
+        EventManager.UIBus.AddListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnDisable()
     {
-        EventManager.GetGameplayBus().RemoveListener<PlayerPrepared>(OnPlayerPrepared);
-        EventManager.GetGameplayBus().RemoveListener<PlayerAppearanceUpdated>(OnPlayerAppearanceUpdated);
-        EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetUiBus().RemoveListener<GameLeaved>(OnGameLeaved);
+        EventManager.GameplayBus.RemoveListener<PlayerPrepared>(OnPlayerPrepared);
+        EventManager.GameplayBus.RemoveListener<PlayerAppearanceUpdated>(OnPlayerAppearanceUpdated);
+        EventManager.GameplayBus.RemoveListener<PlayerDead>(OnPlayerDead);
+        EventManager.UIBus.RemoveListener<GameLeaved>(OnGameLeaved);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -48,10 +48,12 @@ public class PlayerPhysicsController : MonoBehaviour
         if (_inCollisionCooldown)
             return;
 
-        collision.TryGetComponent(out AsteroidController detectedAsteroid);
-        if (detectedAsteroid != null)
+        collision.TryGetComponent(out ICollisionable detectedCollisionable);
+        if (detectedCollisionable != null)
         {
-            EventManager.GetGameplayBus().RaiseEvent(new PlayerHitted());
+            detectedCollisionable.Collisioned();
+
+            EventManager.GameplayBus.RaiseEvent(new PlayerHitted());
             _inCollisionCooldown = true;
             Invoke(nameof(ResetCollisionCooldown), _shipData.InvulnerabilityDuration);
         }
@@ -96,7 +98,7 @@ public class PlayerPhysicsController : MonoBehaviour
 
     private void Initialize()
     {
-        _shipData = ResourcesManager.Instance.ShipsConfiguration.Ships.FirstOrDefault(x => x.Id == PersistentDataManager.SelectedShipId);
+        _shipData = ResourcesManager.Instance.GetScriptableObject<ShipsCollection>(ScriptableObjectKeys.SHIP_COLLECTION_KEY).Ships.FirstOrDefault(x => x.Id == PersistentDataManager.SelectedShipId);
 
         _inCollisionCooldown = false;
         TurnDetection(true);

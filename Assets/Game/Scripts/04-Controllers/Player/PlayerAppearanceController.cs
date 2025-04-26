@@ -16,7 +16,6 @@ public class PlayerAppearanceController : MonoBehaviour
     private Sequence _blinkSequence;
     private Sequence _CollisionCooldownSequence;
 
-
     private Color _storedColor;
     #endregion
 
@@ -29,18 +28,18 @@ public class PlayerAppearanceController : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.GetGameplayBus().AddListener<PlayerPrepared>(OnPlayerPrepared);
-        EventManager.GetGameplayBus().AddListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetGameplayBus().AddListener<ShieldStateChanged>(OnShieldStateChanged);
-        EventManager.GetGameplayBus().AddListener<PlayerHitted>(OnPlayerHitted);
+        EventManager.GameplayBus.AddListener<PlayerPrepared>(OnPlayerPrepared);
+        EventManager.GameplayBus.AddListener<PlayerDead>(OnPlayerDead);
+        EventManager.GameplayBus.AddListener<ShieldStateChanged>(OnShieldStateChanged);
+        EventManager.GameplayBus.AddListener<PlayerHitted>(OnPlayerHitted);
     }
 
     private void OnDisable()
     {
-        EventManager.GetGameplayBus().RemoveListener<PlayerPrepared>(OnPlayerPrepared);
-        EventManager.GetGameplayBus().RemoveListener<PlayerDead>(OnPlayerDead);
-        EventManager.GetGameplayBus().RemoveListener<ShieldStateChanged>(OnShieldStateChanged);
-        EventManager.GetGameplayBus().RemoveListener<PlayerHitted>(OnPlayerHitted);
+        EventManager.GameplayBus.RemoveListener<PlayerPrepared>(OnPlayerPrepared);
+        EventManager.GameplayBus.RemoveListener<PlayerDead>(OnPlayerDead);
+        EventManager.GameplayBus.RemoveListener<ShieldStateChanged>(OnShieldStateChanged);
+        EventManager.GameplayBus.RemoveListener<PlayerHitted>(OnPlayerHitted);
     }
 
     #endregion
@@ -68,7 +67,7 @@ public class PlayerAppearanceController : MonoBehaviour
 
     private void OnPlayerHitted(PlayerHitted pPlayerHitted)
     {
-        InvulnerabilitySequence();
+        DisplayInvulnerabilityBlinkSequence();
     }
 
     #endregion
@@ -83,17 +82,17 @@ public class PlayerAppearanceController : MonoBehaviour
 
     private void Initialize()
     {
-        _shipData = ResourcesManager.Instance.ShipsConfiguration.Ships.FirstOrDefault(x => x.Id == PersistentDataManager.SelectedShipId);
+        _shipData = ResourcesManager.Instance.GetScriptableObject<ShipsCollection>(ScriptableObjectKeys.SHIP_COLLECTION_KEY).Ships.FirstOrDefault(x => x.Id == PersistentDataManager.SelectedShipId);
 
         _shipSpriteRenderer.sprite = _shipData.Sprite;
         _shieldFX.enabled = true;
         _shieldFX.color = _shipData.ShieldColor;
-        StartBlink();
+        StartShieldBlink();
 
         _CollisionCooldownSequence?.Kill();
         _shipSpriteRenderer.color = _storedColor;
 
-        EventManager.GetGameplayBus().RaiseEvent(new PlayerAppearanceUpdated());
+        EventManager.GameplayBus.RaiseEvent(new PlayerAppearanceUpdated());
     }
 
     #endregion
@@ -109,7 +108,7 @@ public class PlayerAppearanceController : MonoBehaviour
 
         _shieldFX.DOFade(_shipData.BlinkMaxAlpha, _shipData.FadeInDuration).OnComplete(() =>
         {
-            StartBlink();
+            StartShieldBlink();
         });
     }
 
@@ -124,7 +123,7 @@ public class PlayerAppearanceController : MonoBehaviour
         });
     }
 
-    private void StartBlink()
+    private void StartShieldBlink()
     {
         _blinkSequence = DOTween.Sequence()
         .Append(_shieldFX.DOFade(_shipData.BlinkMinAlpha, _shipData.BlickDuration).SetEase(Ease.InOutSine))
@@ -136,15 +135,15 @@ public class PlayerAppearanceController : MonoBehaviour
 
     #region Invulnerability
 
-    private void InvulnerabilitySequence() 
+    private void DisplayInvulnerabilityBlinkSequence() 
     {
         if (_CollisionCooldownSequence != null)
             _CollisionCooldownSequence?.Kill();
 
         _CollisionCooldownSequence = DOTween.Sequence()
-                .Append(_shipSpriteRenderer.DOFade(0f, 0.25f).SetEase(Ease.Linear))
-                .Append(_shipSpriteRenderer.DOFade(1f, 0.25f).SetEase(Ease.Linear))
-                .SetLoops((int)_shipData.InvulnerabilityDuration*2, LoopType.Yoyo);
+                .Append(_shipSpriteRenderer.DOFade(0f,(float)1/(_shipData.InvulnerabilityBlinksPerSecond*2)).SetEase(Ease.Linear))
+                .Append(_shipSpriteRenderer.DOFade(1f, (float)1 / (_shipData.InvulnerabilityBlinksPerSecond*2)).SetEase(Ease.Linear))
+                .SetLoops((int)_shipData.InvulnerabilityDuration* _shipData.InvulnerabilityBlinksPerSecond, LoopType.Yoyo);
     }
 
     #endregion
@@ -155,7 +154,7 @@ public class PlayerAppearanceController : MonoBehaviour
     {
         foreach (ParticleSetup item in _shipData.DestuctionParticles)
         {
-            ParticleSystem pooledParticlesystem = PoolsManager.Instance.GetGameObjectInstance(item.particleEffectName).GetComponent<ParticleSystem>();
+            ParticleSystem pooledParticlesystem = FactoryManager.Instance.GetGameObjectInstance(item.particleEffectName).GetComponent<ParticleSystem>();
             if (item.particleConfig != null)
                 item.particleConfig.ApplyConfig(pooledParticlesystem);
             pooledParticlesystem.transform.position = transform.position;

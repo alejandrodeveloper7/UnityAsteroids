@@ -32,7 +32,8 @@ public class SO_Ship : SO_Selectable
     public float EdgeRepositionOffsetX;
 
     [Header("Shield")]
-    public float InvulnerabilityDuration;
+    public int InvulnerabilityDuration;
+    public int InvulnerabilityBlinksPerSecond;
     public Color ShieldColor;
     [Space]
     public float FadeInDuration;

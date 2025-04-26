@@ -7,4 +7,6 @@ public class PlayerSettings : ScriptableObject
     [Range(1,5)]public int HealthPoints;
     [Space]
     public float ShieldRecoveryTime;
+    [Space]
+    public float TimeBeforeReciclePlayer;
 }
