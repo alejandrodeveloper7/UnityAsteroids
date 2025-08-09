@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using ToolsACG.Utils.Events;
+using ToolsACG.Utils.PlayerPrefs;
 using UnityEngine;
 
 namespace ToolsACG.Scenes.Pause
@@ -83,7 +83,7 @@ namespace ToolsACG.Scenes.Pause
         private void OnPauseKeyClicked(PauseKeyClicked pPauseKeyClicked)
         {
             _inPause = !_inPause;
-            EventManager.GameplayBus.RaiseEvent(new PauseStateChanged() { InPause = _inPause });
+            EventManager.GameplayBus.RaiseEvent(new PauseStateChanged(_inPause));
 
             _view.TurnGeneralContainer(_inPause);
 
@@ -103,7 +103,7 @@ namespace ToolsACG.Scenes.Pause
         private void OnGameLeaved(GameLeaved pGameLeaved)
         {
             _inPause = false;
-            EventManager.GameplayBus.RaiseEvent(new PauseStateChanged() { InPause = _inPause });
+            EventManager.GameplayBus.RaiseEvent(new PauseStateChanged(_inPause));
             DoExitWithDelay(0);
 
             Time.timeScale = 1;
@@ -116,11 +116,11 @@ namespace ToolsACG.Scenes.Pause
 
         private void OnMusicSliderValueChaged()
         {
-            EventManager.UIBus.RaiseEvent(new MusicVolumeUpdated() { Value = _view.MusicVolume });
+            EventManager.UIBus.RaiseEvent(new MusicVolumeUpdated(_view.MusicVolume));
         }
         private void OnEffectsSliderValueChaged()
         {
-            EventManager.UIBus.RaiseEvent(new EffectsVolumeUpdated() { Value = _view.EffectsVolume });
+            EventManager.UIBus.RaiseEvent(new EffectsVolumeUpdated(_view.EffectsVolume));
         }
 
         private void OnResolutionDropdownValueChanged()
@@ -142,7 +142,7 @@ namespace ToolsACG.Scenes.Pause
         }
         private void OnResumeButtonClicked()
         {
-            OnPauseKeyClicked(null);
+            OnPauseKeyClicked(new PauseKeyClicked());
         }
 
         private void SaveMusicVolume(float pValue)
@@ -168,11 +168,11 @@ namespace ToolsACG.Scenes.Pause
         private void InitializeVolumeSliders()
         {
             float musicVolume = PlayerPrefsManager.GetFloat(PlayerPrefsKeys.MUSIC_VOLUME_KEY, 1);
-            EventManager.UIBus.RaiseEvent(new MusicVolumeUpdated() { Value = musicVolume });
+            EventManager.UIBus.RaiseEvent(new MusicVolumeUpdated(musicVolume));
             _view.SetMusicVolume(musicVolume);
 
             float effectsVolume = PlayerPrefsManager.GetFloat(PlayerPrefsKeys.EFFECTS_VOLUME_KEY, 1);
-            EventManager.UIBus.RaiseEvent(new EffectsVolumeUpdated() { Value = effectsVolume });
+            EventManager.UIBus.RaiseEvent(new EffectsVolumeUpdated(effectsVolume));
             _view.SetEffectsVolume(effectsVolume);
         }
 
@@ -203,21 +203,36 @@ namespace ToolsACG.Scenes.Pause
 
 #region IEvents
 
-public class PauseStateChanged : IEvent
+public readonly struct PauseStateChanged : IEvent
 {
-    public bool InPause { get; set; }
+    public readonly bool InPause;
+
+    public PauseStateChanged(bool inPause)
+    {
+        InPause = inPause;
+    }
 }
 
-public class MusicVolumeUpdated : IEvent
+public readonly struct MusicVolumeUpdated : IEvent
 {
-    public float Value { get; set; }
+    public readonly float Value;
+
+    public MusicVolumeUpdated(float value)
+    {
+        Value = value;
+    }
 }
 
-public class EffectsVolumeUpdated : IEvent
+public readonly struct EffectsVolumeUpdated : IEvent
 {
-    public float Value { get; set; }
+    public readonly float Value;
+
+    public EffectsVolumeUpdated(float value)
+    {
+        Value = value;
+    }
 }
-public class GameLeaved : IEvent
+public readonly struct GameLeaved : IEvent
 {
 
 }

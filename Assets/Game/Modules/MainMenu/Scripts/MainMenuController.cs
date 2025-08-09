@@ -1,7 +1,6 @@
 using System.Linq;
 using UnityEngine;
 using System;
-using ToolsACG.Utils.Events;
 using System.Threading.Tasks;
 
 #if UNITY_EDITOR
@@ -138,6 +137,6 @@ namespace ToolsACG.Scenes.MainMenu
     }
 }
 
-public class StartMatch : IEvent 
+public readonly struct StartMatch : IEvent 
 {
 }

@@ -1,5 +1,4 @@
 using System.Linq;
-using ToolsACG.Utils.Events;
 using UnityEngine;
 
 public class PlayerSoundController : MonoBehaviour
@@ -35,20 +34,20 @@ public class PlayerSoundController : MonoBehaviour
 
     private void OnPlayerDead(PlayerDead pPlayerDead)
     {
-        EventManager.SoundBus.RaiseEvent(new Generate2DSound() { SoundsData = _shipData.SoundsOnDestruction });
+        EventManager.SoundBus.RaiseEvent(new Generate2DSound(_shipData.SoundsOnDestruction));
     }
 
     private void OnPlayerDamaged(PlayerDamaged pPlayerDamaged)
     {
-        EventManager.SoundBus.RaiseEvent(new Generate2DSound() { SoundsData = _shipData.SoundsOnDamage });
+        EventManager.SoundBus.RaiseEvent(new Generate2DSound(_shipData.SoundsOnDamage));
     }
 
-    private void OnShieldStateChanged(ShieldStateChanged pShieldStateChanged) 
+    private void OnShieldStateChanged(ShieldStateChanged pShieldStateChanged)
     {
-        if(pShieldStateChanged.Active)
-            EventManager.SoundBus.RaiseEvent(new Generate2DSound() { SoundsData = _shipData.SoundsOnShieldUp });
+        if (pShieldStateChanged.Active)
+            EventManager.SoundBus.RaiseEvent(new Generate2DSound(_shipData.SoundsOnShieldUp));
         else
-            EventManager.SoundBus.RaiseEvent(new Generate2DSound() { SoundsData = _shipData.SoundsOnShieldDown });
+            EventManager.SoundBus.RaiseEvent(new Generate2DSound(_shipData.SoundsOnShieldDown));
     }
 
     #endregion

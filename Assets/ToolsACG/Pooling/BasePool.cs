@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ToolsACG.Utils.Pooling
 {
-    public abstract class BasePool<T> : MonoBehaviour
+    public abstract class BasePool<T>
     {
         protected T[] _availableInstances;
 

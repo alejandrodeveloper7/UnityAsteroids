@@ -1,6 +1,5 @@
 using DG.Tweening;
 using System.Linq;
-using ToolsACG.Utils.Events;
 using UnityEngine;
 
 public class PlayerAppearanceController : MonoBehaviour
@@ -165,6 +164,6 @@ public class PlayerAppearanceController : MonoBehaviour
     #endregion
 }
 
-public class PlayerAppearanceUpdated : IEvent
+public readonly struct PlayerAppearanceUpdated : IEvent
 {
 }

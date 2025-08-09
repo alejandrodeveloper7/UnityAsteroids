@@ -1,4 +1,3 @@
-using ToolsACG.Utils.Events;
 using ToolsACG.Utils.Pooling;
 using UnityEngine;
 
@@ -67,7 +66,7 @@ public class BulletController : MonoBehaviour, IPooleableGameObject
     #endregion
 
     #region Initialization
-  
+
     private void GetReferences()
     {
         _collider = GetComponent<BoxCollider2D>();
@@ -81,7 +80,7 @@ public class BulletController : MonoBehaviour, IPooleableGameObject
         _bulletData = pData;
 
         _spriteRenderer.sprite = _bulletData.Sprite;
-        _spriteRenderer.color=_bulletData.Color;
+        _spriteRenderer.color = _bulletData.Color;
         _rigidBody.velocity = _bulletData.Speed * Time.fixedDeltaTime * -transform.up;
 
         TurnDetection(true);
@@ -91,8 +90,8 @@ public class BulletController : MonoBehaviour, IPooleableGameObject
 
         _screenEdgeTeleporter.EdgeOffsetY = _bulletData.EdgeOffsetY;
         _screenEdgeTeleporter.EdgeRepositionOffsetY = _bulletData.EdgeRepositionOffsetY;
-        
-        EventManager.SoundBus.RaiseEvent(new Generate2DSound() { SoundsData = _bulletData.SoundsOnShoot });
+
+        EventManager.SoundBus.RaiseEvent(new Generate2DSound(_bulletData.SoundsOnShoot));
         Invoke(nameof(CleanBullet), _bulletData.LifeDuration);
     }
 
@@ -107,12 +106,12 @@ public class BulletController : MonoBehaviour, IPooleableGameObject
             ParticleSystem pooledParticlesystem = FactoryManager.Instance.GetGameObjectInstance(item.particleEffectName).GetComponent<ParticleSystem>();
             if (item.particleConfig != null)
                 item.particleConfig.ApplyConfig(pooledParticlesystem);
-    
+
             pooledParticlesystem.transform.position = transform.position;
             pooledParticlesystem.GetComponent<ParticleSystemController>().Play();
         }
     }
-    
+
     private void StopMovement()
     {
         _rigidBody.velocity = Vector2.zero;

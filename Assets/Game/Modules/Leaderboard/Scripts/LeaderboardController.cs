@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using ToolsACG.Services.DreamloLeaderboard;
-using ToolsACG.Utils.Events;
+using ToolsACG.ApiCaller.DreamloLeaderboardApiCaller;
 using UnityEngine;
 
 namespace ToolsACG.Scenes.Leaderboard
@@ -85,46 +84,34 @@ namespace ToolsACG.Scenes.Leaderboard
 
         #region Apis Management
 
-        private void SetScoreToAPI()
+        private async void SetScoreToAPI()
         {
-            DreamloLeaderboardService.Instance.SetScore(PersistentDataManager.UserName, PersistentDataManager.LastScore
-             ,
-                  pResponse =>
-                 {
-                     if (pResponse.Contains("OK"))
-                         GetScoresFromApi();
-                     else
-                     {
-                         _view.TurnErrorMessage(true);
-                         _view.TurnRowsContainer(true);
-                     }
-                 }
-             ,
-                  pResponse =>
-                 {
-                     _view.TurnErrorMessage(true);
-                     _view.TurnRowsContainer(true);
-                 }
-             );
+            bool sucess = await DreamloLeaderboardApiCaller.Instance.SetScore(PersistentDataManager.UserName, PersistentDataManager.LastScore);
+
+            if (sucess)
+                GetScoresFromApi();
+            else
+            {
+                _view.TurnErrorMessage(true);
+                _view.TurnRowsContainer(true);
+            }
         }
 
-        private void GetScoresFromApi()
+        private async void GetScoresFromApi()
         {
-            DreamloLeaderboardService.Instance.GetRangeScores(_data.LeaderboardPositionsAmount
-             ,
-                 pResponse =>
-                 {
-                     _view.SetLeaderboardData(pResponse.Dreamlo.Leaderboard.Entry, _data.LeaderboardPlayerColor);
-                     _view.TurnRowsContainer(true);
-                     _view.TurnLoadingSpinner(false);
-                 }
-             ,
-                 pResponse =>
-                 {
-                     _view.TurnErrorMessage(true);
-                     _view.TurnRowsContainer(true);
-                 }
-             );
+            bool sucess = await DreamloLeaderboardApiCaller.Instance.GetRangeScores(_data.LeaderboardPositionsAmount);
+
+            if (sucess)
+            {
+                _view.SetLeaderboardData(DreamloLeaderboardApiCaller.Instance.RangeScoreResponse.Dreamlo.Leaderboard.Entry, _data.LeaderboardPlayerColor);
+                _view.TurnRowsContainer(true);
+                _view.TurnLoadingSpinner(false);
+            }
+            else
+            {
+                _view.TurnErrorMessage(true);
+                _view.TurnRowsContainer(true);
+            }
         }
 
         #endregion
@@ -164,5 +151,5 @@ namespace ToolsACG.Scenes.Leaderboard
     }
 }
 
-public class BackToMenuButtonClicked : IEvent
+public readonly struct BackToMenuButtonClicked : IEvent
 { }

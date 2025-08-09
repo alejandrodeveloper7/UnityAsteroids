@@ -1,6 +1,6 @@
 using TMPro;
 using UnityEngine;
-using static ToolsACG.Services.DreamloLeaderboard.DreamloLeaderboardService;
+using static ToolsACG.ApiCaller.DreamloLeaderboardApiCaller.DreamloLeaderboardApiCaller;
 
 public class LeaderboardRowHelper : MonoBehaviour
 {

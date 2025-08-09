@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using ToolsACG.Utils.Events;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -131,8 +130,13 @@ public class SoundManager : MonoBehaviour
 
 #region IEvents
 
-public class Generate2DSound : IEvent
+public sealed class Generate2DSound : IEvent
 {
     public SO_Sound[] SoundsData { get; set; }
+
+    public Generate2DSound(SO_Sound[] soundsData)
+    {
+        SoundsData = soundsData;
+    }
 }
 #endregion

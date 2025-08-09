@@ -1,7 +1,7 @@
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
-using static ToolsACG.Services.DreamloLeaderboard.DreamloLeaderboardService;
+using static ToolsACG.ApiCaller.DreamloLeaderboardApiCaller.DreamloLeaderboardApiCaller;
 
 namespace ToolsACG.Scenes.Leaderboard
 {
@@ -62,7 +62,7 @@ namespace ToolsACG.Scenes.Leaderboard
         {
             _rowsContainer.SetActive(pState);
         }
-      
+
         public void SetLeaderboardData(List<LeaderboardEntry> pData, Color pPlayerColor)
         {
             for (int i = 0; i < pData.Count; i++)

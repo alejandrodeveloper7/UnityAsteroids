@@ -1,4 +1,3 @@
-using ToolsACG.Utils.Events;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -15,13 +14,13 @@ public class UISoundTrigger : MonoBehaviour, IPointerClickHandler, IPointerEnter
             return;
 
         if (clickSound != null)
-            EventManager.SoundBus.RaiseEvent(new Generate2DSound() { SoundsData = clickSound });
+            EventManager.SoundBus.RaiseEvent(new Generate2DSound(clickSound));
     }
 
     public void OnPointerEnter(PointerEventData pEventData)
     {
         if (hoverSound != null)
-            EventManager.SoundBus.RaiseEvent(new Generate2DSound() { SoundsData = hoverSound });
+            EventManager.SoundBus.RaiseEvent(new Generate2DSound(hoverSound));
     }
 
     #endregion

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using ToolsACG.Utils.Events;
 using UnityEngine;
 
 public class PlayerPhysicsController : MonoBehaviour
@@ -142,6 +141,6 @@ public class PlayerPhysicsController : MonoBehaviour
     #endregion
 }
 
-public class PlayerHitted : IEvent
+public readonly struct PlayerHitted : IEvent
 {
 }

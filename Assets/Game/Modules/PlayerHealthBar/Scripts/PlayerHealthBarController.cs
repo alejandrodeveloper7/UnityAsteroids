@@ -1,7 +1,6 @@
 using DG.Tweening;
 using System;
 using System.Threading.Tasks;
-using ToolsACG.Utils.Events;
 using UnityEngine;
 
 namespace ToolsACG.Scenes.PlayerHealth
@@ -162,7 +161,7 @@ namespace ToolsACG.Scenes.PlayerHealth
                 .OnComplete(() =>
                 {
                     _view.SetShieldSliderValue(100);
-                    EventManager.GameplayBus.RaiseEvent(new ShieldStateChanged() { Active = true });
+                    EventManager.GameplayBus.RaiseEvent(new ShieldStateChanged(true));
                 });
         }
 

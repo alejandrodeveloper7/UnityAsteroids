@@ -1,4 +1,3 @@
-using ToolsACG.Utils.Events;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,10 +6,6 @@ public class GameManager : MonoBehaviour
 
     private GameSettings _gameSettings;
 
-    private bool _inMainMenu;
-    private bool _inMatch;
-    private bool _inPause;
-    private bool _inLeaderboard;
 
     #endregion
 
@@ -19,54 +14,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         InitializeGame();
-    }
-
-    private void OnEnable()
-    {
-        EventManager.GameplayBus.AddListener<StartMatch>(OnStartMatch);
-        EventManager.GameplayBus.AddListener<PlayerDead>(OnPlayerDead);
-        EventManager.UIBus.AddListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
-        EventManager.UIBus.AddListener<GameLeaved>(OnGameLeaved);
-    }
-
-    private void OnDisable()
-    {
-        EventManager.GameplayBus.RemoveListener<StartMatch>(OnStartMatch);
-        EventManager.GameplayBus.RemoveListener<PlayerDead>(OnPlayerDead);
-        EventManager.UIBus.RemoveListener<BackToMenuButtonClicked>(OnBackToMenuButtonClicked);
-        EventManager.UIBus.RemoveListener<GameLeaved>(OnGameLeaved);
-    }
-
-    #endregion
-
-    #region Bus Callbacks
-
-    private void OnStartMatch(StartMatch pStartMatch)
-    {
-        Debug.Log("- PROGRESS - Match Started");
-        _inMainMenu = false;
-        _inMatch = true;
-    }
-
-    private void OnPlayerDead(PlayerDead pPlayerDead)
-    {
-        Debug.Log("- PROGRESS - Match Finished");
-        _inMatch = false;
-        _inLeaderboard = true;
-    }
-
-    private void OnBackToMenuButtonClicked(BackToMenuButtonClicked pBackToMenuButtonClicked) 
-    {
-        _inLeaderboard = false;
-        _inMainMenu = true;
-    }
-
-    private void OnGameLeaved(GameLeaved pGameLeaved) 
-    {
-        Debug.Log("- PROGRESS - Game leaved");
-        _inMatch = false;
-        _inPause = false;
-        _inMainMenu = true;
     }
 
     #endregion
@@ -84,13 +31,12 @@ public class GameManager : MonoBehaviour
     private void OnAdditiveScenesLoadComplete()
     {
         EventManager.UIBus.RaiseEvent(new StartGame());
-        _inMainMenu = true;
     }
 
     #endregion
 
 }
 
-public class StartGame : IEvent
+public readonly struct StartGame : IEvent
 {
 }

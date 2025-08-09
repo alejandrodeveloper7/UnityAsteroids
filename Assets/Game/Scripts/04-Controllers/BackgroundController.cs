@@ -1,5 +1,4 @@
 using DG.Tweening;
-using ToolsACG.Utils.Events;
 using UnityEngine;
 
 public class BackgroundController : MonoBehaviour

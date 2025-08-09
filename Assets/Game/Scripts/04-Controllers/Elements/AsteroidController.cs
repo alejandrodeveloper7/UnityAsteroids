@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using ToolsACG.Utils.Events;
 using ToolsACG.Utils.Pooling;
 using UnityEngine;
 
-public class AsteroidController : MonoBehaviour,ICollisionable, IDamageable, IPooleableGameObject
+public class AsteroidController : MonoBehaviour, ICollisionable, IDamageable, IPooleableGameObject
 {
     #region Fields
-    
+
     [Header("IPooleableItem")]
     SimpleGameObjectPool _originPool;
     public SimpleGameObjectPool OriginPool { get { return _originPool; } set { _originPool = value; } }
@@ -35,7 +34,7 @@ public class AsteroidController : MonoBehaviour,ICollisionable, IDamageable, IPo
     private void Awake()
     {
         GetReferences();
-    }   
+    }
 
     #endregion
 
@@ -74,7 +73,7 @@ public class AsteroidController : MonoBehaviour,ICollisionable, IDamageable, IPo
 
         _rigidBody.velocity = _direction * _asteroidData.Speed * Time.fixedDeltaTime;
         _rigidBody.AddTorque(Random.Range(-_asteroidData.PosibleTorque, _asteroidData.PosibleTorque));
-        
+
         _screenEdgeTeleporter.EdgeOffsetX = _asteroidData.EdgeOffsetX;
         _screenEdgeTeleporter.EdgeRepositionOffsetX = _asteroidData.EdgeRepositionOffsetX;
 
@@ -119,7 +118,7 @@ public class AsteroidController : MonoBehaviour,ICollisionable, IDamageable, IPo
     #endregion
 
     #region Functionality
-    
+
     private Vector2 GetRandomSpawnPosition()
     {
         float minLimitX = 0f - _asteroidData.EdgeRepositionOffsetX;
@@ -137,7 +136,7 @@ public class AsteroidController : MonoBehaviour,ICollisionable, IDamageable, IPo
         else
             return Camera.main.ViewportToWorldPoint(new Vector2(RandomValueX, maxLimitY));
     }
-    
+
     private void GenerateDestructionParticles()
     {
         foreach (ParticleSetup item in _asteroidData.DestuctionParticles)
@@ -147,14 +146,14 @@ public class AsteroidController : MonoBehaviour,ICollisionable, IDamageable, IPo
                 item.particleConfig.ApplyConfig(pooledParticlesystem);
             pooledParticlesystem.transform.position = transform.position;
             pooledParticlesystem.GetComponent<ParticleSystemController>().Play();
-            EventManager.SoundBus.RaiseEvent(new Generate2DSound() { SoundsData = _asteroidData.SoundsOnDestruction });
+            EventManager.SoundBus.RaiseEvent(new Generate2DSound(_asteroidData.SoundsOnDestruction));
         }
     }
 
     private void AsteroidDestroyed()
     {
         GenerateDestructionParticles();
-        EventManager.GameplayBus.RaiseEvent(new AsteroidDestroyed() { AsteroidScript = this, AsteroidData = _asteroidData, Position = transform.position, Direction = _direction });
+        EventManager.GameplayBus.RaiseEvent(new AsteroidDestroyed(this, _asteroidData, transform.position, _direction));
         CleanAsteroid();
     }
 
@@ -174,7 +173,7 @@ public class AsteroidController : MonoBehaviour,ICollisionable, IDamageable, IPo
         if (Alive is false)
             return;
 
-        CurrentHP-=pDamage;
+        CurrentHP -= pDamage;
         if (CurrentHP <= 0)
             Die();
     }
@@ -193,10 +192,18 @@ public class AsteroidController : MonoBehaviour,ICollisionable, IDamageable, IPo
     #endregion
 }
 
-public class AsteroidDestroyed : IEvent
+public sealed class AsteroidDestroyed : IEvent
 {
     public AsteroidController AsteroidScript { get; set; }
     public SO_Asteroid AsteroidData { get; set; }
     public Vector2 Position { get; set; }
     public Vector2 Direction { get; set; }
+
+    public AsteroidDestroyed(AsteroidController asteroidScript, SO_Asteroid asteroidData, Vector2 position, Vector2 direction)
+    {
+        AsteroidScript = asteroidScript;
+        AsteroidData = asteroidData;
+        Position = position;
+        Direction = direction;
+    }
 }

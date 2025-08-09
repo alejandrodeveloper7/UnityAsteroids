@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ToolsACG.Utils.Events;
 using UnityEngine;
 
 public class BoardManager : MonoBehaviour
@@ -142,6 +141,6 @@ public class BoardManager : MonoBehaviour
     #endregion
 }
 
-public class PlayerPrepared : IEvent
+public readonly struct PlayerPrepared : IEvent
 {
 }

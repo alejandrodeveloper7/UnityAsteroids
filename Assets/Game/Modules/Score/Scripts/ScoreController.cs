@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using ToolsACG.Utils.Events;
 using UnityEngine;
 
 namespace ToolsACG.Scenes.Score
