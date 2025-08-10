@@ -16,7 +16,6 @@ public class ResourcesManager
     private void Initialize()
     {
         LoadScriptablesFromResources("Settings");
-        LoadScriptablesFromResources("Configurations");
         LoadScriptablesFromResources("Collections");
     }
 

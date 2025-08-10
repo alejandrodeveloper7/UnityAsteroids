@@ -1,0 +1,28 @@
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
+
+public class UISoundTrigger : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
+{
+    [SerializeField]private List<SO_Sound> clickSound;
+    [SerializeField] private List<SO_Sound> hoverSound;
+
+    #region Interface Handlers
+
+    public void OnPointerClick(PointerEventData pEventData)
+    {
+        if (pEventData.button is PointerEventData.InputButton.Left is false)
+            return;
+
+        if (clickSound != null)
+            EventManager.SoundBus.RaiseEvent(new Generate2DSound(clickSound));
+    }
+
+    public void OnPointerEnter(PointerEventData pEventData)
+    {
+        if (hoverSound != null)
+            EventManager.SoundBus.RaiseEvent(new Generate2DSound(hoverSound));
+    }
+
+    #endregion
+}

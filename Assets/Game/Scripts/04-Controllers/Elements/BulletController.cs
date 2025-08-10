@@ -108,7 +108,7 @@ public class BulletController : MonoBehaviour, IPooleableGameObject
                 item.particleConfig.ApplyConfig(pooledParticlesystem);
 
             pooledParticlesystem.transform.position = transform.position;
-            pooledParticlesystem.GetComponent<ParticleSystemController>().Play();
+            pooledParticlesystem.GetComponent<ParticleSystemController>().Play(0);
         }
     }
 

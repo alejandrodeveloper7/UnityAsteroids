@@ -67,6 +67,7 @@ public class AsteroidController : MonoBehaviour, ICollisionable, IDamageable, IP
             pPosition = GetRandomSpawnPosition();
 
         transform.position = pPosition;
+        transform.localScale = pData.Scale;
 
         if (_direction == Vector2.zero)
             _direction = Random.insideUnitCircle.normalized;
@@ -145,7 +146,7 @@ public class AsteroidController : MonoBehaviour, ICollisionable, IDamageable, IP
             if (item.particleConfig != null)
                 item.particleConfig.ApplyConfig(pooledParticlesystem);
             pooledParticlesystem.transform.position = transform.position;
-            pooledParticlesystem.GetComponent<ParticleSystemController>().Play();
+            pooledParticlesystem.GetComponent<ParticleSystemController>().Play(0);
             EventManager.SoundBus.RaiseEvent(new Generate2DSound(_asteroidData.SoundsOnDestruction));
         }
     }

@@ -4,23 +4,21 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class AdditiveScenesManager
+public static class AdditiveScenesManager
 {
-    public static AdditiveScenesManager Instance { get; } = new AdditiveScenesManager();
-
     #region Scenes Management
 
-    public async void LoadScenesAdditive(List<string> pSceneNames, Action pOnComplete)
+    public static async void LoadAdditiveScenes(List<string> pSceneNames, Action pOnComplete)
     {
         if (pSceneNames == null || pSceneNames.Count == 0)
             return;
 
         foreach (string sceneName in pSceneNames)
-            await LoadSceneAdditive(sceneName);
+            await LoadAdditiveScene(sceneName);
 
         pOnComplete?.Invoke();
     }
-    public async Task LoadSceneAdditive(string pSceneName)
+    private static async Task LoadAdditiveScene(string pSceneName)
     {
         if (string.IsNullOrEmpty(pSceneName))
         {
@@ -34,17 +32,17 @@ public class AdditiveScenesManager
     }
 
 
-    public async void UnloadScenes(List<string> sceneNames, Action onComplete)
+    public static async void UnloadAdditiveScenes(List<string> pSceneNames, Action pOnComplete)
     {
-        if (sceneNames == null || sceneNames.Count == 0)
+        if (pSceneNames == null || pSceneNames.Count == 0)
             return;
 
-        foreach (string sceneName in sceneNames)
-            await UnloadScene(sceneName);
+        foreach (string sceneName in pSceneNames)
+            await UnloadAdditiveScene(sceneName);
 
-        onComplete?.Invoke();
+        pOnComplete?.Invoke();
     }
-    public async Task UnloadScene(string pSceneName)
+    private static async Task UnloadAdditiveScene(string pSceneName)
     {
         if (string.IsNullOrEmpty(pSceneName))
         {

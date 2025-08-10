@@ -12,9 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 429aa25534ce08f479a3ac7aec15eed3, type: 3}
   m_Name: 05 - PlayerDamage
   m_EditorClassIdentifier: 
-  Id: 5
-  PoolName: Sound
+  PoolName: 
+  Delay: 0
   Clip: {fileID: 8300000, guid: cc334829ad85a9045a6b0529832299f9, type: 3}
   AudioMixerGroup: {fileID: 24300002, guid: 6d0e2d0b6227f9a4f83dfa9d0bbe5a09, type: 2}
+  Mute: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  Loop: 0
+  Priority: 128
   Volume: 1
+  Pitch: 1
   PitchVariation: 0.2
+  StereoPan: 0
+  SpatialBlend: 0
+  ReverbZonMix: 1
+  DopplerLevel: 1
+  Spread: 0
+  VolumeRolloff: 0
+  CustomVolumeRollofCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  MinDistance: 1
+  MaxDistance: 500

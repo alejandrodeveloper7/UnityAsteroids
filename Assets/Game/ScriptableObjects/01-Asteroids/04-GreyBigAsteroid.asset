@@ -20,6 +20,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9034ad968e2d7ab4f97cf8b71b343df2, type: 3}
   - {fileID: 21300000, guid: d4c5c48e6593578409f6ebc79881024e, type: 3}
   - {fileID: 21300000, guid: 83965a0c5bcc7bd44b6e7ed5fcab8cb6, type: 3}
+  Scale: {x: 2, y: 2, z: 2}
   MaxHP: 1
   AsteroidSpawnAngle: 60
   PosibleTorque: 80

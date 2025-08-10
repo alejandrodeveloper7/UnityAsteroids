@@ -116,22 +116,22 @@ namespace ToolsACG.Scenes.Pause
 
         private void OnMusicSliderValueChaged()
         {
-            EventManager.UIBus.RaiseEvent(new MusicVolumeUpdated(_view.MusicVolume));
+            EventManager.SoundBus.RaiseEvent(new MusicVolumeUpdated(_view.MusicVolume));
         }
         private void OnEffectsSliderValueChaged()
         {
-            EventManager.UIBus.RaiseEvent(new EffectsVolumeUpdated(_view.EffectsVolume));
+            EventManager.SoundBus.RaiseEvent(new EffectsVolumeUpdated(_view.EffectsVolume));
         }
 
         private void OnResolutionDropdownValueChanged()
         {
-            ScreenManager.UpdateResolution(_view.ResolutionIndex);
+            ScreenManager.SetResolution(_view.ResolutionIndex);
             PlayerPrefsManager.SetInt(PlayerPrefsKeys.RESOLUTION_INDEX_KEY, _view.ResolutionIndex);
         }
 
         private void OnFullScreenToggleValueChanged()
         {
-            ScreenManager.UpdateFullScreenMode(_view.FullScreen);
+            ScreenManager.SetFullScreenMode(_view.FullScreen);
             PlayerPrefsManager.SetInt(PlayerPrefsKeys.FULL_SCREEN_MODE_KEY, _view.FullScreen ? 1 : 0);
         }
 
@@ -161,25 +161,25 @@ namespace ToolsACG.Scenes.Pause
         private void InitializeAvailableResolutions()
         {
             int resolutionIndex = PlayerPrefsManager.GetInt(PlayerPrefsKeys.RESOLUTION_INDEX_KEY, 0);
-            ScreenManager.UpdateResolution(resolutionIndex);
+            ScreenManager.SetResolution(resolutionIndex);
             _view.SetResolutionsOptionsAndIndex(ScreenManager.AvailableResolutionsOptions, resolutionIndex);
         }
 
         private void InitializeVolumeSliders()
         {
             float musicVolume = PlayerPrefsManager.GetFloat(PlayerPrefsKeys.MUSIC_VOLUME_KEY, 1);
-            EventManager.UIBus.RaiseEvent(new MusicVolumeUpdated(musicVolume));
+            EventManager.SoundBus.RaiseEvent(new MusicVolumeUpdated(musicVolume));
             _view.SetMusicVolume(musicVolume);
 
             float effectsVolume = PlayerPrefsManager.GetFloat(PlayerPrefsKeys.EFFECTS_VOLUME_KEY, 1);
-            EventManager.UIBus.RaiseEvent(new EffectsVolumeUpdated(effectsVolume));
+            EventManager.SoundBus.RaiseEvent(new EffectsVolumeUpdated(effectsVolume));
             _view.SetEffectsVolume(effectsVolume);
         }
 
         private void InitializeToggles()
         {
             bool fullScreen = Convert.ToBoolean(PlayerPrefsManager.GetInt(PlayerPrefsKeys.FULL_SCREEN_MODE_KEY, 0));
-            ScreenManager.UpdateFullScreenMode(fullScreen);
+            ScreenManager.SetFullScreenMode(fullScreen);
             _view.SetFullScreenMode(fullScreen);
         }
 

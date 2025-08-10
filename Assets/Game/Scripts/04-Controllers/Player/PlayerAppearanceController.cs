@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System.Linq;
+using ToolsACG.Utils.Pooling;
 using UnityEngine;
 
 public class PlayerAppearanceController : MonoBehaviour
@@ -157,7 +158,7 @@ public class PlayerAppearanceController : MonoBehaviour
             if (item.particleConfig != null)
                 item.particleConfig.ApplyConfig(pooledParticlesystem);
             pooledParticlesystem.transform.position = transform.position;
-            pooledParticlesystem.GetComponent<ParticleSystemController>().Play();
+            pooledParticlesystem.GetComponent<ParticleSystemController>().Play(0);
         }
     }
     

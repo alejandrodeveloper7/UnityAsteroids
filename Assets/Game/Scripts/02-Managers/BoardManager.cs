@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ToolsACG.Utils.Pooling;
 using UnityEngine;
 
 public class BoardManager : MonoBehaviour
@@ -11,7 +12,7 @@ public class BoardManager : MonoBehaviour
     private List<AsteroidController> _currentAsteroids = new List<AsteroidController>();
 
     [Header("Data")]
-    private AsteroidsCollection _asteroidsCollection;
+    private SO_AsteroidsCollection _asteroidsCollection;
     private StageSettings _stageSettings;
     private SO_Ship _ShipData;
     [Space]
@@ -77,7 +78,7 @@ public class BoardManager : MonoBehaviour
 
     private void GetReferences() 
     {
-        _asteroidsCollection = ResourcesManager.Instance.GetScriptableObject<AsteroidsCollection>(ScriptableObjectKeys.ASTEROID_COLLECTION_KEY);
+        _asteroidsCollection = ResourcesManager.Instance.GetScriptableObject<SO_AsteroidsCollection>(ScriptableObjectKeys.ASTEROID_COLLECTION_KEY);
         _stageSettings = ResourcesManager.Instance.GetScriptableObject<StageSettings>(ScriptableObjectKeys.STAGE_SETTINGS_KEY);
         _initialPosibleAsteroids = _asteroidsCollection.Asteroids.Where(x => x.IsInitialAsteroid is true).ToList();
     }

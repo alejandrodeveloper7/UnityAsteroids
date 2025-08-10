@@ -23,9 +23,7 @@ public class GameManager : MonoBehaviour
     private void InitializeGame()
     {
         _gameSettings = ResourcesManager.Instance.GetScriptableObject<GameSettings>(ScriptableObjectKeys.GAME_SETTINGS_KEY);
-
-        ScreenManager.SetTargetFrameRate(_gameSettings.TargetFrameRate);
-        AdditiveScenesManager.Instance.LoadScenesAdditive(_gameSettings._sceneDependencys, OnAdditiveScenesLoadComplete);
+        AdditiveScenesManager.LoadAdditiveScenes(_gameSettings._desktopSceneDependencys, OnAdditiveScenesLoadComplete);
     }
 
     private void OnAdditiveScenesLoadComplete()
