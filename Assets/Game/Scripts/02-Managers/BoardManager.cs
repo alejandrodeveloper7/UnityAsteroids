@@ -54,7 +54,7 @@ public class BoardManager : MonoBehaviour
     private void OnStartMatch(StartMatch pStartMatch)
     {
         _ShipData = ResourcesManager.Instance.GetScriptableObject<ShipsCollection>(ScriptableObjectKeys.SHIP_COLLECTION_KEY).Ships.FirstOrDefault(x => x.Id == PersistentDataManager.SelectedShipId);
-        
+
         _currentRound = 0;
 
         CleanCurrentAsteroids();

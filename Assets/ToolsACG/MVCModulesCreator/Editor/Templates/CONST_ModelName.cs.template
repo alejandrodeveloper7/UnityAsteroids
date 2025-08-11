@@ -1,7 +1,29 @@
-using UnityEngine;
+using System;
 
-[CreateAssetMenu(fileName = "CONST_ModelName", menuName = "ScriptableObjects/ToolsACG/MVCModuleCreator/CONST_ModelName")]
-public class CONST_ModelName : ModuleModel
-{
-   
+namespace ToolsACG.Scenes.CONST_ModuleName
+{ 
+    public class CONST_ModelName : ModuleModel
+    {
+        #region Fields and Properties
+
+        //Declare your fields and properties here
+
+        #endregion
+
+        #region Actions
+
+        //public event Action OnSomething;
+        //public event Action<int> OnSomethingWithParameter;
+
+        #endregion
+
+        #region Constructors
+        
+        public CONST_ModelName(CONST_SO_ConfigurationScriptableObject Configuration)
+        {
+            //TODO: Initialize the model with the ConfigurationData
+        }
+
+        #endregion
+    }
 }

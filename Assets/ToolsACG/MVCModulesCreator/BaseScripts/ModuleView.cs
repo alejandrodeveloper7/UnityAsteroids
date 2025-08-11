@@ -3,14 +3,33 @@ using UnityEngine;
 
 namespace ToolsACG.Scenes
 {
+    [RequireComponent(typeof(CanvasGroup))]
     public abstract class ModuleView : MonoBehaviour
     {
-        internal CanvasGroup CanvasGroup;
+        #region Fields
 
+        protected CanvasGroup CanvasGroup;
+
+        #endregion
+
+        #region Protected Methods
+        
         protected virtual void Awake()
         {
             CanvasGroup = GetComponent<CanvasGroup>();
         }
+
+        #endregion
+
+        #region Abstract Methods
+
+        protected abstract void RegisterListeners();
+        protected abstract void UnRegisterListeners();
+        protected abstract void GetReferences();
+
+        #endregion
+
+        #region Public Methods
 
         public void SetViewAlpha(float pValue)
         {
@@ -31,10 +50,12 @@ namespace ToolsACG.Scenes
                 );
         }
 
-        internal void SetCanvasGroupDetection(bool pState)
+        public void SetCanvasGroupDetection(bool pState)
         {
             CanvasGroup.blocksRaycasts = pState;
             CanvasGroup.interactable = pState;
         }
+
+        #endregion
     }
 }

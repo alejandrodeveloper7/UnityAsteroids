@@ -71,7 +71,7 @@ public class PlayerCombatController : MonoBehaviour
             _shooting = false;
     }
 
-    private void OnGameLeaved(GameLeaved pGameLeaved) 
+    private void OnGameLeaved(GameLeaved pGameLeaved)
     {
         _isAlive = false;
         _shooting = false;

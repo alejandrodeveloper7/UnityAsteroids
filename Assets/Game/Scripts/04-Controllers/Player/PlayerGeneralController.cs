@@ -36,13 +36,13 @@ public class PlayerGeneralController : MonoBehaviour, IPooleableGameObject
 
     #region Bus callbacks
 
-    private async void OnPlayerDead(PlayerDead pPlayerDead) 
+    private async void OnPlayerDead(PlayerDead pPlayerDead)
     {
-        await Task.Delay((int)(_playerSettings.TimeBeforeReciclePlayer*1000));
+        await Task.Delay((int)(_playerSettings.TimeBeforeReciclePlayer * 1000));
         _originPool.RecycleGameObject(gameObject);
     }
 
-    private void OnGameLeaved(GameLeaved pGameLeaved) 
+    private void OnGameLeaved(GameLeaved pGameLeaved)
     {
         _originPool.RecycleGameObject(gameObject);
     }

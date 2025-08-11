@@ -21,6 +21,7 @@ namespace ToolsACG.Editor
         private const string _controllerTemplateFileName = "CONST_ControllerName.cs.template";
         private const string _viewTemplateFileName = "CONST_ViewName.cs.template";
         private const string _modelTemplateFileName = "CONST_ModelName.cs.template";
+        private const string _configurationScriptableObjectFileName = "CONST_ConfigurationScriptableObject.cs.template";
         private const string _sceneTemplateFileName = "CONST_SceneName.unity";
 
         #endregion
@@ -59,7 +60,7 @@ namespace ToolsACG.Editor
             EditorGUILayout.Space();
 
             GUI.enabled = !string.IsNullOrEmpty(_moduleName);
-            DrawButton("Create Scriptable", CreateAssetFromScript);
+            DrawButton("Create Configuration Scriptable", CreateConfigurationScriptableObject);
             GUI.enabled = true;
 
             EditorGUILayout.Space();
@@ -84,48 +85,56 @@ namespace ToolsACG.Editor
             string controllerTemplatePath = string.Concat(templatesCompletePath, _controllerTemplateFileName);
             string viewTemplatePath = string.Concat(templatesCompletePath, _viewTemplateFileName);
             string modelTemplatePath = string.Concat(templatesCompletePath, _modelTemplateFileName);
+            string configurationScriptableObjectTemplatePath = string.Concat(templatesCompletePath, _configurationScriptableObjectFileName);
             string sceneTemplatePath = string.Concat(templatesCompletePath, _sceneTemplateFileName);
 
             string newControllerOutputPath = string.Concat(newScriptsDirectory.FullName, "/", _controllerTemplateFileName.Replace("CONST_ControllerName", string.Concat(_moduleName, "Controller")).Replace(".template", string.Empty));
             string newViewOutputPath = string.Concat(newScriptsDirectory.FullName, "/", _viewTemplateFileName.Replace("CONST_ViewName", string.Concat(_moduleName, "View")).Replace(".template", string.Empty));
             string newModelOutputPath = string.Concat(newScriptsDirectory.FullName, "/", _modelTemplateFileName.Replace("CONST_ModelName", string.Concat(_moduleName, "Model")).Replace(".template", string.Empty));
+            string newConfigurationScriptableObjectPath = string.Concat(newScriptsDirectory.FullName, "/", _configurationScriptableObjectFileName.Replace("CONST_ConfigurationScriptableObject", string.Concat(_moduleName, "Configuration")).Replace(".template", string.Empty));
             string newSceneOutputPath = string.Concat(newModuleDirectory.FullName, "/", _sceneTemplateFileName.Replace("CONST_SceneName", string.Concat(_moduleName, "Scene")));
 
             File.Copy(controllerTemplatePath, newControllerOutputPath);
             File.Copy(viewTemplatePath, newViewOutputPath);
             File.Copy(modelTemplatePath, newModelOutputPath);
             File.Copy(sceneTemplatePath, newSceneOutputPath);
+            File.Copy(configurationScriptableObjectTemplatePath, newConfigurationScriptableObjectPath);
 
             string newControllerText = ReplaceConstantsInFiles(newControllerOutputPath);
             string newViewText = ReplaceConstantsInFiles(newViewOutputPath);
             string newModelText = ReplaceConstantsInFiles(newModelOutputPath);
+            string newConfigurationScriptableObjectText = ReplaceConstantsInFiles(newConfigurationScriptableObjectPath);
             string newSceneText = ReplaceConstantsInFiles(newSceneOutputPath);
 
             File.Delete(newControllerOutputPath);
             File.Delete(newViewOutputPath);
             File.Delete(newModelOutputPath);
+            File.Delete(newConfigurationScriptableObjectPath);
             File.Delete(newSceneOutputPath);
 
             File.WriteAllText(newControllerOutputPath, newControllerText);
             File.WriteAllText(newViewOutputPath, newViewText);
             File.WriteAllText(newModelOutputPath, newModelText);
+            File.WriteAllText(newConfigurationScriptableObjectPath, newConfigurationScriptableObjectText);
             File.WriteAllText(newSceneOutputPath, newSceneText);
 
-            AssetDatabase.Refresh();
+
+            Debug.Log(string.Format("-- MVC Module Creator -- Scripts of the module {0} created in {1}", _moduleName, newScriptsDirectory.FullName));
+            EditorApplication.delayCall += () => AssetDatabase.Refresh();
         }
 
-        private void CreateAssetFromScript()
+        private void CreateConfigurationScriptableObject()
         {
-            string className = string.Concat(_moduleName, "Model");
+            string className = string.Concat("SO_", _moduleName, "Configuration");
             string outputCompletePath = string.Concat("Assets/", _outputPath, _moduleName, "/");
-            string fileName = string.Concat(_moduleName, "Model.asset");
+            string fileName = string.Concat(_moduleName, "Configuration.asset");
             string path = string.Concat(outputCompletePath, fileName);
 
             Type scriptableObjectType = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()).FirstOrDefault(t => t.Name == className);
 
             if (scriptableObjectType == null || typeof(ScriptableObject).IsAssignableFrom(scriptableObjectType) is false)
             {
-                Debug.LogError(string.Format("ScriptableObject class called {0} not found", className));
+                Debug.LogError(string.Format("-- MVC Module Creator -- ScriptableObject class called {0} not found", className));
                 return;
             }
 
@@ -135,7 +144,7 @@ namespace ToolsACG.Editor
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
-            Debug.Log(string.Format("ScriptableObject {0} created in {1}", className, path));
+            Debug.Log(string.Format("-- MVC Module Creator -- ScriptableObject {0} created in {1}", className, path));
         }
 
         private string ReplaceConstantsInFiles(string pPath)
@@ -147,6 +156,9 @@ namespace ToolsACG.Editor
             result = result.Replace("CONST_ViewName", string.Concat(_moduleName, "View"));
             result = result.Replace("CONST_ModelName", string.Concat(_moduleName, "Model"));
             result = result.Replace("CONST_InterfaceName", string.Concat("I", _moduleName, "View"));
+            result = result.Replace("CONST_SO_ConfigurationScriptableObject", string.Concat("SO_" + _moduleName, "Configuration"));
+            result = result.Replace("CONST_ConfigurationScriptableObject", string.Concat(_moduleName, "Configuration"));
+
 
             return result;
         }

@@ -40,7 +40,7 @@ public class SoundManager : MonoBehaviour
     private void OnEnable()
     {
         EventManager.SoundBus.AddListener<MusicVolumeUpdated>(OnMusicVolumeUpdated);
-        EventManager.SoundBus.AddListener<EffectsVolumeUpdated>(OnEffectsVolumeUpdated); 
+        EventManager.SoundBus.AddListener<EffectsVolumeUpdated>(OnEffectsVolumeUpdated);
         EventManager.SoundBus.AddListener<Generate2DSound>(OnGenerate2DSound);
         EventManager.SoundBus.AddListener<Generate3DSound>(OnGenerate3DSound);
         EventManager.SoundBus.AddListener<PlayMusic>(OnPlayMusic);
@@ -50,7 +50,7 @@ public class SoundManager : MonoBehaviour
     private void OnDisable()
     {
         EventManager.SoundBus.RemoveListener<MusicVolumeUpdated>(OnMusicVolumeUpdated);
-        EventManager.SoundBus.RemoveListener<EffectsVolumeUpdated>(OnEffectsVolumeUpdated); 
+        EventManager.SoundBus.RemoveListener<EffectsVolumeUpdated>(OnEffectsVolumeUpdated);
         EventManager.SoundBus.RemoveListener<Generate2DSound>(OnGenerate2DSound);
         EventManager.SoundBus.RemoveListener<Generate3DSound>(OnGenerate3DSound);
         EventManager.SoundBus.RemoveListener<PlayMusic>(OnPlayMusic);
@@ -99,7 +99,7 @@ public class SoundManager : MonoBehaviour
     }
     #endregion
 
-        #region Initialization
+    #region Initialization
 
     private void GetReferences()
     {

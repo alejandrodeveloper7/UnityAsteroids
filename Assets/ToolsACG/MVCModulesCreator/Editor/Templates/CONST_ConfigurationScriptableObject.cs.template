@@ -1,0 +1,10 @@
+using UnityEngine;
+
+namespace ToolsACG.Scenes.CONST_ModuleName
+{ 
+    [CreateAssetMenu(fileName = "CONST_ConfigurationScriptableObject", menuName = "ScriptableObjects/MVCModuleCreator/CONST_ConfigurationScriptableObject")]
+    public class CONST_SO_ConfigurationScriptableObject : ModuleConfiguration
+    {
+   
+    }
+}

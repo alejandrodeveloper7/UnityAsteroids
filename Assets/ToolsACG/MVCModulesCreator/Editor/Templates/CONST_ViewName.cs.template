@@ -1,22 +1,74 @@
-﻿
+﻿using UnityEngine;
+
 namespace ToolsACG.Scenes.CONST_ModuleName
 {
-    public interface CONST_InterfaceName
+    public class CONST_ViewName : ModuleView
     {
-        // TODO: declare here view methods to call them from controller context
-    }
+        #region Fields     
 
-    public class CONST_ViewName : ModuleView, CONST_InterfaceName
-    {   
-        #region Fields        
+        [Header("MVC References")]
+        private CONST_ControllerName _controller;
+        private CONST_ModelName _model;
+        private CONST_SO_ConfigurationScriptableObject _configuration;
+
+        // TODO: Declare your fields here
+
         #endregion
 
-        #region View Methods
-        // TODO: define here view methods to call them from controller context
+        #region Monobehaviour        
+
+        protected override void Awake()
+        {
+            base.Awake();
+         
+            GetReferences();
+            RegisterListeners();
+        }
+
+        private void OnDestroy()
+        {
+            UnRegisterListeners();
+        }
+
         #endregion
 
-        #region Private Methods
-        // TODO: define here methods called from view methods
+        #region Initialization
+
+        protected override void GetReferences()
+        {
+            _controller = GetComponent<CONST_ControllerName>();
+            _model = _controller.Model;
+            _configuration=_controller.ModuleConfigurationData;
+        }
+
+        protected override void RegisterListeners()
+        {
+            // TODO: Create the listeners for the Model events
+        }
+
+        protected override void UnRegisterListeners()
+        {
+            // TODO: Erase the listeners for the Model events
+        }
+
+        #endregion
+
+        #region Model Callbacks
+
+        // TODO: Define here callbacks of the events from the model
+
+        #endregion
+
+        #region View Methods   
+
+        // TODO: Define here methods called from other view methods     
+
+        #endregion
+
+        #region public Methods
+
+        // TODO: Define here methods called from the controller     
+
         #endregion
     }
 }

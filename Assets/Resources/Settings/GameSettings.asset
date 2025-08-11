@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   _desktopSceneDependencys:
-  - LeaderboardScene
-  - MainMenuScene
-  - PauseScene
-  - PlayerHealthBarScene
-  - ScoreScene
+  - LeaderboardUIScene
+  - MainMenuUIScene
+  - PauseUIScene
+  - PlayerHealthBarUIScene
+  - ScoreUIScene
   _MobileSceneDependencys: []

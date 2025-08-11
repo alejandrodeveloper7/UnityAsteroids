@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace ToolsACG.Scenes.CONST_ModuleName
 {
@@ -7,42 +10,87 @@ namespace ToolsACG.Scenes.CONST_ModuleName
     {
         #region Private Fields
 
-        private CONST_InterfaceName _view;
-        [SerializeField] private CONST_ModelName _data;
+        [Header("View")]
+        private CONST_ViewName _view;
+
+        [Header("Model")]
+        private CONST_ModelName _model; 
+        public CONST_ModelName Model { get { return _model;}}
+
+        [Header("Data")]
+        [SerializeField] CONST_SO_ConfigurationScriptableObject _configurationData;   
+        public CONST_SO_ConfigurationScriptableObject ModuleConfigurationData { get { return _configurationData;}}
         
         #endregion
                
-        #region Protected Methods
-
+        #region Monobehaviour
+             
         protected override void Awake()
         {
             base.Awake();
             
             GetReferences();
+            CreateModel();
+            RegisterActions(); 
             Initialize();
-            RegisterActions();
         }
+
+        private void OnDestroy()
+        {
+            UnRegisterActions();
+        }
+
+        #endregion
+
+        #region Initialization
 
         protected override void RegisterActions()
         {
-            // TODO: Initialize listeners and dictionaries with actions for buttons, toggles, sliders, input fields and dropdowns.      
+            // TODO: Initialize listeners and Actions for buttons, toggles, sliders...    
+            
+            //Actions["MyButton"] = (Action<Button>)((btn) => Debug.Log($"Clicked: {btn.name}"));
+            //Actions["MyToggle"] = (Action<Toggle>)((tgl) => Debug.Log($"Toggle isOn: {tgl.isOn}"));
+            //Actions["MySlider"] = (Action<Slider>)((sld) => Debug.Log($"Slider value: {sld.value}"));
+            //Actions["MyInputField"] = (Action<TMP_InputField>)((imf) => Debug.Log($"InputField text: {imf.text}"));
+            //Actions["MyDropdown"] = (Action<TMP_Dropdown>)((dpd) => Debug.Log($"Dropdown value: {dpd.value}"));
+            //Actions["MyScrollbar"] = (Action<Scrollbar>)((scb) => Debug.Log($"ScrollBar value: {scb.value}"));
+            //Actions["MyScrollRect"] = (Action<ScrollRect>)((scr) => Debug.Log($"ScrollRect verticalNormalizedPosition: {scr.verticalNormalizedPosition}"));
         }
         
         protected override void UnRegisterActions()
         {
-            // TODO: Unregister listeners and dictionarie actions.      
-        }
-        
+            // TODO: Unregister listeners.      
+            
+            Actions.Clear();
+        }       
+
         protected override void GetReferences()
         {
-            _view = GetComponent<CONST_InterfaceName>();
+            _view = GetComponent<CONST_ViewName>();
         }
 
         protected override void Initialize()
         {
-            // TODO: Initialize view and controller
+            // TODO: Initialize controller
         }
 
-        #endregion           
+        protected override void CreateModel()
+        {
+            _model = new CONST_ModelName(_configurationData);
+        }
+
+        #endregion
+
+        #region Bus callbacks
+
+        // TODO: Declare here the callbacks of the Bus Events
+
+        #endregion
+
+        #region UI Elements Actions callbacks
+
+        // TODO: Declare here the callbacks of the UI interactios registered in the Actions Dictionary
+
+        #endregion
     }
 }

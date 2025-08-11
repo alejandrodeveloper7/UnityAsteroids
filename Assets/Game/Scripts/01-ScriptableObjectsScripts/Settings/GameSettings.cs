@@ -5,5 +5,7 @@ using UnityEngine;
 public class GameSettings : ScriptableObject
 {   
     public List<string> _desktopSceneDependencys;
-    public List<string> _MobileSceneDependencys;
+
+    //Cooming soon
+    //public List<string> _MobileSceneDependencys;
 }

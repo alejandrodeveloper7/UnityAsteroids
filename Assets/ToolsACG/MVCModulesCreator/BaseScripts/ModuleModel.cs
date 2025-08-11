@@ -1,6 +1,5 @@
-using UnityEngine;
 
-public abstract class ModuleModel : ScriptableObject
+public class ModuleModel
 {
- 
+
 }
