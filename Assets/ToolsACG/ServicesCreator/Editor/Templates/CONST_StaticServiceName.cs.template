@@ -1,0 +1,9 @@
+﻿namespace CONST_RootNamespace.Core.Services
+{
+   public static class CONST_StaticServiceName 
+   {         
+        #region Functionality
+                
+        #endregion
+   }
+}

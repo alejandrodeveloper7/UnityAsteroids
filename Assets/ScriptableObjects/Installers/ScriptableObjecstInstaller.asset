@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4752f4bb5f1e83149870c2cd1660424b, type: 3}
+  m_Name: ScriptableObjecstInstaller
+  m_EditorClassIdentifier: 
+  _shipCollection: {fileID: 11400000, guid: 7c45d33c6ee53c74c9395f4b5ff60a20, type: 2}
+  _bulletCollection: {fileID: 11400000, guid: ae50396112315114888e939dc78fc23e, type: 2}
+  _asteroidCollection: {fileID: 11400000, guid: 369cdda288b486b43914ec373631b20d, type: 2}
+  _musicCollection: {fileID: 11400000, guid: 2d08b2d9ea8b1d04991941486957066d, type: 2}
+  _stageConfiguration: {fileID: 11400000, guid: fb9d14b923ecccf4fad0a4d76cdcddc9, type: 2}
+  _leaderboardConfiguration: {fileID: 11400000, guid: aa1fff4ec4f719842bee8683f95c4c72, type: 2}
+  _scenesConfiguration: {fileID: 11400000, guid: eda97f9479a4705418567005af3065c1, type: 2}
+  _floatingTextConfiguration: {fileID: 11400000, guid: a145c9084391d8d4eb8043db76bb8bfe, type: 2}
+  _backgroundConfiguration: {fileID: 11400000, guid: 5ba58abcd11ee9f4d818218d91e916fe, type: 2}
+  _statsDisplayConfiguration: {fileID: 11400000, guid: 21724847a3c7940409e0d33970ab0c58, type: 2}
+  _leaderboardRowConfiguration: {fileID: 11400000, guid: cddd4ad1376f75341a4ad4152b60cfe9, type: 2}
+  _selectorConfiguration: {fileID: 11400000, guid: 9af419de144ca5b4ca882f3e2dc2733f, type: 2}

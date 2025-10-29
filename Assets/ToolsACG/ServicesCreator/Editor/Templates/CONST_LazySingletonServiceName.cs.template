@@ -1,0 +1,38 @@
+﻿using ToolsACG.ServicesCreator.Bases;
+
+namespace CONST_RootNamespace.Core.Services
+{
+   public class CONST_LazySingletonServiceName : SingletonServiceBase<CONST_LazySingletonServiceName> , CONST_I_ServiceName 
+   {         
+        #region Fields
+
+        // TODO: Declare your fields here
+
+        #endregion
+
+        #region Initialization     
+
+        // Uncomment this to enable auto-instantiation on play and make it an auto singleton
+        //[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        //private static void AutoInit() => EnsureInstance();
+                     
+        public void Setup()
+        {
+            // TODO: Manual method called to set parameters
+        }
+   
+        public override void Initialize()
+        {
+            base.Initialize();
+            // TODO: Method called in the constructor to initialize the Service
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            // TODO: clean here all the elements that need be clean when the Service is destroyed
+        }
+
+        #endregion       
+   }
+}

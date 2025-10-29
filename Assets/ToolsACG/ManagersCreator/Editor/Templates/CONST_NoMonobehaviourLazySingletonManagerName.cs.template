@@ -1,0 +1,38 @@
+﻿using ToolsACG.ManagersCreator.Bases;
+
+namespace CONST_RootNamespace.Core.Managers
+{
+   public class CONST_NoMonobehaviourLazySingletonManagerName : NoMonobehaviourSingletonManagerBase<CONST_NoMonobehaviourLazySingletonManagerName> , CONST_I_ManagerName
+   {         
+      #region Fields
+
+      // TODO: Declare here your fields
+
+      #endregion
+
+      #region Initialization
+
+      // Uncomment this to enable auto-instantiation on play and make it an auto singleton
+      //[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+      //private static void AutoInit() => EnsureInstance();
+
+      public void Setup()
+      {
+          // TODO: Manual method to set parameters
+      }
+
+      public override void Initialize()
+      {
+          base.Initialize();
+          // TODO: Add logic here that will be executed when the manager is created
+      }
+
+      public override void Dispose()
+      {
+          base.Dispose();
+          // TODO: clean here all the listeners or elements that need be clean when the manager is destroyed
+      }
+
+      #endregion
+   }
+}

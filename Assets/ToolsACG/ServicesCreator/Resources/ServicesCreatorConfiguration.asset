@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39971ce5a41bd684c83414820e5220da, type: 3}
+  m_Name: ServicesCreatorConfiguration
+  m_EditorClassIdentifier: 
+  WindowTitle: Services Creator
+  WindowMinSize: {x: 400, y: 300}
+  AssetsPath: Assets/
+  TemplatesPath: ToolsACG/ServicesCreator/Editor/Templates/
+  OutputPath: Scripts/Core/Services/
+  InterfacePrefix: I
+  ServiceSufix: Service
+  CsFileExtension: .cs
+  StaticServiceTemplateFileName: CONST_StaticServiceName.cs.template
+  ConstStaticServiceScriptName: CONST_StaticServiceName
+  AutoSingletonTemplateFileName: CONST_AutoSingletonServiceName.cs.template
+  ConstAutoSingletonServiceScriptName: CONST_AutoSingletonServiceName
+  LazySingletonTemplateFileName: CONST_LazySingletonServiceName.cs.template
+  ConstLazySingletonServiceScriptName: CONST_LazySingletonServiceName
+  InstancesServiceTemplateFileName: CONST_InstancesServiceName.cs.template
+  ConstInstancesServiceScriptName: CONST_InstancesServiceName
+  ServiceInterfaceTemplateFileName: CONST_I_ServiceName.cs.template
+  ConstServiceInterfaceScriptName: CONST_I_ServiceName
+  ConstNamespaceName: CONST_RootNamespace
+  InfoMessage: The affixes like "Service" or "I" will be added automatically
+  staticServiceInfoMessage: This service will be static, and would not have an interface
+    or inheritance.
+  AutoSingletonServiceInfoMessage: This service will be automatically instanced once
+    you press play button and you can NOT have other instances. Problematic with
+    Zenject!!!
+  LazySingletonServiceInfoMessage: This service will be instanced once you acces
+    .Instance for the first time and you can NOT have other instances. Problematic
+    with Zenject!!!
+  InstanceServiceInfoMessage: This service can define constructors with parameters
+    and you can have several instances. Good for Zenject!!!

@@ -1,0 +1,15 @@
+﻿using ToolsACG.SOCreator.Data;
+using UnityEngine;
+
+namespace CONST_RootNamespace.Core.ScriptableObjects.Data
+{
+   [CreateAssetMenu(fileName = "CONST_NewInstanceName", menuName = "ScriptableObjects/Data/CONST_Name")]
+   public class CONST_SODataName : SO_DataBase
+   {         
+       #region Values
+
+       // TODO: Declare your values here.
+
+       #endregion
+   }
+}

@@ -6,21 +6,21 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Game/Scenes/GameScene.unity
+    path: Assets/Scenes/GameScene.unity
     guid: 8acbde9de52b9ed4daed6de9832cdb1c
   - enabled: 1
-    path: Assets/Game/Modules/MainMenuUI/MainMenuUIScene.unity
-    guid: a950ff0ca7f87f14c91de68321d05751
-  - enabled: 1
-    path: Assets/Game/Modules/PlayerHealthBarUI/PlayerHealthBarUIScene.unity
-    guid: 5385e5fd16d62f54f94232e9d5309c9d
-  - enabled: 1
-    path: Assets/Game/Modules/ScoreUI/ScoreUIScene.unity
+    path: Assets/MVC Modules/ScoreUI/Scenes/ScoreUIScene.unity
     guid: 40e9a9f171426e84eb92bce64f672be8
   - enabled: 1
-    path: Assets/Game/Modules/PauseUI/PauseUIScene.unity
-    guid: 6529ab7008fa36442900320450484830
+    path: Assets/MVC Modules/PlayerHealthBarUI/Scenes/PlayerHealthBarUIScene.unity
+    guid: d45fba9c6364bf44281dd5a52d03d690
   - enabled: 1
-    path: Assets/Game/Modules/LeaderboardUI/LeaderboardUIScene.unity
-    guid: 4fea11aa0e918b6459e9acb3cebad7b2
+    path: Assets/MVC Modules/MainMenuUI/Scenes/MainMenuUIScene.unity
+    guid: c3776896679abbf45965d57694b2bfa0
+  - enabled: 1
+    path: Assets/MVC Modules/LeaderboardUI/Scenes/LeaderboardUIScene.unity
+    guid: 92dc1b90e08f00b458e370fa6de453dd
+  - enabled: 1
+    path: Assets/MVC Modules/PauseUI/Scenes/PauseUIScene.unity
+    guid: 16beb163726d31d4bacbf1f3026a28f3
   m_configObjects: {}

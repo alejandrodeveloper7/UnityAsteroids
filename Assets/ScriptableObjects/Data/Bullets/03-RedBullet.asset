@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fe3f9afe629a5d4197b50f17f5d1e46, type: 3}
+  m_Name: 03-RedBullet
+  m_EditorClassIdentifier: 
+  _id: 3
+  _active: 1
+  _sprite: {fileID: 21300000, guid: b5b582aca19ea6543b1f1169d34626b8, type: 3}
+  _stats:
+  - Id: 100
+    PropertyName: BetweenBulletsTime
+  - Id: 101
+    PropertyName: Damage
+  - Id: 102
+    PropertyName: LifeDuration
+  _poolName: Bullet
+  _color: {r: 1, g: 1, b: 1, a: 1}
+  _scale: {x: 1, y: 1, z: 1}
+  _speed: 12
+  _damage: 4
+  _betweenBulletsTime: 0.2
+  _lifeDuration: 0.4
+  _descaleDuration: 0.2
+  _pushForce: 0.4
+  _torqueForce: 0.5
+  _particlesOnDestruction:
+  - ParticleEffectName: FX_BulletDestroyed
+    ParticleConfig: {fileID: 11400000, guid: 22fd62f03ee75d0459fddc8d2e2f40ce, type: 2}
+  _screenEdgeTeleportConfiguration:
+    EdgeOffsetY: 0.03
+    EdgeRepositionOffsetY: 0.02
+    EdgeOffsetX: 0.03
+    EdgeRepositionOffsetX: 0.02
+    CheckInterval: 0.05
+  _soundsOnShoot:
+  - {fileID: 11400000, guid: 70f77bfcb6b55eb44b1f9cb3fe69eb51, type: 2}

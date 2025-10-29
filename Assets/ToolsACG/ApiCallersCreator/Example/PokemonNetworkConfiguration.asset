@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11071c2d9e98c054189d16cc09cced43, type: 3}
+  m_Name: PokemonNetworkConfiguration
+  m_EditorClassIdentifier: 
+  _developmentUrl: https://pokeapi.co/api/v2/
+  _developmentPrivateKey: 
+  _developmentPublicKey: 
+  _developmentApiKey: 
+  _productionUrl: https://pokeapi.co/api/v2/
+  _productionPrivateKey: 
+  _productionPublicKey: 
+  _productionApiKey: 
+  _integrationUrl: https://pokeapi.co/api/v2/
+  _integrationPrivateKey: 
+  _integrationPublicKey: 
+  _integrationApiKey: 
+  _localhostUrl: https://pokeapi.co/api/v2/
+  _localHostPrivateKey: 
+  _localHostPublicKey: 
+  _localHostApiKey: 
+  _requiresAuthToken: 0
+  _customHeaders: []
+  _timeOutMs: 8000

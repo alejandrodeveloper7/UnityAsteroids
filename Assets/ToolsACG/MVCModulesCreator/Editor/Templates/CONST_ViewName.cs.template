@@ -1,17 +1,55 @@
-﻿using UnityEngine;
+﻿using CONST_RootNamespace.MVC.CONST_ModuleName.Controllers;
+using CONST_RootNamespace.MVC.CONST_ModuleName.Models;
+using CONST_RootNamespace.MVC.CONST_ModuleName.ScriptableObjects;
+using ToolsACG.MVCModulesCreator.Bases;
+using UnityEngine;
+using Zenject;
 
-namespace ToolsACG.Scenes.CONST_ModuleName
+namespace CONST_RootNamespace.MVC.CONST_ModuleName.Views
 {
-    public class CONST_ViewName : ModuleView
+    public class CONST_ViewName : MVCViewBase , CONST_IViewName
     {
         #region Fields     
 
         [Header("MVC References")]
-        private CONST_ControllerName _controller;
-        private CONST_ModelName _model;
-        private CONST_SO_ConfigurationScriptableObject _configuration;
+        [Inject] private readonly CONST_IControllerName _controller;
+        [Inject] private readonly CONST_ModelName _model;
+        [Inject] private readonly CONST_SO_ConfigurationScriptableObject _configuration;
 
         // TODO: Declare your fields here
+
+        #endregion
+        
+        #region Initialization
+
+        protected override void GetReferences()
+        {
+            base.GetReferences();
+
+            // Not used thanks to Zenject injection
+            //_controller = GetComponent<IMainMenuUIController>();
+            //_model = _controller.Model;
+            //_configuration = _controller.ModuleConfigurationData;
+        }
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+
+            SetGeneralContainerActive(_configuration.ViewInitialState);
+            SetGeneralContainerScale(_configuration.ViewInitialScale);
+            SetAlpha(_configuration.ViewInitialAlpha);
+        }
+
+        protected override void RegisterListeners()
+        {
+            // TODO: Add listeners for the events
+        }
+
+        protected override void UnRegisterListeners()
+        {
+            // TODO: Remove listeners for the events
+        }
 
         #endregion
 
@@ -20,54 +58,42 @@ namespace ToolsACG.Scenes.CONST_ModuleName
         protected override void Awake()
         {
             base.Awake();
-         
+
             GetReferences();
             RegisterListeners();
         }
 
-        private void OnDestroy()
+        protected override void Start()
         {
+            base.Start();
+
+            Initialize();
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
             UnRegisterListeners();
         }
 
         #endregion
 
-        #region Initialization
+        #region Event Callbacks
 
-        protected override void GetReferences()
-        {
-            _controller = GetComponent<CONST_ControllerName>();
-            _model = _controller.Model;
-            _configuration=_controller.ModuleConfigurationData;
-        }
-
-        protected override void RegisterListeners()
-        {
-            // TODO: Create the listeners for the Model events
-        }
-
-        protected override void UnRegisterListeners()
-        {
-            // TODO: Erase the listeners for the Model events
-        }
-
-        #endregion
-
-        #region Model Callbacks
-
-        // TODO: Define here callbacks of the events from the model
-
-        #endregion
-
-        #region View Methods   
-
-        // TODO: Define here methods called from other view methods     
+        // TODO: Define here callbacks for the events
 
         #endregion
 
         #region public Methods
 
         // TODO: Define here methods called from the controller     
+
+        #endregion
+
+        #region View Methods   
+
+        // TODO: Define here methods called from other view methods     
 
         #endregion
     }

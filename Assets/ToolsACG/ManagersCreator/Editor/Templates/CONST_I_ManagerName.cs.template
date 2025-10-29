@@ -1,0 +1,7 @@
+﻿namespace CONST_RootNamespace.Core.Managers
+{
+   public interface CONST_I_ManagerName 
+   {         
+      
+   }
+}

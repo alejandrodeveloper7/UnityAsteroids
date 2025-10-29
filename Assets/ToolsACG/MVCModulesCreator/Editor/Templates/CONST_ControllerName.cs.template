@@ -1,48 +1,45 @@
-﻿using System;
-using TMPro;
+﻿using CONST_RootNamespace.MVC.CONST_ModuleName.Models;
+using CONST_RootNamespace.MVC.CONST_ModuleName.ScriptableObjects;
+using CONST_RootNamespace.MVC.CONST_ModuleName.Views;
+using ToolsACG.MVCModulesCreator.Bases;
 using UnityEngine;
-using UnityEngine.UI;
+using Zenject;
 
-namespace ToolsACG.Scenes.CONST_ModuleName
+namespace CONST_RootNamespace.MVC.CONST_ModuleName.Controllers
 {
-    [RequireComponent(typeof(CONST_ViewName))]
-    public class CONST_ControllerName : ModuleController
+    public class CONST_ControllerName : MVCControllerBase , CONST_IControllerName
     {
         #region Private Fields
 
+        //YOU HAVE TO CREATE THE ZENJECT INSTALLER MANUALLY
+
         [Header("View")]
-        private CONST_ViewName _view;
+        [Inject] private readonly CONST_IViewName _view;
 
         [Header("Model")]
-        private CONST_ModelName _model; 
-        public CONST_ModelName Model { get { return _model;}}
+        [Inject] private readonly CONST_ModelName _model; 
+        //public CONST_ModelName Model { get { return _model;}}
 
         [Header("Data")]
-        [SerializeField] CONST_SO_ConfigurationScriptableObject _configurationData;   
-        public CONST_SO_ConfigurationScriptableObject ModuleConfigurationData { get { return _configurationData;}}
+        [Inject] private readonly CONST_SO_ConfigurationScriptableObject _configurationData;   
+        //public CONST_SO_ConfigurationScriptableObject ModuleConfigurationData { get { return _configurationData;}}
         
         #endregion
-               
-        #region Monobehaviour
-             
-        protected override void Awake()
-        {
-            base.Awake();
-            
-            GetReferences();
-            CreateModel();
-            RegisterActions(); 
-            Initialize();
-        }
-
-        private void OnDestroy()
-        {
-            UnRegisterActions();
-        }
-
-        #endregion
-
+     
         #region Initialization
+        
+        protected override void GetReferences()
+        {
+            base.GetReferences();
+
+            // Not used thanks to Zenject injection
+            //_view = GetComponent<CONST_IViewName>();
+        }
+
+        protected override void Initialize()
+        {
+            // TODO: Initialize controller
+        }
 
         protected override void RegisterActions()
         {
@@ -64,26 +61,44 @@ namespace ToolsACG.Scenes.CONST_ModuleName
             Actions.Clear();
         }       
 
-        protected override void GetReferences()
-        {
-            _view = GetComponent<CONST_ViewName>();
-        }
-
-        protected override void Initialize()
-        {
-            // TODO: Initialize controller
-        }
-
         protected override void CreateModel()
         {
-            _model = new CONST_ModelName(_configurationData);
+            // Not used thanks to Zenject injection
+            //_model = new CONST_ModelName(_configurationData);
         }
 
         #endregion
 
-        #region Bus callbacks
+        #region Monobehaviour
+             
+        protected override void Awake()
+        {
+            base.Awake();
+            
+            GetReferences();
+            CreateModel();
+            RegisterActions(); 
+        }
 
-        // TODO: Declare here the callbacks of the Bus Events
+        protected override void Start()
+        {
+            base.Start();
+            
+            Initialize();
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            UnRegisterActions();
+        }
+
+        #endregion
+
+        #region Event callbacks
+
+        // TODO: Declare here the callbacks of the Events
 
         #endregion
 

@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3de9eac9aa7d1a9498d97365465a7c54, type: 3}
+  m_Name: 03-BrownSmallAsteroid
+  m_EditorClassIdentifier: 
+  _id: 3
+  _poolName: Asteroid
+  _isInitialAsteroid: 0
+  _possibleSprites:
+  - {fileID: 21300000, guid: 8b986e58548e62842a6970e716ab9b20, type: 3}
+  - {fileID: 21300000, guid: e3505f4085e8b2e44a701763827971ff, type: 3}
+  _color: {r: 0.8980392, g: 0.8980392, b: 0.8980392, a: 1}
+  _scale: {x: 2, y: 2, z: 2}
+  _asteroidSpawnAngle: 60
+  _posibleTorque: 80
+  _alphaAparitionDuration: 0.8
+  _maxHP: 2
+  _speed: 2
+  _scoreValue: 10
+  _damage: 1
+  _damageFeedbackColor: {r: 1, g: 0.36862746, b: 0.36862746, a: 1}
+  _damageFeedbackScale: {x: 1.85, y: 1.85, z: 1.85}
+  _damageFeedbackDuration: 0.05
+  _fragmentsAmountGeneratedOnDestruction: 0
+  _fragmentTypesGeneratedOnDestruction: []
+  _screenEdgeTeleportConfiguration:
+    EdgeOffsetY: 0.03
+    EdgeRepositionOffsetY: 0.02
+    EdgeOffsetX: 0.03
+    EdgeRepositionOffsetX: 0.02
+    CheckInterval: 0.05
+  _particlesOnDamage:
+  - ParticleEffectName: FX_AsteroidDamaged
+    ParticleConfig: {fileID: 11400000, guid: a0549390e8ac70142bb07cda601523a8, type: 2}
+  _particlesOnDestruction:
+  - ParticleEffectName: FX_AsteroidDestroyed
+    ParticleConfig: {fileID: 11400000, guid: a0549390e8ac70142bb07cda601523a8, type: 2}
+  _soundsOnDamage:
+  - {fileID: 11400000, guid: a208fa64b7715dd41be5ab33b70e6ffa, type: 2}
+  _soundsOnDestruction:
+  - {fileID: 11400000, guid: e9ec574fd32bf724cbb3a2502f6008df, type: 2}

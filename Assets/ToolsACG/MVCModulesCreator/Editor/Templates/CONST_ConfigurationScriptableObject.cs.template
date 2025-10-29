@@ -1,10 +1,21 @@
+using ToolsACG.MVCModulesCreator.Bases;
 using UnityEngine;
 
-namespace ToolsACG.Scenes.CONST_ModuleName
+namespace CONST_RootNamespace.MVC.CONST_ModuleName.ScriptableObjects
 { 
-    [CreateAssetMenu(fileName = "CONST_ConfigurationScriptableObject", menuName = "ScriptableObjects/MVCModuleCreator/CONST_ConfigurationScriptableObject")]
-    public class CONST_SO_ConfigurationScriptableObject : ModuleConfiguration
+    [CreateAssetMenu(fileName = "CONST_ConfigurationScriptableObject", menuName = "MVCModules/CONST_ConfigurationScriptableObject")]
+    public class CONST_SO_ConfigurationScriptableObject : SO_MVCConfigurationBase
     {
-   
+        #region Values
+
+        // TODO: Declare your Values here
+
+        #endregion
+        
+        #region Methods
+
+        // TODO: Declare your methods here
+
+        #endregion
     }
 }

@@ -1,0 +1,7 @@
+﻿namespace CONST_RootNamespace.Core.Services
+{
+   public interface CONST_I_ServiceName 
+   {         
+      
+   }
+}

@@ -1,0 +1,39 @@
+﻿using ToolsACG.ManagersCreator.Bases;
+using UnityEngine;
+
+namespace CONST_RootNamespace.Core.Managers
+{
+   public class CONST_NoMonobehaviourAutoSingletonManagerName : NoMonobehaviourSingletonManagerBase<CONST_NoMonobehaviourAutoSingletonManagerName> , CONST_I_ManagerName
+   {         
+      #region Fields
+
+      // TODO: Declare here your fields
+
+      #endregion
+
+      #region Initialization
+
+      // Comment this out to disable auto-instantiation on play and turn it into a lazy singleton
+      [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+      private static void AutoInit() => EnsureInstance();
+
+      public void Setup()
+      {
+          // TODO: Manual method to set parameters
+      }
+
+      public override void Initialize()
+      {
+          base.Initialize();
+          // TODO: Add logic here that will be executed when the manager is created
+      }
+
+      public override void Dispose()
+      {
+          base.Dispose();
+          // TODO: clean here all the listeners or elements that need be clean when the manager is destroyed
+      }
+
+      #endregion
+   }
+}

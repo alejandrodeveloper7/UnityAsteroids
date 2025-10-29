@@ -1,27 +1,30 @@
-using System;
+using CONST_RootNamespace.MVC.CONST_ModuleName.ScriptableObjects;
+using ToolsACG.MVCModulesCreator.Bases;
+using Zenject;
 
-namespace ToolsACG.Scenes.CONST_ModuleName
+namespace CONST_RootNamespace.MVC.CONST_ModuleName.Models
 { 
-    public class CONST_ModelName : ModuleModel
+    public class CONST_ModelName : MVCModelBase
     {
         #region Fields and Properties
 
-        //Declare your fields and properties here
+        // TODO: Declare your fields and properties here
 
         #endregion
 
-        #region Actions
+        #region Events
 
-        //public event Action OnSomething;
-        //public event Action<int> OnSomethingWithParameter;
+        //public event Action Something;
+        //public event Action<int> SomethingWithParameter;
 
         #endregion
 
         #region Constructors
         
-        public CONST_ModelName(CONST_SO_ConfigurationScriptableObject Configuration)
+        [Inject]
+        public CONST_ModelName(CONST_SO_ConfigurationScriptableObject configuration)
         {
-            //TODO: Initialize the model with the ConfigurationData
+            //TODO: Initialize the model with the Configuration SO and other data
         }
 
         #endregion

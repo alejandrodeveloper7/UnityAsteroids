@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16bd363c4f7957c42b3bef817ed254a3, type: 3}
+  m_Name: LeaderboardRowConfiguration
+  m_EditorClassIdentifier: 
+  _playerRowColor: {r: 0, g: 0.7490196, b: 1, a: 1}
+  _defaultRowColor: {r: 1, g: 1, b: 1, a: 1}
+  _firstPositionMedal: {fileID: 21300000, guid: 3b962c0e7b363b3498f479fa078611eb, type: 3}
+  _secondPositionMedal: {fileID: 21300000, guid: 7ece60c5ff7474f45a1065240b92c5b2, type: 3}
+  _thirdPositionMedal: {fileID: 21300000, guid: 8f4d41635e66d3747ab44b7057a83031, type: 3}
+  _firstPositionScale: {x: 1.09, y: 1.09, z: 1.09}
+  _secondPositionScale: {x: 1.06, y: 1.06, z: 1.06}
+  _thirdPositionScale: {x: 1.03, y: 1.03, z: 1.03}
+  _defaultPositionScale: {x: 1, y: 1, z: 1}
+  _enterRowAnimationDuration: 0.2
+  _enterRowAnimationDelay: 0.05

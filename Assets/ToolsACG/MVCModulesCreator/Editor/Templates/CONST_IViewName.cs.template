@@ -1,0 +1,7 @@
+﻿namespace CONST_RootNamespace.MVC.CONST_ModuleName.Views
+{
+    public interface CONST_IViewName 
+    {
+
+    }
+}
