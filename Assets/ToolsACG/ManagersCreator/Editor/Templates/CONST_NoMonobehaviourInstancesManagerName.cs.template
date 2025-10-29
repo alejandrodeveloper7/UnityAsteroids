@@ -14,7 +14,7 @@ namespace CONST_RootNamespace.Core.Managers
 
       public CONST_NoMonobehaviourInstancesManagerName()
       {
-          Initialize()
+          Initialize();
       }
 
       #endregion
