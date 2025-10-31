@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5fd19636d4eff94ba63ef4ba091dc9f, type: 3}
   m_Name: InputSettings
   m_EditorClassIdentifier: 
-  _moveForwardKey: 119
   _turnLeftKey: 97
   _turnRightKey: 100
+  _moveForwardKey: 119
   _shootKey: 32
-  _pauseKey: 27
+  _pauseKey: 13

@@ -3,6 +3,7 @@ using Asteroids.Core.Events.Gameplay;
 using Asteroids.Core.Services;
 using System;
 using ToolsACG.Core.EventBus;
+using ToolsACG.Core.Managers;
 using ToolsACG.Core.Services;
 using ToolsACG.ManagersCreator.Bases;
 using UnityEngine;
@@ -19,6 +20,8 @@ namespace Asteroids.Core.Managers
 
         [Header("References")]
         [Inject] private readonly IDebugService _debugService;
+        [Space]
+        [Inject] private readonly ICursorManager _cursorManager;
 
         [Header("Configuration")]
         [SerializeField] private bool _autoPauseOnFocusLost;
@@ -114,6 +117,7 @@ namespace Asteroids.Core.Managers
         private void OnRunExitRequested(RunExitRequested runExitRequested)
         {
             _canPause = false;
+            _cursorManager.SetUICursor();
         }
 
         private void OnPlayerDied(PlayerDied playerDied)
@@ -140,6 +144,7 @@ namespace Asteroids.Core.Managers
 
             IsPaused = true;
             TimeScaleService.Pause();
+            _cursorManager.SetUICursor();
             GamePaused?.Invoke();
             _debugService.Log("Pause", "Game paused");
         }
@@ -151,6 +156,7 @@ namespace Asteroids.Core.Managers
 
             IsPaused = false;
             TimeScaleService.Resume();
+            _cursorManager.SetGameplayCursor();
             GameResumed?.Invoke();
             _debugService.Log("Pause", "Game resumed");
         }

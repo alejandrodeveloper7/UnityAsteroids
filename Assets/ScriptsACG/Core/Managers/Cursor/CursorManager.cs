@@ -122,6 +122,15 @@ namespace ToolsACG.Core.Managers
             _cursorService.SetCursorTexture(_cursorSettings.ClickedCursor, _cursorSettings.Hotspot);
         }
 
+        public void SetUICursor() 
+        {
+            _cursorService.SetUICursor();
+        }
+        public void SetGameplayCursor() 
+        {
+            _cursorService.SetGameplayCursor();
+        }
+
         #endregion
     }
 }

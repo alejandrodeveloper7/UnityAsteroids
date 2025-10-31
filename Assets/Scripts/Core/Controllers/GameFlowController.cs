@@ -4,6 +4,7 @@ using Asteroids.Core.ScriptableObjects.Configurations;
 using Asteroids.Gameplay.Player.Spawners;
 using System.Threading.Tasks;
 using ToolsACG.Core.EventBus;
+using ToolsACG.Core.Managers;
 using ToolsACG.Core.Services;
 using ToolsACG.Core.Utils;
 using UnityEngine;
@@ -23,6 +24,8 @@ namespace Asteroids.Core.Controllers
         [Inject] private readonly PlayerSpawner _playerSpawner;
         [Space]
         [Inject] private readonly ISettingsService _settingsService;
+        [Space]
+        [Inject] private readonly ICursorManager _cursorManager;
 
         [Header("Data")]
         [Inject] private readonly SO_StageConfiguration _stageConfiguration;
@@ -80,12 +83,14 @@ namespace Asteroids.Core.Controllers
         {
             _settingsService.ApplyAllStoredSettings();
             await AdditiveScenesService.LoadAdditiveScenes(_scenesConfiguration.DesktopSceneDependencies);
+            _cursorManager.SetUICursor();
             _asteroidsController.CreateDecorationAsteroids();
             EventBusManager.GameFlowBus.RaiseEvent(new GameInitialized());
         }
 
         private void StartRun()
         {
+            _cursorManager.SetGameplayCursor();
             _asteroidsController.CleanCurrentAsteroids();
             _asteroidsController.RestartRound();
             _scoreController.RestartScore();
@@ -98,6 +103,7 @@ namespace Asteroids.Core.Controllers
         {
             await TimingUtils.WaitSeconds(_stageConfiguration.DelayAfterPlayerDead);
             EventBusManager.GameFlowBus.RaiseEvent(new RunEnded());
+            _cursorManager.SetUICursor();
             _scoreController.SaveLasScore();
             _ = _leaderboardController.ProcessLeaderboardFlowAfterRun();
         }
