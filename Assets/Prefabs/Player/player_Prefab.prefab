@@ -221,6 +221,8 @@ GameObject:
   - component: {fileID: 2110151990419267615}
   - component: {fileID: 6933489424560028514}
   - component: {fileID: 793394471211757296}
+  - component: {fileID: 3997012055526434590}
+  - component: {fileID: 7641219351561058757}
   m_Layer: 7
   m_Name: player_Prefab
   m_TagString: Untagged
@@ -322,7 +324,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3956968647392f1409381113138dac3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inCollisionCooldown: 0
 --- !u!114 &7117846050555154846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,6 +506,37 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &3997012055526434590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6392037772438142911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers: []
+  _monoInstallers:
+  - {fileID: 7641219351561058757}
+  _installerPrefabs: []
+  _findSiblingMonoInstallers: 0
+  _autoRun: 1
+  _kernel: {fileID: 0}
+--- !u!114 &7641219351561058757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6392037772438142911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f9e5f8386f06c1468e887b09da7bc4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6411455989539170815
 GameObject:
   m_ObjectHideFlags: 0

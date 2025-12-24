@@ -49,7 +49,6 @@ namespace ToolsACG.Core.ScriptableObjects.Settings
 
         [SerializeField] private KeyCode _pauseKey;
         public KeyCode PauseKey =>  _pauseKey;
-
         
         #endregion
     }

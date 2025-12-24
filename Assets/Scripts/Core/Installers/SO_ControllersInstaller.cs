@@ -15,6 +15,7 @@ namespace Asteroids.Core.Intallers
             Container.Bind<LeaderboardController>().AsSingle();
             Container.Bind<AsteroidsController>().AsSingle();
             Container.Bind<ScoreController>().AsSingle();
+            Container.Bind<ScenesController>().AsSingle();
         }
 
         #endregion

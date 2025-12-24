@@ -125,7 +125,7 @@ namespace ToolsACG.Core.Managers
 
         #endregion
 
-        #region Bus Callbacks
+        #region Event Callbacks
 
         private void OnRunStarted(RunStarted runStarted)
         {

@@ -50,14 +50,67 @@ namespace ToolsACG.Core.Utils
 
             while (true)
             {
-                token.ThrowIfCancellationRequested();
-
+                if (token.IsCancellationRequested)                
+                    return;
+                
                 float elapsed = (ignoreTimeScale ? Time.realtimeSinceStartup : Time.time) - start;
                 if (elapsed >= seconds)
                     break;
 
                 await Task.Yield();
             }
+        }
+
+        public static async Task WaitTask(Task taskToWait, CancellationToken cancellationToken = default)
+        {
+            if (taskToWait == null)
+                return;
+
+#if UNITY_EDITOR
+            using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, PlayModeToken);
+            CancellationToken token = linkedCts.Token;
+#else
+    CancellationToken token = cancellationToken;
+#endif
+
+            while (true)
+            {
+                if (token.IsCancellationRequested)
+                    return;
+
+                if (taskToWait.IsCompleted)
+                {
+                    await taskToWait;
+                    token.ThrowIfCancellationRequested();
+                    break;
+                }
+
+                await Task.Yield();
+            }
+        }
+
+        public static async Task WaitAsyncOperation(AsyncOperation asyncOperation, CancellationToken cancellationToken = default)
+        {
+            if (asyncOperation == null)
+                return;
+
+#if UNITY_EDITOR
+            using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, PlayModeToken);
+            CancellationToken token = linkedCts.Token;
+#else
+    CancellationToken token = cancellationToken;
+#endif
+
+            while (!asyncOperation.isDone)
+            {
+                if (token.IsCancellationRequested)
+                    return;
+                
+                await Task.Yield();
+            }
+
+            if (token.IsCancellationRequested)
+                return;
         }
 
         public static async Task WaitMilliseconds(int miliseconds, bool ignoreTimeScale = false, CancellationToken cancellationToken = default)
@@ -70,9 +123,9 @@ namespace ToolsACG.Core.Utils
 
         #region Conversions
 
-        public static int ToMilliseconds(float seconds) => Mathf.RoundToInt(seconds * 1000);
+        private static int ToMilliseconds(float seconds) => Mathf.RoundToInt(seconds * 1000);
 
-        public static float ToSeconds(int milliseconds) => milliseconds / 1000f;
+        private static float ToSeconds(int milliseconds) => milliseconds / 1000f;
 
         #endregion
     }

@@ -20,6 +20,7 @@ namespace Asteroids.Core.Controllers
         [Inject] private readonly AsteroidsController _asteroidsController;
         [Inject] private readonly LeaderboardController _leaderboardController;
         [Inject] private readonly ScoreController _scoreController;
+        [Inject] private readonly ScenesController _scenesController;
         [Space]
         [Inject] private readonly PlayerSpawner _playerSpawner;
         [Space]
@@ -29,7 +30,6 @@ namespace Asteroids.Core.Controllers
 
         [Header("Data")]
         [Inject] private readonly SO_StageConfiguration _stageConfiguration;
-        [Inject] private readonly SO_ScenesConfiguration _scenesConfiguration;
 
         #endregion
 
@@ -82,7 +82,7 @@ namespace Asteroids.Core.Controllers
         private async Task StartGame()
         {
             _settingsService.ApplyAllStoredSettings();
-            await AdditiveScenesService.LoadAdditiveScenes(_scenesConfiguration.DesktopSceneDependencies);
+            await _scenesController.LoadGameplayAdditiveScenes();
             _cursorManager.SetUICursor();
             _asteroidsController.CreateDecorationAsteroids();
             EventBusManager.GameFlowBus.RaiseEvent(new GameInitialized());

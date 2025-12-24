@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ToolsACG.Core.ScriptableObjects.Collections;
 using ToolsACG.Core.ScriptableObjects.Data;
+using ToolsACG.Core.Utils;
 using ToolsACG.ManagersCreator.Bases;
 using ToolsACG.Pooling.Core;
 using ToolsACG.Pooling.Gameplay;
@@ -22,6 +23,9 @@ namespace ToolsACG.Core.Managers
         [Header("Audio Mixers")]
         [SerializeField] private AudioMixer _musicMixer;
         [SerializeField] private AudioMixer _effectsMixer;
+
+        [Header("Gameplay References")]
+        private Transform _3dSoundsGeneralParent;
 
         [Header("Music")]
         [SerializeField] private bool _autoPlayMusic;
@@ -49,6 +53,7 @@ namespace ToolsACG.Core.Managers
         {
             base.Initialize();
 
+            Create3DSoundsGeneralParent();
             CreateMusicSource();
 
             if (_autoPlayMusic)
@@ -169,12 +174,19 @@ namespace ToolsACG.Core.Managers
         private async Task WaitForMusicEnd()
         {
             while (_isMusicPlaying && _musicSource != null && _musicSource.isPlaying)
-                await Task.Delay(100);
+                await Task.Delay(200);
         }
 
         #endregion
 
         #region Sound
+
+        private void Create3DSoundsGeneralParent()
+        {
+            GameObject newGameObject = new("3DSound_general_parent");
+            GameObject.DontDestroyOnLoad(newGameObject);
+            _3dSoundsGeneralParent = newGameObject.transform;
+        }
 
         public void Play2DSounds(List<SO_SoundData> data)
         {
@@ -184,7 +196,7 @@ namespace ToolsACG.Core.Managers
         public async Task Play2DSound(SO_SoundData data)
         {
             if (data.Delay > 0)
-                await Task.Delay((int)(data.Delay * 1000));
+                await TimingUtils.WaitSeconds(data.Delay);
 
             AudioSource audioSource = FactoryManager.Instance.Get2DAudioSourceInstance();
             data.ApplyConfiguration(audioSource);
@@ -199,12 +211,13 @@ namespace ToolsACG.Core.Managers
         public async Task Play3DSound(SO_SoundData data, Vector3 position, Transform parent)
         {
             if (data.Delay > 0)
-                await Task.Delay((int)(data.Delay * 1000));
+                await TimingUtils.WaitSeconds(data.Delay);
 
             GameObject new3DSound = FactoryManager.Instance.Get3DSoundInstance();
 
             if (parent == null)
             {
+                new3DSound.transform.SetParent(_3dSoundsGeneralParent, false);
                 new3DSound.transform.position = position;
             }
             else
@@ -216,8 +229,7 @@ namespace ToolsACG.Core.Managers
             AudioSource audioSource = new3DSound.GetComponent<AudioSource>();
             data.ApplyConfiguration(audioSource);
 
-            Pooled3DSound sound3DController = new3DSound.GetComponent<Pooled3DSound>();
-            sound3DController.Play();
+            new3DSound.GetComponent<Pooled3DSound>().Play();
         }
 
         #endregion
