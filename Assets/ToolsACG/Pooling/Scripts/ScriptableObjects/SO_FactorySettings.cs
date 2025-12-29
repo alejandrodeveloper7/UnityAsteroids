@@ -36,11 +36,13 @@ namespace ToolsACG.Pooling.ScriptableObjects
 
         [Space]
 
-        [SerializeField] private string _audioSourcePoolParentName = "Pooled_AudioSources_parent";
+        [SerializeField] private string _audioSourcePoolParentName = "Pooled_AudioSources";
         public string AudioSourcePoolParentName => _audioSourcePoolParentName;
 
         [SerializeField] private Vector3 _audioSourcePoolParentPosition = new(0, 50, 0);
         public Vector3 AudioSourcePoolParentPosition => _audioSourcePoolParentPosition;
+
+        [Space]
 
         [SerializeField] private int _audiSourcesPoolInitialSize = 10;
         public int AudiSourcesPoolInitialSize => _audiSourcesPoolInitialSize;
@@ -67,18 +69,11 @@ namespace ToolsACG.Pooling.ScriptableObjects
 
         [SerializeField] private Vector3 _3DSoundPoolParentPosition = new(0, 50, 0);
         public Vector3 Sound3DPoolParentPosition => _3DSoundPoolParentPosition;
+        
+        [Space]
 
-        [SerializeField] private GameObject _3DSoundPrefab;
-        public GameObject Sound3DPrefab => _3DSoundPrefab;
-
-        [SerializeField] private int _3DSoundPoolInitialSize = 10;
-        public int Sound3DPoolInitialSize => _3DSoundPoolInitialSize;
-
-        [SerializeField] private int _3DSoundPoolEscalation = 2;
-        public int Sound3DPoolEscalation => _3DSoundPoolEscalation;
-
-        [SerializeField] private int _3DSoundPoolMaxSize = 150;
-        public int Sound3DPoolMaxSize => _3DSoundPoolMaxSize;
+        [SerializeField] private SO_PooledGameObjectData _3DSoundPooledGameObjectData;
+        public SO_PooledGameObjectData Sound3DPooledGameObjectData => _3DSoundPooledGameObjectData;
 
         [Space(20)]
 
@@ -97,8 +92,8 @@ namespace ToolsACG.Pooling.ScriptableObjects
         [SerializeField] private Vector3 _persistentPoolsParentPosition = new(0, 50, 0);
         public Vector3 PersistentPoolsParentPosition => _persistentPoolsParentPosition;
 
-        [SerializeField] private SO_PersistentPoolData _persistentPoolsData;
-        public SO_PersistentPoolData PersistentPoolsData => _persistentPoolsData;
+        [SerializeField] private List<SO_PooledGameObjectData> _persistentPoolsData;
+        public List<SO_PooledGameObjectData> PersistentPoolsData => _persistentPoolsData;
 
         [Space(20)]
 
@@ -120,6 +115,18 @@ namespace ToolsACG.Pooling.ScriptableObjects
         [SerializeField] private List<SO_ScenePoolData> _scenesPoolData;
         public List<SO_ScenePoolData> ScenesPoolData => _scenesPoolData;
 
+        [Space(20)]
+
+        [Header("Containers Pool Data")]
+
+        [Space]
+
+        [SerializeField] private string _containerPoolsParentName = "Containers_pooled_gameObjects_parent";
+        public string ContainerPoolsParentName => _containerPoolsParentName;
+
+        [SerializeField] private Vector3 _containerPoolsParentPosition = new(0, 50, 0);
+        public Vector3 ContainerPoolsParentPosition => _containerPoolsParentPosition;
+     
         #endregion
     }
 }

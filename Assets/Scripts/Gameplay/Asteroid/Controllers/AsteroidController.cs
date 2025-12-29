@@ -13,7 +13,7 @@ using Zenject;
 namespace Asteroids.Gameplay.Asteroids.Controllers
 {
     [RequireComponent(typeof(AsteroidHealthController))]
-    [RequireComponent(typeof(PooledGameObject))]
+    [RequireComponent(typeof(PooledGameObjectController))]
     [RequireComponent(typeof(ScreenEdgeTeleport))]
     [RequireComponent(typeof(DamageOnContact))]
     [RequireComponent(typeof(AsteroidMovementController))]
@@ -29,7 +29,7 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
         [Inject] private readonly AsteroidMovementController _asteroidMovementcontroller;
         [Inject] private readonly AsteroidHealthController _asteroidHealthController;
         [Inject] private readonly DamageOnContact _damageOnContact;
-        [Inject] private readonly PooledGameObject _pooledGameObject;
+        [Inject] private readonly PooledGameObjectController _pooledGameObject;
         [Inject] private readonly ScreenEdgeTeleport _screenEdgeTeleport;
 
         [Header("Data")]

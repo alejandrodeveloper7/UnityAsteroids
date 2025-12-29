@@ -14,7 +14,7 @@ using Zenject;
 namespace Asteroids.Gameplay.Bullets.Controllers
 {
     [RequireComponent(typeof(ScreenEdgeTeleport))]
-    [RequireComponent(typeof(PooledGameObject))]
+    [RequireComponent(typeof(PooledGameObjectController))]
     [RequireComponent(typeof(DamageOnContact))]
     [RequireComponent(typeof(PushOnContact))]
     [RequireComponent(typeof(BulletPhysicsController))]
@@ -28,7 +28,7 @@ namespace Asteroids.Gameplay.Bullets.Controllers
 
         [Header("References")]
         [Inject] private readonly ScreenEdgeTeleport _screenEdgeTeleport;
-        [Inject] private readonly PooledGameObject _pooledGameObject;
+        [Inject] private readonly PooledGameObjectController _pooledGameObject;
         [Inject] private readonly DamageOnContact _damageOnContact;
         [Inject] private readonly PushOnContact _pushOnContact;
         [Inject] private readonly BulletPhysicsController _bulletPhysicsController;

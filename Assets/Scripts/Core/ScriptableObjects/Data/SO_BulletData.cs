@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using ToolsACG.Core.ScriptableObjects.Data;
 using ToolsACG.Core.ScriptableObjects.ParticleSystemConfigs;
 using ToolsACG.Core.Utilitys;
+using ToolsACG.Pooling.ScriptableObjects;
 using ToolsACG.SOCreator.Data;
 using UnityEngine;
 
@@ -31,8 +32,8 @@ namespace Asteroids.Core.ScriptableObjects.Data
 
         [Header("Configuration")]
 
-        [SerializeField] private string _poolName;
-        public string PoolName => _poolName;
+        [SerializeField] private SO_PooledGameObjectData _prefabData;
+        public SO_PooledGameObjectData PrefabData => _prefabData;
 
         [SerializeField] private Color _color;
         public Color Color => _color;

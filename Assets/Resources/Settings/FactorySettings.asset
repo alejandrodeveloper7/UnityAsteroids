@@ -21,15 +21,20 @@ MonoBehaviour:
   _use3DSoundPool: 0
   _3DSoundPoolParentName: Pooled_3DSounds_parent
   _3DSoundPoolParentPosition: {x: -30, y: 0, z: 0}
-  _3DSoundPrefab: {fileID: 4226950753071616288, guid: 211bbd487770f2b448016b78749c0293, type: 3}
-  _3DSoundPoolInitialSize: 10
-  _3DSoundPoolEscalation: 2
-  _3DSoundPoolMaxSize: 150
+  _3DSoundPooledGameObjectData: {fileID: 11400000, guid: b07fb798d3f336f449d51821536e4165, type: 2}
   _usePersistentPools: 1
   _persistentPoolsParentName: Persistent_pooled_gameObjects_parent
   _persistentPoolsParentPosition: {x: -30, y: 0, z: 0}
-  _persistentPoolsData: {fileID: 11400000, guid: 17b257e0b96d4e549bc09a26d939173a, type: 2}
+  _persistentPoolsData:
+  - {fileID: 11400000, guid: eba3a4c965da3b84f85785bdf6398f7b, type: 2}
+  - {fileID: 11400000, guid: c863cd39b4e68274bb707930aa7c1507, type: 2}
+  - {fileID: 11400000, guid: 41f8ada8b9ea79f4ba44003b41003424, type: 2}
+  - {fileID: 11400000, guid: 3af43aec57dabca419189d63292642e4, type: 2}
+  - {fileID: 11400000, guid: e22152a520f6cc54b8003b794574dbff, type: 2}
+  - {fileID: 11400000, guid: ab1181f5c8f3e734fb1bddc72bf6a597, type: 2}
   _useScenePools: 0
   _scenePoolsParentName: Scene_pooled_gameObjects_parent
   _scenePoolsParentPosition: {x: -30, y: 0, z: 0}
   _scenesPoolData: []
+  _containerPoolsParentName: Containers_pooled_gameObjects_parent
+  _containerPoolsParentPosition: {x: 0, y: 50, z: 0}

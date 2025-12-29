@@ -84,7 +84,7 @@ namespace Asteroids.Gameplay.Bullets.Controllers
         private void CreateDestructionParticles()
         {
             foreach (ParticleConfiguration item in _bulletData.ParticlesOnDestruction)
-                _vFXManager.PlayParticlesVFX(item.ParticleEffectName, transform.position, null, item.ParticleConfig);
+                _vFXManager.PlayParticlesVFX(item.PrefabData, transform.position, Quaternion.identity, null, item.ParticleConfig);
         }
 
         #endregion

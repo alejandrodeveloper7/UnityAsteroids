@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using ToolsACG.Pooling.Models;
 using ToolsACG.Pooling.Pools;
 using ToolsACG.Pooling.ScriptableObjects;
 using UnityEngine;
@@ -16,11 +15,14 @@ namespace ToolsACG.Pooling.Managers
         [Header("References")]
         private Transform _persistentPooledGameObjectsParentTransform;
         private Transform _scenePoolsGameObjectsParentTransform;
+        private Transform _containersPoolsGameObjectsParentTransform;
+        [Space]
         private readonly DiContainer _container;
 
         [Header("Pools")]
         private List<GameObjectPool> _persistentGameObjectsPools = new();
         private List<GameObjectPool> _sceneGameObjectsPools = new();
+        private List<GameObjectPool> _containerObjectsPools = new();
 
         [Header("Data")]
         private readonly SO_FactorySettings _factorySettings;
@@ -34,7 +36,6 @@ namespace ToolsACG.Pooling.Managers
         {
             _container = container;
             _factorySettings = settings;
-            Initialize();
         }
 
         #endregion
@@ -43,6 +44,8 @@ namespace ToolsACG.Pooling.Managers
 
         public override void Initialize()
         {
+            CreateContainersPoolsParent();
+         
             if (_factorySettings.UsePersistentPools)
             {
                 CreatePersistentPoolsParent();
@@ -70,6 +73,9 @@ namespace ToolsACG.Pooling.Managers
                 DestroyScenePoolsParent();
                 UnsuscribeListeners();
             }
+
+            DestroyAllContainerPools();
+            DestroyContainersPoolsParent();
         }
 
         private void SuscribeListeners()
@@ -77,6 +83,7 @@ namespace ToolsACG.Pooling.Managers
             SceneManager.sceneLoaded += OnSceneLoaded;
             SceneManager.sceneUnloaded += OnSceneUnloaded;
         }
+
         private void UnsuscribeListeners()
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -92,13 +99,14 @@ namespace ToolsACG.Pooling.Managers
             foreach (var data in _factorySettings.ScenesPoolData)
                 if (data.SceneName == scene.name)
                 {
-                    CreateScenePools(scene.name, data.PoolsData);
+                    CreateScenePools(data);
                     return;
                 }
         }
+
         private void OnSceneUnloaded(Scene scene)
         {
-            DestroyScenePool(scene.name);
+            DestroyScenePools(scene.name);
         }
 
         #endregion        
@@ -112,6 +120,7 @@ namespace ToolsACG.Pooling.Managers
             _persistentPooledGameObjectsParentTransform = newGameObject.transform;
             _persistentPooledGameObjectsParentTransform.position = _factorySettings.PersistentPoolsParentPosition;
         }
+
         private void DestroyPersistentPoolsParent()
         {
             GameObject.Destroy(_persistentPooledGameObjectsParentTransform.gameObject);
@@ -119,14 +128,12 @@ namespace ToolsACG.Pooling.Managers
 
         private void CreatePersistentPools()
         {
-            if (_factorySettings.PersistentPoolsData == null)
-                return;
-
-            foreach (PoolData data in _factorySettings.PersistentPoolsData.PoolsData)
-                _persistentGameObjectsPools.Add(_container.Instantiate<GameObjectPool>(new object[]  { data.Prefab, _persistentPooledGameObjectsParentTransform, data.InitialSize, data.Escalation, data.MaxSize, data.PoolName, "" }));
+            foreach (SO_PooledGameObjectData data in _factorySettings.PersistentPoolsData)
+                _persistentGameObjectsPools.Add(_container.Instantiate<GameObjectPool>(new object[] { data, _persistentPooledGameObjectsParentTransform, "" }));
 
             Debug.Log($"- {typeof(GameObjectPoolManager).Name} - Persistend pools created");
         }
+
         private void DestroyPersistenPools()
         {
             foreach (var pool in _persistentGameObjectsPools)
@@ -148,19 +155,21 @@ namespace ToolsACG.Pooling.Managers
             _scenePoolsGameObjectsParentTransform = newGameObject.transform;
             _scenePoolsGameObjectsParentTransform.position = _factorySettings.ScenePoolsParentPosition;
         }
+
         private void DestroyScenePoolsParent()
         {
             GameObject.Destroy(_scenePoolsGameObjectsParentTransform.gameObject);
         }
 
-        private void CreateScenePools(string sceneName, List<PoolData> data)
+        private void CreateScenePools(SO_ScenePoolData sceneData)
         {
-            foreach (PoolData poolData in data)
-                _sceneGameObjectsPools.Add(_container.Instantiate<GameObjectPool>(new object[] { poolData.Prefab, _scenePoolsGameObjectsParentTransform, poolData.InitialSize, poolData.Escalation, poolData.MaxSize, poolData.PoolName, sceneName}));
+            foreach (SO_PooledGameObjectData gameObjectData in sceneData.GameObjectesData)
+                _sceneGameObjectsPools.Add(_container.Instantiate<GameObjectPool>(new object[] { gameObjectData, _scenePoolsGameObjectsParentTransform, sceneData.SceneName }));
 
-            Debug.Log($"- {typeof(GameObjectPoolManager).Name} - {sceneName} scene pools created");
+            Debug.Log($"- {typeof(GameObjectPoolManager).Name} - {sceneData.SceneName} scene pools created");
         }
-        private void DestroyScenePool(string sceneName)
+
+        private void DestroyScenePools(string sceneName)
         {
             List<GameObjectPool> poolsToRemove = _sceneGameObjectsPools.Where(p => p.SceneName == sceneName).ToList();
 
@@ -171,6 +180,7 @@ namespace ToolsACG.Pooling.Managers
 
             Debug.Log($"- {typeof(GameObjectPoolManager).Name} - {sceneName} scene pools destroyed");
         }
+
         private void DestroyAllScenePools()
         {
             foreach (var pool in _sceneGameObjectsPools)
@@ -183,19 +193,72 @@ namespace ToolsACG.Pooling.Managers
 
         #endregion
 
+        #region Container pools Management
+
+        private void CreateContainersPoolsParent()
+        {
+            GameObject newGameObject = new(_factorySettings.ContainerPoolsParentName);
+            GameObject.DontDestroyOnLoad(newGameObject);
+            _containersPoolsGameObjectsParentTransform = newGameObject.transform;
+            _containersPoolsGameObjectsParentTransform.position = _factorySettings.ContainerPoolsParentPosition;
+        }
+
+        private void DestroyContainersPoolsParent()
+        {
+            GameObject.Destroy(_containersPoolsGameObjectsParentTransform.gameObject);
+        }
+
+        public void CreateContainerPools(List<SO_PooledGameObjectData> poolsData)
+        {
+            foreach (SO_PooledGameObjectData data in poolsData)
+                _containerObjectsPools.Add(_container.Instantiate<GameObjectPool>(new object[] { data, _containersPoolsGameObjectsParentTransform, "" }));
+        }
+
+        public void DestroyContainerPools(List<SO_PooledGameObjectData> poolsData)
+        {
+            for (int i = _containerObjectsPools.Count - 1; i >= 0; i--)
+            {
+                GameObjectPool pool = _containerObjectsPools[i];
+
+                foreach (var data in poolsData)
+                    if (pool.ObjectPooled == data.Prefab)
+                    {
+                        pool.DestroyPool();
+                        _containerObjectsPools.RemoveAt(i);
+                        break;
+                    }
+            }
+        }
+
+        public void DestroyAllContainerPools()
+        {
+            for (int i = _containerObjectsPools.Count - 1; i >= 0; i--)
+            {
+                GameObjectPool pool = _containerObjectsPools[i];
+                pool.DestroyPool();
+                _containerObjectsPools.RemoveAt(i);
+            }
+        }
+
+        #endregion
+
         #region Get Instance
 
-        public GameObject GetGameObjectInstance(string poolName)
+        public GameObject GetGameObjectInstance(GameObject prefab)
         {
             foreach (GameObjectPool pool in _persistentGameObjectsPools)
-                if (pool.PoolName == poolName)
+                if (pool.ObjectPooled == prefab)
+                    return pool.GetInstance();
+
+            foreach (GameObjectPool pool in _containerObjectsPools)
+                if (pool.ObjectPooled == prefab)
                     return pool.GetInstance();
 
             foreach (GameObjectPool pool in _sceneGameObjectsPools)
-                if (pool.PoolName == poolName)
+                if (pool.ObjectPooled == prefab)
                     return pool.GetInstance();
 
-            Debug.LogError($"- {typeof(GameObjectPoolManager).Name} - Pool with the name {poolName} not found");
+            Debug.LogError($"- {typeof(GameObjectPoolManager).Name} - Pool of the Gameobject with the name {prefab.name} not found");
             return null;
         }
 

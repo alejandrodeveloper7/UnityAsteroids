@@ -4,10 +4,11 @@ using UnityEngine;
 
 namespace ToolsACG.Pooling.Gameplay
 {
-    public class PooledGameObject : MonoBehaviour, IPooleableGameObject
+    public class PooledGameObjectController : MonoBehaviour, IPooleableGameObject
     {
         #region Fields
 
+        //[Header("IPooleableGameObject")]
         public GameObjectPool OriginPool { get; set; }
         public bool ReadyToUse { get; set; }
 

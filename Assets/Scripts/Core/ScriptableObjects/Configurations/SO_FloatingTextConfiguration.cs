@@ -1,3 +1,4 @@
+using ToolsACG.Pooling.ScriptableObjects;
 using ToolsACG.SOCreator.Configurations;
 using UnityEngine;
 
@@ -13,8 +14,8 @@ namespace Asteroids.Core.ScriptableObjects.Configurations
         [SerializeField] private bool _isActive;
         public bool IsActive => _isActive;
 
-        [SerializeField] private string _poolName;
-        public string PoolName => _poolName;
+        [SerializeField] private SO_PooledGameObjectData _prefabData;
+        public SO_PooledGameObjectData PrefabData => _prefabData;
 
 
         [Header("Configuration")]

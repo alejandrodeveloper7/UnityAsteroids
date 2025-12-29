@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 05-GreyMediumAsteroid
   m_EditorClassIdentifier: 
   _id: 5
-  _poolName: Asteroid
+  _prefabData: {fileID: 11400000, guid: c863cd39b4e68274bb707930aa7c1507, type: 2}
   _isInitialAsteroid: 0
   _possibleSprites:
   - {fileID: 21300000, guid: b22fc98cc308bc54aabc082900c3af59, type: 3}
@@ -40,10 +40,10 @@ MonoBehaviour:
     EdgeRepositionOffsetX: 0.02
     CheckInterval: 0.05
   _particlesOnDamage:
-  - ParticleEffectName: FX_AsteroidDamaged
+  - PrefabData: {fileID: 11400000, guid: 3af43aec57dabca419189d63292642e4, type: 2}
     ParticleConfig: {fileID: 11400000, guid: 1ea16350ffbd6d043bc7480adce714b0, type: 2}
   _particlesOnDestruction:
-  - ParticleEffectName: FX_AsteroidDestroyed
+  - PrefabData: {fileID: 11400000, guid: e22152a520f6cc54b8003b794574dbff, type: 2}
     ParticleConfig: {fileID: 11400000, guid: 1ea16350ffbd6d043bc7480adce714b0, type: 2}
   _soundsOnDamage:
   - {fileID: 11400000, guid: a208fa64b7715dd41be5ab33b70e6ffa, type: 2}

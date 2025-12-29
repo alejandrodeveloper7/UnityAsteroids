@@ -8,15 +8,16 @@ namespace ToolsACG.Pooling.Managers
     public class Sound3DPoolManager : PoolManagerBase
     {
         #region Fields
+
         [Header("References")]
         private Transform _pooled3DSoundsParentTransform;
+        private readonly DiContainer _container;
 
         [Header("Pools")]
         private GameObjectPool _3DSoundPool;
 
         [Header("Data")]
         private readonly SO_FactorySettings _factorySettings;
-        private readonly DiContainer _container;
 
         #endregion
 
@@ -27,7 +28,6 @@ namespace ToolsACG.Pooling.Managers
         {
             _container = container;
             _factorySettings = settings;
-            Initialize();
         }
 
         #endregion
@@ -54,6 +54,15 @@ namespace ToolsACG.Pooling.Managers
 
         #endregion
 
+        #region Get Instance
+
+        public GameObject Get3DSoundInstance()
+        {
+            return _3DSoundPool.GetInstance();
+        }
+
+        #endregion
+
         #region 3DSound Pool Management
 
         private void Create3DSoundPoolParent()
@@ -70,7 +79,7 @@ namespace ToolsACG.Pooling.Managers
 
         private void Create3DSoundPool()
         {
-            _3DSoundPool = _container.Instantiate<GameObjectPool>(new object[] { _factorySettings.Sound3DPrefab, _pooled3DSoundsParentTransform, _factorySettings.Sound3DPoolInitialSize, _factorySettings.Sound3DPoolEscalation, _factorySettings.Sound3DPoolMaxSize });
+            _3DSoundPool = _container.Instantiate<GameObjectPool>(new object[] { _factorySettings.Sound3DPooledGameObjectData, _pooled3DSoundsParentTransform,"" });
             Debug.Log($"- {typeof(Sound3DPoolManager).Name} - 3DSound pool created");
         }
         private void Destroy3DSoundPool()
@@ -78,15 +87,6 @@ namespace ToolsACG.Pooling.Managers
             _3DSoundPool.DestroyPool();
             _3DSoundPool = null;
             Debug.Log($"- {typeof(Sound3DPoolManager).Name} - 3DSound pool destroyed");
-        }
-
-        #endregion
-
-        #region Get Instance
-
-        public GameObject Get3DSoundInstance()
-        {
-            return _3DSoundPool.GetInstance();
         }
 
         #endregion

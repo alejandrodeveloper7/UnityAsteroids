@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ToolsACG.Pooling.Gameplay
 {
-    public class PooledParticleSystem : MonoBehaviour, IPooleableGameObject
+    public class Pooled3DSoundController : MonoBehaviour, IPooledDetonable
     {
         #region Fields
 
@@ -13,7 +13,7 @@ namespace ToolsACG.Pooling.Gameplay
         public bool ReadyToUse { get; set; }
 
         [Header("References")]
-        private ParticleSystem _particleSystem;
+        private AudioSource _audioSource;
 
         #endregion
 
@@ -21,7 +21,7 @@ namespace ToolsACG.Pooling.Gameplay
 
         private void GetReferences()
         {
-            _particleSystem = GetComponent<ParticleSystem>();
+            _audioSource = GetComponent<AudioSource>();
         }
 
         #endregion
@@ -39,10 +39,8 @@ namespace ToolsACG.Pooling.Gameplay
 
         public void Play()
         {
-            float duration = _particleSystem.main.duration;
-
-            _particleSystem.Play();
-            Invoke(nameof(RecycleGameObject), duration);
+            _audioSource.Play();
+            Invoke(nameof(RecycleGameObject), _audioSource.clip.length);
         }
 
         private void RecycleGameObject()

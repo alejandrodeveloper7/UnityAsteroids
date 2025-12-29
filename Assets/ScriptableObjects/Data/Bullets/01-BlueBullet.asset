@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 01-BlueBullet
   m_EditorClassIdentifier: 
   _id: 1
-  _active: 1
+  _isActive: 1
   _sprite: {fileID: 21300000, guid: 474d85e8abc77364e961f54bdd67de14, type: 3}
   _stats:
   - Id: 100
@@ -22,7 +22,7 @@ MonoBehaviour:
     PropertyName: Damage
   - Id: 102
     PropertyName: LifeDuration
-  _poolName: Bullet
+  _prefabData: {fileID: 11400000, guid: 3aec3f5a9707ab04a9ee8f7e0abc69fb, type: 2}
   _color: {r: 0.8901961, g: 0.8901961, b: 0.8901961, a: 1}
   _scale: {x: 1, y: 1, z: 1}
   _speed: 12
@@ -33,7 +33,7 @@ MonoBehaviour:
   _pushForce: 0.3
   _torqueForce: 0.5
   _particlesOnDestruction:
-  - ParticleEffectName: FX_BulletDestroyed
+  - PrefabData: {fileID: 11400000, guid: ab1181f5c8f3e734fb1bddc72bf6a597, type: 2}
     ParticleConfig: {fileID: 11400000, guid: fd562bb6fc0f4a14a8a0f71e95f1beec, type: 2}
   _screenEdgeTeleportConfiguration:
     EdgeOffsetY: 0.03

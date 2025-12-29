@@ -1,4 +1,8 @@
 using Asteroids.Gameplay.Bullets.Controllers;
+using Asteroids.Gameplay.General.OnContact;
+using ToolsACG.Core.Utilitys;
+using ToolsACG.Pooling.Gameplay;
+using UnityEngine;
 using Zenject;
 
 namespace Asteroids.Gameplay.Bullets.Intallers
@@ -10,6 +14,15 @@ namespace Asteroids.Gameplay.Bullets.Intallers
             Container.Bind<BulletController>().FromComponentSibling();
             Container.Bind<BulletVisualsController>().FromComponentSibling();
             Container.Bind<BulletPhysicsController>().FromComponentSibling();
+
+            Container.Bind<PushOnContact>().FromComponentSibling();
+            Container.Bind<DamageOnContact>().FromComponentSibling();
+            Container.Bind<PooledGameObjectController>().FromComponentSibling();
+            Container.Bind<ScreenEdgeTeleport>().FromComponentSibling();
+          
+            Container.Bind<SpriteRenderer>().FromComponentSibling();
+            Container.Bind<Rigidbody2D>().FromComponentSibling();
+            Container.Bind<BoxCollider2D>().FromComponentSibling();
         }
     }
 }

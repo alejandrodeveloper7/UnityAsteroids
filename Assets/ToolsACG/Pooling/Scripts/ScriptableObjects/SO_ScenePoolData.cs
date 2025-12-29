@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using ToolsACG.Pooling.Models;
 using UnityEngine;
 
 namespace ToolsACG.Pooling.ScriptableObjects
@@ -14,8 +13,8 @@ namespace ToolsACG.Pooling.ScriptableObjects
         [SerializeField] private string _sceneName;
         public string SceneName => _sceneName;
 
-        [SerializeField] private List<PoolData> _poolsData;
-        public List<PoolData> PoolsData => _poolsData;
+        [SerializeField] private List<SO_PooledGameObjectData> _gameObjectesData;
+        public List<SO_PooledGameObjectData> GameObjectesData => _gameObjectesData;
 
         #endregion
     }

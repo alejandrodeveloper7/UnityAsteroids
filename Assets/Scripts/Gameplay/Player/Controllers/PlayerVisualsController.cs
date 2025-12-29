@@ -203,7 +203,7 @@ namespace Asteroids.Gameplay.Player.Controllers
         private void CreateDeadParticles()
         {
             foreach (ParticleConfiguration item in _shipData.ParticlesOnDead)
-                _vFXManager.PlayParticlesVFX(item.ParticleEffectName, transform.position, null, item.ParticleConfig);
+                _vFXManager.PlayParticlesVFX(item.PrefabData, transform.position, Quaternion.identity, null, item.ParticleConfig);
         }
 
         #endregion

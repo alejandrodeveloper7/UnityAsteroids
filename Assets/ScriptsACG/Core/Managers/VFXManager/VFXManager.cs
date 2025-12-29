@@ -2,6 +2,8 @@ using ToolsACG.Core.ScriptableObjects.ParticleSystemConfigs;
 using ToolsACG.ManagersCreator.Bases;
 using ToolsACG.Pooling.Core;
 using ToolsACG.Pooling.Gameplay;
+using ToolsACG.Pooling.Interfaces;
+using ToolsACG.Pooling.ScriptableObjects;
 using UnityEngine;
 
 namespace ToolsACG.Core.Managers
@@ -11,7 +13,7 @@ namespace ToolsACG.Core.Managers
         #region Fields
 
         [Header("References")]
-        private Transform _vfxGeneralParent;
+        private Transform _particlesGeneralParent;
 
         #endregion
 
@@ -30,7 +32,7 @@ namespace ToolsACG.Core.Managers
         {
             base.Initialize();
 
-            CreateGeneralParent();
+            CreateParticlesGeneralParent();
         }
 
         public override void Dispose()
@@ -41,28 +43,40 @@ namespace ToolsACG.Core.Managers
 
         #endregion
 
-        #region Functionality
+        #region Parents Creation
 
-        private void CreateGeneralParent()
+        private void CreateParticlesGeneralParent()
         {
-            _vfxGeneralParent = new GameObject("VFX_general_parent").transform;
-            _vfxGeneralParent.transform.position = Vector3.zero;
-            GameObject.DontDestroyOnLoad(_vfxGeneralParent.gameObject);
+            _particlesGeneralParent = new GameObject("particles_general_parent").transform;
+            _particlesGeneralParent.transform.position = Vector3.zero;
+            GameObject.DontDestroyOnLoad(_particlesGeneralParent.gameObject);
         }
 
-        public void PlayParticlesVFX(string name, Vector3 position, Transform parent = null, SO_ParticleConfigurationBase particlesConfig = null)
-        {
-            if (parent == null)
-                parent = _vfxGeneralParent;
+        #endregion
 
-            GameObject vfx = FactoryManager.Instance.GetGameObjectInstance(name);
+
+        #region Functionality
+
+        public void PlayParticlesVFX(SO_PooledGameObjectData pooledGameObjectData, Vector3 position, Quaternion rotation, Transform parent = null, SO_ParticleConfigurationBase particlesConfig = null)
+        {
+            GameObject vfx = FactoryManager.Instance.GetGameObjectInstance(pooledGameObjectData);
 
             if (particlesConfig != null)
                 particlesConfig.ApplyConfiguration(vfx.GetComponent<ParticleSystem>());
 
-            vfx.transform.SetParent(parent);
-            vfx.transform.localPosition = position;
-            vfx.GetComponent<PooledParticleSystem>().Play();
+            if (parent == null)
+            {
+                parent = _particlesGeneralParent;
+                vfx.transform.SetParent(parent);
+                vfx.transform.SetLocalPositionAndRotation(position, rotation);
+            }
+            else
+            {
+                vfx.transform.SetParent(parent);
+                vfx.transform.SetPositionAndRotation(position, rotation);
+            }
+
+            vfx.GetComponent<IPooledDetonable>().Play();
         }
 
         #endregion

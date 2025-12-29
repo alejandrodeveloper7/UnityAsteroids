@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using ToolsACG.Pooling.Managers;
+using ToolsACG.Pooling.ScriptableObjects;
 using UnityEngine;
 using Zenject;
 
@@ -37,7 +39,15 @@ namespace ToolsACG.Pooling.Core
         private static void AutoInit()
         {
             _instance = ProjectContext.Instance.Container.Resolve<FactoryManager>();
+            _instance.Initialize();
             Debug.Log($"- {nameof(FactoryManager)} - persistent manager initilized");
+        }
+
+        public void Initialize() 
+        {
+            _audioSourcePoolManager.Initialize();
+            _sound3DPoolManager.Initialize();
+            _gameObjectPoolManager.Initialize();
         }
 
         public void Dispose()
@@ -45,6 +55,20 @@ namespace ToolsACG.Pooling.Core
             _audioSourcePoolManager.Dispose();
             _sound3DPoolManager.Dispose();
             _gameObjectPoolManager.Dispose();
+        }
+
+        #endregion
+
+        #region Container Pools management
+
+        public void CreateContainerPools(List<SO_PooledGameObjectData> poolsData) 
+        {
+            _gameObjectPoolManager.CreateContainerPools(poolsData);
+        }
+
+        public void DestroyContainerPools(List<SO_PooledGameObjectData> poolsData)
+        {
+            _gameObjectPoolManager.DestroyContainerPools(poolsData);
         }
 
         #endregion
@@ -57,8 +81,8 @@ namespace ToolsACG.Pooling.Core
         public GameObject Get3DSoundInstance()
             => _sound3DPoolManager.Get3DSoundInstance();
 
-        public GameObject GetGameObjectInstance(string poolName)
-            => _gameObjectPoolManager.GetGameObjectInstance(poolName);
+        public GameObject GetGameObjectInstance(SO_PooledGameObjectData pooledGameObjectData)
+            => _gameObjectPoolManager.GetGameObjectInstance(pooledGameObjectData.Prefab);
 
         #endregion
     }

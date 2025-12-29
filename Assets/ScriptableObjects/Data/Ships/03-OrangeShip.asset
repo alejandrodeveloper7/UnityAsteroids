@@ -24,7 +24,7 @@ MonoBehaviour:
     PropertyName: MovementSpeed
   - Id: 3
     PropertyName: RotationSpeed
-  _poolName: Player
+  _prefabData: {fileID: 11400000, guid: eba3a4c965da3b84f85785bdf6398f7b, type: 2}
   _timeBeforeRecicle: 0.4
   _healthPoints: 5
   _movementSpeed: 5
@@ -69,7 +69,7 @@ MonoBehaviour:
     _shieldShakeDuration: 0.5
     _shieldShakeMagnitude: 0.6
   _particlesOnDead:
-  - ParticleEffectName: FX_ShipDestroyed
+  - PrefabData: {fileID: 11400000, guid: a136770c8b707cc4e8dd5f60aab54330, type: 2}
     ParticleConfig: {fileID: 0}
   _soundsOnShieldUp:
   - {fileID: 11400000, guid: 18c7d7f41cc34d349bb6090fdebb1992, type: 2}

@@ -7,6 +7,7 @@ using ToolsACG.Core.Utils;
 using ToolsACG.ManagersCreator.Bases;
 using ToolsACG.Pooling.Core;
 using ToolsACG.Pooling.Gameplay;
+using ToolsACG.Pooling.Interfaces;
 using UnityEngine;
 using UnityEngine.Audio;
 using Zenject;
@@ -229,7 +230,7 @@ namespace ToolsACG.Core.Managers
             AudioSource audioSource = new3DSound.GetComponent<AudioSource>();
             data.ApplyConfiguration(audioSource);
 
-            new3DSound.GetComponent<Pooled3DSound>().Play();
+            new3DSound.GetComponent<IPooledDetonable>().Play();
         }
 
         #endregion

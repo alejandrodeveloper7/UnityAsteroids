@@ -1,4 +1,5 @@
 using ToolsACG.Pooling.Interfaces;
+using ToolsACG.Pooling.ScriptableObjects;
 using UnityEngine;
 using Zenject;
 
@@ -8,39 +9,38 @@ namespace ToolsACG.Pooling.Pools
     {
         #region Fields
 
-        public string PoolName { get; }
-        public string SceneName { get; }
-
-        [Header("References")]
+        [Header("Fields")]
         private readonly DiContainer _container;
-        private GameObject ObjectPooled { get; }
+        public string SceneName { get; }
+        public GameObject ObjectPooled { get; }
 
         #endregion
 
         #region Constructors
 
         [Inject]
-        public GameObjectPool(DiContainer container, GameObject objectPooled, Transform parent, int initialSize = 0, int scalation = 1, int poolMaxSize = int.MaxValue, string poolName = "", string sceneName = "")
+        public GameObjectPool(DiContainer container, SO_PooledGameObjectData data, Transform parent, string sceneName = "")
         {
             _container = container;
-            PoolName = poolName;
             SceneName = sceneName;
 
-            if (scalation <= 0)
-                scalation = 1;
+            if (data.Scalation <= 0)
+                Scalation = 1;
+            else
+                Scalation = data.Scalation;
 
-            if (poolMaxSize <= 0)
-                poolMaxSize = 1;
+            if (data.MaxSize <= 0)
+                PoolMaxSize = 1;
+            else
+                PoolMaxSize = data.MaxSize;
 
-            _availableInstances = new();
+            ObjectPooled = data.Prefab;
             _parent = parent;
 
-            ObjectPooled = objectPooled;
-            Scalation = scalation;
-            PoolMaxSize = poolMaxSize;
+            _availableInstances = new();
 
-            if (initialSize > 0)
-                ExpandPoolSize(initialSize);
+            if (data.InitialSize > 0)
+                ExpandPoolSize(data.InitialSize);
         }
 
         #endregion

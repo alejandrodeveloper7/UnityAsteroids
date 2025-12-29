@@ -14,11 +14,9 @@ namespace ToolsACG.Pooling.Pools
         //[Header("Properties")]
         public int Scalation { get; set; }
         public int PoolMaxSize { get; set; }
+        public int PoolCurrentSize=> _availableInstances.Count;
 
-        public int PoolCurrentSize
-        {
-            get => _availableInstances.Count;
-        }
+        
 
         #endregion
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FloatingTextConfiguration
   m_EditorClassIdentifier: 
   _isActive: 1
-  _poolName: FloatingText
+  _prefabData: {fileID: 11400000, guid: 41f8ada8b9ea79f4ba44003b41003424, type: 2}
   _textColor: {r: 0, g: 0, b: 0, a: 1}
   _offsetDistance: 0.4
   _minMovementDistance: 0.5

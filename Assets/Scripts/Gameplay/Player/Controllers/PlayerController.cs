@@ -13,7 +13,7 @@ using Zenject;
 
 namespace Asteroids.Gameplay.Player.Controllers
 {
-    [RequireComponent(typeof(PooledGameObject))]
+    [RequireComponent(typeof(PooledGameObjectController))]
     [RequireComponent(typeof(ScreenEdgeTeleport))]
     [RequireComponent(typeof(PlayerHealthController))]
 
@@ -30,7 +30,7 @@ namespace Asteroids.Gameplay.Player.Controllers
         public event Action<bool> ShootKeyStateChanged;
 
         [Header("References")]
-        [Inject] private readonly PooledGameObject _pooledGameObject;
+        [Inject] private readonly PooledGameObjectController _pooledGameObject;
         [Inject] private readonly ScreenEdgeTeleport _screenEdgeTeleport;
         [Inject] private readonly PlayerHealthController _playerHealthController;
         [Space]

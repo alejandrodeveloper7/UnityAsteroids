@@ -156,13 +156,13 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
         private void CreateDamageParticles(Vector3 position)
         {
             foreach (ParticleConfiguration item in _asteroidData.ParticlesOnDamage)
-                _vFXManager.PlayParticlesVFX(item.ParticleEffectName, position, null, item.ParticleConfig);
+                _vFXManager.PlayParticlesVFX(item.PrefabData, position,Quaternion.identity, null, item.ParticleConfig);
         }
 
         private void CreateDestructionParticles(Vector3 position)
         {
             foreach (ParticleConfiguration item in _asteroidData.ParticlesOnDestruction)
-                _vFXManager.PlayParticlesVFX(item.ParticleEffectName, position, null, item.ParticleConfig);
+                _vFXManager.PlayParticlesVFX(item.PrefabData, position, Quaternion.identity, null, item.ParticleConfig);
         }
 
         #endregion

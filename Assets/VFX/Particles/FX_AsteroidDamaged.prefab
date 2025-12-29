@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9105732024619284606}
   - component: {fileID: 9105732024619284607}
   - component: {fileID: 9105732024619284604}
-  - component: {fileID: 1903799130945473666}
+  - component: {fileID: 6346897190265984213}
   m_Layer: 0
   m_Name: FX_AsteroidDamaged
   m_TagString: Untagged
@@ -4889,7 +4889,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &1903799130945473666
+--- !u!114 &6346897190265984213
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4898,6 +4898,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 9105732024619284605}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 669115bfdb5b79a45b621932112cf5f3, type: 3}
+  m_Script: {fileID: 11500000, guid: 9249bc91e269f63418bb5d4ad937493e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

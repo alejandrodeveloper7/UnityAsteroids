@@ -32,6 +32,8 @@ namespace ToolsACG.Core.ScriptableObjects.Settings
         [SerializeField] private bool _applyInitialConfiguration = true;
         public bool ApplyInitialConfiguration => _applyInitialConfiguration;
 
+        [Space]
+
         [SerializeField] private bool _cursorInitialVisibility = true;
         public bool CursorInitialVisibility => _cursorInitialVisibility;
 

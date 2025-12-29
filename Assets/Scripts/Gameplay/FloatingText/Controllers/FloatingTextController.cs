@@ -8,7 +8,7 @@ using Zenject;
 namespace Asteroids.Gameplay.FloatingText.Controllers
 {
     [RequireComponent(typeof(FloatingTextVisualsController))]
-    [RequireComponent(typeof(PooledGameObject))]
+    [RequireComponent(typeof(PooledGameObjectController))]
 
     public class FloatingTextController : MonoBehaviour
     {
@@ -16,7 +16,7 @@ namespace Asteroids.Gameplay.FloatingText.Controllers
 
         [Header("References")]
         [Inject] private readonly FloatingTextVisualsController _floatingTextVisuals;
-        [Inject] private readonly PooledGameObject _pooledGameObject;
+        [Inject] private readonly PooledGameObjectController _pooledGameObject;
 
         [Header("Data")]
         [Inject] private readonly SO_FloatingTextConfiguration _configuration;

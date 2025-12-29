@@ -10,7 +10,7 @@ namespace Asteroids.Gameplay.FloatingText.Factorys
 
         public GameObject GetInstance(SO_FloatingTextConfiguration configuration)
         {
-            GameObject newInstance = FactoryManager.Instance.GetGameObjectInstance(configuration.PoolName);
+            GameObject newInstance = FactoryManager.Instance.GetGameObjectInstance(configuration.PrefabData);
             return newInstance;
         }
 

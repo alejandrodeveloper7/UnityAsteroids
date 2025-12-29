@@ -8,6 +8,7 @@ namespace ToolsACG.Pooling.Managers
     public class AudioSourcePoolManager : PoolManagerBase
     {
         #region Fields
+
         [Header("References")]
         private Transform _audioSourcePoolParentTransform;
 
@@ -25,13 +26,12 @@ namespace ToolsACG.Pooling.Managers
         public AudioSourcePoolManager(SO_FactorySettings settings)
         {
             _factorySettings = settings;
-            Initialize();
         }
-        
+
         #endregion
 
         #region Initialization
-        
+
         public override void Initialize()
         {
             if (_factorySettings.UseAudioSourcePool)

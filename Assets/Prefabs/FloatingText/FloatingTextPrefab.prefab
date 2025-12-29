@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 119228901682095861}
   - component: {fileID: 6455434860106139318}
   - component: {fileID: 3259913240597431656}
+  - component: {fileID: 6468991981750329113}
+  - component: {fileID: -2814621707815661241}
   m_Layer: 0
   m_Name: FloatingTextPrefab
   m_TagString: Untagged
@@ -211,3 +213,34 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 6455434860106139318}
   m_maskType: 0
+--- !u!114 &6468991981750329113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034351441427726931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers: []
+  _monoInstallers:
+  - {fileID: -2814621707815661241}
+  _installerPrefabs: []
+  _findSiblingMonoInstallers: 0
+  _autoRun: 1
+  _kernel: {fileID: 0}
+--- !u!114 &-2814621707815661241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034351441427726931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3fefaa21af4539469485e4c16ab4d75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

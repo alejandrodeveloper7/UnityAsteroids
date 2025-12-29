@@ -10,7 +10,7 @@ namespace Asteroids.Gameplay.Player.Factorys
 
         public GameObject GetInstance(SO_ShipData data)
         {
-            GameObject newInstance = FactoryManager.Instance.GetGameObjectInstance(data.PoolName);            
+            GameObject newInstance = FactoryManager.Instance.GetGameObjectInstance(data.PrefabData);            
             return newInstance;
         }
 
