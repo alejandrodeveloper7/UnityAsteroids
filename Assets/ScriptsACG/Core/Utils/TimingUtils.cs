@@ -50,9 +50,8 @@ namespace ToolsACG.Core.Utils
 
             while (true)
             {
-                if (token.IsCancellationRequested)                
-                    return;
-                
+                token.ThrowIfCancellationRequested();
+
                 float elapsed = (ignoreTimeScale ? Time.realtimeSinceStartup : Time.time) - start;
                 if (elapsed >= seconds)
                     break;
@@ -75,8 +74,7 @@ namespace ToolsACG.Core.Utils
 
             while (true)
             {
-                if (token.IsCancellationRequested)
-                    return;
+                token.ThrowIfCancellationRequested();
 
                 if (taskToWait.IsCompleted)
                 {
@@ -103,14 +101,12 @@ namespace ToolsACG.Core.Utils
 
             while (!asyncOperation.isDone)
             {
-                if (token.IsCancellationRequested)
-                    return;
-                
+                token.ThrowIfCancellationRequested();
+
                 await Task.Yield();
             }
 
-            if (token.IsCancellationRequested)
-                return;
+            token.ThrowIfCancellationRequested();
         }
 
         public static async Task WaitMilliseconds(int miliseconds, bool ignoreTimeScale = false, CancellationToken cancellationToken = default)
@@ -122,8 +118,6 @@ namespace ToolsACG.Core.Utils
         #endregion
 
         #region Conversions
-
-        private static int ToMilliseconds(float seconds) => Mathf.RoundToInt(seconds * 1000);
 
         private static float ToSeconds(int milliseconds) => milliseconds / 1000f;
 
