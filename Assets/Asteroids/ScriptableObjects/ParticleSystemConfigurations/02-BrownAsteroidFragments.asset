@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d81ef758a8c415e4a9dd7de31e41e106, type: 3}
+  m_Script: {fileID: 11500000, guid: c5a8ca547f937724c88427479ce07737, type: 3}
   m_Name: 02-BrownAsteroidFragments
   m_EditorClassIdentifier: 
   _material: {fileID: 2100000, guid: c871b1ad4b7e9e34b8e38857acc347eb, type: 2}

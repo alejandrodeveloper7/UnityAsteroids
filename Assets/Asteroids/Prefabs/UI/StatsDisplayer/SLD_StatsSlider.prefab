@@ -286,7 +286,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7937068987094209033}
   - component: {fileID: 7937068987094209034}
-  - component: {fileID: 7262556777848008072}
+  - component: {fileID: 294760960453238928}
   m_Layer: 5
   m_Name: SLD_StatsSlider
   m_TagString: Untagged
@@ -366,7 +366,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &7262556777848008072
+--- !u!114 &294760960453238928
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -375,7 +375,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7937068987094209032}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4bcb644b0ca80f4aaa362be1c39a941, type: 3}
+  m_Script: {fileID: 11500000, guid: 16d042a4f4606b64686fc0e97956bbfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _slider: {fileID: 7937068987094209034}

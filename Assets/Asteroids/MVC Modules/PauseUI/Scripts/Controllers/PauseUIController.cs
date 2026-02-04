@@ -1,3 +1,7 @@
+using ACG.Core.EventBus;
+using ACG.Scripts.Services;
+using ACG.Scripts.UIUtilitys.EventHandlers;
+using ACG.Tools.Runtime.MVCModulesCreator.Bases;
 using Asteroids.Core.Events.GameFlow;
 using Asteroids.Core.Managers;
 using Asteroids.MVC.PauseUI.Models;
@@ -5,10 +9,6 @@ using Asteroids.MVC.PauseUI.ScriptableObjects;
 using Asteroids.MVC.PauseUI.Views;
 using System;
 using TMPro;
-using ToolsACG.Core.EventBus;
-using ToolsACG.Core.Services;
-using ToolsACG.MVCModulesCreator.Bases;
-using ToolsACG.UI.Utilitys.EventHandlers;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -83,12 +83,6 @@ namespace Asteroids.MVC.PauseUI.Controllers
             Actions.Clear();
         }
 
-        protected override void CreateModel()
-        {
-            // Not used thanks to Zenject injection
-            //_model = new PauseUIModel(_configurationData);
-        }
-
         #endregion
 
         #region Monobehaviour
@@ -98,7 +92,6 @@ namespace Asteroids.MVC.PauseUI.Controllers
             base.Awake();
 
             GetReferences();
-            CreateModel();
             RegisterActions();
         }
 

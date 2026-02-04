@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00670535f977e6146b742595697cacaf, type: 3}
+  m_Script: {fileID: 11500000, guid: 071444183631c61419eff11d876f96bf, type: 3}
   m_Name: VFX_AsteroidDestroyedParticles
   m_EditorClassIdentifier: 
   _prefab: {fileID: 9105732024619284605, guid: 1935741c8d638b54cbc794d60d8a9631, type: 3}

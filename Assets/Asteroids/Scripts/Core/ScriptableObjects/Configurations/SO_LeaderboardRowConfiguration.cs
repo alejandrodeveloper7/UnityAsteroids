@@ -1,4 +1,4 @@
-using ToolsACG.SOCreator.Configurations;
+using ACG.Tools.Runtime.SOCreator.Configurations;
 using UnityEngine;
 
 namespace Asteroids.Core.ScriptableObjects.Configurations

@@ -1,0 +1,32 @@
+﻿using CONST_RootNamespace.MVC.CONST_ModuleName.Controllers;
+using CONST_RootNamespace.MVC.CONST_ModuleName.Models;
+using CONST_RootNamespace.MVC.CONST_ModuleName.ScriptableObjects;
+using CONST_RootNamespace.MVC.CONST_ModuleName.Views;
+using UnityEngine;
+using Zenject;
+
+namespace CONST_RootNamespace.MVC.CONST_ModuleName.Installers
+{
+   public class CONST_SceneInstaller : MonoInstaller
+   {
+      #region Fields
+
+      [Header("References")]
+      [SerializeField] private CONST_SO_ConfigurationScriptableObject _moduleConfiguration;
+
+      #endregion
+
+      #region Methods
+ 
+      public override void InstallBindings()
+      {
+          Container.Bind<CONST_SO_ConfigurationScriptableObject>().FromInstance(_moduleConfiguration).AsSingle();
+
+          Container.Bind<CONST_IControllerName>().FromComponentSibling();
+          Container.Bind<CONST_IViewName>().FromComponentSibling();
+          Container.Bind<CONST_ModelName>().AsSingle();
+      }
+
+      #endregion
+   }
+}

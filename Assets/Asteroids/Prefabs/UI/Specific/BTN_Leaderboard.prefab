@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6678180323881404123}
   - component: {fileID: 9183713879568081975}
   - component: {fileID: 516297909591088790}
-  - component: {fileID: 8950997812863196666}
-  - component: {fileID: 4023858924459449305}
+  - component: {fileID: 2988109815274175302}
+  - component: {fileID: 7898564211723250311}
   m_Layer: 5
   m_Name: BTN_Leaderboard
   m_TagString: Untagged
@@ -135,7 +135,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8950997812863196666
+--- !u!114 &2988109815274175302
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,13 +144,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4549440637405478814}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd8dbee2a51bb7d41a462ba2669e1f25, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e4d556ea50723f4197bbf144011207c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _scaleFactor: 1.1
   _duration: 0.3
   _ignoreTimeScale: 1
---- !u!114 &4023858924459449305
+--- !u!114 &7898564211723250311
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,7 +159,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4549440637405478814}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 669c3122b26ceed4faacc2486a08d2aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 36b48f55496baab4a99904f0e9a3a5ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _clickSounds:

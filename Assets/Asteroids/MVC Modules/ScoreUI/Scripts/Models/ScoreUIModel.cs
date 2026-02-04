@@ -1,8 +1,8 @@
 using Asteroids.MVC.ScoreUI.ScriptableObjects;
-using ToolsACG.MVCModulesCreator.Bases;
 using System;
 using UnityEngine;
 using Zenject;
+using ACG.Tools.Runtime.MVCModulesCreator.Bases;
 
 namespace Asteroids.MVC.ScoreUI.Models
 {

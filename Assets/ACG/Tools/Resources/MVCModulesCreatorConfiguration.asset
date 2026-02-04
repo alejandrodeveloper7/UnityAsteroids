@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a34c003c68ee734a8577ff5d992d0a1, type: 3}
+  m_Name: MVCModulesCreatorConfiguration
+  m_EditorClassIdentifier: 
+  WindowTitle: MVC Module Creator
+  WindowMinSize: {x: 345, y: 215}
+  AssetsPath: Assets/
+  TemplatesPath: ACG/Tools/Editor/MVCModulesCreator/Templates/
+  OutputPath: MVC Modules/
+  ControllerTemplateFileName: CONST_ControllerName.cs.template
+  ControllerInterfaceTemplateFileName: CONST_IControllerName.cs.template
+  ViewTemplateFileName: CONST_ViewName.cs.template
+  ViewInterfaceTemplateFileName: CONST_IViewName.cs.template
+  ModelTemplateFileName: CONST_ModelName.cs.template
+  ConfigurationScriptableObjectFileName: CONST_ConfigurationScriptableObject.cs.template
+  InstallerFileName: CONST_SceneInstaller.cs.template
+  SceneTemplateFileName: CONST_SceneName.unity
+  ConstModuleName: CONST_ModuleName
+  ConstControllerName: CONST_ControllerName
+  ConstControllerInterfaceName: CONST_IControllerName
+  ConstViewName: CONST_ViewName
+  ConstViewInterfaceName: CONST_IViewName
+  ConstModelName: CONST_ModelName
+  ConstNamespaceName: CONST_RootNamespace
+  ConstSOConfigurationName: CONST_SO_ConfigurationScriptableObject
+  ConstInstallerName: CONST_SceneInstaller
+  ConstSOName: CONST_ConfigurationScriptableObject
+  SOPrefix: SO_
+  InterfacePrefix: I
+  ViewSufix: View
+  ControllerSufix: Controller
+  ModelSufix: Model
+  SceneSufix: Scene
+  InstallerSufix: SceneInstaller
+  ConfigurationSufix: Configuration
+  CsFileExtension: .cs
+  AssetFileExtension: .asset
+  SceneFileExtension: .unity
+  ScriptFolderName: Scripts
+  ControllerFolderName: Controllers
+  ViewFolderName: Views
+  ModelFolderName: Models
+  SOFolderName: ScriptableObjects
+  InstallersFolderName: Installers
+  DesignFolderName: Design
+  PrefabsFolderName: Prefabs
+  ScenessFolderName: Scenes
+  OthersFolderName: Others
+  InfoMessage: The affixes of each script will be added automatically

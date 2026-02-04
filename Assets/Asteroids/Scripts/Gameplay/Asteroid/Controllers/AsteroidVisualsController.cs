@@ -1,3 +1,6 @@
+using ACG.Core.Utils;
+using ACG.Scripts.Managers;
+using ACG.Scripts.Models;
 using Asteroids.Core.Interfaces.Models;
 using Asteroids.Core.ScriptableObjects.Configurations;
 using Asteroids.Core.ScriptableObjects.Data;
@@ -5,9 +8,6 @@ using Asteroids.Gameplay.FloatingText.Spawners;
 using Asteroids.Gameplay.General.OnContact;
 using DG.Tweening;
 using System;
-using ToolsACG.Core.Managers;
-using ToolsACG.Core.ScriptableObjects.ParticleSystemConfigs;
-using ToolsACG.Core.Utils;
 using UnityEngine;
 using Zenject;
 
@@ -155,14 +155,12 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
 
         private void CreateDamageParticles(Vector3 position)
         {
-            foreach (ParticleConfiguration item in _asteroidData.ParticlesOnDamage)
-                _vFXManager.PlayParticlesVFX(item.PrefabData, position,Quaternion.identity, null, item.ParticleConfig);
+                _vFXManager.PlayParticlesVFX(_asteroidData.ParticlesOnDamage, position,Quaternion.identity, null);
         }
 
         private void CreateDestructionParticles(Vector3 position)
         {
-            foreach (ParticleConfiguration item in _asteroidData.ParticlesOnDestruction)
-                _vFXManager.PlayParticlesVFX(item.PrefabData, position, Quaternion.identity, null, item.ParticleConfig);
+                _vFXManager.PlayParticlesVFX(_asteroidData.ParticlesOnDestruction, position, Quaternion.identity, null);
         }
 
         #endregion

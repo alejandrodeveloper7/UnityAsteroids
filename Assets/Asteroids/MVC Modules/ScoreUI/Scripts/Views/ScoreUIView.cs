@@ -1,9 +1,9 @@
+using ACG.Tools.Runtime.MVCModulesCreator.Bases;
 using Asteroids.MVC.ScoreUI.Controllers;
 using Asteroids.MVC.ScoreUI.Models;
 using Asteroids.MVC.ScoreUI.ScriptableObjects;
 using DG.Tweening;
 using TMPro;
-using ToolsACG.MVCModulesCreator.Bases;
 using UnityEngine;
 using Zenject;
 

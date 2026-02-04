@@ -1,5 +1,5 @@
+using ACG.Tools.Runtime.MVCModulesCreator.Bases;
 using Asteroids.MVC.PauseUI.ScriptableObjects;
-using ToolsACG.MVCModulesCreator.Bases;
 using Zenject;
 
 namespace Asteroids.MVC.PauseUI.Models

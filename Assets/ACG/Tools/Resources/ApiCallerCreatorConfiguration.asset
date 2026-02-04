@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69a6c869f525da544bef0c3daf604217, type: 3}
+  m_Name: ApiCallerCreatorConfiguration
+  m_EditorClassIdentifier: 
+  WindowTitle: ApiCaller Creator
+  WindowMinSize: {x: 345, y: 205}
+  TemplatesPath: ACG/Tools/Editor/ApiCallersCreator/Templates/
+  OutputPath: Scripts/ApiCallers/
+  InterfacePrefix: I
+  ApiCallerSufix: ApiCaller
+  ServiceSufix: ApiService
+  ContainerSufix: ApiContainer
+  ModelsSufix: Models
+  RequestsSufix: Requests
+  ResponsesSufix: Responses
+  CsFileExtension: .cs
+  CallerTemplateFileName: CONST_ApiCallerName.cs.template
+  CallerInterfaceTemplateFileName: CONST_IApiCallerName.cs.template
+  ServiceTemplateFileName: CONST_ApiServiceName.cs.template
+  ServiceInterfaceTemplateFileName: CONST_IApiServiceName.cs.template
+  ContainerTemplateFileName: CONST_ApiContainerName.cs.template
+  ModelsTemplateFileName: CONST_ApiCallerModelsName.cs.template
+  RequestsTemplateFileName: CONST_ApiCallerRequestsName.cs.template
+  ResponsesTemplateFileName: CONST_ApiCallerResponsesName.cs.template
+  ConstApiCallerScriptName: CONST_ApiCallerName
+  ConstApiCallerInterfaceScriptName: CONST_IApiCallerName
+  ConstApiServiceScriptName: CONST_ApiServiceName
+  ConstApiServiceInterfaceScriptName: CONST_IApiServiceName
+  ConstApiContainerScriptName: CONST_ApiContainerName
+  ConstNamespaceName: CONST_RootNamespace
+  ServicesFolderName: Services
+  ApiCallersFolderName: ApiCallers
+  ApiContainersFolderName: Containers
+  ModelsFolderName: Models
+  InfoMessage: The affixes of each script will be added automatically

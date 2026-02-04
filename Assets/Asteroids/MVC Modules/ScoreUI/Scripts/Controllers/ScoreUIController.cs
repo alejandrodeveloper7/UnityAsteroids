@@ -1,10 +1,10 @@
+using ACG.Core.EventBus;
+using ACG.Tools.Runtime.MVCModulesCreator.Bases;
 using Asteroids.Core.Events.GameFlow;
 using Asteroids.Core.Events.Gameplay;
 using Asteroids.MVC.ScoreUI.Models;
 using Asteroids.MVC.ScoreUI.ScriptableObjects;
 using Asteroids.MVC.ScoreUI.Views;
-using ToolsACG.Core.EventBus;
-using ToolsACG.MVCModulesCreator.Bases;
 using UnityEngine;
 using Zenject;
 
@@ -60,12 +60,6 @@ namespace Asteroids.MVC.ScoreUI.Controllers
             Actions.Clear();
         }
 
-        protected override void CreateModel()
-        {
-            // Not used thanks to Zenject injection
-            //_model = new ScoreUIModel(_configurationData);
-        }
-
         #endregion
 
         #region Monobehaviour
@@ -75,7 +69,6 @@ namespace Asteroids.MVC.ScoreUI.Controllers
             base.Awake();
 
             GetReferences();
-            CreateModel();
             RegisterActions();
         }
 

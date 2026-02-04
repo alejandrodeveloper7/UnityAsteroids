@@ -1,0 +1,63 @@
+﻿using ACG.Tools.Runtime.ManagersCreator.Bases;
+
+namespace CONST_RootNamespace.Core.Managers
+{
+   public class CONST_MonobehaviourInstancesManagerName : MonobehaviourInstancesManagerBase<CONST_MonobehaviourInstancesManagerName> , CONST_I_ManagerName
+   {         
+        #region Fields
+
+        // TODO: Declare your fields here
+
+        #endregion
+
+        #region Initialization     
+
+        protected override void GetReferences()
+        {
+            base.GetReferences();
+            // TODO: Get your references here
+        }
+
+        public void Setup()
+        {
+            // TODO: Manual method to set parameters
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            // TODO: Manual method to initialize the manager
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            // TODO: clean here all the listeners or elements that need be clean when the manager is destroyed
+        }
+
+        #endregion
+
+        #region Monobehaviour
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            GetReferences();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+
+            Initialize();
+        }
+
+        private void OnDestroy()
+        {
+            Dispose();
+        }
+
+        #endregion
+   }
+}

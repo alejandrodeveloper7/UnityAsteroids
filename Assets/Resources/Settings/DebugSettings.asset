@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 572327cf7aa186a4384618d882daa679, type: 3}
+  m_Script: {fileID: 11500000, guid: 261cbbc3335435646a7eaa7536d0813b, type: 3}
   m_Name: DebugSettings
   m_EditorClassIdentifier: 
   _topicIndicators: ---
   _warningMessage: '[WARNING]'
-  _warningMessageColor: {r: 1, g: 0.95686275, b: 0, a: 1}
+  _warningMessageColor: {r: 0.99258995, g: 1, b: 0, a: 1}
   _errorMessage: '[ERROR] [ERROR] [ERROR]'
-  _errorMessageColor: {r: 1, g: 0.038293872, b: 0, a: 1}
+  _errorMessageColor: {r: 1, g: 0, b: 0, a: 1}

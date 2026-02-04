@@ -1,0 +1,20 @@
+{
+    "name": "ACG.Scripts",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:442e12a2e6c0d9c4bbaed855ff97203c",
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
+        "GUID:e9c0cac12bde0ba4f95e0a1aa6f1e774",
+        "GUID:3e0de828174e482488e86a4f3a7f3d16"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

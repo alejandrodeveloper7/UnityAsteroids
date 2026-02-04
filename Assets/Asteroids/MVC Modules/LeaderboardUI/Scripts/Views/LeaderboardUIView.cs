@@ -1,3 +1,4 @@
+using ACG.Tools.Runtime.MVCModulesCreator.Bases;
 using Asteroids.ApiCallers.DreamloLeaderboardApiCaller;
 using Asteroids.MVC.LeaderboardUI.Controllers;
 using Asteroids.MVC.LeaderboardUI.Models;
@@ -5,7 +6,6 @@ using Asteroids.MVC.LeaderboardUI.ScriptableObjects;
 using Asteroids.UI.Controllers;
 using DG.Tweening;
 using System.Collections.Generic;
-using ToolsACG.MVCModulesCreator.Bases;
 using UnityEngine;
 using Zenject;
 

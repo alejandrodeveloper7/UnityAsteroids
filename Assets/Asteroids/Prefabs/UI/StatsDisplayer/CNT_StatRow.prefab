@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameText: {fileID: 1861899450761172904}
-  _sliderController: {fileID: 1051371215947136196}
+  _sliderController: {fileID: 7947098443910148572}
 --- !u!1001 &4725457057021269767
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -287,14 +287,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7937068987094209033, guid: 3007315fa63b86149af23c526864a048, type: 3}
   m_PrefabInstance: {fileID: 7664827935721066828}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1051371215947136196 stripped
+--- !u!114 &7947098443910148572 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7262556777848008072, guid: 3007315fa63b86149af23c526864a048, type: 3}
+  m_CorrespondingSourceObject: {fileID: 294760960453238928, guid: 3007315fa63b86149af23c526864a048, type: 3}
   m_PrefabInstance: {fileID: 7664827935721066828}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4bcb644b0ca80f4aaa362be1c39a941, type: 3}
+  m_Script: {fileID: 11500000, guid: 16d042a4f4606b64686fc0e97956bbfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

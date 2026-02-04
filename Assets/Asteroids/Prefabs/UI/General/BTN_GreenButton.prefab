@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6467275704213697842}
   - component: {fileID: 6467275704213697841}
   - component: {fileID: 6467275704213697840}
-  - component: {fileID: 8730108596686806225}
-  - component: {fileID: 4155881803997867524}
-  - component: {fileID: 5632476923459070677}
+  - component: {fileID: 2898826764427197034}
+  - component: {fileID: 2034107335432803102}
+  - component: {fileID: 6492670816113651988}
   m_Layer: 5
   m_Name: BTN_GreenButton
   m_TagString: Untagged
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8730108596686806225
+--- !u!114 &2898826764427197034
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,14 +133,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 6467275704213697870}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 669c3122b26ceed4faacc2486a08d2aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 36b48f55496baab4a99904f0e9a3a5ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _clickSounds:
   - {fileID: 11400000, guid: 7cd3d0a9306794b4688aecbe97605fec, type: 2}
   _hoverSounds:
   - {fileID: 11400000, guid: d9e511271bbdcc848a9e1ee4288c6e40, type: 2}
---- !u!114 &4155881803997867524
+--- !u!114 &2034107335432803102
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,12 +149,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6467275704213697870}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd8dbee2a51bb7d41a462ba2669e1f25, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e4d556ea50723f4197bbf144011207c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _scaleFactor: 1.1
   _duration: 0.3
---- !u!114 &5632476923459070677
+  _ignoreTimeScale: 1
+--- !u!114 &6492670816113651988
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,12 +164,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6467275704213697870}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fc2826235cd945479d1e16b928605e8, type: 3}
+  m_Script: {fileID: 11500000, guid: dd0efdc380884534fbeec291a89d555c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _targetRotationZ: 4
-  _duration: 0.3
+  _duration: 0.2
   _ease: 6
+  _ignoreTimeScale: 1
 --- !u!1001 &938281438107308048
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -381,9 +381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 141fb4beac3bd744ebf47de0cf10bf4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moduleRoot: {fileID: 57698126}
   _leaderboardUIConfiguration: {fileID: 11400000, guid: 9658814da69685a45a17094808787512, type: 2}
-  _leaderboardRowConfiguration: {fileID: 11400000, guid: cddd4ad1376f75341a4ad4152b60cfe9, type: 2}
 --- !u!114 &421146445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -484,7 +482,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 754332207}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66e727e41fab7bc4ebf41bc5f985462e, type: 3}
+  m_Script: {fileID: 11500000, guid: 55ac96da508e93b4399b0b5cba58d50e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _movementRadius: 15
@@ -674,7 +672,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 966979716}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66e727e41fab7bc4ebf41bc5f985462e, type: 3}
+  m_Script: {fileID: 11500000, guid: 55ac96da508e93b4399b0b5cba58d50e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _movementRadius: 15

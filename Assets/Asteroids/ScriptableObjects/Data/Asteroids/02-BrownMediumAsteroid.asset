@@ -41,10 +41,14 @@ MonoBehaviour:
     CheckInterval: 0.05
   _particlesOnDamage:
   - PrefabData: {fileID: 11400000, guid: 3af43aec57dabca419189d63292642e4, type: 2}
-    ParticleConfig: {fileID: 11400000, guid: a0549390e8ac70142bb07cda601523a8, type: 2}
+    ParticleConfiguration: {fileID: 11400000, guid: a0549390e8ac70142bb07cda601523a8, type: 2}
+    PositionOffset: {x: 0, y: 0, z: 0}
+    RotationOffset: {x: 0, y: 0, z: 0}
   _particlesOnDestruction:
   - PrefabData: {fileID: 11400000, guid: e22152a520f6cc54b8003b794574dbff, type: 2}
-    ParticleConfig: {fileID: 11400000, guid: a0549390e8ac70142bb07cda601523a8, type: 2}
+    ParticleConfiguration: {fileID: 11400000, guid: a0549390e8ac70142bb07cda601523a8, type: 2}
+    PositionOffset: {x: 0, y: 0, z: 0}
+    RotationOffset: {x: 0, y: 0, z: 0}
   _soundsOnDamage:
   - {fileID: 11400000, guid: a208fa64b7715dd41be5ab33b70e6ffa, type: 2}
   _soundsOnDestruction:

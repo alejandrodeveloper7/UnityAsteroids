@@ -1,0 +1,19 @@
+{
+    "name": "ACG.Tools.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:e9c0cac12bde0ba4f95e0a1aa6f1e774",
+        "GUID:3e0de828174e482488e86a4f3a7f3d16"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

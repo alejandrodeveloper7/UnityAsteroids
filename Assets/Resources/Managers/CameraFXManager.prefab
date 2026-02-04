@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1916936315254707570}
-  - component: {fileID: 741041351119953051}
+  - component: {fileID: 2990509367079350688}
   m_Layer: 0
   m_Name: CameraFXManager
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &741041351119953051
+--- !u!114 &2990509367079350688
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,6 +41,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 6163179484795484918}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 767f69eca33b24b45a1d152b66fce9a4, type: 3}
+  m_Script: {fileID: 11500000, guid: a114fbb81aefbe743b717941b87255ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

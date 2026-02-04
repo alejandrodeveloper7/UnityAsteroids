@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 556107409562460604}
   - component: {fileID: 556107409562460605}
   - component: {fileID: 556107409562460594}
-  - component: {fileID: 758726690089286319}
-  - component: {fileID: 7376093285109731718}
-  - component: {fileID: -8008132264009746667}
+  - component: {fileID: 1686003664025413199}
+  - component: {fileID: 4713977100871249284}
+  - component: {fileID: 2529893469137796470}
   m_Layer: 5
   m_Name: BTN_RedButton
   m_TagString: Untagged
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &758726690089286319
+--- !u!114 &1686003664025413199
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,14 +133,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 556107409562460592}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 669c3122b26ceed4faacc2486a08d2aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 36b48f55496baab4a99904f0e9a3a5ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _clickSounds:
   - {fileID: 11400000, guid: 7cd3d0a9306794b4688aecbe97605fec, type: 2}
   _hoverSounds:
   - {fileID: 11400000, guid: d9e511271bbdcc848a9e1ee4288c6e40, type: 2}
---- !u!114 &7376093285109731718
+--- !u!114 &4713977100871249284
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,12 +149,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 556107409562460592}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd8dbee2a51bb7d41a462ba2669e1f25, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e4d556ea50723f4197bbf144011207c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _scaleFactor: 1.1
   _duration: 0.3
---- !u!114 &-8008132264009746667
+  _ignoreTimeScale: 1
+--- !u!114 &2529893469137796470
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,12 +164,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 556107409562460592}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fc2826235cd945479d1e16b928605e8, type: 3}
+  m_Script: {fileID: 11500000, guid: dd0efdc380884534fbeec291a89d555c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _targetRotationZ: -4
-  _duration: 0.3
+  _duration: 0.2
   _ease: 6
+  _ignoreTimeScale: 1
 --- !u!1001 &6062557339949526567
 PrefabInstance:
   m_ObjectHideFlags: 0

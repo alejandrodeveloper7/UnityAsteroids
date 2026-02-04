@@ -1,0 +1,17 @@
+﻿//using System.Threading.Tasks;
+//using ACG.Tools.Runtime.ApiCallersCreator.Enums;
+//using ACG.Tools.Runtime.ApiCallersCreator.ScriptableObjects;
+
+namespace CONST_RootNamespace.ApiCallers.CONST_ApiCallerName
+{
+    public interface CONST_IApiServiceName 
+    {
+        CONST_ApiContainerName Data { get; }
+
+        //Task<bool> UpdatePikachuData(RequestMode mode = RequestMode.Direct);
+        //Task<bool> UpdatePikachuData(SO_NetworkConfiguration networkConfiguration, RequestMode mode = RequestMode.Direct);
+
+        //Task<bool> UpdateCharmanderData(RequestMode mode = RequestMode.Direct);
+        //Task<bool> UpdateCharmanderData(SO_NetworkConfiguration networkConfiguration, RequestMode mode = RequestMode.Direct);
+    }
+}

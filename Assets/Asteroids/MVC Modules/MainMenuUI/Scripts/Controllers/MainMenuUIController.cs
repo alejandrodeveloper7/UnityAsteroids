@@ -6,9 +6,6 @@ using System.Linq;
 using Asteroids.Core.ScriptableObjects.Data;
 using Asteroids.Core.ScriptableObjects.Collections;
 using Asteroids.UI.Controllers;
-using ToolsACG.MVCModulesCreator.Bases;
-using ToolsACG.Core.EventBus;
-using ToolsACG.Core.Services;
 using Asteroids.Core.Events.GameFlow;
 using Asteroids.Core.Services;
 using Zenject;
@@ -17,6 +14,8 @@ using System.Collections.Generic;
 using Asteroids.MVC.MainMenuUI.Views;
 using Asteroids.MVC.MainMenuUI.Models;
 using Asteroids.MVC.MainMenuUI.ScriptableObjects;
+using ACG.Tools.Runtime.MVCModulesCreator.Bases;
+using ACG.Core.EventBus;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -57,9 +56,6 @@ namespace Asteroids.MVC.MainMenuUI.Controllers
         protected override void GetReferences()
         {
             base.GetReferences();
-
-            // Not used thanks to Zenject injection
-            //_view = GetComponent<IMainMenuUIView>();
         }
 
         protected override void Initialize()
@@ -96,11 +92,6 @@ namespace Asteroids.MVC.MainMenuUI.Controllers
             Actions.Clear();
         }
 
-        protected override void CreateModel()
-        {
-            // Not used thanks to Zenject injection
-            //_model = new MainMenuUIModel(_configurationData);
-        }
 
         #endregion
 
@@ -111,7 +102,6 @@ namespace Asteroids.MVC.MainMenuUI.Controllers
             base.Awake();
 
             GetReferences();
-            CreateModel();
             RegisterActions();
         }
 

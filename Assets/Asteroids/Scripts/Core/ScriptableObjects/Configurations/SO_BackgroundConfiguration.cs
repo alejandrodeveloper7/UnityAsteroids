@@ -1,5 +1,5 @@
+using ACG.Tools.Runtime.SOCreator.Configurations;
 using DG.Tweening;
-using ToolsACG.SOCreator.Configurations;
 using UnityEngine;
 
 namespace Asteroids.Core.ScriptableObjects.Configurations

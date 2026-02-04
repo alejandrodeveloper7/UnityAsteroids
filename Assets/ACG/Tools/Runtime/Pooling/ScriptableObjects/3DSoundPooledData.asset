@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 071444183631c61419eff11d876f96bf, type: 3}
+  m_Name: 3DSoundPooledData
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 4226950753071616288, guid: a4803d3102e5e5c4c92feb674fbef48e, type: 3}
+  _initialSize: 30
+  _scalation: 5
+  _maxSize: 5000

@@ -1,7 +1,6 @@
+using ACG.Scripts.Managers;
 using Asteroids.Core.ScriptableObjects.Data;
 using DG.Tweening;
-using ToolsACG.Core.Managers;
-using ToolsACG.Core.ScriptableObjects.ParticleSystemConfigs;
 using UnityEngine;
 using Zenject;
 
@@ -97,8 +96,7 @@ namespace Asteroids.Gameplay.Bullets.Controllers
 
         private void CreateDestructionParticles()
         {
-            foreach (ParticleConfiguration item in _bulletData.ParticlesOnDestruction)
-                _vFXManager.PlayParticlesVFX(item.PrefabData, transform.position, Quaternion.identity, null, item.ParticleConfig);
+            _vFXManager.PlayParticlesVFX(_bulletData.ParticlesOnDestruction, transform.position, Quaternion.identity, null);
         }
 
         #endregion

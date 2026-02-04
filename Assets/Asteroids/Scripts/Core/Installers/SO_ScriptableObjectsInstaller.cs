@@ -1,9 +1,9 @@
+using ACG.Scripts.ScriptableObjects.Collections;
+using ACG.Scripts.ScriptableObjects.Settings;
+using ACG.Tools.Runtime.ApiCallersCreator.ScriptableObjects;
+using ACG.Tools.Runtime.Pooling.ScriptableObjects;
 using Asteroids.Core.ScriptableObjects.Collections;
 using Asteroids.Core.ScriptableObjects.Configurations;
-using ToolsACG.ApiCallersCreator.ScriptableObjects;
-using ToolsACG.Core.ScriptableObjects.Collections;
-using ToolsACG.Core.ScriptableObjects.Settings;
-using ToolsACG.Pooling.ScriptableObjects;
 using UnityEngine;
 using Zenject;
 
@@ -45,6 +45,7 @@ namespace Asteroids.Core.Intallers
             Container.Bind<SO_CursorSettings>().FromInstance(SO_CursorSettings.Instance).AsSingle();
             Container.Bind<SO_DebugSettings>().FromInstance(SO_DebugSettings.Instance).AsSingle();
             Container.Bind<SO_InputSettings>().FromInstance(SO_InputSettings.Instance).AsSingle();
+            Container.Bind<SO_SoundSettings>().FromInstance(SO_SoundSettings.Instance).AsSingle();
             Container.Bind<SO_ScreenSettings>().FromInstance(SO_ScreenSettings.Instance).AsSingle();
             Container.Bind<SO_NetworkSettings>().FromInstance(SO_NetworkSettings.Instance).AsSingle();
 

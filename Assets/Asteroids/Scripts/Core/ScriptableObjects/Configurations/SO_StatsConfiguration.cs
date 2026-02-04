@@ -1,6 +1,6 @@
+using ACG.Tools.Runtime.SOCreator.Configurations;
 using Asteroids.Core.Interfaces.Models;
 using System.Collections.Generic;
-using ToolsACG.SOCreator.Configurations;
 using UnityEngine;
 
 namespace Asteroids.Core.ScriptableObjects.Configurations

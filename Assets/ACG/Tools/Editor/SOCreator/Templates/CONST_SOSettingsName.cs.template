@@ -1,0 +1,34 @@
+﻿using ACG.Tools.Runtime.SOCreator.Settings;
+using UnityEngine;
+
+namespace CONST_RootNamespace.Core.ScriptableObjects.Settings
+{
+   [CreateAssetMenu(fileName = "CONST_NewInstanceName", menuName = "ScriptableObjects/Settings/CONST_Name")]
+   public class CONST_SOSettingsName : SO_SettingsBase
+   {        
+       #region Singleton
+
+       private static CONST_SOSettingsName _instance;
+       public static CONST_SOSettingsName Instance
+       {
+           get
+           {
+               if (_instance == null)
+               {
+                   _instance = Resources.Load<CONST_SOSettingsName>("Settings/CONST_NewInstanceName");
+                   if (_instance == null)
+                       Debug.LogError($"No {typeof(CONST_SOSettingsName).Name} found in Resources");
+               }
+               return _instance;
+           }
+       }
+
+       #endregion
+
+       #region Values
+
+       // TODO: Declare your values here.
+
+       #endregion
+   }
+}

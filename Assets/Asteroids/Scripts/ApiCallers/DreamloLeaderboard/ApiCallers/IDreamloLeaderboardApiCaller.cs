@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using ToolsACG.ApiCallersCreator.Models;
-using ToolsACG.ApiCallersCreator.Enums;
-using ToolsACG.ApiCallersCreator.ScriptableObjects;
+using ACG.Tools.Runtime.ApiCallersCreator.ScriptableObjects;
+using ACG.Tools.Runtime.ApiCallersCreator.Models;
+using ACG.Tools.Runtime.ApiCallersCreator.Enums;
 
 namespace Asteroids.ApiCallers.DreamloLeaderboardApiCaller
 {

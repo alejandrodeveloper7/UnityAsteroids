@@ -1,0 +1,38 @@
+﻿using ACG.Tools.Runtime.ServicesCreator.Bases;
+
+namespace CONST_RootNamespace.Core.Services
+{
+   public class CONST_InstancesServiceName : InstancesServiceBase, CONST_I_ServiceName 
+   {         
+        #region Fields
+
+        // TODO: Declare your fields here
+
+        #endregion
+
+        #region Constructors
+
+        public CONST_InstancesServiceName()
+        {
+            Initialize();
+        }
+
+        #endregion
+
+        #region Initialization     
+                
+        public override void Initialize()
+        {
+            base.Initialize();
+            // TODO: Method called in the constructor to initialize the Service
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            // TODO: clean here all the elements that need be clean when the Service is destroyed
+        }
+
+        #endregion         
+   }
+}

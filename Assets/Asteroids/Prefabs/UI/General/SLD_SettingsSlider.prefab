@@ -286,9 +286,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7937068987094209033}
   - component: {fileID: 7937068987094209034}
-  - component: {fileID: 8181892110299867134}
-  - component: {fileID: 7262556777848008072}
-  - component: {fileID: 7461817142532545016}
+  - component: {fileID: 305155684227149795}
+  - component: {fileID: 7103234261650058564}
+  - component: {fileID: 5718426447535727473}
   m_Layer: 5
   m_Name: SLD_SettingsSlider
   m_TagString: Untagged
@@ -368,7 +368,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8181892110299867134
+--- !u!114 &305155684227149795
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -377,14 +377,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7937068987094209032}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64c2f4b326332d749941e233621e5cd1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d9023b3297fbdb418aaad0d1cf5855e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _clickSounds:
   - {fileID: 11400000, guid: 7cd3d0a9306794b4688aecbe97605fec, type: 2}
   _hoverSounds:
   - {fileID: 11400000, guid: d9e511271bbdcc848a9e1ee4288c6e40, type: 2}
---- !u!114 &7262556777848008072
+--- !u!114 &7103234261650058564
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -393,12 +393,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 7937068987094209032}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4bcb644b0ca80f4aaa362be1c39a941, type: 3}
+  m_Script: {fileID: 11500000, guid: 16d042a4f4606b64686fc0e97956bbfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _slider: {fileID: 7937068987094209034}
   _sliderFillImage: {fileID: 7937068985858384118}
---- !u!114 &7461817142532545016
+--- !u!114 &5718426447535727473
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -407,7 +407,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7937068987094209032}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd8dbee2a51bb7d41a462ba2669e1f25, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e4d556ea50723f4197bbf144011207c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _scaleFactor: 1.1

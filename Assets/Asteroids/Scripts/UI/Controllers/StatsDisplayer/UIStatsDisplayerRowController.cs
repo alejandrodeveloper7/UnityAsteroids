@@ -1,8 +1,8 @@
+using ACG.Scripts.UIControllers;
 using Asteroids.Core.Interfaces.Enums;
 using Asteroids.Core.Interfaces.Models;
 using Asteroids.Core.ScriptableObjects.Configurations;
 using TMPro;
-using ToolsACG.UI.Controllers;
 using UnityEngine;
 using Zenject;
 

@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6e1b6ae105ad714e80b3a1b8ed93894, type: 3}
+  m_Name: ManagersCreatorConfiguration
+  m_EditorClassIdentifier: 
+  WindowTitle: Managers Creator
+  WindowMinSize: {x: 420, y: 350}
+  TemplatesPath: ACG/Tools/Editor/ManagersCreator/Templates/
+  OutputPath: Scripts/Core/Managers
+  PrefabsOutputPath: Resources/Managers/
+  ManagerSufix: Manager
+  InterfaceSufix: I
+  PrefabFileExtension: .prefab
+  CsFileExtension: .cs
+  MonobehaviourAutoSingletonTemplateFileName: CONST_MonobehaviourAutoSingletonManagerName.cs.template
+  ConstMonobehaviourAutoSingletonScriptName: CONST_MonobehaviourAutoSingletonManagerName
+  MonobehaviourLazySingletonTemplateFileName: CONST_MonobehaviourLazySingletonManagerName.cs.template
+  ConstMonobehaviourLazySingletonScriptName: CONST_MonobehaviourLazySingletonManagerName
+  MonobehaviourInstancesTemplateFileName: CONST_MonobehaviourInstancesManagerName.cs.template
+  ConstMonobehaviourInstancesScriptName: CONST_MonobehaviourInstancesManagerName
+  NoMonobehaviourAutoSingletonTemplateFileName: CONST_NoMonobehaviourAutoSingletonManagerName.cs.template
+  ConstNoMonobehaviourAutoSingletonScriptName: CONST_NoMonobehaviourAutoSingletonManagerName
+  NoMonobehaviourLazySingletonTemplateFileName: CONST_NoMonobehaviourLazySingletonManagerName.cs.template
+  ConstNoMonobehaviourLazySingletonScriptName: CONST_NoMonobehaviourLazySingletonManagerName
+  NoMonobehaviourInstancesTemplateFileName: CONST_NoMonobehaviourInstancesManagerName.cs.template
+  ConstNoMonobehaviourInstancesScriptName: CONST_NoMonobehaviourInstancesManagerName
+  InterfaceTemplateFileName: CONST_I_ManagerName.cs.template
+  ConstInterfaceName: CONST_I_ManagerName
+  ConstNamespaceName: CONST_RootNamespace
+  InfoMessage: The affixes like 'I' or 'Manager' will be added automatically
+  MonoAutoSingletonMessage: This manager will be a MonoBehaviour that automatically
+    instantiates a prefab in the scene when you press the Play button and does NOT
+    allow more than one instance. Problematic with Zenject!!!
+  MonoLazySingletonMessage: This manager will be a MonoBehaviour that, when you access
+    .Instance for the firs time, instantiates a prefab in the scene and does NOT
+    allow more than one instance. Problematic with Zenject!!!
+  MonoInstancesMessage: This manager will be a MonoBehaviour that, when you call
+    .CreateInstance(), instantiates a prefab in the scene and allows multiple instances.
+    Good for Zenject!!!
+  NoMonoAutoSingletonMessage: This manager will be a NO MonoBehaviour that automatically
+    instantiates itself when you press the Play button and does NOT allow more than
+    one instance. Problematic with Zenject!!!
+  NoMonoLazySingletonMessage: This manager will be a NO MonoBehaviour that, when
+    you access .Instance for the firs time, instantiates itself and does NOT allow
+    more than one instance. Problematic with Zenject!!!
+  NoMonoInstancesMessage: This manager will be a NO MonoBehaviour that allows multiple
+    instances and define constructors with parameters. Good for Zenject!!!

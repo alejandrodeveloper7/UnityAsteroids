@@ -1,6 +1,6 @@
+using ACG.Tools.Runtime.MVCModulesCreator.Bases;
 using Asteroids.MVC.MainMenuUI.ScriptableObjects;
 using System;
-using ToolsACG.MVCModulesCreator.Bases;
 using Zenject;
 
 namespace Asteroids.MVC.MainMenuUI.Models

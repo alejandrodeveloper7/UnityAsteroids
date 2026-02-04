@@ -1,5 +1,5 @@
+using ACG.Scripts.Managers;
 using Asteroids.Core.ScriptableObjects.Data;
-using ToolsACG.Core.Managers;
 using UnityEngine;
 using Zenject;
 

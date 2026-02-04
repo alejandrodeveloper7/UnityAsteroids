@@ -1,11 +1,11 @@
+using ACG.Core.EventBus;
+using ACG.Tools.Runtime.MVCModulesCreator.Bases;
 using Asteroids.Core.Events.GameFlow;
+using Asteroids.Core.Services;
 using Asteroids.MVC.LeaderboardUI.Models;
 using Asteroids.MVC.LeaderboardUI.ScriptableObjects;
 using Asteroids.MVC.LeaderboardUI.Views;
 using System;
-using ToolsACG.Core.EventBus;
-using ToolsACG.Core.Services;
-using ToolsACG.MVCModulesCreator.Bases;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -63,12 +63,6 @@ namespace Asteroids.MVC.LeaderboardUI.Controllers
             Actions.Clear();
         }
 
-        protected override void CreateModel()
-        {
-            // Not used thanks to Zenject injection
-            //_model = new LeaderboardUIModel(_configurationData);
-        }
-
         #endregion
 
         #region Monobehaviour
@@ -78,7 +72,6 @@ namespace Asteroids.MVC.LeaderboardUI.Controllers
             base.Awake();
 
             GetReferences();
-            CreateModel();
             RegisterActions();
         }
 

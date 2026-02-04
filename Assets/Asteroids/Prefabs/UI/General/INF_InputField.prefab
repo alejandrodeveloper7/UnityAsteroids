@@ -353,8 +353,8 @@ GameObject:
   - component: {fileID: 7602938843121986029}
   - component: {fileID: 7153976655536079614}
   - component: {fileID: 1575302349120723764}
-  - component: {fileID: 1832004245124656893}
-  - component: {fileID: 6573033604312452728}
+  - component: {fileID: 5950056404645525073}
+  - component: {fileID: 6110245763856725987}
   m_Layer: 5
   m_Name: INF_InputField
   m_TagString: Untagged
@@ -518,7 +518,7 @@ MonoBehaviour:
   m_isRichTextEditingAllowed: 0
   m_LineLimit: 0
   m_InputValidator: {fileID: 0}
---- !u!114 &1832004245124656893
+--- !u!114 &5950056404645525073
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -527,14 +527,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8229498581093953876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 669c3122b26ceed4faacc2486a08d2aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 36b48f55496baab4a99904f0e9a3a5ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _clickSounds:
   - {fileID: 11400000, guid: 7cd3d0a9306794b4688aecbe97605fec, type: 2}
   _hoverSounds:
   - {fileID: 11400000, guid: d9e511271bbdcc848a9e1ee4288c6e40, type: 2}
---- !u!114 &6573033604312452728
+--- !u!114 &6110245763856725987
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -543,7 +543,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8229498581093953876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd8dbee2a51bb7d41a462ba2669e1f25, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e4d556ea50723f4197bbf144011207c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _scaleFactor: 1.1

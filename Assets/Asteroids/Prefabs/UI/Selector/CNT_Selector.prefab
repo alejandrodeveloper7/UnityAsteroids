@@ -88,8 +88,8 @@ GameObject:
   - component: {fileID: 1031659658029154344}
   - component: {fileID: 1031659658029154345}
   - component: {fileID: 1031659658029154350}
-  - component: {fileID: 9190101259480502064}
-  - component: {fileID: 1464821959491349089}
+  - component: {fileID: 556708156582126166}
+  - component: {fileID: 4130568243244916156}
   m_Layer: 5
   m_Name: BTN_NextElement
   m_TagString: Untagged
@@ -211,7 +211,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &9190101259480502064
+--- !u!114 &556708156582126166
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -220,14 +220,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1031659658029154348}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 669c3122b26ceed4faacc2486a08d2aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 36b48f55496baab4a99904f0e9a3a5ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _clickSounds:
   - {fileID: 11400000, guid: 7cd3d0a9306794b4688aecbe97605fec, type: 2}
   _hoverSounds:
   - {fileID: 11400000, guid: d9e511271bbdcc848a9e1ee4288c6e40, type: 2}
---- !u!114 &1464821959491349089
+--- !u!114 &4130568243244916156
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -236,7 +236,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1031659658029154348}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d16bf63aab77894d8bc62e288f2f74b, type: 3}
+  m_Script: {fileID: 11500000, guid: 44b81a2853c601444a9a3cc8da4f7834, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _hoverScale: 1.1
@@ -410,8 +410,8 @@ GameObject:
   - component: {fileID: 1031659658990153720}
   - component: {fileID: 1031659658990153721}
   - component: {fileID: 1031659658990153726}
-  - component: {fileID: 4262293030170330636}
-  - component: {fileID: 5823329294927567618}
+  - component: {fileID: 7000035901278693487}
+  - component: {fileID: 7004929611979660484}
   m_Layer: 5
   m_Name: BTN_PreviousElement
   m_TagString: Untagged
@@ -533,7 +533,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4262293030170330636
+--- !u!114 &7000035901278693487
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -542,14 +542,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1031659658990153724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 669c3122b26ceed4faacc2486a08d2aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 36b48f55496baab4a99904f0e9a3a5ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _clickSounds:
   - {fileID: 11400000, guid: 7cd3d0a9306794b4688aecbe97605fec, type: 2}
   _hoverSounds:
   - {fileID: 11400000, guid: d9e511271bbdcc848a9e1ee4288c6e40, type: 2}
---- !u!114 &5823329294927567618
+--- !u!114 &7004929611979660484
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -558,7 +558,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1031659658990153724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d16bf63aab77894d8bc62e288f2f74b, type: 3}
+  m_Script: {fileID: 11500000, guid: 44b81a2853c601444a9a3cc8da4f7834, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _hoverScale: 1.1

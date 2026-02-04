@@ -1,0 +1,95 @@
+﻿using CONST_RootNamespace.MVC.CONST_ModuleName.Controllers;
+using CONST_RootNamespace.MVC.CONST_ModuleName.Models;
+using CONST_RootNamespace.MVC.CONST_ModuleName.ScriptableObjects;
+using ACG.Tools.Runtime.MVCModulesCreator.Bases;
+using UnityEngine;
+using Zenject;
+
+namespace CONST_RootNamespace.MVC.CONST_ModuleName.Views
+{
+     public class CONST_ViewName : MVCViewBase , CONST_IViewName
+    {
+        #region Fields     
+
+        [Header("MVC References")]
+        [Inject] private readonly CONST_IControllerName _controller;
+        [Inject] private readonly CONST_ModelName _model;
+        [Inject] private readonly CONST_SO_ConfigurationScriptableObject _configuration;
+
+        // TODO: Declare your fields here
+
+        #endregion
+        
+        #region Initialization
+
+        protected override void GetReferences()
+        {
+            base.GetReferences();
+        }
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+            
+            SetGeneralContainerActive(_configuration.ViewInitialState);
+            SetGeneralContainerScale(_configuration.ViewInitialScale);
+            SetAlpha(_configuration.ViewInitialAlpha);
+        }
+
+        protected override void RegisterListeners()
+        {
+            // TODO: Add listeners for the events
+        }
+
+        protected override void UnRegisterListeners()
+        {
+            // TODO: Remove listeners for the events
+        }
+
+        #endregion
+
+        #region Monobehaviour        
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            GetReferences();
+            RegisterListeners();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+
+            Initialize();
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            UnRegisterListeners();
+        }
+
+        #endregion
+
+        #region Event Callbacks
+
+        // TODO: Define here callbacks for the events
+
+        #endregion
+
+        #region public Methods
+
+        // TODO: Define here methods called from the controller     
+
+        #endregion
+
+        #region View Methods   
+
+        // TODO: Define here methods called from other view methods     
+
+        #endregion
+    }
+}

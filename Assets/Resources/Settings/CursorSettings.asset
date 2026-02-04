@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40fb9e7e17bf4314595579dcb0656dc6, type: 3}
+  m_Script: {fileID: 11500000, guid: 09bfd29ebaf7c6b44baa6bb4e7e1a0f5, type: 3}
   m_Name: CursorSettings
   m_EditorClassIdentifier: 
-  _applyInitialCongifuration: 1
+  _applyInitialConfiguration: 1
   _cursorInitialVisibility: 1
   _cursorInitialLockMode: 0
   _defaultCursor: {fileID: 2800000, guid: 61d0d41f80568384fb1704991b0019a7, type: 3}

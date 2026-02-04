@@ -86,8 +86,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4818819972427708221}
   - component: {fileID: 4818819972427708220}
-  - component: {fileID: 1305783466198303090}
-  - component: {fileID: 8470604283592231339}
+  - component: {fileID: 6037808085402866843}
+  - component: {fileID: 108601026939146762}
   m_Layer: 5
   m_Name: TGL_Toggle
   m_TagString: Untagged
@@ -163,7 +163,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
---- !u!114 &1305783466198303090
+--- !u!114 &6037808085402866843
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,14 +172,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4818819972427708222}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 669c3122b26ceed4faacc2486a08d2aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 36b48f55496baab4a99904f0e9a3a5ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _clickSounds:
   - {fileID: 11400000, guid: 7cd3d0a9306794b4688aecbe97605fec, type: 2}
   _hoverSounds:
   - {fileID: 11400000, guid: d9e511271bbdcc848a9e1ee4288c6e40, type: 2}
---- !u!114 &8470604283592231339
+--- !u!114 &108601026939146762
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4818819972427708222}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd8dbee2a51bb7d41a462ba2669e1f25, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e4d556ea50723f4197bbf144011207c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _scaleFactor: 1.2

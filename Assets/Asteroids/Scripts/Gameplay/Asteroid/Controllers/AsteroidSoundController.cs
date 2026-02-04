@@ -1,7 +1,7 @@
+using ACG.Scripts.Managers;
 using Asteroids.Core.Interfaces.Models;
 using Asteroids.Core.ScriptableObjects.Data;
 using Asteroids.Gameplay.General.OnContact;
-using ToolsACG.Core.Managers;
 using UnityEngine;
 using Zenject;
 

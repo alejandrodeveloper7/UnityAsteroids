@@ -1,10 +1,9 @@
+using ACG.Core.Utils;
+using ACG.Scripts.Managers;
 using Asteroids.Core.ScriptableObjects.Data;
 using DG.Tweening;
 using System;
 using System.Linq;
-using ToolsACG.Core.Managers;
-using ToolsACG.Core.ScriptableObjects.ParticleSystemConfigs;
-using ToolsACG.Core.Utils;
 using UnityEngine;
 using Zenject;
 
@@ -202,8 +201,7 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         private void CreateDeadParticles()
         {
-            foreach (ParticleConfiguration item in _shipData.ParticlesOnDead)
-                _vFXManager.PlayParticlesVFX(item.PrefabData, transform.position, Quaternion.identity, null, item.ParticleConfig);
+                _vFXManager.PlayParticlesVFX(_shipData.ParticlesOnDead, transform.position, Quaternion.identity, null);
         }
 
         #endregion

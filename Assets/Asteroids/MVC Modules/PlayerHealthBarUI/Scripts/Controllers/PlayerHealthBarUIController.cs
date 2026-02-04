@@ -1,13 +1,13 @@
+using ACG.Core.EventBus;
+using ACG.Tools.Runtime.MVCModulesCreator.Bases;
 using Asteroids.Core.Events.GameFlow;
 using Asteroids.Core.Events.Gameplay;
 using Asteroids.Core.ScriptableObjects.Data;
+using Asteroids.Core.Services;
 using Asteroids.MVC.PlayerHealthBarUI.Models;
 using Asteroids.MVC.PlayerHealthBarUI.ScriptableObjects;
 using Asteroids.MVC.PlayerHealthBarUI.Views;
 using System.Threading.Tasks;
-using ToolsACG.Core.EventBus;
-using ToolsACG.Core.Services;
-using ToolsACG.MVCModulesCreator.Bases;
 using UnityEngine;
 using Zenject;
 
@@ -38,9 +38,6 @@ namespace Asteroids.MVC.PlayerHealthBarUI.Controllers
         protected override void GetReferences()
         {
             base.GetReferences();
-
-            // Not used thanks to Zenject injection
-            //_view = GetComponent<IPlayerHealthBarUIView>();
         }
 
         protected override void Initialize()
@@ -70,12 +67,6 @@ namespace Asteroids.MVC.PlayerHealthBarUI.Controllers
             Actions.Clear();
         }
 
-        protected override void CreateModel()
-        {
-            // Not used thanks to Zenject injection
-            //_model = new PlayerHealthBarUIModel(_configurationData);
-        }
-
         #endregion
 
         #region Monobehaviour
@@ -85,7 +76,6 @@ namespace Asteroids.MVC.PlayerHealthBarUI.Controllers
             base.Awake();
 
             GetReferences();
-            CreateModel();
             RegisterActions();
         }
 

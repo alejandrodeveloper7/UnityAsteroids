@@ -34,7 +34,9 @@ MonoBehaviour:
   _torqueForce: 0.5
   _particlesOnDestruction:
   - PrefabData: {fileID: 11400000, guid: ab1181f5c8f3e734fb1bddc72bf6a597, type: 2}
-    ParticleConfig: {fileID: 11400000, guid: fd562bb6fc0f4a14a8a0f71e95f1beec, type: 2}
+    ParticleConfiguration: {fileID: 11400000, guid: fd562bb6fc0f4a14a8a0f71e95f1beec, type: 2}
+    PositionOffset: {x: 0, y: 0, z: 0}
+    RotationOffset: {x: 0, y: 0, z: 0}
   _screenEdgeTeleportConfiguration:
     EdgeOffsetY: 0.03
     EdgeRepositionOffsetY: 0.02

@@ -1,0 +1,7 @@
+﻿namespace CONST_RootNamespace.MVC.CONST_ModuleName.Controllers
+{
+    public interface CONST_IControllerName 
+    {
+
+    }
+}

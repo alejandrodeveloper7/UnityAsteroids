@@ -1,0 +1,14 @@
+﻿//using System.Threading.Tasks;
+//using ACG.Tools.Runtime.ApiCallers.PokemonApiCaller;
+//using ACG.Tools.Runtime.ApiCallersCreator.Models;
+//using ACG.Tools.Runtime.ApiCallersCreator.Enums;
+//using ACG.Tools.Runtime.ApiCallersCreator.ScriptableObjects;
+
+namespace CONST_RootNamespace.ApiCallers.CONST_ApiCallerName
+{
+    public interface CONST_IApiCallerName
+    {
+        //Task<Pokemon> GetPikachuData(SO_NetworkConfiguration networkConfiguration, RequestEmpty request, RequestMode mode = RequestMode.Direct);
+        //Task<Pokemon> GetCharmanderData(SO_NetworkConfiguration networkConfiguration, RequestEmpty request, RequestMode mode = RequestMode.Direct);
+    }
+}

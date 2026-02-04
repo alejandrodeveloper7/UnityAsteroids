@@ -1,9 +1,8 @@
+using ACG.Scripts.Models;
+using ACG.Scripts.ScriptableObjects.Data;
+using ACG.Tools.Runtime.Pooling.ScriptableObjects;
+using ACG.Tools.Runtime.SOCreator.Data;
 using System.Collections.Generic;
-using ToolsACG.Core.ScriptableObjects.Data;
-using ToolsACG.Core.ScriptableObjects.ParticleSystemConfigs;
-using ToolsACG.Core.Utilitys;
-using ToolsACG.Pooling.ScriptableObjects;
-using ToolsACG.SOCreator.Data;
 using UnityEngine;
 
 namespace Asteroids.Core.ScriptableObjects.Data
@@ -88,11 +87,11 @@ namespace Asteroids.Core.ScriptableObjects.Data
 
         [Header("Particles")]
 
-        [SerializeField] private List<ParticleConfiguration> _particlesOnDamage;
-        public List<ParticleConfiguration> ParticlesOnDamage => _particlesOnDamage;
+        [SerializeField] private List<ParticleSystemData> _particlesOnDamage;
+        public List<ParticleSystemData> ParticlesOnDamage => _particlesOnDamage;
 
-        [SerializeField] private List<ParticleConfiguration> _particlesOnDestruction;
-        public List<ParticleConfiguration> ParticlesOnDestruction => _particlesOnDestruction;
+        [SerializeField] private List<ParticleSystemData> _particlesOnDestruction;
+        public List<ParticleSystemData> ParticlesOnDestruction => _particlesOnDestruction;
 
 
         [Header("Sound")]

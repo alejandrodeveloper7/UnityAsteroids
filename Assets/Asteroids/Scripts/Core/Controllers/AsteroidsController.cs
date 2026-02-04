@@ -2,14 +2,14 @@ using Asteroids.Core.ScriptableObjects.Configurations;
 using Asteroids.Core.ScriptableObjects.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ToolsACG.Core.EventBus;
-using ToolsACG.Core.Utils;
 using UnityEngine;
 using Asteroids.Core.Events.Gameplay;
 using Asteroids.Gameplay.Asteroids.Controllers;
 using Asteroids.Gameplay.Asteroids.Spawners;
 using Zenject;
-using ToolsACG.Core.Services;
+using ACG.Core.EventBus;
+using ACG.Scripts.Services;
+using ACG.Core.Utils;
 
 namespace Asteroids.Core.Controllers
 {

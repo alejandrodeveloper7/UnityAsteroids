@@ -1,4 +1,4 @@
-using ToolsACG.SOCreator.Interfaces;
+using ACG.Tools.Runtime.SOCreator.Interfaces;
 using UnityEngine;
 
 namespace Asteroids.Core.Interfaces

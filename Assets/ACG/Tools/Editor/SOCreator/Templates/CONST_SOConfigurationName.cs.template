@@ -1,0 +1,15 @@
+﻿using ACG.Tools.Runtime.SOCreator.Configurations;
+using UnityEngine;
+
+namespace CONST_RootNamespace.Core.ScriptableObjects.Configurations
+{
+   [CreateAssetMenu(fileName = "CONST_NewInstanceName", menuName = "ScriptableObjects/Configurations/CONST_Name")]
+   public class CONST_SOConfigurationName : SO_ConfigurationBase
+   {         
+       #region Values
+
+       // TODO: Declare your values here.
+
+       #endregion
+   }
+}

@@ -1,5 +1,5 @@
-using ToolsACG.Pooling.ScriptableObjects;
-using ToolsACG.SOCreator.Configurations;
+using ACG.Tools.Runtime.Pooling.ScriptableObjects;
+using ACG.Tools.Runtime.SOCreator.Configurations;
 using UnityEngine;
 
 namespace Asteroids.Core.ScriptableObjects.Configurations
