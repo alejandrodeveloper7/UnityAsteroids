@@ -1,5 +1,4 @@
 using ACG.Core.EventBus;
-using ACG.Core.Utils;
 using ACG.Scripts.Utilitys;
 using ACG.Tools.Runtime.Pooling.Gameplay;
 using Asteroids.Core.Events.GameFlow;
@@ -12,12 +11,12 @@ using Zenject;
 
 namespace Asteroids.Gameplay.Bullets.Controllers
 {
-    [RequireComponent(typeof(ScreenEdgeTeleport))]
-    [RequireComponent(typeof(PooledGameObjectController))]
-    [RequireComponent(typeof(DamageOnContact))]
-    [RequireComponent(typeof(PushOnContact))]
     [RequireComponent(typeof(BulletPhysicsController))]
     [RequireComponent(typeof(BulletLifeTimeController))]
+    [RequireComponent(typeof(PooledGameObjectController))]
+    [RequireComponent(typeof(ScreenEdgeTeleport))]
+    [RequireComponent(typeof(DamageOnContact))]
+    [RequireComponent(typeof(PushOnContact))]
 
     public class BulletController : MonoBehaviour
     {
@@ -27,12 +26,13 @@ namespace Asteroids.Gameplay.Bullets.Controllers
         public event Action BulletReadyToBeRecycled;
 
         [Header("References")]
-        [Inject] private readonly ScreenEdgeTeleport _screenEdgeTeleport;
-        [Inject] private readonly PooledGameObjectController _pooledGameObject;
-        [Inject] private readonly DamageOnContact _damageOnContact;
-        [Inject] private readonly PushOnContact _pushOnContact;
         [Inject] private readonly BulletPhysicsController _bulletPhysicsController;
         [Inject] private readonly BulletLifeTimeController _bulletLifeTimeController;
+        [Space]
+        [Inject] private readonly PooledGameObjectController _pooledGameObject;
+        [Inject] private readonly ScreenEdgeTeleport _screenEdgeTeleport;
+        [Inject] private readonly DamageOnContact _damageOnContact;
+        [Inject] private readonly PushOnContact _pushOnContact;
 
         [Header("Data")]
         private SO_BulletData _bulletData;
@@ -45,7 +45,7 @@ namespace Asteroids.Gameplay.Bullets.Controllers
         {
             _bulletData = data;
 
-            _screenEdgeTeleport.SetData(_bulletData.ScreenEdgeTeleportConfiguration);
+            _screenEdgeTeleport.SetData(_bulletData.ScreenEdgeTeleportData);
             _damageOnContact.SetData(_bulletData.Damage);
             _pushOnContact.SetData(_bulletData.PushForce, _bulletData.TorqueForce, (_bulletData.Speed * -transform.up).normalized);
 
@@ -80,27 +80,27 @@ namespace Asteroids.Gameplay.Bullets.Controllers
 
         private void OnCollisioned()
         {
-            _ = CleanBullet();
+            _ = Recycle();
         }
 
         private void OnLifeTimeCompleted()
         {
-            _ = CleanBullet();
+            _ = Recycle();
         }
 
         private void OnRunExitRequested(RunExitRequested runExitRequested)
         {
-            _ = CleanBullet();
+            _ = Recycle();
         }
 
         #endregion
 
         #region Functionality
 
-        private async Task CleanBullet()
+        private async Task Recycle()
         {
             BulletReadyToBeRecycled?.Invoke();
-            await TimingUtils.WaitSeconds(Time.deltaTime);
+            await Task.Yield();
             _pooledGameObject.RecycleGameObject();
         }
 

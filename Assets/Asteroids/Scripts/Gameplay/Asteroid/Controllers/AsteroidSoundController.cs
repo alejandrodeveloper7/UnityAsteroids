@@ -68,7 +68,7 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
             PlayDestructionSound();
         }
 
-        private void OnDamageDone(DamageInfo data)
+        private void OnDamageDone(DamageData data)
         {
             PlayDamageSound();
         }

@@ -55,7 +55,7 @@ namespace Asteroids.Gameplay.Bullets.Controllers
             _bulletData = data;
 
             ApplyAppearance();
-            PlayBulletLifeSequence();
+            PlayBulletVisualSequence();
         }
 
         private void OnBulletCollisioned()
@@ -73,18 +73,18 @@ namespace Asteroids.Gameplay.Bullets.Controllers
             _spriteRenderer.color = _bulletData.Color;
         }
 
-        private void PlayBulletLifeSequence()
+        private void PlayBulletVisualSequence()
         {
-            StopBulletLifeSequence();
+            StopBulletVisualSequence();
 
             transform.localScale = _bulletData.Scale;
 
             _bulletLifeSequence = DOTween.Sequence();
-            _bulletLifeSequence.AppendInterval(_bulletData.LifeDuration);
+            _bulletLifeSequence.AppendInterval(_bulletData.FullScaleDuration);
             _bulletLifeSequence.Append(transform.DOScale(Vector3.zero, _bulletData.DescaleDuration));
         }
 
-        private void StopBulletLifeSequence()
+        private void StopBulletVisualSequence()
         {
             transform.DOKill();
             _bulletLifeSequence?.Kill();

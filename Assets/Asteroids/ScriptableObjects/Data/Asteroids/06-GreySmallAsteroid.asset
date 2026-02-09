@@ -15,13 +15,15 @@ MonoBehaviour:
   _id: 6
   _prefabData: {fileID: 11400000, guid: c863cd39b4e68274bb707930aa7c1507, type: 2}
   _isInitialAsteroid: 0
-  _possibleSprites:
+  _possibleSpritesList:
   - {fileID: 21300000, guid: 04628f580f90c4c4abe41667699b87fc, type: 3}
   - {fileID: 21300000, guid: 7549a9f4fee0a274eaf85d115f622c68, type: 3}
   _color: {r: 0.8980392, g: 0.8980392, b: 0.8980392, a: 1}
   _scale: {x: 2, y: 2, z: 2}
   _asteroidSpawnAngle: 60
-  _posibleTorque: 80
+  _torqueRange:
+    Min: -80
+    Max: 80
   _alphaAparitionDuration: 0.8
   _maxHP: 2
   _speed: 2
@@ -32,7 +34,7 @@ MonoBehaviour:
   _damageFeedbackDuration: 0.05
   _fragmentsAmountGeneratedOnDestruction: 0
   _fragmentTypesGeneratedOnDestruction: []
-  _screenEdgeTeleportConfiguration:
+  _screenEdgeTeleportData:
     EdgeOffsetY: 0.03
     EdgeRepositionOffsetY: 0.02
     EdgeOffsetX: 0.03

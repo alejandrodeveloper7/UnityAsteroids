@@ -13,11 +13,13 @@ namespace ACG.Scripts.ScriptableObjects.Configurations
         [SerializeField] private string _baseName = "User";
         public string BaseName => _baseName;
 
-        [SerializeField] int _randomCharactersAmount = 6;
-        public int RandomCharactersAmount => _randomCharactersAmount;
+        [Space]
 
         [SerializeField] private string _randomCharacters = "0123456789";
         public string RandomCharacters => _randomCharacters;
+
+        [SerializeField] int _randomCharactersAmount = 6;
+        public int RandomCharactersAmount => _randomCharactersAmount;
 
         #endregion
     }

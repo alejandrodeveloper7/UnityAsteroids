@@ -18,7 +18,7 @@ namespace Asteroids.Core.Controllers
         private int _score;
 
         [Header("States")]
-        private bool _playing;
+        private bool _canScore;
 
         #endregion
 
@@ -64,17 +64,17 @@ namespace Asteroids.Core.Controllers
 
         private void OnRunStarted(RunStarted runStarted)
         {
-            _playing = true;
+            _canScore = true;
         }
 
         private void OnRunExitRequested(RunExitRequested runExitRequested)
         {
-            _playing = false;
+            _canScore = false;
         }
 
         private void OnAsteroidDestroyed(AsteroidDestroyed asteroidDestroyed)
         {
-            if (_playing is false)
+            if (_canScore is false)
                 return;
 
             _score += asteroidDestroyed.AsteroidData.ScoreValue;
@@ -83,7 +83,7 @@ namespace Asteroids.Core.Controllers
 
         private void OnPlayerDied(PlayerDied playerDied)
         {
-            _playing = false;
+            _canScore = false;
         }
 
         #endregion
@@ -96,7 +96,7 @@ namespace Asteroids.Core.Controllers
             EventBusManager.GameplayBus.RaiseEvent(new ScoreUpdated(_score));
         }
 
-        public void SaveLasScore()
+        public void RegisterRunScore()
         {
             _runtimeDataService.Data.LastScore = _score;
         }

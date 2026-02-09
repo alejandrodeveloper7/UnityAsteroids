@@ -11,7 +11,7 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
 
     public class AsteroidHealthController : MonoBehaviour, IDamageable
     {
-        #region Fields
+        #region Fields and events
 
         public event Action<Vector3> AsteroidDamaged;
         public event Action AsteroidDestroyed;
@@ -40,7 +40,6 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
 
         #endregion
 
-
         #region Monobehaviour
 
         private void OnEnable()
@@ -67,12 +66,12 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
 
         #region Management
 
-        public void TakeDamage(DamageInfo data)
+        public void TakeDamage(DamageData data)
         {
             if (_alive is false)
                 return;
 
-            _health-=data.Amount;
+            _health -= data.Amount;
 
             AsteroidDamaged?.Invoke(data.HitPoint);
 
@@ -80,7 +79,7 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
                 Die();
         }
 
-        private void Die() 
+        public void Die()
         {
             _alive = false;
             _health = 0;

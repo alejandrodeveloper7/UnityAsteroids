@@ -1,5 +1,4 @@
 using ACG.Scripts.Models;
-using ACG.Scripts.ScriptableObjects.Data;
 using System.Collections.Generic;
 using UnityEngine;
 

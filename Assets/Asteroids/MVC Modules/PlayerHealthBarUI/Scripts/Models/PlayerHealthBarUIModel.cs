@@ -1,7 +1,11 @@
+using ACG.Core.Utils;
 using ACG.Tools.Runtime.MVCModulesCreator.Bases;
+using Asteroids.Core.ScriptableObjects.Data;
+using Asteroids.Core.Services;
 using Asteroids.MVC.PlayerHealthBarUI.ScriptableObjects;
 using DG.Tweening;
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -11,12 +15,20 @@ namespace Asteroids.MVC.PlayerHealthBarUI.Models
     {
         #region Fields and Properties
 
-        [Header("Health")]
+        [Header("references")]
+        private readonly IContainerRuntimeDataService _containerRuntimeDataService;
+
+        [Header("Values")]
+
         private int _currentHealth;
 
-        [Header("Shield")]
         private float _currentShieldSliderValue;
         public bool ShieldActive { get; private set; }
+
+        public SO_ShipData ShipData { get; private set; }
+
+        [Header("Data")]
+        private readonly SO_PlayerHealthBarUIConfiguration _configuration;
 
         [Header("Cache")]
         private Tween _shieldChargeTween;
@@ -25,10 +37,13 @@ namespace Asteroids.MVC.PlayerHealthBarUI.Models
 
         #region Events
 
+        public event Action<SO_ShipData> RunInitialized;
+
         public event Action<int> HealthUpdated;
         public event Action<int> HealthRestarted;
 
         public event Action<float> ShieldSliderValueUpdated;
+        public event Action ShieldLost;
         public event Action<float> ShieldRestored;
         public event Action<float> ShieldRestarted;
 
@@ -37,18 +52,19 @@ namespace Asteroids.MVC.PlayerHealthBarUI.Models
         #region Constructors
 
         [Inject]
-        public PlayerHealthBarUIModel(SO_PlayerHealthBarUIConfiguration configuration)
+        public PlayerHealthBarUIModel(SO_PlayerHealthBarUIConfiguration configuration, IContainerRuntimeDataService containerRuntimeDataService)
         {
-            //TODO: Initialize the model with the Configuration SO and other data
+            _configuration = configuration;
+            _containerRuntimeDataService = containerRuntimeDataService;
         }
 
         #endregion
 
         #region Health Management
 
-        public void RestartHealth(int newHealth)
+        private void RestartHealth()
         {
-            _currentHealth = newHealth;
+            _currentHealth = ShipData.HealthPoints;
             HealthRestarted?.Invoke(_currentHealth);
         }
 
@@ -60,25 +76,49 @@ namespace Asteroids.MVC.PlayerHealthBarUI.Models
 
         #endregion
 
+        #region Initialization
+
+        public void InitializeRun()
+        {
+            UpdateShipData();
+
+            RunInitialized?.Invoke(ShipData);
+
+            StopShieldRecoveryProcess();
+            RestartHealth();
+            RestartShield();
+        }
+
+        #endregion
+
+        #region Ship data management
+
+        private void UpdateShipData()
+        {
+            ShipData = _containerRuntimeDataService.Data.SelectedShipData;
+        }
+
+        #endregion
+
         #region Shield Management
 
-        public void RestartShield(float newShieldSliderValue)
+        public async Task StartShieldLostProcess()
         {
-            _currentShieldSliderValue = newShieldSliderValue;
-            ShieldActive = true;
-            ShieldRestarted?.Invoke(_currentShieldSliderValue);
-        }
+            if (ShieldActive is false)
+                return;
 
-        public void ShieldLost() 
-        {
             ShieldActive = false;
+            ShieldLost?.Invoke();
+            await TimingUtils.WaitSeconds(_configuration.ShieldSliderTransitionDuration);
+            StartShieldRecoveryProcess();
         }
 
-        public void StartShieldRecoveryProcess(float minValue, float maxValue, float duration)
+        private void StartShieldRecoveryProcess()
         {
-            float currentValue = minValue;
+            float shieldRecoveryDuration = ShipData.ShieldRecoveryTime - _configuration.ShieldSliderTransitionDuration;
+            float currentValue = ShipData.ShieldSliderValueRange.Min;
 
-            _shieldChargeTween = DOTween.To(() => currentValue, x => currentValue = x, maxValue, duration)
+            _shieldChargeTween = DOTween.To(() => currentValue, x => currentValue = x, ShipData.ShieldSliderValueRange.Max, shieldRecoveryDuration)
                 .SetEase(Ease.Linear)
                 .OnUpdate(() =>
                 {
@@ -88,7 +128,7 @@ namespace Asteroids.MVC.PlayerHealthBarUI.Models
                 .OnComplete(() =>
                 {
                     ShieldActive = true;
-                    ShieldRestored?.Invoke(maxValue);
+                    ShieldRestored?.Invoke(ShipData.ShieldSliderValueRange.Max);
                 });
 
         }
@@ -96,6 +136,14 @@ namespace Asteroids.MVC.PlayerHealthBarUI.Models
         public void StopShieldRecoveryProcess()
         {
             _shieldChargeTween?.Kill();
+            _shieldChargeTween = null;
+        }
+
+        private void RestartShield()
+        {
+            _currentShieldSliderValue = ShipData.ShieldSliderValueRange.Max;
+            ShieldActive = true;
+            ShieldRestarted?.Invoke(_currentShieldSliderValue);
         }
 
         #endregion

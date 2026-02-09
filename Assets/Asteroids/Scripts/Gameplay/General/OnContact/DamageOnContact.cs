@@ -9,10 +9,19 @@ namespace Asteroids.Gameplay.General.OnContact
     {
         #region Fields and events
 
-        public event Action<DamageInfo> DamageDone;
+        public event Action<DamageData> DamageDone;
 
         [Header("Configuration")]
         private int _damage = 1;
+
+        #endregion
+
+        #region Initialization
+
+        public void SetData(int value)
+        {
+            _damage = value;
+        }
 
         #endregion
 
@@ -22,20 +31,11 @@ namespace Asteroids.Gameplay.General.OnContact
         {
             if (collision.TryGetComponent(out IDamageable damageable))
             {
-                DamageInfo damageInfo = new (_damage, collision.ClosestPoint(transform.position), gameObject);
-                damageable.TakeDamage(damageInfo);
+                DamageData damageData = new (_damage, collision.ClosestPoint(transform.position), gameObject);
+                damageable.TakeDamage(damageData);
 
-                DamageDone?.Invoke(damageInfo);
+                DamageDone?.Invoke(damageData);
             }
-        }
-
-        #endregion
-
-        #region Initialization
-
-        public void SetData(int value)
-        {
-            _damage = value;
         }
 
         #endregion

@@ -12,11 +12,12 @@ namespace Asteroids.Core.Intallers
 
         public override void InstallBindings()
         {
-            //Api callers            
+            //Game Apicallers            
             Container.Bind<IDreamloLeaderboardApiCaller>().To<DreamloLeaderboardApiCaller>().FromInstance(DreamloLeaderboardApiCaller.Instance);
             Container.Bind<IDreamloLeaderboardApiService>().To<DreamloLeaderboardApiService>().AsSingle();
             Container.Bind<DreamloLeaderboardApiContainer>().AsSingle();
 
+            //Example ApiCaller
             Container.Bind<IPokemonApiCaller>().To<PokemonApiCaller>().FromInstance(PokemonApiCaller.Instance);
             Container.Bind<IPokemonApiService>().To<PokemonApiService>().AsSingle();
             Container.Bind<PokemonApiContainer>().AsSingle();

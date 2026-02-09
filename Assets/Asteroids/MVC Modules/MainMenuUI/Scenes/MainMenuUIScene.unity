@@ -318,10 +318,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 843dd6888ba45594ba7c2853968f0a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shipSelectorController: {fileID: 6503748758486444390}
-  _shipStatsDisplayerController: {fileID: 2684284682696941747}
-  _bulletSelectorController: {fileID: 2761279259293270661}
-  _bulletStatsDisplayerController: {fileID: 240593106}
 --- !u!114 &57698132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,6 +333,10 @@ MonoBehaviour:
   GeneralContainer: {fileID: 4323647771394167293}
   _userNameInputField: {fileID: 3418087238465618954}
   _playButton: {fileID: 115063697940255636}
+  _shipSelectorController: {fileID: 6503748758486444390}
+  _bulletSelectorController: {fileID: 2761279259293270661}
+  _shipStatsDisplayerController: {fileID: 2684284682696941747}
+  _bulletStatsDisplayerController: {fileID: 240593106}
 --- !u!225 &57698133
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -495,10 +495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9a474f8bc99ee740bcb5190dd112bc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moduleRoot: {fileID: 57698126}
   _mainMenuUIConfiguration: {fileID: 11400000, guid: 281c56a1ab1d36143b25c3f10f904e0a, type: 2}
-  _statsDisplayConfiguration: {fileID: 11400000, guid: 21724847a3c7940409e0d33970ab0c58, type: 2}
-  _userNameConfiguration: {fileID: 11400000, guid: ad8c8fc991135754aa8fd195ca12e849, type: 2}
 --- !u!114 &710848009
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ namespace Asteroids.Gameplay.FloatingText.Spawners
 
         [Header("References")]
         private readonly FloatingTextFactory _factory;
-        private readonly Transform _floatingTextParent;
+        private Transform _floatingTextsParent;
 
         [Header("Data")]
         private readonly SO_FloatingTextConfiguration _configuration;
@@ -27,7 +27,16 @@ namespace Asteroids.Gameplay.FloatingText.Spawners
             _configuration = configuration;
             _factory = factory;
 
-            _floatingTextParent = new GameObject("FloatingTexts").transform;
+            CreateParent();
+        }
+
+        #endregion
+
+        #region Parent management
+
+        private void CreateParent()
+        {
+            _floatingTextsParent = new GameObject("FloatingTexts").transform;
         }
 
         #endregion
@@ -36,8 +45,11 @@ namespace Asteroids.Gameplay.FloatingText.Spawners
 
         public GameObject Spawn(Vector3 position, string text)
         {
+            if (_configuration.UseFloatingText is false)
+                return null;
+
             GameObject newInstance = _factory.GetInstance(_configuration);
-            newInstance.transform.SetParent(_floatingTextParent, false);
+            newInstance.transform.SetParent(_floatingTextsParent, false);
             newInstance.transform.SetPositionAndRotation(position, Quaternion.identity);
 
             FloatingTextController controller = newInstance.GetComponent<FloatingTextController>();

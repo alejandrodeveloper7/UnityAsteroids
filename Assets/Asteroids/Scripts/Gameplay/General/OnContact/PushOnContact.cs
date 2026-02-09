@@ -9,27 +9,12 @@ namespace Asteroids.Gameplay.General.OnContact
     {
         #region Fields and events
 
-        public event Action<PushInfo> PushDone;
+        public event Action<PushData> PushDone;
 
         [Header("Configuration")]
         private float _pushForce = 0.5f;
         private float _torqueForce = 0.5f;
         private Vector2 _direction;
-
-        #endregion
-
-        #region Monobehaviour
-
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.TryGetComponent(out IPushable pushable))
-            {
-                PushInfo pushInfo = new(_pushForce, _torqueForce, collision.ClosestPoint(transform.position), _direction, gameObject);
-                pushable.Push(pushInfo);
-
-                PushDone?.Invoke(pushInfo);
-            }
-        }
 
         #endregion
 
@@ -40,6 +25,21 @@ namespace Asteroids.Gameplay.General.OnContact
             _pushForce = pushForce;
             _torqueForce = torqueForce;
             _direction = direction;
+        }
+
+        #endregion
+
+        #region Monobehaviour
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.TryGetComponent(out IPushable pushable))
+            {
+                PushData pushData = new(_pushForce, _torqueForce, collision.ClosestPoint(transform.position), _direction, gameObject);
+                pushable.Push(pushData);
+
+                PushDone?.Invoke(pushData);
+            }
         }
 
         #endregion

@@ -1,5 +1,9 @@
 using ACG.Tools.Runtime.MVCModulesCreator.Bases;
+using Asteroids.ApiCallers.DreamloLeaderboardApiCaller;
+using Asteroids.Core.Services;
 using Asteroids.MVC.LeaderboardUI.ScriptableObjects;
+using System;
+using UnityEngine;
 using Zenject;
 
 namespace Asteroids.MVC.LeaderboardUI.Models
@@ -8,25 +12,55 @@ namespace Asteroids.MVC.LeaderboardUI.Models
     {
         #region Fields and Properties
 
-        //Declare your fields and properties here
+        [Header("references")]
+        private readonly IContainerRuntimeDataService _containerRuntimeDataService;
+
+        [Header("Data")]
+        private readonly SO_LeaderboardUIConfiguration _configuration;
+        [Space]
+        private Leaderboard _leaderboardData;
+
+        public string Username { get; private set; }
 
         #endregion
 
         #region Events
 
-        //public event Action Something;
-        //public event Action<int> SomethingWithParameter;
+        public event Action<Leaderboard> LeaderboardDataUpdated;
 
         #endregion
 
         #region Constructors
 
         [Inject]
-        public LeaderboardUIModel(SO_LeaderboardUIConfiguration configuration)
+        public LeaderboardUIModel(SO_LeaderboardUIConfiguration configuration ,IContainerRuntimeDataService containerRuntimeDataService)
         {
-            //TODO: Initialize the model with the Configuration SO and other data
+            _configuration = configuration;
+            _containerRuntimeDataService = containerRuntimeDataService;
+            
+            UpdateUsername();
         }
 
         #endregion
+
+        #region Username management
+
+        public void UpdateUsername()
+        {
+            Username = _containerRuntimeDataService.Data.UserName;
+        }
+
+        #endregion
+
+        #region Leaderboard Data Management
+
+        public void SetLeaderboardData(Leaderboard data)
+        {
+            _leaderboardData = data;
+            LeaderboardDataUpdated?.Invoke(_leaderboardData);
+        }
+
+        #endregion
+
     }
 }

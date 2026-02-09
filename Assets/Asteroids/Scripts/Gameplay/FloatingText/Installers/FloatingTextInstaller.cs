@@ -8,6 +8,7 @@ namespace Asteroids.Gameplay.FloatingText.Intallers
     {
         public override void InstallBindings()
         {
+            Container.Bind<FloatingTextController>().FromComponentSibling();
             Container.Bind<FloatingTextVisualsController>().FromComponentSibling();
 
             Container.Bind<PooledGameObjectController>().FromComponentSibling();

@@ -1,3 +1,4 @@
+using ACG.Core.Models;
 using ACG.Tools.Runtime.MVCModulesCreator.Bases;
 using UnityEngine;
 
@@ -46,14 +47,11 @@ namespace Asteroids.MVC.PlayerHealthBarUI.ScriptableObjects
 
         [Space]
 
+        [SerializeField] private FloatRange _shieldShineBlinkAlphaRange;
+        public FloatRange ShieldShineBlinkAlphaRange => _shieldShineBlinkAlphaRange;
+
         [SerializeField] private float _shieldShineBlinkDuration = 0.3f;
         public float ShieldShineBlinkDuration => _shieldShineBlinkDuration;
-
-        [SerializeField] private float _shieldShineBlinkMinAlpha = 0.75f;
-        public float ShieldShineBlinkMinAlpha => _shieldShineBlinkMinAlpha;
-
-        [SerializeField] private float _shieldShineBlinkMaxAlpha = 1f;
-        public float ShieldShineBlinkMaxAlpha => _shieldShineBlinkMaxAlpha;
 
         #endregion
 

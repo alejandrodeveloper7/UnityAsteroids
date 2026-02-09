@@ -2,6 +2,7 @@ using ACG.Core.Keys;
 using ACG.Scripts.Managers;
 using ACG.Tools.Runtime.ServicesCreator.Bases;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -13,7 +14,8 @@ namespace ACG.Scripts.Services
 
         [Header("References")]
         private readonly IScreenService _screenService;
-        private readonly ISoundManager _soundManager;
+        private readonly ISoundService _soundService;
+
         private readonly IPersistentDataService _persistentDataService;
 
         #endregion
@@ -21,10 +23,10 @@ namespace ACG.Scripts.Services
         #region Constructors
 
         [Inject]
-        public SettingsService(IScreenService screenService, ISoundManager soundManager, IPersistentDataService persistentDataService)
+        public SettingsService(IScreenService screenService, ISoundService soundService, IPersistentDataService persistentDataService)
         {
             _screenService = screenService;
-            _soundManager = soundManager;
+            _soundService = soundService;
             _persistentDataService = persistentDataService;
 
             Initialize();
@@ -52,25 +54,27 @@ namespace ACG.Scripts.Services
 
         public void ApplyAllStoredSettings()
         {
-            ApplyStoredMusicVolume();
-            ApplyStoredEffectsVolume();
-            ApplyStoredFullScreen();
-            ApplyStoredResolution();
+            SetStoredMusicVolume();
+            SetStoredEffectsVolume();
+            SetStoredFullScreen();
+            SetStoredResolution();
         }
 
         #endregion
 
         #region FullScreen
 
-        public void ApplyStoredFullScreen()
+        public void SetStoredFullScreen()
         {
             _screenService.SetFullScreenMode(GetFullScreen());
         }
+
         public void SetFullScreen(bool isFullScreen)
         {
             _screenService.SetFullScreenMode(isFullScreen);
             _persistentDataService.SetInt(PlayerPrefsKeys.FULL_SCREEN_MODE_KEY, isFullScreen ? 1 : 0);
         }
+
         public bool GetFullScreen()
         {
             return Convert.ToBoolean(_persistentDataService.GetInt(PlayerPrefsKeys.FULL_SCREEN_MODE_KEY, 0));
@@ -78,38 +82,67 @@ namespace ACG.Scripts.Services
 
         #endregion
 
-        #region Volumes
+        #region Music Volume
 
-        public void ApplyStoredMusicVolume()
+        public void SetStoredMusicVolume()
         {
-            _soundManager.SetMusicVolume(GetMusicVolume());
+            _soundService.SetMusicVolume(GetMusicVolume());
         }
+
         public void SetMusicVolume(float value)
         {
-            _soundManager.SetMusicVolume(value);
+            _soundService.SetMusicVolume(value);
         }
+
         public void SaveMusicVolume(float value)
         {
             _persistentDataService.SetFloat(PlayerPrefsKeys.MUSIC_VOLUME_KEY, value);
         }
+
         public float GetMusicVolume()
         {
             return _persistentDataService.GetFloat(PlayerPrefsKeys.MUSIC_VOLUME_KEY, 1);
         }
 
+        #endregion
 
-        public void ApplyStoredEffectsVolume()
+        #region Music mute
+
+        public void SetStoredMusicMute()
         {
-            _soundManager.SetEffectsVolume(GetEffectsVolume());
+            _soundService.SetMuteMusicState(GetMusicMuted());
         }
+
+        public void SetMusicMute(bool state)
+        {
+            _soundService.SetMuteMusicState(state);
+            _persistentDataService.SetInt(PlayerPrefsKeys.MUSIC_MUTED_KEY, state ? 1 : 0);
+        }
+
+        public bool GetMusicMuted()
+        {
+            return Convert.ToBoolean(_persistentDataService.GetInt(PlayerPrefsKeys.MUSIC_MUTED_KEY, 0));
+        }
+
+        #endregion
+
+        #region Effects Volume
+
+        public void SetStoredEffectsVolume()
+        {
+            _soundService.SetEffectsVolume(GetEffectsVolume());
+        }
+
         public void SetEffectsVolume(float value)
         {
-            _soundManager.SetEffectsVolume(value);
+            _soundService.SetEffectsVolume(value);
         }
+
         public void SaveEffectsVolume(float value)
         {
             _persistentDataService.SetFloat(PlayerPrefsKeys.EFFECTS_VOLUME_KEY, value);
         }
+
         public float GetEffectsVolume()
         {
             return _persistentDataService.GetFloat(PlayerPrefsKeys.EFFECTS_VOLUME_KEY, 1);
@@ -117,20 +150,47 @@ namespace ACG.Scripts.Services
 
         #endregion
 
+        #region Effects mute
+
+        public void SetStoredEffectsMute()
+        {
+            _soundService.SetMuteEffectsState(GetEffectsMuted());
+        }
+
+        public void SetEffectsMute(bool state)
+        {
+            _soundService.SetMuteEffectsState(state);
+            _persistentDataService.SetInt(PlayerPrefsKeys.EFFECTS_MUTED_KEY, state ? 1 : 0);
+        }
+
+        public bool GetEffectsMuted()
+        {
+            return Convert.ToBoolean(_persistentDataService.GetInt(PlayerPrefsKeys.EFFECTS_MUTED_KEY, 0));
+        }
+
+        #endregion
+
         #region Resolution
 
-        public void ApplyStoredResolution()
+        public void SetStoredResolution()
         {
             _screenService.SetResolution(GetResolutionIndex());
         }
+
         public void SetResolution(int index)
         {
             _screenService.SetResolution(index);
             _persistentDataService.SetInt(PlayerPrefsKeys.RESOLUTION_INDEX_KEY, index);
         }
+
         public int GetResolutionIndex()
         {
             return _persistentDataService.GetInt(PlayerPrefsKeys.RESOLUTION_INDEX_KEY, 0);
+        }
+
+        public List<string> GetAvailableResolutionOptions()
+        {
+            return _screenService.AvailableResolutionsOptions;
         }
 
         #endregion

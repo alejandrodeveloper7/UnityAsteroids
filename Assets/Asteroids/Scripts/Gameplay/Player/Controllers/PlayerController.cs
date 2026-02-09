@@ -1,6 +1,5 @@
 using ACG.Core.EventBus;
 using ACG.Core.Utils;
-using ACG.Scripts.Managers;
 using ACG.Scripts.Utilitys;
 using ACG.Tools.Runtime.Pooling.Gameplay;
 using Asteroids.Core.Events.GameFlow;
@@ -48,7 +47,7 @@ namespace Asteroids.Gameplay.Player.Controllers
         {
             _shipData = data;
 
-            _screenEdgeTeleport.SetData(_shipData.ScreenEdgeTeleportConfiguration);
+            _screenEdgeTeleport.SetData(_shipData.ScreenEdgeTeleportData);
 
             PlayerInitialized?.Invoke(_shipData);
         }
@@ -94,12 +93,12 @@ namespace Asteroids.Gameplay.Player.Controllers
         private async void OnPlayerDied()
         {
             await TimingUtils.WaitSeconds(_shipData.TimeBeforeRecicle);
-            _ = CleanPlayer();
+            _ = Recycle();
         }
 
         private void OnRunExitRequested(RunExitRequested runExitRequested)
         {
-            _ = CleanPlayer();
+            _ = Recycle();
         }
 
         private void OnGamePaused()
@@ -126,10 +125,10 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         #region Functionality
 
-        private async Task CleanPlayer()
+        private async Task Recycle()
         {
             PlayerReadyToBeRecycled?.Invoke();
-            await TimingUtils.WaitSeconds(Time.deltaTime);
+            await Task.Yield();
             _pooledGameObject.RecycleGameObject();
         }
 

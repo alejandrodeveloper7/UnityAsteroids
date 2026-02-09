@@ -19,14 +19,14 @@ namespace Asteroids.UI.Controllers
         [Header("References")]
         [SerializeField] private Image _elementDisplayImage;
 
+        [Header("Values")]
+        private int _selectedIndex = 0;
+        public int SelectedId { get; private set; }
+
         [Header("Data")]
         [Inject] private readonly SO_SelectorConfiguration _selectorConfiguration;
         [Space]
         private List<ISelectorElement> _availableItems;
-
-        [Header("Values")]
-        private int _selectedIndex = 0;
-        public int SelectedId { get; private set; }
 
         #endregion
 
@@ -37,7 +37,7 @@ namespace Asteroids.UI.Controllers
             _availableItems = items;
             _selectedIndex = initialIndex;
 
-            UpdateSelectedItem();
+            UpdateSelectedItem(true, false);
         }
 
         #endregion
@@ -60,7 +60,7 @@ namespace Asteroids.UI.Controllers
 
         #region Private Methods
 
-        private void UpdateSelectedItem(bool isNext = true, bool useAnimation = false)
+        private void UpdateSelectedItem(bool isNext, bool useAnimation)
         {
             if (_availableItems == null || _availableItems.Count == 0)
                 return;
@@ -75,7 +75,7 @@ namespace Asteroids.UI.Controllers
                 {
                     SelectedId = _availableItems[validIndex].Id;
                     SelectedElementUpdated?.Invoke(SelectedId);
-                    _ = UpdateDisplay(validIndex, useAnimation);
+                    UpdateDisplay(validIndex, useAnimation);
                     return;
                 }
 
@@ -83,15 +83,18 @@ namespace Asteroids.UI.Controllers
             }
         }
 
-        private async Task UpdateDisplay(int index, bool useAnimation = false)
+        private void UpdateDisplay(int index, bool useAnimation)
         {
             _elementDisplayImage.transform.DOKill();
 
             if (useAnimation)
             {
-                await _elementDisplayImage.transform.DORotate(_selectorConfiguration.DisplayedItemAnimationRotationAngle, _selectorConfiguration.DisplayedItemChangeAnimationTotalDuration * 0.5f).AsyncWaitForCompletion();
-                _elementDisplayImage.sprite = _availableItems[index].Sprite;
-                await _elementDisplayImage.transform.DORotate(new Vector3(0, 0, 0), _selectorConfiguration.DisplayedItemChangeAnimationTotalDuration * 0.5f).AsyncWaitForCompletion();
+                Sequence seq = DOTween.Sequence();
+
+                seq.Append(_elementDisplayImage.transform.DORotate(_selectorConfiguration.DisplayChangeRotationAngle, _selectorConfiguration.DisplayChangeDuration / 2));
+                seq.AppendCallback(() => { _elementDisplayImage.sprite = _availableItems[index].Sprite; });
+                seq.Append(_elementDisplayImage.transform.DORotate(Vector3.zero, _selectorConfiguration.DisplayChangeDuration / 2));
+                seq.Play();
             }
             else
                 _elementDisplayImage.sprite = _availableItems[index].Sprite;

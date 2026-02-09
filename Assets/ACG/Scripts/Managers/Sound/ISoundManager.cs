@@ -6,10 +6,7 @@ using UnityEngine;
 namespace ACG.Scripts.Managers
 {
     public interface ISoundManager
-    {
-        void SetMusicVolume(float newValue);
-        void SetEffectsVolume(float newValue);
-
+    {      
         void PlayMusicLoop();
         void StopMusicLoop(float progressivelyStopDuration);
 

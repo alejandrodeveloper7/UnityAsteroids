@@ -35,11 +35,6 @@ namespace Asteroids.MVC.ScoreUI.Views
         protected override void GetReferences()
         {
             base.GetReferences();
-
-            // Not used thanks to Zenject injection
-            //_controller = GetComponent<IMainMenuUIController>();
-            //_model = _controller.Model;
-            //_configuration = _controller.ModuleConfigurationData;
         }
 
         protected override void Initialize()

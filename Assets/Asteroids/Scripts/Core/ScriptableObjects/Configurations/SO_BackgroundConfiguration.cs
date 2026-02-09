@@ -1,3 +1,4 @@
+using ACG.Core.Models;
 using ACG.Tools.Runtime.SOCreator.Configurations;
 using DG.Tweening;
 using UnityEngine;
@@ -22,23 +23,18 @@ namespace Asteroids.Core.ScriptableObjects.Configurations
        
         [SerializeField] private float _movementDuration;
         public float MovementDuration=> _movementDuration;
-    
+
         [SerializeField] private Ease _movementEase;
         public Ease MovementEase=> _movementEase;
 
 
         [Header("Aparition")]
-    
-        [SerializeField] private float _initialAlphaValue;
-        public float InitialAlphaValue=> _initialAlphaValue;
-    
-        [SerializeField] private float _finalAlphaValue;
-        public float FinalAlphaValue=> _finalAlphaValue;
-
-        [Space]
 
         [SerializeField] private float _alphaTransitionDuration;
         public float AlphaTransitionDuration=> _alphaTransitionDuration;
+
+        [SerializeField] private FloatRange _alphaValueRange;
+        public FloatRange AlphaValueRange => _alphaValueRange;
         
         #endregion
     }

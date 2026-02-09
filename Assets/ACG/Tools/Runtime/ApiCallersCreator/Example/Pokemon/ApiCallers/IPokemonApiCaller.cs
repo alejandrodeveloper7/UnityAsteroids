@@ -8,6 +8,7 @@ namespace ACG.Tools.Runtime.ApiCallers.Pokemon
     public interface IPokemonApiCaller
     {
         Task<Pokemon> GetPikachuData(SO_NetworkConfiguration networkConfiguration, RequestEmpty request, RequestMode mode = RequestMode.Direct);
+  
         Task<Pokemon> GetCharmanderData(SO_NetworkConfiguration networkConfiguration, RequestEmpty request, RequestMode mode = RequestMode.Direct);
     }
 }

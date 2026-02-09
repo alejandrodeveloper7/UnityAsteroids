@@ -9,10 +9,10 @@ using Zenject;
 
 namespace Asteroids.Gameplay.Player.Controllers
 {
-    [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(PlayerController))]
     [RequireComponent(typeof(PlayerHealthController))]
     [RequireComponent(typeof(PlayerMovementController))]
+    [RequireComponent(typeof(SpriteRenderer))]
 
     public class PlayerVisualsController : MonoBehaviour
     {
@@ -109,22 +109,21 @@ namespace Asteroids.Gameplay.Player.Controllers
             {
                 DeactivateShield();
                 PlayInvulnerabilityBlinkSequence();
-                _cameraFXManager.PlayCameraShake(_shipData.ShieldLostCameraShakeConfig);
+                _cameraFXManager.PlayCameraShake(_shipData.ShieldLostCameraShakeData);
             }
-
         }
 
         private void OnPlayerDamaged()
         {
             PlayInvulnerabilityBlinkSequence();
-            _cameraFXManager.PlayCameraShake(_shipData.DamageTakedCameraShakeConfig);
+            _cameraFXManager.PlayCameraShake(_shipData.DamageTakedCameraShakedata);
         }
 
         private void OnPlayerDied()
         {
             CreateDeadParticles();
             StopInvulnerabilityBlinkSequence();
-            _cameraFXManager.PlayCameraShake(_shipData.DeadCameraShakeConfig);
+            _cameraFXManager.PlayCameraShake(_shipData.DeadCameraShakeData);
         }
 
         #endregion
@@ -154,7 +153,7 @@ namespace Asteroids.Gameplay.Player.Controllers
         {
             _shieldFX.enabled = true;
             _blinkSequence?.Kill();
-            await _shieldFX.DOFade(_shipData.ShieldBlinkMaxAlpha, _shipData.ShieldFadeInDuration).AsyncWaitForCompletion();
+            await _shieldFX.DOFade(_shipData.ShieldBlinkAlphaRange.Max, _shipData.ShieldFadeInDuration).AsyncWaitForCompletion();
             PlayShieldBlinkSequenceLoop();
         }
 
@@ -168,8 +167,8 @@ namespace Asteroids.Gameplay.Player.Controllers
         private void PlayShieldBlinkSequenceLoop()
         {
             _blinkSequence = DOTween.Sequence()
-            .Append(_shieldFX.DOFade(_shipData.ShieldBlinkMinAlpha, _shipData.ShieldBlinkDuration).SetEase(Ease.InOutSine))
-            .Append(_shieldFX.DOFade(_shipData.ShieldBlinkMaxAlpha, _shipData.ShieldBlinkDuration).SetEase(Ease.InOutSine))
+            .Append(_shieldFX.DOFade(_shipData.ShieldBlinkAlphaRange.Min, _shipData.ShieldBlinkDuration).SetEase(Ease.InOutSine))
+            .Append(_shieldFX.DOFade(_shipData.ShieldBlinkAlphaRange.Max, _shipData.ShieldBlinkDuration).SetEase(Ease.InOutSine))
             .SetLoops(-1, LoopType.Yoyo);
         }
 
@@ -181,13 +180,10 @@ namespace Asteroids.Gameplay.Player.Controllers
         {
             StopInvulnerabilityBlinkSequence();
 
-            float blinkDuration = 1f / (_shipData.InvulnerabilityBlinksPerSecond * 2);
-            int totalBlinks = _shipData.InvulnerabilityDuration * _shipData.InvulnerabilityBlinksPerSecond;
-
             _invulnerabilityBlinkSequence = DOTween.Sequence()
-                .Append(_shipSpriteRenderer.DOFade(0f, blinkDuration).SetEase(Ease.Linear))
-                .Append(_shipSpriteRenderer.DOFade(1f, blinkDuration).SetEase(Ease.Linear))
-                .SetLoops(totalBlinks, LoopType.Yoyo);
+                .Append(_shipSpriteRenderer.DOFade(0f, _shipData.InvulnerabilityBlinkDuration).SetEase(Ease.Linear))
+                .Append(_shipSpriteRenderer.DOFade(1f, _shipData.InvulnerabilityBlinkDuration).SetEase(Ease.Linear))
+                .SetLoops(_shipData.TotalInvulnerabilityBlinks, LoopType.Yoyo);
         }
 
         private void StopInvulnerabilityBlinkSequence()
@@ -201,7 +197,7 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         private void CreateDeadParticles()
         {
-                _vFXManager.PlayParticlesVFX(_shipData.ParticlesOnDead, transform.position, Quaternion.identity, null);
+            _vFXManager.PlayParticlesVFX(_shipData.ParticlesOnDead, transform.position, Quaternion.identity, null);
         }
 
         #endregion

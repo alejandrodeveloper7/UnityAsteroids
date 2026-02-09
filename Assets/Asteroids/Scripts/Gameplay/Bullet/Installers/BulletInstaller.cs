@@ -13,8 +13,10 @@ namespace Asteroids.Gameplay.Bullets.Intallers
         {
             Container.Bind<BulletController>().FromComponentSibling();
             Container.Bind<BulletVisualsController>().FromComponentSibling();
-            Container.Bind<BulletPhysicsController>().FromComponentSibling();
             Container.Bind<BulletLifeTimeController>().FromComponentSibling();
+            Container.Bind<BulletMovementController>().FromComponentSibling();
+            Container.Bind<BulletPhysicsController>().FromComponentSibling();
+            Container.Bind<BulletSoundController>().FromComponentSibling();
 
             Container.Bind<PushOnContact>().FromComponentSibling();
             Container.Bind<DamageOnContact>().FromComponentSibling();

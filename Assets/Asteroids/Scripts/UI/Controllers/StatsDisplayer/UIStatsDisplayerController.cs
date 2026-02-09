@@ -16,7 +16,7 @@ namespace Asteroids.UI.Controllers
         #region Fields
 
         [Header("References")]
-        private readonly List<UIStatsDisplayerRowController> _currentRows = new();
+        private readonly List<UIStatsDisplayerRowController> _currentRowsList = new();
         [Inject] private readonly DiContainer _container;
 
         [Header("Data")]
@@ -25,25 +25,16 @@ namespace Asteroids.UI.Controllers
 
         #endregion
 
-        #region Initialization
+        #region Monobehaviour
 
-        private void Initialize()
+        private void Awake()
         {
             CreateStatsRows();
         }
 
         #endregion
 
-        #region Monobehaviour
-
-        private void Awake()
-        {
-            Initialize();
-        }
-
-        #endregion
-
-        #region Stat Rows Management
+        #region Rows Management
 
         private void CreateStatsRows()
         {
@@ -53,40 +44,37 @@ namespace Asteroids.UI.Controllers
 
         private void AddStatRow(StatConfiguration statConfiguration)
         {
-            if (StatExist(statConfiguration.Id))
-            {
-                Debug.Log($"stat {statConfiguration.Id} already exists");
-                return;
-            }
+            if (StatExist(statConfiguration.Id))            
+                return;            
 
             GameObject newRow = _container.InstantiatePrefab(_displayerConfiguration.StatsRowPrefab, transform);
             UIStatsDisplayerRowController newController = newRow.GetComponent<UIStatsDisplayerRowController>();
-            _currentRows.Add(newController);
+            _currentRowsList.Add(newController);
             newController.Initialize(statConfiguration);
         }
 
-        public void RemoveStatRow(StatIdType id)
+        private void RemoveStatRow(StatIdType id)
         {
-            foreach (UIStatsDisplayerRowController row in _currentRows)
+            foreach (UIStatsDisplayerRowController row in _currentRowsList)
                 if (row.Id == id)
                     Destroy(row);
 
-            _currentRows.RemoveNulls();
+            _currentRowsList.RemoveNulls();
         }
 
-        public void RemoveAllStatsRows()
+        private void RemoveAllStatsRows()
         {
-            foreach (UIStatsDisplayerRowController row in _currentRows)
+            foreach (UIStatsDisplayerRowController row in _currentRowsList)
                 Destroy(row);
 
-            _currentRows.Clear();
+            _currentRowsList.Clear();
         }
 
         #endregion
 
         #region Values Management
 
-        public void SetStatsValues(IHasStats data, bool progressively = false)
+        public void SetStatsValues(IHasStats data, bool progressively)
         {
             foreach (StatData stat in data.Stats)
             {
@@ -98,7 +86,7 @@ namespace Asteroids.UI.Controllers
 
         private void SetStatValue(StatIdType id, float value, bool progressively)
         {
-            foreach (UIStatsDisplayerRowController row in _currentRows)
+            foreach (UIStatsDisplayerRowController row in _currentRowsList)
                 if (row.Id == id)
                     row.SetValue(value, progressively);
         }
@@ -109,7 +97,7 @@ namespace Asteroids.UI.Controllers
 
         private bool StatExist(StatIdType id)
         {
-            foreach (UIStatsDisplayerRowController row in _currentRows)
+            foreach (UIStatsDisplayerRowController row in _currentRowsList)
                 if (row.Id == id)
                     return true;
 

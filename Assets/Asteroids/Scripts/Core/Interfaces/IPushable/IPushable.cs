@@ -4,6 +4,6 @@ namespace Asteroids.Core.Interfaces
 {
     public interface IPushable
     {
-        void Push(PushInfo pushInfo);
+        void Push(PushData pushData);
     }
 }

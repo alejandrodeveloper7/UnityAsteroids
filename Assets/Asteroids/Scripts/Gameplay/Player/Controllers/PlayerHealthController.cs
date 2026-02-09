@@ -35,11 +35,11 @@ namespace Asteroids.Gameplay.Player.Controllers
         private bool _shieldActive;
         private bool _isAlive;
 
-        [Header("Data")]
-        private SO_ShipData _shipData;
-
         [Header("Cache")]
         private Coroutine _currentShieldRecoveryCoroutine;
+        
+        [Header("Data")]
+        private SO_ShipData _shipData;
 
         #endregion
 
@@ -88,7 +88,7 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         #region Damage Management
 
-        public void TakeDamage(DamageInfo data)
+        public void TakeDamage(DamageData data)
         {
             if (_playerPhysicsController.InCollisionCooldown)
                 return;
@@ -102,16 +102,18 @@ namespace Asteroids.Gameplay.Player.Controllers
         private void LoseShield()
         {
             _shieldActive = false;
-            _debugService.Log("Player", "Shield lost", Color.cyan, Color.red);
             _currentShieldRecoveryCoroutine = StartCoroutine(RecoverShieldAfterDelay(_shipData.ShieldRecoveryTime));
 
             PlayerShieldStateChanged?.Invoke(false);
             EventBusManager.GameplayBus.RaiseEvent(new PlayerShieldStateChanged(false));
+            
+            _debugService.Log("Player", "Shield lost", Color.cyan, Color.red);
         }
 
         private void LoseHealth(int amount)
         {
             _health -= amount;
+            
             _debugService.Log("Player", $"{amount} Damage taked", Color.cyan, Color.red);
 
             PlayerDamaged?.Invoke();
@@ -121,11 +123,12 @@ namespace Asteroids.Gameplay.Player.Controllers
                 Die();
         }
 
-        private void Die()
+        public void Die()
         {
             _isAlive = false;
-            _debugService.Log("Player", "Dead", Color.cyan, Color.red);
             CancelShieldRecovery();
+
+            _debugService.Log("Player", "Dead", Color.cyan, Color.red);
 
             PlayerDied?.Invoke();
             EventBusManager.GameplayBus.RaiseEvent(new PlayerDied());
@@ -139,6 +142,7 @@ namespace Asteroids.Gameplay.Player.Controllers
         {
             yield return new WaitForSeconds(delay);
             _shieldActive = true;
+
             _debugService.Log("Player", "Shield recovered", Color.cyan);
 
             PlayerShieldStateChanged?.Invoke(true);

@@ -16,6 +16,7 @@ MonoBehaviour:
   _finalPosition: {x: -3.2, y: -11.5, z: 0}
   _movementDuration: 90
   _movementEase: 1
-  _initialAlphaValue: 0
-  _finalAlphaValue: 1
   _alphaTransitionDuration: 0.3
+  _alphaValueRange:
+    Min: 0
+    Max: 1

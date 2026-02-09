@@ -6,9 +6,9 @@ using Zenject;
 
 namespace Asteroids.Gameplay.Player.Controllers
 {
-    [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(PlayerController))]
     [RequireComponent(typeof(PlayerHealthController))]
+    [RequireComponent(typeof(Rigidbody2D))]
 
     public class PlayerMovementController : MonoBehaviour
     {
@@ -22,11 +22,6 @@ namespace Asteroids.Gameplay.Player.Controllers
         [Space]
         [Inject] private readonly Rigidbody2D _rigidBody;
 
-        [Header("Data")]
-        private float _movementSpeed;
-        private float _rotationSpeed;
-        private SO_ShipData _shipData;
-
         [Header("States")]
         private bool _isAlive;
         private bool _isMovingForward;
@@ -36,6 +31,9 @@ namespace Asteroids.Gameplay.Player.Controllers
         private Coroutine _moveForwardCoroutine;
         private Coroutine _rotationCoroutine;
 
+        [Header("Data")]
+        private SO_ShipData _shipData;
+
         #endregion
 
         #region Initilization
@@ -43,9 +41,6 @@ namespace Asteroids.Gameplay.Player.Controllers
         private void Initialize()
         {
             _isAlive = true;
-
-            _movementSpeed = _shipData.MovementSpeed;
-            _rotationSpeed = _shipData.RotationSpeed;
         }
 
         #endregion
@@ -100,7 +95,7 @@ namespace Asteroids.Gameplay.Player.Controllers
             _rotationValue = value;
 
             if (_rotationValue != 0 && _rotationCoroutine == null)
-                StartRotaion();
+                StartRotation();
             else if (_rotationValue == 0 && _rotationCoroutine != null)
                 StopRotation();
         }
@@ -117,7 +112,7 @@ namespace Asteroids.Gameplay.Player.Controllers
         }
 
         private void OnPlayerDied()
-        {            
+        {
             Cleanup();
             StopPlayer();
         }
@@ -130,20 +125,21 @@ namespace Asteroids.Gameplay.Player.Controllers
         {
             _moveForwardCoroutine ??= StartCoroutine(MoveForwardCoroutine());
         }
+
         private void StopForwardMovement()
         {
-            if (_moveForwardCoroutine != null)
-            {
-                StopCoroutine(_moveForwardCoroutine);
-                _moveForwardCoroutine = null;
-            }
+            if (_moveForwardCoroutine == null)
+                return;
+
+            StopCoroutine(_moveForwardCoroutine);
+            _moveForwardCoroutine = null;
         }
 
         private IEnumerator MoveForwardCoroutine()
         {
             while (_isMovingForward && _isAlive)
             {
-                _rigidBody.AddForce(_movementSpeed * Time.deltaTime * -transform.up, ForceMode2D.Impulse);
+                _rigidBody.AddForce(_shipData.MovementSpeed * Time.deltaTime * -transform.up, ForceMode2D.Impulse);
                 yield return null;
             }
 
@@ -159,13 +155,17 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         #region Rotation
 
-        private void StartRotaion()
+        private void StartRotation()
         {
+            StopRotation();
             _rotationCoroutine = StartCoroutine(RotateCoroutine());
-
         }
+
         private void StopRotation()
         {
+            if (_rotationCoroutine == null)
+                return;
+
             StopCoroutine(_rotationCoroutine);
             _rotationCoroutine = null;
         }
@@ -174,7 +174,7 @@ namespace Asteroids.Gameplay.Player.Controllers
         {
             while (_rotationValue != 0 && _isAlive)
             {
-                transform.Rotate(0, 0, _rotationValue * _rotationSpeed * Time.fixedDeltaTime);
+                transform.Rotate(0, 0, _rotationValue * _shipData.RotationSpeed * Time.fixedDeltaTime);
                 yield return new WaitForFixedUpdate();
             }
 

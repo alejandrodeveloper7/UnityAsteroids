@@ -4,6 +4,6 @@ namespace ACG.Scripts.Managers
 {
     public interface ICameraFXManager
     {
-        void PlayCameraShake(CameraShakeConfiguration shakeData);
+        void PlayCameraShake(CameraShakeData shakeData);
     }
 }

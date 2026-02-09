@@ -1,3 +1,4 @@
+using ACG.Core.Models;
 using ACG.Scripts.Models;
 using ACG.Scripts.ScriptableObjects.Data;
 using ACG.Tools.Runtime.Pooling.ScriptableObjects;
@@ -14,6 +15,10 @@ namespace Asteroids.Core.ScriptableObjects.Data
     {
         #region Values
 
+        [SerializeField] private SO_PooledGameObjectData _prefabData;
+        public SO_PooledGameObjectData PrefabData => _prefabData;
+
+
         [Header("Selector Element")]
 
         [SerializeField] private bool _isActive = true;
@@ -23,16 +28,7 @@ namespace Asteroids.Core.ScriptableObjects.Data
         public Sprite Sprite => _sprite;
 
 
-        [Header("Has Stats")]
-
-        [SerializeField] private List<StatData> _stats;
-        public List<StatData> Stats => _stats;
-
-
         [Header("Configuration")]
-
-        [SerializeField] private SO_PooledGameObjectData _prefabData;
-        public SO_PooledGameObjectData PrefabData => _prefabData;
 
         [SerializeField] private Color _color;
         public Color Color => _color;
@@ -40,27 +36,18 @@ namespace Asteroids.Core.ScriptableObjects.Data
         [SerializeField] private Vector3 _scale;
         public Vector3 Scale => _scale;
 
-
-        [Header("Stats")]
-
-        [SerializeField] private float _speed;
-        public float Speed => _speed;
-
-        [SerializeField] private int _damage;
-        public int Damage => _damage;
-
         [SerializeField] private float _betweenBulletsTime;
         public float BetweenBulletsTime => _betweenBulletsTime;
 
         [Space]
 
-        [SerializeField] private float _lifeDuration;
-        public float LifeDuration => _lifeDuration;
+        [SerializeField] private float _fullScaleDuration;
+        public float FullScaleDuration => _fullScaleDuration;
 
         [SerializeField] private float _descaleDuration;
         public float DescaleDuration => _descaleDuration;
 
-        public float LifeTime => _lifeDuration + _descaleDuration;
+        public float LifeTime => _fullScaleDuration + _descaleDuration;
 
         [Space]
 
@@ -71,6 +58,21 @@ namespace Asteroids.Core.ScriptableObjects.Data
         public float TorqueForce => _torqueForce;
 
 
+        [Header("Stats")]
+
+        [SerializeField] private float _speed;
+        public float Speed => _speed;
+
+        [SerializeField] private int _damage;
+        public int Damage => _damage;
+
+
+        [Header("Has Stats")]
+
+        [SerializeField] private List<StatData> _stats;
+        public List<StatData> Stats => _stats;
+        
+
         [Header("Particles")]
 
         [SerializeField] private List<ParticleSystemData> _particlesOnDestruction;
@@ -79,8 +81,8 @@ namespace Asteroids.Core.ScriptableObjects.Data
 
         [Header("Edge Resposition")]
 
-        [SerializeField] private ScreenEdgeTeleportConfiguration _screenEdgeTeleportConfiguration;
-        public ScreenEdgeTeleportConfiguration ScreenEdgeTeleportConfiguration => _screenEdgeTeleportConfiguration;
+        [SerializeField] private ScreenEdgeTeleportData _screenEdgeTeleportData;
+        public ScreenEdgeTeleportData ScreenEdgeTeleportData => _screenEdgeTeleportData;
 
 
         [Header("Sound")]

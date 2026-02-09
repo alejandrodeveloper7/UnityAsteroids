@@ -8,6 +8,7 @@ namespace Asteroids.Gameplay.Backgrounds.Intallers
     {
         public override void InstallBindings()
         {
+            Container.Bind<BackgroundController>().FromComponentSibling();
             Container.Bind<BackgroundVisualsController>().FromComponentSibling();
         }
     }

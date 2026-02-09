@@ -24,3 +24,4 @@ MonoBehaviour:
   _statsDisplayConfiguration: {fileID: 11400000, guid: 21724847a3c7940409e0d33970ab0c58, type: 2}
   _leaderboardRowConfiguration: {fileID: 11400000, guid: cddd4ad1376f75341a4ad4152b60cfe9, type: 2}
   _selectorConfiguration: {fileID: 11400000, guid: 9af419de144ca5b4ca882f3e2dc2733f, type: 2}
+  _randomUserNameConfiguration: {fileID: 11400000, guid: b57d2e4ab82dc4146b48d6711a1e8178, type: 2}

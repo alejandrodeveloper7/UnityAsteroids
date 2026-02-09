@@ -21,8 +21,8 @@ namespace Asteroids.Gameplay.Backgrounds.Controllers
 
         private void Initialize() 
         {
-            _backgroundVisualsController.SetAlphaValue(_backgroundConfiguration.InitialAlphaValue);
-            _backgroundVisualsController.DoFadeTransition(_backgroundConfiguration.FinalAlphaValue, _backgroundConfiguration.AlphaTransitionDuration);
+            _backgroundVisualsController.SetAlphaValue(_backgroundConfiguration.AlphaValueRange.Min);
+            _backgroundVisualsController.DoFadeTransition(_backgroundConfiguration.AlphaValueRange.Max, _backgroundConfiguration.AlphaTransitionDuration);
         }
 
         #endregion

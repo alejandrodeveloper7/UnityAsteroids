@@ -21,14 +21,14 @@ MonoBehaviour:
   - Id: 101
     PropertyName: Damage
   - Id: 102
-    PropertyName: LifeDuration
+    PropertyName: FullScaleDuration
   _prefabData: {fileID: 11400000, guid: 3aec3f5a9707ab04a9ee8f7e0abc69fb, type: 2}
   _color: {r: 1, g: 1, b: 1, a: 1}
   _scale: {x: 1, y: 1, z: 1}
   _speed: 12
   _damage: 4
   _betweenBulletsTime: 0.2
-  _lifeDuration: 0.4
+  _fullScaleDuration: 0.4
   _descaleDuration: 0.2
   _pushForce: 0.4
   _torqueForce: 0.5
@@ -37,7 +37,7 @@ MonoBehaviour:
     ParticleConfiguration: {fileID: 11400000, guid: 22fd62f03ee75d0459fddc8d2e2f40ce, type: 2}
     PositionOffset: {x: 0, y: 0, z: 0}
     RotationOffset: {x: 0, y: 0, z: 0}
-  _screenEdgeTeleportConfiguration:
+  _screenEdgeTeleportData:
     EdgeOffsetY: 0.03
     EdgeRepositionOffsetY: 0.02
     EdgeOffsetX: 0.03

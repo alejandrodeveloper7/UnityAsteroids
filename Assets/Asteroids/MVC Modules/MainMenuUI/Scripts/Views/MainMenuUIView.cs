@@ -1,8 +1,12 @@
 using ACG.Core.Utils;
 using ACG.Tools.Runtime.MVCModulesCreator.Bases;
+using Asteroids.Core.Interfaces;
+using Asteroids.Core.ScriptableObjects.Data;
 using Asteroids.MVC.MainMenuUI.Controllers;
 using Asteroids.MVC.MainMenuUI.Models;
 using Asteroids.MVC.MainMenuUI.ScriptableObjects;
+using Asteroids.UI.Controllers;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -13,17 +17,25 @@ namespace Asteroids.MVC.MainMenuUI.Views
 {
     public class MainMenuUIView : MVCViewBase, IMainMenuUIView
     {
-        #region Fields     
+        #region Fields and events    
 
         [Header("MVC References")]
         [Inject] private readonly IMainMenuUIController _controller;
         [Inject] private readonly MainMenuUIModel _model;
         [Inject] private readonly SO_MainMenuUIConfiguration _configuration;
 
-        [Header("References")]
+        [Header("Gameplay References")]
         [SerializeField] private TMP_InputField _userNameInputField;
         [Space]
         [SerializeField] private Button _playButton;
+
+        [Header("Selectors")]
+        [SerializeField] private UISelectorController _shipSelectorController;
+        [SerializeField] private UISelectorController _bulletSelectorController;
+
+        [Header("Stat Displayers")]
+        [SerializeField] private UIStatsDisplayerController _shipStatsDisplayerController;
+        [SerializeField] private UIStatsDisplayerController _bulletStatsDisplayerController;
 
         #endregion
 
@@ -32,11 +44,6 @@ namespace Asteroids.MVC.MainMenuUI.Views
         protected override void GetReferences()
         {
             base.GetReferences();
-
-            // Not used thanks to Zenject injection
-            //_controller = GetComponent<IMainMenuUIController>();
-            //_model = _controller.Model;
-            //_configuration = _controller.ModuleConfigurationData;
         }
 
         protected override void Initialize()
@@ -51,11 +58,27 @@ namespace Asteroids.MVC.MainMenuUI.Views
         protected override void RegisterListeners()
         {
             _model.UserNameUpdated += OnUserNameUpdated;
+            _model.ShipsInitialized += OnShipsInitialized;
+            _model.BulletsInitialized += OnBulletsInitialized;
+            _model.ShipSelected += OnShipSelected;
+            _model.BulletSelected += OnBulletSelected;
+
+            _shipSelectorController.SelectedElementUpdated += OnSelectedShipUpdated;
+
+            _bulletSelectorController.SelectedElementUpdated += OnSelectedBulletUpdated;
         }
 
         protected override void UnRegisterListeners()
         {
             _model.UserNameUpdated -= OnUserNameUpdated;
+            _model.ShipsInitialized -= OnShipsInitialized;
+            _model.BulletsInitialized -= OnBulletsInitialized;
+            _model.ShipSelected -= OnShipSelected;
+            _model.BulletSelected -= OnBulletSelected;
+
+            _shipSelectorController.SelectedElementUpdated -= OnSelectedShipUpdated;
+
+            _bulletSelectorController.SelectedElementUpdated -= OnSelectedBulletUpdated;
         }
 
         #endregion
@@ -90,7 +113,7 @@ namespace Asteroids.MVC.MainMenuUI.Views
 
         private void OnUserNameUpdated(string userName)
         {
-            // This line overwrites the input in case of additional validations, such as removing special characters or similar done in the controller.
+            // This line overwrites the input in case of additional validations done in the model, such as removing special characters or similar.
             _userNameInputField.text = userName;
 
             if (string.IsNullOrEmpty(userName))
@@ -99,14 +122,43 @@ namespace Asteroids.MVC.MainMenuUI.Views
                 _playButton.interactable = true;
         }
 
+        private void OnShipsInitialized(List<ISelectorElement> shipsCollection)
+        {
+            _shipSelectorController.SetData(shipsCollection);
+        }
+
+        private void OnBulletsInitialized(List<ISelectorElement> bulletsCollection)
+        {
+            _bulletSelectorController.SetData(bulletsCollection);
+        }
+
+        private void OnShipSelected(SO_ShipData data)
+        {
+            _shipStatsDisplayerController.SetStatsValues(data, true);
+        }
+
+        private void OnBulletSelected(SO_BulletData data)
+        {
+            _bulletStatsDisplayerController.SetStatsValues(data, true);
+        }
+
+        private void OnSelectedShipUpdated(int id)
+        {
+            _model.SetShipSelectedId(id);
+        }
+
+        private void OnSelectedBulletUpdated(int id)
+        {
+            _model.SetBulletSelectedId(id);
+        }
+
         #endregion
 
         #region Public Methods
 
+        // This override prevents the buttons from looking disabled when the menu is openned.
         public override async Task PlayExitTransition(float delay, float transitionDuration)
         {
-            // This override prevents the buttons from looking disabled when the menu opens.
-
             await TimingUtils.WaitSeconds(delay, true);
             //SetCanvasGroupDetection(false);
             _ = PlayScaleTransition(0, transitionDuration);

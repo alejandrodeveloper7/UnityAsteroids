@@ -4,6 +4,7 @@ namespace Asteroids.Core.Interfaces
 {
     public interface IDamageable
     {        
-        void TakeDamage(DamageInfo damageInfo);
+        void TakeDamage(DamageData damageData);
+        void Die();
     }
 }

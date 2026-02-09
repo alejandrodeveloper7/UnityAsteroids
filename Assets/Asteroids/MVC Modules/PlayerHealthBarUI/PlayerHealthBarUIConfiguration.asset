@@ -26,6 +26,7 @@ MonoBehaviour:
   _shieldLostSliderTransitionDuration: 0.3
   _shieldShineFadeInDuration: 0.5
   _shieldShineFadeOutDuration: 0.5
+  _shieldShineBlinkAlphaRange:
+    Min: 0.6
+    Max: 1
   _shieldShineBlinkDuration: 0.3
-  _shieldShineBlinkMinAlpha: 0.6
-  _shieldShineBlinkMaxAlpha: 1

@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80a768273d222744e9d93cfdf19bacd6, type: 3}
   m_Name: FloatingTextConfiguration
   m_EditorClassIdentifier: 
-  _isActive: 1
+  _useFloatingText: 1
   _prefabData: {fileID: 11400000, guid: 41f8ada8b9ea79f4ba44003b41003424, type: 2}
   _textColor: {r: 0, g: 0, b: 0, a: 1}
-  _offsetDistance: 0.4
-  _minMovementDistance: 0.5
-  _maxMovementDistance: 0.8
-  _lifeTime: 1.2
-  _transitionDuration: 0.3
+  _movementDistanceRange:
+    Min: 0.5
+    Max: 0.8
+  _enterTransitionDuration: 0.3
+  _exitTransitionDuration: 0.3
+  _duration: 1.2

@@ -239,8 +239,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f019fe652aba63b4d90cc1820630a9b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _musicVolumeSliderEventHandler: {fileID: 1292530864150583730}
-  _effectsVolumeSliderEventHandler: {fileID: 7252708856750501780}
 --- !u!114 &57698132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,7 +253,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GeneralContainer: {fileID: 3750634953667160151}
   _musicSlider: {fileID: 1292530864150583729}
+  _musicVolumeSliderEventHandler: {fileID: 1292530864150583730}
   _effectsSlider: {fileID: 7252708856750501779}
+  _effectsVolumeSliderEventHandler: {fileID: 7252708856750501780}
   _resolutionDropdown: {fileID: 6423373166758029701}
   _fullScreenToggle: {fileID: 2259644305426609309}
 --- !u!225 &57698133
@@ -1847,7 +1847,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a71907577b7d75740bfc83b90300d766, type: 3}
+  m_Script: {fileID: 11500000, guid: 71acc08af0da45444a21d31b0b0853f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6567530106990376775

@@ -1,4 +1,5 @@
 using ACG.Core.Utils;
+using ACG.Scripts.UIUtilitys.EventHandlers;
 using ACG.Tools.Runtime.MVCModulesCreator.Bases;
 using Asteroids.MVC.PauseUI.Controllers;
 using Asteroids.MVC.PauseUI.Models;
@@ -21,9 +22,12 @@ namespace Asteroids.MVC.PauseUI.Views
         [Inject] private readonly PauseUIModel _model;
         [Inject] private readonly SO_PauseUIConfiguration _configuration;
 
-        [Header("References")]
+        [Header("Gameplay References")]
         [SerializeField] private Slider _musicSlider;
+        [SerializeField] private UISliderEventsHandler _musicVolumeSliderEventHandler;
+        [Space]
         [SerializeField] private Slider _effectsSlider;
+        [SerializeField] private UISliderEventsHandler _effectsVolumeSliderEventHandler;
         [Space]
         [SerializeField] private TMP_Dropdown _resolutionDropdown;
         [Space]
@@ -36,11 +40,6 @@ namespace Asteroids.MVC.PauseUI.Views
         protected override void GetReferences()
         {
             base.GetReferences();
-
-            // Not used thanks to Zenject injection
-            //_controller = GetComponent<IMainMenuUIController>();
-            //_model = _controller.Model;
-            //_configuration = _controller.ModuleConfigurationData;
         }
 
         protected override void Initialize()
@@ -54,12 +53,20 @@ namespace Asteroids.MVC.PauseUI.Views
 
         protected override void RegisterListeners()
         {
-            // TODO: Add listeners for the events
+            _model.ValuesInitialized += OnValuesInitialized;
+            _model.PauseStateUpdated += OnPauseStateUpdated;
+
+            _musicVolumeSliderEventHandler.OnEndDrag += OnMusicSliderEndDrag;
+            _effectsVolumeSliderEventHandler.OnEndDrag += OnEffectsSliderEndDrag;
         }
 
         protected override void UnRegisterListeners()
         {
-            // TODO: Remove listeners for the events
+            _model.ValuesInitialized -= OnValuesInitialized;
+            _model.PauseStateUpdated -= OnPauseStateUpdated;
+
+            _musicVolumeSliderEventHandler.OnEndDrag -= OnMusicSliderEndDrag;
+            _effectsVolumeSliderEventHandler.OnEndDrag -= OnEffectsSliderEndDrag;
         }
 
         #endregion
@@ -92,47 +99,72 @@ namespace Asteroids.MVC.PauseUI.Views
 
         #region Event Callbacks
 
-        // TODO: Define here callbacks for the events
+        private void OnValuesInitialized()
+        {
+            SetResolutionsDropdownOptionsAndIndex(_model.ResolutionOptions, _model.ResolutionIndex);
+            SetMusicSliderValue(_model.MusicVolume);
+            SetEffectsSliderValue(_model.EffectsVolume);
+            SetFullScreenModeToggleState(_model.FullScreenState);
+        }
+
+        private void OnPauseStateUpdated(bool state)
+        {
+            if (state)
+                _ = PlayEnterTransition(_configuration.DelayBeforeEnter, _configuration.TransitionDuration);
+            else
+                _ = PlayExitTransition(_configuration.DelayBeforeExit, _configuration.TransitionDuration);
+
+        }
+
+        private void OnMusicSliderEndDrag(float value)
+        {
+            _model.SetMusicVolume(value);
+        }
+
+        private void OnEffectsSliderEndDrag(float value)
+        {
+            _model.SetEffectsVolume(value);
+        }
 
         #endregion
 
         #region public Methods   
-
-        public void SetMusicSliderValue(float value)
-        {
-            _musicSlider.value = value;
-        }
-        public void SetEffectsSliderValue(float value)
-        {
-            _effectsSlider.value = value;
-        }
-        public void SetFullScreenModeToggleState(bool state)
-        {
-            _fullScreenToggle.isOn = state;
-        }
-
-        public void SetResolutionsDropdownOptionsAndIndex(List<string> options, int selectedIndex)
-        {
-            _resolutionDropdown.ClearOptions();
-            _resolutionDropdown.AddOptions(options);
-            _resolutionDropdown.value = selectedIndex;
-            _resolutionDropdown.RefreshShownValue();
-        }
 
         public override async Task PlayEnterTransition(float delay, float transitionDuration)
         {
             // This override prevents visual timming errors when the pause button is spammed.
 
             CleanTweens();
-            await TimingUtils.WaitSeconds(Time.deltaTime,true);
-            _=base.PlayEnterTransition(delay, transitionDuration);
+            await TimingUtils.WaitSeconds(Time.deltaTime, true);
+            _ = base.PlayEnterTransition(delay, transitionDuration);
         }
 
         #endregion
 
         #region View Methods 
 
-        // TODO: Define here methods called from other view methods     
+        private void SetMusicSliderValue(float value)
+        {
+            _musicSlider.value = value;
+        }
+
+        private void SetEffectsSliderValue(float value)
+        {
+            _effectsSlider.value = value;
+        }
+
+        private void SetFullScreenModeToggleState(bool state)
+        {
+            _fullScreenToggle.isOn = state;
+        }
+
+        private void SetResolutionsDropdownOptionsAndIndex(List<string> options, int selectedIndex)
+        {
+            _resolutionDropdown.ClearOptions();
+            _resolutionDropdown.AddOptions(options);
+            _resolutionDropdown.value = selectedIndex;
+            _resolutionDropdown.RefreshShownValue();
+        }
 
         #endregion
     }

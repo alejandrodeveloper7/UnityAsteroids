@@ -2,7 +2,7 @@
 
 Personal remake of the classic arcade game **“Asteroids”** for Windows. The project recreates the gameplay with enhanced visuals and several new features, while preserving the essence and feel of the original title.
 
-![Screenshot](https://github.com/alejandrodeveloper7/UnityAsteroids/blob/main/Assets/Art/Screens/Screen1.png)
+![Screenshot](https://github.com/alejandrodeveloper7/UnityAsteroids/blob/main/Assets/Asteroids/Art/Screens/Screen1.png)
 
 This version includes the following additions and changes:
 

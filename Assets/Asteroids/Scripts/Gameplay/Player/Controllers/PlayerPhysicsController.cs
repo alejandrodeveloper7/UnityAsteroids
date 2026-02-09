@@ -1,16 +1,17 @@
 using Asteroids.Core.ScriptableObjects.Data;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 namespace Asteroids.Gameplay.Player.Controllers
 {
+    [RequireComponent(typeof(PlayerController))]
+    [RequireComponent(typeof(PlayerVisualsController))]
+    [RequireComponent(typeof(PlayerHealthController))]
     [RequireComponent(typeof(PolygonCollider2D))]
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(SpriteRenderer))]
-    [RequireComponent(typeof(PlayerController))]
-    [RequireComponent(typeof(PlayerHealthController))]
-    [RequireComponent(typeof(PlayerVisualsController))]
 
     public class PlayerPhysicsController : MonoBehaviour
     {
@@ -29,6 +30,9 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         [Header("Data")]
         private SO_ShipData _shipData;
+
+        [Header("Cache")]
+        private Coroutine _cooldownCoroutine;
 
         #endregion
 
@@ -80,8 +84,10 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         private void OnPlayerShieldStateChanged(bool state)
         {
-            if (state is false)
-                HandleCollision();
+            if (state)
+                return;
+
+            HandleCollision();
         }
 
         private void OnPlayerDied()
@@ -100,8 +106,8 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         private void Cleanup()
         {
-            CancelInvoke(nameof(EndCooldown));
-            InCollisionCooldown = false;
+            StopCooldownCoroutine();
+            SetCooldownState(false);
             _collider.enabled = false;
         }
 
@@ -111,17 +117,34 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         private void HandleCollision()
         {
-            SetCooldownState(true);
-            Invoke(nameof(EndCooldown), _shipData.InvulnerabilityDuration);
+            StartCooldownCoroutine();
         }
 
         #endregion
 
         #region Cooldown Management
 
-        private void EndCooldown()
+        private void StartCooldownCoroutine()
         {
+            StopCooldownCoroutine();
+            _cooldownCoroutine = StartCoroutine(CooldownCoroutine());
+        }
+
+        private void StopCooldownCoroutine()
+        {
+            if (_cooldownCoroutine == null)
+                return;
+
+            StopCoroutine(_cooldownCoroutine);
+            _cooldownCoroutine = null;
+        }
+
+        private IEnumerator CooldownCoroutine()
+        {
+            SetCooldownState(true);
+            yield return new WaitForSeconds(_shipData.InvulnerabilityDuration);
             SetCooldownState(false);
+            _cooldownCoroutine = null;
         }
 
         private void SetCooldownState(bool state)
@@ -133,7 +156,7 @@ namespace Asteroids.Gameplay.Player.Controllers
         #endregion
 
         #region Functionality
-        
+
         private void ReBuildColliderShape()
         {
             if (_spriteRenderer.sprite == null)

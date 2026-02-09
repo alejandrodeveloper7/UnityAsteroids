@@ -1,6 +1,5 @@
 using ACG.Core.EventBus;
 using ACG.Scripts.Services;
-using ACG.Scripts.UIUtilitys.EventHandlers;
 using ACG.Tools.Runtime.MVCModulesCreator.Bases;
 using Asteroids.Core.Events.GameFlow;
 using Asteroids.Core.Managers;
@@ -22,11 +21,7 @@ namespace Asteroids.MVC.PauseUI.Controllers
         [Header("References")]
         [Inject] private readonly IPauseManager _pauseManager;
         [Inject] private readonly ISettingsService _settingsService;
-        [Inject] private readonly IScreenService _screenService;
-        [Space]
-        [SerializeField] private UISliderEventsHandler _musicVolumeSliderEventHandler;
-        [SerializeField] private UISliderEventsHandler _effectsVolumeSliderEventHandler;
-      
+
         [Header("View")]
         [Inject] private readonly IPauseUIView _view;
 
@@ -34,7 +29,7 @@ namespace Asteroids.MVC.PauseUI.Controllers
         [Inject] private readonly PauseUIModel _model;
 
         [Header("Data")]
-        [Inject] private readonly SO_PauseUIConfiguration _configurationData;
+        [Inject] private readonly SO_PauseUIConfiguration _configuration;
 
         #endregion
 
@@ -43,14 +38,11 @@ namespace Asteroids.MVC.PauseUI.Controllers
         protected override void GetReferences()
         {
             base.GetReferences();
-
-            // Not used thanks to Zenject injection
-            //_view = GetComponent<IPauseUIView>();
         }
 
         protected override void Initialize()
         {
-            InitializePauseOptions();
+            _model.Initialize();
         }
 
         protected override void RegisterActions()
@@ -58,8 +50,8 @@ namespace Asteroids.MVC.PauseUI.Controllers
             _pauseManager.GamePaused += OnGamePaused;
             _pauseManager.GameResumed += OnGameResumed;
 
-            _musicVolumeSliderEventHandler.OnEndDrag += OnMusicSliderEndDrag;
-            _effectsVolumeSliderEventHandler.OnEndDrag += OnEffectsSliderEndDrag;
+            _model.MusicVolumeUpdated += OnMusicVolumeUpdated;
+            _model.EffectsVolumeUpdated += OnEffectsVolumeUpdated;
 
             Actions["SLD_Music"] = (Action<Slider>)((sld) => OnMusicSliderValueChaged(sld));
             Actions["SLD_Effects"] = (Action<Slider>)((sld) => OnEffectsSliderValueChaged(sld));
@@ -77,8 +69,8 @@ namespace Asteroids.MVC.PauseUI.Controllers
                 _pauseManager.GameResumed -= OnGameResumed;
             }
 
-            _musicVolumeSliderEventHandler.OnEndDrag -= OnMusicSliderEndDrag;
-            _effectsVolumeSliderEventHandler.OnEndDrag -= OnEffectsSliderEndDrag;
+            _model.MusicVolumeUpdated -= OnMusicVolumeUpdated;
+            _model.EffectsVolumeUpdated -= OnEffectsVolumeUpdated;
 
             Actions.Clear();
         }
@@ -115,21 +107,18 @@ namespace Asteroids.MVC.PauseUI.Controllers
 
         private void OnGamePaused()
         {
-            _model.InPause = true;
-            _ = ViewBase.PlayEnterTransition(_configurationData.DelayBeforeEnter, _configurationData.TransitionDuration);
+            _model.SetPauseState(true);
         }
         private void OnGameResumed()
         {
-            _model.InPause = false;
-            _ = ViewBase.PlayExitTransition(_configurationData.DelayBeforeExit, _configurationData.TransitionDuration);
+            _model.SetPauseState(false);
         }
 
-        private void OnMusicSliderEndDrag(float value)
+        private void OnMusicVolumeUpdated(float value)
         {
             _settingsService.SaveMusicVolume(value);
         }
-
-        private void OnEffectsSliderEndDrag(float value)
+        private void OnEffectsVolumeUpdated(float value)
         {
             _settingsService.SaveEffectsVolume(value);
         }
@@ -137,6 +126,11 @@ namespace Asteroids.MVC.PauseUI.Controllers
         #endregion
 
         #region UI Elements Actions callbacks
+
+        // To avoid updating the model continuously during slider drag, 
+        // the slider controls the temporary UI value, 
+        // and the model is updated only once the drag ends, 
+        // which also triggers saving the value in settings.
 
         private void OnMusicSliderValueChaged(Slider slider)
         {
@@ -150,12 +144,14 @@ namespace Asteroids.MVC.PauseUI.Controllers
 
         private void OnResolutionDropdownValueChanged(TMP_Dropdown dropdown)
         {
-            _settingsService.SetResolution(dropdown.value);
+            _model.SetResolutionIndex(dropdown.value);
+            _settingsService.SetResolution(_model.ResolutionIndex);
         }
 
         private void OnFullScreenToggleValueChanged(Toggle toggle)
         {
-            _settingsService.SetFullScreen(toggle.isOn);
+            _model.SetFullScreenState(toggle.isOn);
+            _settingsService.SetFullScreen(_model.FullScreenState);
         }
 
         private void OnLeaveGameButtonPressed(Button button)
@@ -167,18 +163,6 @@ namespace Asteroids.MVC.PauseUI.Controllers
         private void OnResumeButtonPressed(Button button)
         {
             _pauseManager.Resume();
-        }
-
-        #endregion
-
-        #region Values Initialization
-
-        private void InitializePauseOptions()
-        {
-            _view.SetResolutionsDropdownOptionsAndIndex(_screenService.AvailableResolutionsOptions, _settingsService.GetResolutionIndex());
-            _view.SetMusicSliderValue(_settingsService.GetMusicVolume());
-            _view.SetEffectsSliderValue(_settingsService.GetEffectsVolume());
-            _view.SetFullScreenModeToggleState(_settingsService.GetFullScreen());
         }
 
         #endregion

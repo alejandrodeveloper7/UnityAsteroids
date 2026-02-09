@@ -39,6 +39,7 @@ namespace Asteroids.ApiCallers.DreamloLeaderboardApiCaller
             SO_NetworkConfiguration networkConfiguration = _networkSettings.GetNetworkConfiguration(NetworkConfigurationType.Default);
             return await SetScore(name, score, networkConfiguration, mode);
         }
+
         public async Task<bool> SetScore(string name, int score, SO_NetworkConfiguration networkConfiguration, RequestMode mode = RequestMode.Direct)
         {
             string response = await _apiCaller.SetScore(name, score, networkConfiguration, new RequestEmpty(), mode);
@@ -56,6 +57,7 @@ namespace Asteroids.ApiCallers.DreamloLeaderboardApiCaller
             SO_NetworkConfiguration networkConfiguration = _networkSettings.GetNetworkConfiguration(NetworkConfigurationType.Default);
             return await GetScoreRange(range, networkConfiguration, mode);
         }
+
         public async Task<bool> GetScoreRange(int range, SO_NetworkConfiguration networkConfiguration, RequestMode mode = RequestMode.Direct)
         {
             Response response = await _apiCaller.GetScoreRange(range, networkConfiguration, new RequestEmpty(), mode);

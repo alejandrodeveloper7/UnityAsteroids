@@ -1,7 +1,6 @@
 using ACG.Core.EventBus;
 using ACG.Tools.Runtime.MVCModulesCreator.Bases;
 using Asteroids.Core.Events.GameFlow;
-using Asteroids.Core.Services;
 using Asteroids.MVC.LeaderboardUI.Models;
 using Asteroids.MVC.LeaderboardUI.ScriptableObjects;
 using Asteroids.MVC.LeaderboardUI.Views;
@@ -15,9 +14,6 @@ namespace Asteroids.MVC.LeaderboardUI.Controllers
     public class LeaderboardUIController : MVCControllerBase, ILeaderboardUIController
     {
         #region Private Fields
-
-        [Header("References")]
-        [Inject] private readonly IContainerRuntimeDataService _runtimeDataService;
        
         [Header("View")]
         [Inject] private readonly ILeaderboardUIView _view;
@@ -26,7 +22,7 @@ namespace Asteroids.MVC.LeaderboardUI.Controllers
         [Inject] private readonly LeaderboardUIModel _model;
 
         [Header("Data")]
-        [Inject] readonly SO_LeaderboardUIConfiguration _configurationData;
+        [Inject] readonly SO_LeaderboardUIConfiguration _configuration;
 
         #endregion
 
@@ -35,9 +31,6 @@ namespace Asteroids.MVC.LeaderboardUI.Controllers
         protected override void GetReferences()
         {
             base.GetReferences();
-
-            // Not used thanks to Zenject injection
-            //_view = GetComponent<ILeaderboardUIView>();
         }
 
         protected override void Initialize()
@@ -96,21 +89,26 @@ namespace Asteroids.MVC.LeaderboardUI.Controllers
         private async void OnGoToLeaderboardRequested(GoToLeaderboardRequested goToLeaderboardRequested) 
         {
             _view.RestartView();
-            await ViewBase.PlayEnterTransition(_configurationData.DelayBeforeEnter, _configurationData.TransitionDuration);
+            await ViewBase.PlayEnterTransition(_configuration.DelayBeforeEnter, _configuration.TransitionDuration);
         }
 
         private async void OnRunEnded(RunEnded runEnded)
         {
             _view.RestartView();
-            await ViewBase.PlayEnterTransition(_configurationData.DelayBeforeEnter, _configurationData.TransitionDuration);
+            await ViewBase.PlayEnterTransition(_configuration.DelayBeforeEnter, _configuration.TransitionDuration);
         }
 
         private void OnLeaderBoardDataReady(LeaderBoardDataReady leaderBoardDataReady)
         {
             if (leaderBoardDataReady.Success)
-                _view.UpdateLeaderboardRowsData(leaderBoardDataReady.LeaderboardData.Entry, _runtimeDataService.Data.UserName);
-            else
+            {
+                _model.UpdateUsername();
+                _model.SetLeaderboardData(leaderBoardDataReady.LeaderboardData);
+            }
+            else 
+            {
                 _view.DisplayLeaderboardError();
+            }
         }
 
         #endregion
@@ -120,10 +118,9 @@ namespace Asteroids.MVC.LeaderboardUI.Controllers
         private void OnBackToMenuButtonPressed(Button button)
         {
             EventBusManager.GameFlowBus.RaiseEvent(new GoToMainMenuRequested());
-            _ = ViewBase.PlayExitTransition(_configurationData.DelayBeforeExit, _configurationData.TransitionDuration);
+            _ = ViewBase.PlayExitTransition(_configuration.DelayBeforeExit, _configuration.TransitionDuration);
         }
 
         #endregion
-
     }
 }

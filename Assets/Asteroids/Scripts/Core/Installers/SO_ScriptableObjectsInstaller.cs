@@ -1,4 +1,5 @@
 using ACG.Scripts.ScriptableObjects.Collections;
+using ACG.Scripts.ScriptableObjects.Configurations;
 using ACG.Scripts.ScriptableObjects.Settings;
 using ACG.Tools.Runtime.ApiCallersCreator.ScriptableObjects;
 using ACG.Tools.Runtime.Pooling.ScriptableObjects;
@@ -21,7 +22,7 @@ namespace Asteroids.Core.Intallers
         [SerializeField] private SO_MusicCollection _musicCollection;
 
         // These configuration ScriptableObjects are unique, so they can be injected.
-        // If you need multiple configurations, it's better to assign the references manually in the editor.
+        // If you need multiple configurations, you cant inject them like this.
         // SO_StatsConfiguration is not injected because there are 2 different ones.
 
         [Header("Configurations")]
@@ -33,6 +34,7 @@ namespace Asteroids.Core.Intallers
         [SerializeField] private SO_StatsDisplayerConfiguration _statsDisplayConfiguration;
         [SerializeField] private SO_LeaderboardRowConfiguration _leaderboardRowConfiguration;
         [SerializeField] private SO_SelectorConfiguration _selectorConfiguration;
+        [SerializeField] private SO_RandomUserNameGenerationConfiguration _randomUserNameConfiguration;
 
         #endregion
 
@@ -48,6 +50,7 @@ namespace Asteroids.Core.Intallers
             Container.Bind<SO_SoundSettings>().FromInstance(SO_SoundSettings.Instance).AsSingle();
             Container.Bind<SO_ScreenSettings>().FromInstance(SO_ScreenSettings.Instance).AsSingle();
             Container.Bind<SO_NetworkSettings>().FromInstance(SO_NetworkSettings.Instance).AsSingle();
+            Container.Bind<SO_PauseSettings>().FromInstance(SO_PauseSettings.Instance).AsSingle();
 
             //SO Collections
             Container.Bind<SO_ShipsCollection>().FromInstance(_shipCollection).AsSingle();
@@ -64,6 +67,7 @@ namespace Asteroids.Core.Intallers
             Container.Bind<SO_StatsDisplayerConfiguration>().FromInstance(_statsDisplayConfiguration).AsSingle();
             Container.Bind<SO_LeaderboardRowConfiguration>().FromInstance(_leaderboardRowConfiguration).AsSingle();
             Container.Bind<SO_SelectorConfiguration>().FromInstance(_selectorConfiguration).AsSingle();
+            Container.Bind<SO_RandomUserNameGenerationConfiguration>().FromInstance(_randomUserNameConfiguration);
         }
 
         #endregion

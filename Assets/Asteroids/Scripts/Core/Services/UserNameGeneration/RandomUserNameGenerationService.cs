@@ -1,6 +1,8 @@
-using System;
+using ACG.Scripts.ScriptableObjects.Configurations;
 using ACG.Tools.Runtime.ServicesCreator.Bases;
+using System;
 using UnityEngine;
+using Zenject;
 
 namespace Asteroids.Core.Services
 {
@@ -8,20 +10,17 @@ namespace Asteroids.Core.Services
     {
         #region Fields
 
-        [Header("Values")]
-        private readonly string _posibleCharacters;
-        private readonly string _baseName;
-        private readonly int _charactersAmount;
+        [Header("References")]
+        private readonly SO_RandomUserNameGenerationConfiguration _configuration;
 
         #endregion
 
         #region Constructors
 
-        public RandomUserNameGenerationService(string posibleCharacters, string baseName, int charactersAmount)
+        [Inject]
+        public RandomUserNameGenerationService(SO_RandomUserNameGenerationConfiguration configuration)
         {
-            _posibleCharacters = posibleCharacters;
-            _baseName = baseName;
-            _charactersAmount = charactersAmount;
+            _configuration = configuration;
 
             Initialize();
         }
@@ -71,12 +70,12 @@ namespace Asteroids.Core.Services
 
         private string GenerateRandomName()
         {
-            string name = _baseName;
+            string name = _configuration.BaseName;
 
-            for (int i = 0; i < _charactersAmount; i++)
+            for (int i = 0; i < _configuration.RandomCharactersAmount; i++)
             {
-                int index = UnityEngine.Random.Range(0, _posibleCharacters.Length);
-                name += _posibleCharacters[index];
+                int index = UnityEngine.Random.Range(0, _configuration.RandomCharacters.Length);
+                name += _configuration.RandomCharacters[index];
             }
             return name;
         }

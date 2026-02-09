@@ -1,6 +1,7 @@
+using ACG.Tools.Runtime.ManagersCreator.ScriptableObjects;
 using System;
 using System.IO;
-using ACG.Tools.Runtime.ManagersCreator.ScriptableObjects;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -146,8 +147,13 @@ namespace ACG.Tools.Editor.ManagersCreator
 
             GameObject go = new(prefabName);
 
-            Type managerType = Type.GetType($"{rootNamespaceName}.Core.Managers.{newTypeName}, Assembly-CSharp");
+            string fullTypeName = $"{rootNamespaceName}.Core.Managers.{newTypeName}";
 
+            Type managerType = AppDomain.CurrentDomain
+                .GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                .FirstOrDefault(t => t.FullName == fullTypeName);
+        
             if (managerType != null && managerType.IsSubclassOf(typeof(MonoBehaviour)))
             {
                 go.AddComponent(managerType);

@@ -28,7 +28,22 @@ namespace Asteroids.Core.Controllers
             _playerSpawner = spawner;
             _runtimeDataService = containerRuntimeDataService;
 
+            CreateListeners();
+        }
+
+        public void Dispose()
+        {
+            RemoveListeners();
+        }
+
+        private void CreateListeners()
+        {
             EventBusManager.GameplayBus.AddListener<PlayerDied>(OnPlayerDied);
+        }
+
+        private void RemoveListeners()
+        {
+            EventBusManager.GameplayBus.RemoveListener<PlayerDied>(OnPlayerDied);
         }
 
         #endregion

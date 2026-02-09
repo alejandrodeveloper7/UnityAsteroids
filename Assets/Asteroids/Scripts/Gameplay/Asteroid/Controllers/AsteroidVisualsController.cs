@@ -1,8 +1,7 @@
+using ACG.Core.Extensions;
 using ACG.Core.Utils;
 using ACG.Scripts.Managers;
-using ACG.Scripts.Models;
 using Asteroids.Core.Interfaces.Models;
-using Asteroids.Core.ScriptableObjects.Configurations;
 using Asteroids.Core.ScriptableObjects.Data;
 using Asteroids.Gameplay.FloatingText.Spawners;
 using Asteroids.Gameplay.General.OnContact;
@@ -36,7 +35,6 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
         [Inject] private readonly IVFXManager _vFXManager;
 
         [Header("Data")]
-        [Inject] private readonly SO_FloatingTextConfiguration _floatingTextConfiguration;
         private SO_AsteroidData _asteroidData;
 
         [Header("Cache")]
@@ -97,12 +95,10 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
         private void OnAsteroidDestroyed()
         {
             CreateDestructionParticles(transform.position);
-
-            if (_floatingTextConfiguration.IsActive)
-                CreateScoreFloatingText(_asteroidData.ScoreValue.ToString());
+            CreateScoreFloatingText(_asteroidData.ScoreValue);
         }
 
-        private void OnDamageDone(DamageInfo data)
+        private void OnDamageDone(DamageData data)
         {
             CreateDamageParticles(data.HitPoint);
         }
@@ -113,8 +109,7 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
 
         private void RandomizeAppearance()
         {
-            int randomValue = UnityEngine.Random.Range(0, _asteroidData.PossibleSprites.Length);
-            _spriteRenderer.sprite = _asteroidData.PossibleSprites[randomValue];
+            _spriteRenderer.sprite = _asteroidData.PossibleSpritesList.GetRandomElement();
             _spriteRenderer.color = _asteroidData.Color;
             transform.localScale = _asteroidData.Scale;
 
@@ -129,10 +124,11 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
             transform.localScale = _asteroidData.Scale;
 
             _damageFeedbackSequence = DOTween.Sequence();
-
-            _damageFeedbackSequence
-               .Append(transform.DOScale(_asteroidData.DamageFeedbackScale, _asteroidData.DamageFeedbackDuration).SetLoops(2, LoopType.Yoyo))
-               .Join(_spriteRenderer.DOColor(_asteroidData.DamageFeedbackColor, _asteroidData.DamageFeedbackDuration).SetLoops(2, LoopType.Yoyo));
+        
+            _damageFeedbackSequence.Append(transform.DOScale(_asteroidData.DamageFeedbackScale, _asteroidData.DamageFeedbackDuration).SetLoops(2, LoopType.Yoyo));
+            _damageFeedbackSequence.Join(_spriteRenderer.DOColor(_asteroidData.DamageFeedbackColor, _asteroidData.DamageFeedbackDuration).SetLoops(2, LoopType.Yoyo));
+      
+            _damageFeedbackSequence.Play();
         }
 
         #endregion
@@ -155,21 +151,21 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
 
         private void CreateDamageParticles(Vector3 position)
         {
-                _vFXManager.PlayParticlesVFX(_asteroidData.ParticlesOnDamage, position,Quaternion.identity, null);
+            _vFXManager.PlayParticlesVFX(_asteroidData.ParticlesOnDamage, position, Quaternion.identity, null);
         }
 
         private void CreateDestructionParticles(Vector3 position)
         {
-                _vFXManager.PlayParticlesVFX(_asteroidData.ParticlesOnDestruction, position, Quaternion.identity, null);
+            _vFXManager.PlayParticlesVFX(_asteroidData.ParticlesOnDestruction, position, Quaternion.identity, null);
         }
 
         #endregion
 
         #region Floating Text
 
-        private void CreateScoreFloatingText(string text)
+        private void CreateScoreFloatingText(int score)
         {
-            _floatingTextSpawner.Spawn(transform.position, text);
+            _floatingTextSpawner.Spawn(transform.position, score.ToString());
         }
 
         #endregion

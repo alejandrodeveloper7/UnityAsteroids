@@ -40,6 +40,7 @@ namespace Asteroids.Gameplay.Bullets.Controllers
         private void OnBulletInitialized(SO_BulletData data)
         {
             _bulletData = data;
+
             PlayShootedSound();
         }
 

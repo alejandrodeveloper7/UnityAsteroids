@@ -1,5 +1,6 @@
 using ACG.Core.EventBus;
 using ACG.Scripts.Managers;
+using ACG.Scripts.ScriptableObjects.Settings;
 using ACG.Scripts.Services;
 using ACG.Tools.Runtime.ManagersCreator.Bases;
 using Asteroids.Core.Events.GameFlow;
@@ -23,17 +24,17 @@ namespace Asteroids.Core.Managers
         [Space]
         [Inject] private readonly ICursorManager _cursorManager;
 
-        [Header("Configuration")]
-        [SerializeField] private bool _autoPauseOnFocusLost;
-
         [Header("State")]
         private bool _canPause;
         public bool IsPaused { get; private set; }
 
+        [Header("Data")]
+        [Inject] private readonly SO_PauseSettings _pauseSettings; 
+
         #endregion
 
         #region Initialization
-  
+
         protected override void GetReferences()
         {
             base.GetReferences();
@@ -85,7 +86,7 @@ namespace Asteroids.Core.Managers
             if (focus)
                 return;
 
-            if (_autoPauseOnFocusLost && _canPause)
+            if (_pauseSettings.AutoPauseOnFocusLost && _canPause)
                 Pause();
         }
 

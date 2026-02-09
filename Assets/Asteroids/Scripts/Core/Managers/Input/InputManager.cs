@@ -21,7 +21,7 @@ namespace Asteroids.Core.Managers
         [Inject] private readonly IPauseManager _pauseManager;
 
         [Header("State")]
-        private bool _playing;
+        private bool _inRun;
         private bool _inPause;
 
         [Header("Data")]
@@ -109,7 +109,7 @@ namespace Asteroids.Core.Managers
 
         private void Update()
         {
-            if (_playing is false)
+            if (_inRun is false)
                 return;
 
             CheckPauseInput();
@@ -128,42 +128,29 @@ namespace Asteroids.Core.Managers
 
         private void OnRunStarted(RunStarted runStarted)
         {
-            _playing = true;
+            _inRun = true;
         }
 
         private void OnGamePaused()
         {
             _inPause = true;
-            RotationtKeysStateChanged?.Invoke(0);
-            ShootKeyStateChanged?.Invoke(false);
-            MoveForwardKeyStateChanged?.Invoke(false);
+            RestartState();
         }
 
         private void OnGameResumed()
         {
             _inPause = false;
-
-            if (Input.GetKey(_inputSettings.TurnLeftKey))
-                RotationtKeysStateChanged?.Invoke(1);
-
-            if (Input.GetKey(_inputSettings.TurnRightKey))
-                RotationtKeysStateChanged?.Invoke(-1);
-
-            if (Input.GetKey(_inputSettings.MoveForwardKey))
-                MoveForwardKeyStateChanged?.Invoke(true);
-
-            if (Input.GetKey(_inputSettings.ShootKey))
-                ShootKeyStateChanged?.Invoke(true);
+            RestartStatesAfterPause();
         }
 
         private void OnRunExitRequested(RunExitRequested runExitRequested)
         {
-            _playing = false;
+            _inRun = false;
         }
 
         private void OnPlayerDied(PlayerDied playerDied)
         {
-            _playing = false;
+            _inRun = false;
         }
 
         #endregion
@@ -217,6 +204,32 @@ namespace Asteroids.Core.Managers
         {
             if (Input.GetKeyDown(_inputSettings.PauseKey))
                 _pauseManager.TogglePause();
+        }
+
+        #endregion
+
+        #region Functionality
+
+        private void RestartStatesAfterPause()
+        {
+            if (Input.GetKey(_inputSettings.TurnLeftKey))
+                RotationtKeysStateChanged?.Invoke(1);
+
+            if (Input.GetKey(_inputSettings.TurnRightKey))
+                RotationtKeysStateChanged?.Invoke(-1);
+
+            if (Input.GetKey(_inputSettings.MoveForwardKey))
+                MoveForwardKeyStateChanged?.Invoke(true);
+
+            if (Input.GetKey(_inputSettings.ShootKey))
+                ShootKeyStateChanged?.Invoke(true);
+        }
+
+        private void RestartState()
+        {
+            RotationtKeysStateChanged?.Invoke(0);
+            ShootKeyStateChanged?.Invoke(false);
+            MoveForwardKeyStateChanged?.Invoke(false);
         }
 
         #endregion

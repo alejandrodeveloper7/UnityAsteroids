@@ -10,7 +10,7 @@ namespace Asteroids.Core.Services
         public static event Action<float> OnTimeScaleChanged;
 
         public static float Current => Time.timeScale;
-        public static bool IsPaused => Time.timeScale == 0;
+        public static bool IsPaused => Time.timeScale is 0;
 
         #endregion
 

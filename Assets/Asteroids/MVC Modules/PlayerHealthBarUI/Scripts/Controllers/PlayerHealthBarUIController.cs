@@ -2,12 +2,9 @@ using ACG.Core.EventBus;
 using ACG.Tools.Runtime.MVCModulesCreator.Bases;
 using Asteroids.Core.Events.GameFlow;
 using Asteroids.Core.Events.Gameplay;
-using Asteroids.Core.ScriptableObjects.Data;
-using Asteroids.Core.Services;
 using Asteroids.MVC.PlayerHealthBarUI.Models;
 using Asteroids.MVC.PlayerHealthBarUI.ScriptableObjects;
 using Asteroids.MVC.PlayerHealthBarUI.Views;
-using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -17,9 +14,6 @@ namespace Asteroids.MVC.PlayerHealthBarUI.Controllers
     {
         #region Private Fields
 
-        [Header("References")]
-        [Inject] private readonly IContainerRuntimeDataService _runtimeDataService;
-
         [Header("Model")]
         [Inject] private readonly IPlayerHealthBarUIView _view;
 
@@ -27,9 +21,7 @@ namespace Asteroids.MVC.PlayerHealthBarUI.Controllers
         [Inject] private readonly PlayerHealthBarUIModel _model;
 
         [Header("Data")]
-        [Inject] private readonly SO_PlayerHealthBarUIConfiguration _configurationData;
-        [Space]
-        private SO_ShipData _shipData;
+        [Inject] private readonly SO_PlayerHealthBarUIConfiguration _configuration;
 
         #endregion
 
@@ -99,14 +91,13 @@ namespace Asteroids.MVC.PlayerHealthBarUI.Controllers
 
         private void OnRunStarted(RunStarted runStarted)
         {
-            _shipData = _runtimeDataService.Data.SelectedShipData;
-            InitializeRun();
+            _model.InitializeRun();
         }
 
         private void OnRunExitRequested(RunExitRequested runExitRequested)
         {
             _model.StopShieldRecoveryProcess();
-            _ = ViewBase.PlayExitTransition(_configurationData.DelayBeforeExit, _configurationData.TransitionDuration);
+            _ = ViewBase.PlayExitTransition(_configuration.DelayBeforeExit, _configuration.TransitionDuration);
         }
 
         private void OnPlayerShieldStateChanged(PlayerShieldStateChanged playerShieldStateChanged)
@@ -114,7 +105,7 @@ namespace Asteroids.MVC.PlayerHealthBarUI.Controllers
             if (playerShieldStateChanged.Active)
                 return;
 
-            _ = LoseShield();
+            _= _model.StartShieldLostProcess();
         }
 
         private void OnPlayerDamaged(PlayerDamaged playerDamaged)
@@ -125,7 +116,7 @@ namespace Asteroids.MVC.PlayerHealthBarUI.Controllers
         private void OnPlayerDied(PlayerDied playerDied)
         {
             _model.StopShieldRecoveryProcess();
-            _ = ViewBase.PlayExitTransition(_configurationData.DelayBeforeExit, _configurationData.TransitionDuration);
+            _ = ViewBase.PlayExitTransition(_configuration.DelayBeforeExit, _configuration.TransitionDuration);
         }
 
         #endregion
@@ -133,31 +124,6 @@ namespace Asteroids.MVC.PlayerHealthBarUI.Controllers
         #region UI Elements Actions callbacks
 
         // TODO: Declare here the callbacks of the UI interactios registered in the Actions Dictionary
-
-        #endregion
-
-        #region Functionality
-
-        private void InitializeRun()
-        {
-            _view.SetShieldSliderColors(_shipData.ShieldSliderRecoveringColor, _shipData.ShieldSliderFullColor, _shipData.ShieldShineColor);
-
-            _view.SetMaxPosibleHealthValue(_shipData.HealthPoints);
-            _view.SetMaxPosibleShieldSliderValue(_shipData.ShielSliderMaxValue);
-
-            _model.RestartHealth(_shipData.HealthPoints);
-            _model.RestartShield(_shipData.ShielSliderMaxValue);
-
-            _ = ViewBase.PlayEnterTransition(_configurationData.DelayBeforeEnter, _configurationData.TransitionDuration);
-        }
-
-        private async Task LoseShield()
-        {
-            _model.ShieldLost();
-            await _view.PlayShieldLostSliderTransition(_shipData.ShieldSliderMinValue);
-            float shieldRecoveryDuration = _shipData.ShieldRecoveryTime - _configurationData.ShieldSliderTransitionDuration;
-            _model.StartShieldRecoveryProcess(_shipData.ShieldSliderMinValue, _shipData.ShielSliderMaxValue, shieldRecoveryDuration);
-        }
 
         #endregion
     }

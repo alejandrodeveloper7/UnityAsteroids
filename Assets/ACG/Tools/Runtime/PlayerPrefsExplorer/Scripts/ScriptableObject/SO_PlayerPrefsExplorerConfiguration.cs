@@ -10,8 +10,7 @@ namespace ACG.Tools.Runtime.PlayerPrefsExplorer.ScriptableObjects
         [Header("Configuration")]
 
         public string WindowTitle = "PlayerPrefs Explorer";
-        public Vector2 WindowMinSize = new(400, 400);
-        public string keyDisplayFormat = "{0}  |  {1}";
+        public Vector2 WindowMinSize = new(550, 400);
 
         #endregion
     }

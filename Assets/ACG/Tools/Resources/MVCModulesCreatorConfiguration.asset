@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a34c003c68ee734a8577ff5d992d0a1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c45008fcb089df46b555e49cee8224d, type: 3}
   m_Name: MVCModulesCreatorConfiguration
   m_EditorClassIdentifier: 
   WindowTitle: MVC Module Creator
   WindowMinSize: {x: 345, y: 215}
   AssetsPath: Assets/
   TemplatesPath: ACG/Tools/Editor/MVCModulesCreator/Templates/
-  OutputPath: MVC Modules/
+  OutputPath: Asteroids/MVC Modules/
   ControllerTemplateFileName: CONST_ControllerName.cs.template
   ControllerInterfaceTemplateFileName: CONST_IControllerName.cs.template
   ViewTemplateFileName: CONST_ViewName.cs.template

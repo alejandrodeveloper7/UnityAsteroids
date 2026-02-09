@@ -8,7 +8,7 @@ namespace Asteroids.Core.ScriptableObjects.Configurations
     {
         #region Values
 
-        [Header("Asteroids Amount")]
+        [Header("Asteroids")]
 
         [SerializeField] private int _decorationAsteroidsAmount = 12;
         public int DecorationAsteroidsAmount => _decorationAsteroidsAmount;

@@ -14,17 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _statsConfiguration:
   - Id: 100
-    Name: Cadence
-    MinValue: 0
-    MaxValue: 0.4
+    DisplayName: Cadence
+    ValueRange:
+      Min: 0
+      Max: 0.4
     IsReverseValue: 1
   - Id: 101
-    Name: Damage
-    MinValue: 0
-    MaxValue: 5
+    DisplayName: Damage
+    ValueRange:
+      Min: 0
+      Max: 5
     IsReverseValue: 0
   - Id: 102
-    Name: Range
-    MinValue: 0
-    MaxValue: 1.25
+    DisplayName: Range
+    ValueRange:
+      Min: 0
+      Max: 1.25
     IsReverseValue: 0

@@ -18,7 +18,7 @@ namespace CONST_RootNamespace.MVC.CONST_ModuleName.Controllers
         [Inject] private readonly CONST_ModelName _model; 
 
         [Header("Data")]
-        [Inject] private readonly CONST_SO_ConfigurationScriptableObject _configurationData;   
+        [Inject] private readonly CONST_SO_ConfigurationScriptableObject _configuration;   
         
         #endregion
      

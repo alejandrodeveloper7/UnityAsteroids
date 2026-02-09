@@ -2,20 +2,15 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
-using Asteroids.Core.ScriptableObjects.Data;
-using Asteroids.Core.ScriptableObjects.Collections;
-using Asteroids.UI.Controllers;
 using Asteroids.Core.Events.GameFlow;
 using Asteroids.Core.Services;
 using Zenject;
-using Asteroids.Core.Interfaces;
-using System.Collections.Generic;
 using Asteroids.MVC.MainMenuUI.Views;
 using Asteroids.MVC.MainMenuUI.Models;
 using Asteroids.MVC.MainMenuUI.ScriptableObjects;
 using ACG.Tools.Runtime.MVCModulesCreator.Bases;
 using ACG.Core.EventBus;
+using Asteroids.Core.ScriptableObjects.Data;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -29,14 +24,7 @@ namespace Asteroids.MVC.MainMenuUI.Controllers
 
         [Header("References")]
         [Inject] private readonly IContainerRuntimeDataService _runtimeDataService;
-        [Inject] private readonly IUserNameGenerationService _userNameGenerationService;
-        [Space]
-        [SerializeField] private UISelectorController _shipSelectorController;
-        [SerializeField] private UIStatsDisplayerController _shipStatsDisplayerController;
-        [Space]
-        [SerializeField] private UISelectorController _bulletSelectorController;
-        [SerializeField] private UIStatsDisplayerController _bulletStatsDisplayerController;
-       
+
         [Header("View")]
         [Inject] private readonly IMainMenuUIView _view;
 
@@ -44,10 +32,8 @@ namespace Asteroids.MVC.MainMenuUI.Controllers
         [Inject] private readonly MainMenuUIModel _model;
 
         [Header("Data")]
-        [Inject] private readonly SO_MainMenuUIConfiguration _configurationData;
-        [Space]
-        [Inject] private readonly SO_BulletsCollection _bulletsCollection;
-        [Inject] private readonly SO_ShipsCollection _shipsCollection;
+        [Inject] private readonly SO_MainMenuUIConfiguration _configuration;
+
 
         #endregion
 
@@ -60,9 +46,7 @@ namespace Asteroids.MVC.MainMenuUI.Controllers
 
         protected override void Initialize()
         {
-            InitializeUserName();
-            InitializeShipSelector();
-            InitializeBulletSelector();
+            _model.Initialize();
         }
 
         protected override void RegisterActions()
@@ -71,8 +55,9 @@ namespace Asteroids.MVC.MainMenuUI.Controllers
             EventBusManager.GameFlowBus.AddListener<GoToMainMenuRequested>(OnGoToMainMenuRequested);
             EventBusManager.GameFlowBus.AddListener<RunExitRequested>(OnRunExitRequested);
 
-            _shipSelectorController.SelectedElementUpdated += OnSelectedShipUpdated;
-            _bulletSelectorController.SelectedElementUpdated += OnSelectedBulletUpdated;
+            _model.UserNameUpdated += OnUserNameUpdated;
+            _model.ShipSelected += OnShipSelected;
+            _model.BulletSelected += OnBulletSelected;
 
             Actions["BTN_Leaderboard"] = (Action<Button>)((btn) => OnLeaderboardButtonPressed(btn));
             Actions["BTN_Play"] = (Action<Button>)((btn) => OnPlayButtonPressed(btn));
@@ -86,12 +71,12 @@ namespace Asteroids.MVC.MainMenuUI.Controllers
             EventBusManager.GameFlowBus.RemoveListener<GoToMainMenuRequested>(OnGoToMainMenuRequested);
             EventBusManager.GameFlowBus.RemoveListener<RunExitRequested>(OnRunExitRequested);
 
-            _shipSelectorController.SelectedElementUpdated -= OnSelectedShipUpdated;
-            _bulletSelectorController.SelectedElementUpdated -= OnSelectedBulletUpdated;
+            _model.UserNameUpdated -= OnUserNameUpdated;
+            _model.ShipSelected -= OnShipSelected;
+            _model.BulletSelected -= OnBulletSelected;
 
             Actions.Clear();
         }
-
 
         #endregion
 
@@ -125,29 +110,32 @@ namespace Asteroids.MVC.MainMenuUI.Controllers
 
         private void OnGameInitialized(GameInitialized gameInitialized)
         {
-            _ = ViewBase.PlayEnterTransition(_configurationData.DelayBeforeEnter, _configurationData.TransitionDuration);
+            _ = ViewBase.PlayEnterTransition(_configuration.DelayBeforeEnter, _configuration.TransitionDuration);
         }
 
         private void OnGoToMainMenuRequested(GoToMainMenuRequested goToMainMenuRequested)
         {
-            _ = ViewBase.PlayEnterTransition(_configurationData.DelayBeforeEnter, _configurationData.TransitionDuration);
+            _ = ViewBase.PlayEnterTransition(_configuration.DelayBeforeEnter, _configuration.TransitionDuration);
         }
 
         private void OnRunExitRequested(RunExitRequested runExitRequested)
         {
-            _ = ViewBase.PlayEnterTransition(_configurationData.DelayBeforeEnter, _configurationData.TransitionDuration);
+            _ = ViewBase.PlayEnterTransition(_configuration.DelayBeforeEnter, _configuration.TransitionDuration);
         }
 
-        private void OnSelectedShipUpdated(int id)
+        private void OnUserNameUpdated(string newName) 
         {
-            SO_ShipData shipData = _shipsCollection.GetElementById(_shipSelectorController.SelectedId);
-            _shipStatsDisplayerController.SetStatsValues(shipData, true);
+            _runtimeDataService.Data.UserName = newName;
         }
 
-        private void OnSelectedBulletUpdated(int id)
+        private void OnShipSelected(SO_ShipData data) 
         {
-            SO_BulletData bulletData = _bulletsCollection.GetElementById(_bulletSelectorController.SelectedId);
-            _bulletStatsDisplayerController.SetStatsValues(bulletData, true);
+            _runtimeDataService.Data.SelectedShipData = data;
+        }
+
+        private void OnBulletSelected(SO_BulletData data) 
+        {
+            _runtimeDataService.Data.SelectedBulletData = data;
         }
 
         #endregion
@@ -156,14 +144,13 @@ namespace Asteroids.MVC.MainMenuUI.Controllers
 
         private void OnLeaderboardButtonPressed(Button button)
         {
-            _ = ViewBase.PlayExitTransition(_configurationData.DelayBeforeExit, _configurationData.TransitionDuration);
+            _ = ViewBase.PlayExitTransition(_configuration.DelayBeforeExit, _configuration.TransitionDuration);
             EventBusManager.GameFlowBus.RaiseEvent(new GoToLeaderboardRequested());
         }
 
         private void OnPlayButtonPressed(Button button)
         {
-            SaveSelectedValues();
-            _ = ViewBase.PlayExitTransition(_configurationData.DelayBeforeExit, _configurationData.TransitionDuration);
+            _ = ViewBase.PlayExitTransition(_configuration.DelayBeforeExit, _configuration.TransitionDuration);
             EventBusManager.GameFlowBus.RaiseEvent(new StartRunRequested());
         }
 
@@ -179,41 +166,6 @@ namespace Asteroids.MVC.MainMenuUI.Controllers
         private void OnUserNameInputFieldValueChanged(TMP_InputField field)
         {
             _model.SetUserName(field.text);
-        }
-
-        #endregion
-
-        #region Initializations
-
-        private void InitializeUserName()
-        {
-            _model.SetUserName(_userNameGenerationService.GetUsername());
-
-            // By saving this value during initialization, we can immediately display the player's score on the leaderboard if they are using the system username.
-            _runtimeDataService.Data.UserName = _model.UserName;
-        }
-
-        private void InitializeShipSelector()
-        {
-            List<ISelectorElement> CastedCollection = _shipsCollection.Elements.Cast<ISelectorElement>().ToList();
-            _shipSelectorController.SetData(CastedCollection);
-        }
-
-        private void InitializeBulletSelector()
-        {
-            List<ISelectorElement> CastedCollection = _bulletsCollection.Elements.Cast<ISelectorElement>().ToList();
-            _bulletSelectorController.SetData(CastedCollection);
-        }
-
-        #endregion
-
-        #region Data Managements
-
-        private void SaveSelectedValues() 
-        {
-            _runtimeDataService.Data.SelectedBulletData = _bulletsCollection.GetElementById(_bulletSelectorController.SelectedId);
-            _runtimeDataService.Data.SelectedShipData = _shipsCollection.GetElementById(_shipSelectorController.SelectedId);
-            _runtimeDataService.Data.UserName = _model.UserName;
         }
 
         #endregion

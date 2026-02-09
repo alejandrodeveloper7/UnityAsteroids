@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6bcf182e8c4db042bde9bde8e09ce41, type: 3}
   m_Name: SelectorConfiguration
   m_EditorClassIdentifier: 
-  _displayedItemChangeAnimationTotalDuration: 0.3
-  _displayedItemAnimationRotationAngle: {x: 0, y: 90, z: 0}
+  _displayChangeDuration: 0.3
+  _displayChangeRotationAngle: {x: 0, y: 90, z: 0}

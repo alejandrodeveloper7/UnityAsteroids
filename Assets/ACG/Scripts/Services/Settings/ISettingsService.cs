@@ -1,27 +1,36 @@
+using System.Collections.Generic;
+
 namespace ACG.Scripts.Services
 {
    public interface ISettingsService 
    {
         void ApplyAllStoredSettings();
 
-        void ApplyStoredFullScreen();
+        void SetStoredFullScreen();
         void SetFullScreen(bool isFullScreen);
         bool GetFullScreen();
 
-        //Set and save are separated in the volume methods for better performance when are configured using sliders
-
-        void ApplyStoredMusicVolume();
+        void SetStoredMusicVolume();
         void SetMusicVolume(float value);
         void SaveMusicVolume(float value);
         float GetMusicVolume();
 
-        void ApplyStoredEffectsVolume();
+        void SetStoredMusicMute();
+        void SetMusicMute(bool state);
+        bool GetMusicMuted();
+
+        void SetStoredEffectsVolume();
         void SetEffectsVolume(float value);
         void SaveEffectsVolume(float value);
         float GetEffectsVolume();
 
-        void ApplyStoredResolution();
+        void SetStoredEffectsMute();
+        void SetEffectsMute(bool state);
+        bool GetEffectsMuted();
+
+        void SetStoredResolution();
         void SetResolution(int index);
         int GetResolutionIndex();
+        List<string> GetAvailableResolutionOptions();
     }
 }

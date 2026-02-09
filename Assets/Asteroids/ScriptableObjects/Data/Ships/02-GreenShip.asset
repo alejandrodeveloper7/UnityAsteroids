@@ -40,37 +40,41 @@ MonoBehaviour:
   _shieldFadeInDuration: 0.5
   _shieldFadeOutDuration: 0.5
   _shieldBlinkDuration: 0.3
-  _shieldBlinkMinAlpha: 0.5
-  _shieldBlinkMaxAlpha: 0.8
-  _shieldSliderMinValue: 20
-  _shielSliderMaxValue: 100
+  _shieldBlinkAlphaRange:
+    Min: 0.5
+    Max: 0.8
+  _shieldSliderValueRange:
+    Min: 20
+    Max: 100
   _shieldSliderRecoveringColor: {r: 0.14901961, g: 0.84313726, b: 0.28235295, a: 0.5019608}
   _shieldSliderFullColor: {r: 0.14901961, g: 0.84313726, b: 0.28235295, a: 1}
   _shieldShineColor: {r: 0, g: 1, b: 0.32156864, a: 1}
-  _screenEdgeTeleportConfiguration:
+  _screenEdgeTeleportData:
     EdgeOffsetY: 0.05
     EdgeRepositionOffsetY: 0.04
     EdgeOffsetX: 0.04
     EdgeRepositionOffsetX: 0.03
     CheckInterval: 0.05
-  _shieldLostCameraShakeConfig:
+  _shieldLostCameraShakeData:
     _shieldMinDistance: -1
     _shieldMaxDistance: 1
     _shieldShakeDuration: 0.2
     _shieldShakeMagnitude: 0.3
-  _damageTakedCameraShakeConfig:
+  _damageTakedCameraShakeData:
     _shieldMinDistance: -1
     _shieldMaxDistance: 1
     _shieldShakeDuration: 0.3
     _shieldShakeMagnitude: 0.4
-  _deadCameraShakeConfig:
+  _deadCameraShakeData:
     _shieldMinDistance: -1
     _shieldMaxDistance: 1
     _shieldShakeDuration: 0.5
     _shieldShakeMagnitude: 0.6
   _particlesOnDead:
   - PrefabData: {fileID: 11400000, guid: a136770c8b707cc4e8dd5f60aab54330, type: 2}
-    ParticleConfig: {fileID: 0}
+    ParticleConfiguration: {fileID: 0}
+    PositionOffset: {x: 0, y: 0, z: 0}
+    RotationOffset: {x: 0, y: 0, z: 0}
   _soundsOnShieldUp:
   - {fileID: 11400000, guid: 18c7d7f41cc34d349bb6090fdebb1992, type: 2}
   _soundsOnShieldDown:

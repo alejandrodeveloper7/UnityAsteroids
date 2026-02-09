@@ -40,13 +40,22 @@ namespace Asteroids.Core.Controllers
             _stageConfiguration = stageConfiguration;
             _debugService = debugService;
 
-            EventBusManager.GameplayBus.AddListener<AsteroidDestroyed>(OnAsteroidDestroyed);
+            CreateListeners();
         }
 
         public void Dispose()
         {
             CleanCurrentAsteroids();
+            RemoveListeners();
+        }
 
+        private void CreateListeners() 
+        {
+            EventBusManager.GameplayBus.AddListener<AsteroidDestroyed>(OnAsteroidDestroyed);
+        }
+
+        private void RemoveListeners() 
+        {
             EventBusManager.GameplayBus.RemoveListener<AsteroidDestroyed>(OnAsteroidDestroyed);
         }
 
@@ -72,6 +81,7 @@ namespace Asteroids.Core.Controllers
         {
             CreateNewAsteroids(_stageConfiguration.DecorationAsteroidsAmount);
         }
+
         public async Task CreateInitialAsteroids()
         {
             await TimingUtils.WaitSeconds(_stageConfiguration.DelayBeforeFirstRound);
@@ -80,6 +90,7 @@ namespace Asteroids.Core.Controllers
 
             _debugService.Log("Progress", $"Round {_currentRound} Started", Color.green);
         }
+
         public async Task CreateRoundAsteroids()
         {
             await TimingUtils.WaitSeconds(_stageConfiguration.DelayBetweenRounds);
@@ -102,6 +113,7 @@ namespace Asteroids.Core.Controllers
                 _currentAsteroids.Add(newAsteroid.GetComponent<AsteroidController>());
             }
         }
+
         private void CreateAsteroidsFromDestroyedOne(List<SO_AsteroidData> posibleData, int amount, Vector3 position, Vector3 originalOneDirection)
         {
             for (int i = 0; i < amount; i++)
@@ -135,7 +147,7 @@ namespace Asteroids.Core.Controllers
         public void CleanCurrentAsteroids()
         {
             foreach (AsteroidController item in _currentAsteroids)
-                _ = item.CleanAsteroid();
+                _ = item.Recycle();
 
             _currentAsteroids.Clear();
         }

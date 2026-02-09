@@ -40,6 +40,10 @@ namespace ACG.Tools.Runtime.ApiCallers.Pokemon
             }
         }
 
+        #endregion
+
+        #region Charmander Data
+
         private readonly string _charmanderDataURL = "pokemon/Charmander";
         public async Task<Pokemon> GetCharmanderData(SO_NetworkConfiguration configuration, RequestEmpty request, RequestMode mode = RequestMode.Direct)
         {

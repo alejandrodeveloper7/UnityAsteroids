@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ACG.Tools.Runtime.Pooling.Gameplay;
 using UnityEngine;
 using Zenject;
+using ACG.Core.Extensions;
 
 namespace Asteroids.Gameplay.FloatingText.Controllers
 {
@@ -37,11 +38,11 @@ namespace Asteroids.Gameplay.FloatingText.Controllers
 
         private async Task StartDisplayProcess()
         {
-            Vector3 randomDir = Random.insideUnitCircle.normalized * Random.Range(_configuration.MinMovementDistance, _configuration.MaxMovementDistance);
-            Vector3 targetPosition = transform.localPosition + new Vector3(randomDir.x, randomDir.y, 0);
+            Vector3 randomDir = Random.insideUnitCircle.normalized * _configuration.MovementDistanceRange.GetRandom();
+            Vector3 targetPosition = transform.localPosition + randomDir.FlattenZ();
 
             Task visualTask = _floatingTextVisuals.PlayDisplaySequence(_configuration);
-            Task movementTask = transform.DOLocalMove(targetPosition, _configuration.LifeTime + _configuration.TransitionDuration * 2)
+            Task movementTask = transform.DOLocalMove(targetPosition, _configuration.TotalLifeTime)
                 .SetEase(Ease.OutQuad)
                 .AsyncWaitForCompletion();
 

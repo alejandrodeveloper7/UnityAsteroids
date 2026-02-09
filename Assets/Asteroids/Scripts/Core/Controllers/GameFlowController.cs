@@ -17,7 +17,6 @@ namespace Asteroids.Core.Controllers
         #region Fields
 
         [Header("Controllers")]
-        [Inject] private readonly ScenesController _scenesController;
         [Inject] private readonly PlayersController _playersController;
         [Inject] private readonly AsteroidsController _asteroidsController;
         [Inject] private readonly ScoreController _scoreController;
@@ -30,6 +29,7 @@ namespace Asteroids.Core.Controllers
         [Inject] private readonly ISettingsService _settingsService;
 
         [Header("Handlers")]
+        [Inject] private readonly ScenesHandler _scenesHandler;
         [Inject] private readonly GameFlowEventsHandler _gameFlowEventsHandler;
 
         [Header("Data")]
@@ -86,7 +86,7 @@ namespace Asteroids.Core.Controllers
         private async Task StartGame()
         {
             _settingsService.ApplyAllStoredSettings();
-            await _scenesController.LoadGameplayAdditiveScenes();
+            await _scenesHandler.LoadGameplayAdditiveScenes();
             _cursorManager.SetUICursor();
             _asteroidsController.CreateDecorationAsteroids();
             _gameFlowEventsHandler.GameInitialized();
@@ -108,7 +108,7 @@ namespace Asteroids.Core.Controllers
             await TimingUtils.WaitSeconds(_stageConfiguration.DelayAfterPlayerDead);
             _gameFlowEventsHandler.RunEnded();
             _cursorManager.SetUICursor();
-            _scoreController.SaveLasScore();
+            _scoreController.RegisterRunScore();
             _ = _leaderboardController.ProcessLeaderboardFlowAfterRun();
         }
 

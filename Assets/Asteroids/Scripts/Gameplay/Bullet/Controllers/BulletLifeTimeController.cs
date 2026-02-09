@@ -13,7 +13,6 @@ namespace Asteroids.Gameplay.Bullets.Controllers
 
     public class BulletLifeTimeController : MonoBehaviour
     {
-
         #region Fields and events
 
         public event Action LifeTimeCompleted;
@@ -23,7 +22,7 @@ namespace Asteroids.Gameplay.Bullets.Controllers
         [Inject] private readonly BulletPhysicsController _bulletPhysicsController;
 
         [Header("Values")]
-        private CancellationTokenSource _token;
+        private CancellationTokenSource _cancellationToken;
 
         [Header("Data")]
         private SO_BulletData _bulletData;
@@ -78,7 +77,7 @@ namespace Asteroids.Gameplay.Bullets.Controllers
 
             try
             {
-                await TimingUtils.WaitSeconds(_bulletData.LifeTime, false, _token.Token);
+                await TimingUtils.WaitSeconds(_bulletData.LifeTime, false, _cancellationToken.Token);
                 LifeTimeCompleted?.Invoke();
             }
             catch (OperationCanceledException)
@@ -95,14 +94,14 @@ namespace Asteroids.Gameplay.Bullets.Controllers
 
         private void CancelToken()
         {
-            _token?.Cancel();
-            _token = null;
+            _cancellationToken?.Cancel();
+            _cancellationToken = null;
         }
 
         private void RestartToken()
         {
-            _token?.Cancel();
-            _token = new CancellationTokenSource();
+            _cancellationToken?.Cancel();
+            _cancellationToken = new CancellationTokenSource();
         }
 
         #endregion

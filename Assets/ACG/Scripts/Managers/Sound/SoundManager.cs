@@ -92,24 +92,6 @@ namespace ACG.Scripts.Managers
 
         #endregion
 
-        #region Volume
-
-        public void SetMusicVolume(float newValue)
-        {
-            float newVolume = Mathf.Log10(newValue) * 20;
-            _soundSettings.MusicMixer.SetFloat("MasterVolume", newVolume);
-            Debug.Log($"- Volume - Music volume is {newValue}");
-        }
-
-        public void SetEffectsVolume(float newValue)
-        {
-            float newVolume = Mathf.Log10(newValue) * 20;
-            _soundSettings.EffectsMixer.SetFloat("MasterVolume", newVolume);
-            Debug.Log($"- Volume - Effects volume is {newValue}");
-        }
-
-        #endregion
-
         #region Ambient Sound
 
         private void PlayAmbientMusic()
@@ -147,6 +129,7 @@ namespace ACG.Scripts.Managers
 
             _musicSource.Play();
         }
+
         public async void PlayMusicLoop()
         {
             if (_soundSettings.MusicCollection == null)
@@ -166,6 +149,7 @@ namespace ACG.Scripts.Managers
                 await WaitForMusicEnd();
             }
         }
+
         public void StopMusicLoop(float progressivelyStopDuration)
         {
             if (progressivelyStopDuration is not 0)
@@ -185,6 +169,7 @@ namespace ACG.Scripts.Managers
                 _isMusicPlaying = false;
             }
         }
+
         private async Task WaitForMusicEnd()
         {
             while (_isMusicPlaying && _musicSource != null && _musicSource.isPlaying)
@@ -195,13 +180,6 @@ namespace ACG.Scripts.Managers
 
         #region Sound
 
-        private void Create3DSoundsGeneralParent()
-        {
-            GameObject newGameObject = new(_soundSettings.Sound3DParentName);
-            GameObject.DontDestroyOnLoad(newGameObject);
-            _3dSoundsGeneralParent = newGameObject.transform;
-        }
-
         public void Play2DSounds(List<SO_SoundData> data)
         {
             if (data is null || data.Count == 0)
@@ -210,6 +188,7 @@ namespace ACG.Scripts.Managers
             foreach (SO_SoundData soundData in data)
                 _ = Play2DSound(soundData);
         }
+
         public async Task Play2DSound(SO_SoundData data)
         {
             if (data == null)
@@ -223,6 +202,14 @@ namespace ACG.Scripts.Managers
             audioSource.Play();
         }
 
+
+        private void Create3DSoundsGeneralParent()
+        {
+            GameObject newGameObject = new(_soundSettings.Sound3DParentName);
+            GameObject.DontDestroyOnLoad(newGameObject);
+            _3dSoundsGeneralParent = newGameObject.transform;
+        }
+
         public void Play3DSounds(List<SO_SoundData> data, Vector3 position, Transform parent = null)
         {
             if (data is null || data.Count == 0)
@@ -231,6 +218,7 @@ namespace ACG.Scripts.Managers
             foreach (SO_SoundData soundData in data)
                 _ = Play3DSound(soundData, position, parent);
         }
+
         public async Task Play3DSound(SO_SoundData data, Vector3 position, Transform parent = null)
         {
             if (data == null)

@@ -1,8 +1,8 @@
+using ACG.Tools.Runtime.MVCModulesCreator.Bases;
 using Asteroids.MVC.ScoreUI.ScriptableObjects;
 using System;
 using UnityEngine;
 using Zenject;
-using ACG.Tools.Runtime.MVCModulesCreator.Bases;
 
 namespace Asteroids.MVC.ScoreUI.Models
 {
@@ -10,8 +10,11 @@ namespace Asteroids.MVC.ScoreUI.Models
     {
         #region Fields and Properties
 
-        [Header("Score")]
-        private int _score; 
+        [Header("Values")]
+        private int _score;
+
+        [Header("Data")]
+        private readonly SO_ScoreUIConfiguration _configuration;
 
         #endregion
 
@@ -27,7 +30,7 @@ namespace Asteroids.MVC.ScoreUI.Models
         [Inject]
         public ScoreUIModel(SO_ScoreUIConfiguration configuration)
         {
-            //TODO: Initialize the model with the Configuration SO and other data
+            _configuration = configuration;
         }
 
         #endregion

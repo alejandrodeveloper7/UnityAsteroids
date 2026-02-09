@@ -15,7 +15,7 @@ namespace Asteroids.Gameplay.Asteroids.Spawners
 
         [Header("References")]
         private readonly AsteroidFactory _factory;
-        private readonly Transform _asteroidsParent;
+        private Transform _asteroidsParent;
 
         [Header("Data")]
         private readonly SO_AsteroidsCollection _asteroidsCollection;
@@ -30,9 +30,18 @@ namespace Asteroids.Gameplay.Asteroids.Spawners
         {
             _factory = factory;
             _asteroidsCollection = collection;
-
-            _asteroidsParent = new GameObject("Asteroids").transform;
             _initialAsteroids = _asteroidsCollection.Elements.Where(x => x.IsInitialAsteroid is true).ToList();
+
+            CreateParent();
+        }
+
+        #endregion
+
+        #region Parent management
+
+        private void CreateParent() 
+        {
+            _asteroidsParent = new GameObject("Asteroids").transform;
         }
 
         #endregion

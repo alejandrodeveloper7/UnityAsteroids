@@ -12,9 +12,11 @@ namespace Asteroids.Gameplay.Asteroids.Intallers
         public override void InstallBindings()
         {
             Container.Bind<AsteroidController>().FromComponentSibling();
-            Container.Bind<AsteroidMovementController>().FromComponentSibling();
-            Container.Bind<AsteroidHealthController>().FromComponentSibling();
             Container.Bind<AsteroidVisualsController>().FromComponentSibling();
+            Container.Bind<AsteroidHealthController>().FromComponentSibling();
+            Container.Bind<AsteroidMovementController>().FromComponentSibling();
+            Container.Bind<AsteroidPhysicsController>().FromComponentSibling();
+            Container.Bind<AsteroidSoundController>().FromComponentSibling();
 
             Container.Bind<DamageOnContact>().FromComponentSibling();
             Container.Bind<PooledGameObjectController>().FromComponentSibling();

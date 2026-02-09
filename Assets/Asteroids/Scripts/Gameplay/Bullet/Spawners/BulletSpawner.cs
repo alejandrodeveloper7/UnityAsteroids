@@ -13,7 +13,7 @@ namespace Asteroids.Gameplay.Bullets.Spawners
         [Header("References")]
         private readonly BulletFactory _factory;
         [Space]
-        private readonly Transform _bulletsParent;
+        private Transform _bulletsParent;
         
         #endregion
 
@@ -23,7 +23,15 @@ namespace Asteroids.Gameplay.Bullets.Spawners
         public BulletSpawner(BulletFactory factory)
         {
             _factory = factory;
+            CreateBulletParent();
+        }
 
+        #endregion
+
+        #region Parent Management
+
+        private void CreateBulletParent() 
+        {
             _bulletsParent = new GameObject("Bullets").transform;
         }
 

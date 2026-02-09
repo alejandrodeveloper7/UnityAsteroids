@@ -8,26 +8,6 @@ namespace Asteroids.Core.ScriptableObjects.Configurations
    {
         #region Values
 
-        [Header("Visuals")]
-
-        [SerializeField] private Color _playerRowColor;
-        public Color PlayerRowColor => _playerRowColor;
-
-        [SerializeField] private Color _defaultRowColor;
-        public Color DefaultRowColor => _defaultRowColor;
-
-        [Space]
-
-        [SerializeField] private Sprite _firstPositionMedal;
-        public Sprite FirstPositionMedal => _firstPositionMedal;
-
-        [SerializeField] private Sprite _secondPositionMedal;
-        public Sprite SecondPositionMedal => _secondPositionMedal;
-
-        [SerializeField] private Sprite _thirdPositionMedal;
-        public Sprite ThirdPositionMedal => _thirdPositionMedal;
-
-
         [Header("Configuration")]
 
         [SerializeField] private Vector3 _firstPositionScale;
@@ -49,6 +29,26 @@ namespace Asteroids.Core.ScriptableObjects.Configurations
 
         [SerializeField] private float _enterRowAnimationDelay;
         public float EnterRowAnimationDelay => _enterRowAnimationDelay;
+      
+        
+        [Header("Visuals")]
+
+        [SerializeField] private Color _playerRowColor;
+        public Color PlayerRowColor => _playerRowColor;
+
+        [SerializeField] private Color _defaultRowColor;
+        public Color DefaultRowColor => _defaultRowColor;
+
+        [Space]
+
+        [SerializeField] private Sprite _firstPositionMedal;
+        public Sprite FirstPositionMedal => _firstPositionMedal;
+
+        [SerializeField] private Sprite _secondPositionMedal;
+        public Sprite SecondPositionMedal => _secondPositionMedal;
+
+        [SerializeField] private Sprite _thirdPositionMedal;
+        public Sprite ThirdPositionMedal => _thirdPositionMedal;
 
         #endregion
     }

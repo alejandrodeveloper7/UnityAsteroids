@@ -1,3 +1,4 @@
+using ACG.Core.Models;
 using ACG.Tools.Runtime.Pooling.ScriptableObjects;
 using ACG.Tools.Runtime.SOCreator.Configurations;
 using UnityEngine;
@@ -11,8 +12,8 @@ namespace Asteroids.Core.ScriptableObjects.Configurations
 
         [Header("General")]
 
-        [SerializeField] private bool _isActive;
-        public bool IsActive => _isActive;
+        [SerializeField] private bool _useFloatingText = true;
+        public bool UseFloatingText => _useFloatingText;
 
         [SerializeField] private SO_PooledGameObjectData _prefabData;
         public SO_PooledGameObjectData PrefabData => _prefabData;
@@ -25,24 +26,22 @@ namespace Asteroids.Core.ScriptableObjects.Configurations
 
         [Space]
 
-        [SerializeField] private float _offsetDistance = 0.4f;
-        public float OffsetDistance => _offsetDistance;
+        [SerializeField] private FloatRange _movementDistanceRange = new(0.5f, 0.8f);
+        public FloatRange MovementDistanceRange => _movementDistanceRange;
 
-        [Space]
 
-        [SerializeField] private float _minMovementDistance = 0.5f;
-        public float MinMovementDistance => _minMovementDistance;
+        [Header("Animation")]
 
-        [SerializeField] private float _maxMovementDistance = 0.8f;
-        public float MaxMovementDistance => _maxMovementDistance;
+        [SerializeField] private float _enterTransitionDuration;
+        public float EnterTransitionDuration => _enterTransitionDuration;
 
-        [Space]
+        [SerializeField] private float _exitTransitionDuration;
+        public float ExitTransitionDuration => _exitTransitionDuration;
 
-        [SerializeField] private float _lifeTime;
-        public float LifeTime => _lifeTime;
+        [SerializeField] private float _duration;
+        public float Duration => _duration;
 
-        [SerializeField] private float _transitionDuration;
-        public float TransitionDuration => _transitionDuration;
+        public float TotalLifeTime => _enterTransitionDuration + _exitTransitionDuration + _duration;
 
         #endregion
     }

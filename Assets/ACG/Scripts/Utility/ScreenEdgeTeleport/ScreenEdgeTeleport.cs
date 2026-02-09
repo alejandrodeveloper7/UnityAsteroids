@@ -15,15 +15,15 @@ namespace ACG.Scripts.Utilitys
         private Coroutine _currentRelocationCoroutine;
 
         [Header("Data")]
-        private ScreenEdgeTeleportConfiguration _configuration;
+        private ScreenEdgeTeleportData _data;
 
         #endregion
 
         #region initialization
 
-        public void SetData(ScreenEdgeTeleportConfiguration config)
+        public void SetData(ScreenEdgeTeleportData data)
         {
-            _configuration = config;
+            _data = data;
             StartRelocationCoroutine();
         }
 
@@ -69,28 +69,28 @@ namespace ACG.Scripts.Utilitys
                 Vector3 viewportPosition = _camera.WorldToViewportPoint(transform.position);
                 Vector3 newPosition = transform.position;
 
-                if (viewportPosition.x > 1 + _configuration.EdgeOffsetX)
+                if (viewportPosition.x > 1 + _data.EdgeOffsetX)
                 {
-                    newPosition.x = _camera.ViewportToWorldPoint(new Vector2(-_configuration.EdgeRepositionOffsetX, viewportPosition.y)).x;
+                    newPosition.x = _camera.ViewportToWorldPoint(new Vector2(-_data.EdgeRepositionOffsetX, viewportPosition.y)).x;
                     transform.position = newPosition;
                 }
-                else if (viewportPosition.x < 0 - _configuration.EdgeOffsetX)
+                else if (viewportPosition.x < 0 - _data.EdgeOffsetX)
                 {
-                    newPosition.x = _camera.ViewportToWorldPoint(new Vector2(1 + _configuration.EdgeRepositionOffsetX, viewportPosition.y)).x;
+                    newPosition.x = _camera.ViewportToWorldPoint(new Vector2(1 + _data.EdgeRepositionOffsetX, viewportPosition.y)).x;
                     transform.position = newPosition;
                 }
-                else if (viewportPosition.y > 1 + _configuration.EdgeOffsetY)
+                else if (viewportPosition.y > 1 + _data.EdgeOffsetY)
                 {
-                    newPosition.y = _camera.ViewportToWorldPoint(new Vector2(viewportPosition.x, -_configuration.EdgeRepositionOffsetY)).y;
+                    newPosition.y = _camera.ViewportToWorldPoint(new Vector2(viewportPosition.x, -_data.EdgeRepositionOffsetY)).y;
                     transform.position = newPosition;
                 }
-                else if (viewportPosition.y < 0 - _configuration.EdgeOffsetY)
+                else if (viewportPosition.y < 0 - _data.EdgeOffsetY)
                 {
-                    newPosition.y = _camera.ViewportToWorldPoint(new Vector2(viewportPosition.x, 1 + _configuration.EdgeRepositionOffsetY)).y;
+                    newPosition.y = _camera.ViewportToWorldPoint(new Vector2(viewportPosition.x, 1 + _data.EdgeRepositionOffsetY)).y;
                     transform.position = newPosition;
                 }
 
-                yield return new WaitForSeconds(_configuration.CheckInterval);
+                yield return new WaitForSeconds(_data.CheckInterval);
             }
         }
 

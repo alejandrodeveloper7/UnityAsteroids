@@ -10,11 +10,11 @@ namespace Asteroids.Core.ScriptableObjects.Configurations
 
         [Header("Configuration")]
 
-        [SerializeField] private float _displayedItemChangeAnimationTotalDuration;
-        public float DisplayedItemChangeAnimationTotalDuration=> _displayedItemChangeAnimationTotalDuration;
+        [SerializeField] private float _displayChangeDuration;
+        public float DisplayChangeDuration=> _displayChangeDuration;
 
-        [SerializeField] private Vector3 _displayedItemAnimationRotationAngle;
-        public Vector3 DisplayedItemAnimationRotationAngle => _displayedItemAnimationRotationAngle;
+        [SerializeField] private Vector3 _displayChangeRotationAngle;
+        public Vector3 DisplayChangeRotationAngle => _displayChangeRotationAngle;
 
         #endregion
     }

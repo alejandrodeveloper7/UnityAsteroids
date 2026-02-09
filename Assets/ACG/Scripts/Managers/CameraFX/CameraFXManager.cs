@@ -71,12 +71,12 @@ namespace ACG.Scripts.Managers
 
         #region Functionality
 
-        public void PlayCameraShake(CameraShakeConfiguration shakeData)
+        public void PlayCameraShake(CameraShakeData shakeData)
         {
             StartCoroutine(CameraShakeCoroutine(shakeData));
         }
 
-        private IEnumerator CameraShakeCoroutine(CameraShakeConfiguration shakeData)
+        private IEnumerator CameraShakeCoroutine(CameraShakeData shakeData)
         {
             _camera.transform.localPosition = _originalPosition;
 

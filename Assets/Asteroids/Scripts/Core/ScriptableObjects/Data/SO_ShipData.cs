@@ -1,3 +1,4 @@
+using ACG.Core.Models;
 using ACG.Scripts.Models;
 using ACG.Scripts.ScriptableObjects.Data;
 using ACG.Tools.Runtime.Pooling.ScriptableObjects;
@@ -14,21 +15,6 @@ namespace Asteroids.Core.ScriptableObjects.Data
     {
         #region Values
 
-        [Header("Selector Element")]
-
-        [SerializeField] private bool _isActive = true;
-        public bool IsActive => _isActive;
-
-        [SerializeField] private Sprite _sprite;
-        public Sprite Sprite => _sprite;
-
-
-        [Header("Has Stats")]
-
-        [SerializeField] private List<StatData> _stats;
-        public List<StatData> Stats => _stats;
-
-
         [Header("General")]
 
         [SerializeField] private SO_PooledGameObjectData _prefabData;
@@ -36,6 +22,15 @@ namespace Asteroids.Core.ScriptableObjects.Data
 
         [SerializeField] private float _timeBeforeRecicle = 0.4f;
         public float TimeBeforeRecicle => _timeBeforeRecicle;
+
+
+        [Header("Selector Element")]
+
+        [SerializeField] private bool _isActive = true;
+        public bool IsActive => _isActive;
+
+        [SerializeField] private Sprite _sprite;
+        public Sprite Sprite => _sprite;
 
 
         [Header("Stats")]
@@ -51,6 +46,12 @@ namespace Asteroids.Core.ScriptableObjects.Data
 
         [SerializeField] private float _shieldRecoveryTime;
         public float ShieldRecoveryTime => _shieldRecoveryTime;
+
+
+        [Header("Has Stats")]
+
+        [SerializeField] private List<StatData> _stats;
+        public List<StatData> Stats => _stats;
 
 
         [Header("Configuration")]
@@ -77,10 +78,12 @@ namespace Asteroids.Core.ScriptableObjects.Data
         [SerializeField] private int _invulnerabilityDuration;
         public int InvulnerabilityDuration => _invulnerabilityDuration;
 
-        [Space]
-
         [SerializeField] private int _invulnerabilityBlinksPerSecond;
         public int InvulnerabilityBlinksPerSecond => _invulnerabilityBlinksPerSecond;
+
+        public int TotalInvulnerabilityBlinks => _invulnerabilityDuration * _invulnerabilityBlinksPerSecond;
+        
+        public float InvulnerabilityBlinkDuration => 1f / (_invulnerabilityBlinksPerSecond * 2);
 
 
         [Header("Shield")]
@@ -101,19 +104,13 @@ namespace Asteroids.Core.ScriptableObjects.Data
         [SerializeField] private float _shieldBlinkDuration = 0.3f;
         public float ShieldBlinkDuration => _shieldBlinkDuration;
 
-        [SerializeField] private float _shieldBlinkMinAlpha = 0.5f;
-        public float ShieldBlinkMinAlpha => _shieldBlinkMinAlpha;
-
-        [SerializeField] private float _shieldBlinkMaxAlpha = 0.8f;
-        public float ShieldBlinkMaxAlpha => _shieldBlinkMaxAlpha;
+        [SerializeField] private FloatRange _shieldBlinkAlphaRange ;
+        public FloatRange ShieldBlinkAlphaRange => _shieldBlinkAlphaRange;
 
         [Space]
 
-        [SerializeField] private float _shieldSliderMinValue = 20;
-        public float ShieldSliderMinValue => _shieldSliderMinValue;
-
-        [SerializeField] private float _shielSliderMaxValue = 100;
-        public float ShielSliderMaxValue => _shielSliderMaxValue;
+        [SerializeField] private FloatRange _shieldSliderValueRange;
+        public FloatRange ShieldSliderValueRange => _shieldSliderValueRange;
 
         [Space]
 
@@ -128,22 +125,23 @@ namespace Asteroids.Core.ScriptableObjects.Data
         [SerializeField] private Color _shieldShineColor;
         public Color ShieldShineColor => _shieldShineColor;
 
+
         [Header("Edge Resposition")]
 
-        [SerializeField] private ScreenEdgeTeleportConfiguration _screenEdgeTeleportConfiguration;
-        public ScreenEdgeTeleportConfiguration ScreenEdgeTeleportConfiguration => _screenEdgeTeleportConfiguration;
+        [SerializeField] private ScreenEdgeTeleportData _screenEdgeTeleportData;
+        public ScreenEdgeTeleportData ScreenEdgeTeleportData => _screenEdgeTeleportData;
 
 
         [Header("CameraShake")]
 
-        [SerializeField] private CameraShakeConfiguration _shieldLostCameraShakeConfig;
-        public CameraShakeConfiguration ShieldLostCameraShakeConfig => _shieldLostCameraShakeConfig;
+        [SerializeField] private CameraShakeData _shieldLostCameraShakeData;
+        public CameraShakeData ShieldLostCameraShakeData => _shieldLostCameraShakeData;
 
-        [SerializeField] private CameraShakeConfiguration _damageTakedCameraShakeConfig;
-        public CameraShakeConfiguration DamageTakedCameraShakeConfig => _damageTakedCameraShakeConfig;
+        [SerializeField] private CameraShakeData _damageTakedCameraShakeData;
+        public CameraShakeData DamageTakedCameraShakedata => _damageTakedCameraShakeData;
 
-        [SerializeField] private CameraShakeConfiguration _deadCameraShakeConfig;
-        public CameraShakeConfiguration DeadCameraShakeConfig => _deadCameraShakeConfig;
+        [SerializeField] private CameraShakeData _deadCameraShakeData;
+        public CameraShakeData DeadCameraShakeData => _deadCameraShakeData;
 
 
         [Header("Particles")]

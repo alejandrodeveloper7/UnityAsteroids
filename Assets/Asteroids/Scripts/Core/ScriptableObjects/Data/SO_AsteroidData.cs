@@ -1,3 +1,4 @@
+using ACG.Core.Models;
 using ACG.Scripts.Models;
 using ACG.Scripts.ScriptableObjects.Data;
 using ACG.Tools.Runtime.Pooling.ScriptableObjects;
@@ -22,8 +23,8 @@ namespace Asteroids.Core.ScriptableObjects.Data
         [SerializeField] private bool _isInitialAsteroid;
         public bool IsInitialAsteroid => _isInitialAsteroid;
 
-        [SerializeField] private Sprite[] _possibleSprites;
-        public Sprite[] PossibleSprites => _possibleSprites;
+        [SerializeField] private List<Sprite> _possibleSpritesList;
+        public List<Sprite> PossibleSpritesList => _possibleSpritesList;
 
         [SerializeField] private Color _color;
         public Color Color => _color;
@@ -36,8 +37,8 @@ namespace Asteroids.Core.ScriptableObjects.Data
         [SerializeField] private float _asteroidSpawnAngle;
         public float AsteroidSpawnAngle => _asteroidSpawnAngle;
 
-        [SerializeField] private float _posibleTorque;
-        public float PosibleTorque => _posibleTorque;
+        [SerializeField] private FloatRange _torqueRange;
+        public FloatRange TorqueRange => _torqueRange;
 
         [SerializeField] private float _alphaAparitionDuration;
         public float AlphaAparitionDuration => _alphaAparitionDuration;
@@ -81,8 +82,8 @@ namespace Asteroids.Core.ScriptableObjects.Data
 
         [Header("Edge Resposition")]
 
-        [SerializeField] private ScreenEdgeTeleportConfiguration _screenEdgeTeleportConfiguration;
-        public ScreenEdgeTeleportConfiguration ScreenEdgeTeleportConfiguration => _screenEdgeTeleportConfiguration;
+        [SerializeField] private ScreenEdgeTeleportData _screenEdgeTeleportData;
+        public ScreenEdgeTeleportData ScreenEdgeTeleportData => _screenEdgeTeleportData;
 
 
         [Header("Particles")]

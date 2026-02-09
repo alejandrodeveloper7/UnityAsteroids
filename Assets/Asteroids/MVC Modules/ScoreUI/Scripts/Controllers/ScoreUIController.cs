@@ -21,7 +21,7 @@ namespace Asteroids.MVC.ScoreUI.Controllers
         [Inject] private readonly ScoreUIModel _model;
 
         [Header("Data")]
-        [Inject] private readonly SO_ScoreUIConfiguration _configurationData;
+        [Inject] private readonly SO_ScoreUIConfiguration _configuration;
 
         #endregion
 
@@ -30,9 +30,6 @@ namespace Asteroids.MVC.ScoreUI.Controllers
         protected override void GetReferences()
         {
             base.GetReferences();
-
-            // Not used thanks to Zenject injection
-            //_view = GetComponent<IScoreUIView>();
         }
 
         protected override void Initialize()
@@ -92,17 +89,17 @@ namespace Asteroids.MVC.ScoreUI.Controllers
 
         private void OnRunStarted(RunStarted runStarted)
         {
-            _ = ViewBase.PlayEnterTransition(_configurationData.DelayBeforeEnter, _configurationData.TransitionDuration);
+            _ = ViewBase.PlayEnterTransition(_configuration.DelayBeforeEnter, _configuration.TransitionDuration);
         }
 
         private void OnRunExitRequested(RunExitRequested runExitRequested)
         {
-            _ = ViewBase.PlayExitTransition(_configurationData.DelayBeforeExit, _configurationData.TransitionDuration);
+            _ = ViewBase.PlayExitTransition(_configuration.DelayBeforeExit, _configuration.TransitionDuration);
         }
 
         private void OnGoToMainMenuRequested(GoToMainMenuRequested goToMainMenuRequested)
         {
-            _ = ViewBase.PlayExitTransition(_configurationData.DelayBeforeExit, _configurationData.TransitionDuration);
+            _ = ViewBase.PlayExitTransition(_configuration.DelayBeforeExit, _configuration.TransitionDuration);
         }
 
         private void OnScoreUpdated(ScoreUpdated scoreUpdated)

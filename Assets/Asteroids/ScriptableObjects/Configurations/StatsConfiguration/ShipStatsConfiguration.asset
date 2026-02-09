@@ -14,22 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _statsConfiguration:
   - Id: 0
-    Name: Healt
-    MinValue: 0
-    MaxValue: 6
+    DisplayName: Health
+    ValueRange:
+      Min: 0
+      Max: 6
     IsReverseValue: 0
   - Id: 1
-    Name: Shield
-    MinValue: 0
-    MaxValue: 100
+    DisplayName: Shield
+    ValueRange:
+      Min: 0
+      Max: 100
     IsReverseValue: 1
   - Id: 2
-    Name: Speed
-    MinValue: 0
-    MaxValue: 10
+    DisplayName: Speed
+    ValueRange:
+      Min: 0
+      Max: 10
     IsReverseValue: 0
   - Id: 3
-    Name: Rotation
-    MinValue: 0
-    MaxValue: 110
+    DisplayName: Rotation
+    ValueRange:
+      Min: 0
+      Max: 120
     IsReverseValue: 0

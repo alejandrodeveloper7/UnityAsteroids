@@ -4,5 +4,6 @@ namespace Asteroids.Core.Events.GameFlow
 {
     public readonly struct GoToLeaderboardRequested : IEvent
     {
+
     }
 }

@@ -1,3 +1,4 @@
+using ACG.Core.Models;
 using ACG.Scripts.UIControllers;
 using Asteroids.Core.Interfaces.Enums;
 using Asteroids.Core.Interfaces.Models;
@@ -12,7 +13,9 @@ namespace Asteroids.UI.Controllers
     {
         #region Fields
 
-        [Header("References")]
+        public StatIdType Id { get; private set; }
+
+        [Header("Gampleplay References")]
         [SerializeField] private TextMeshProUGUI _nameText;
         [SerializeField] private UISliderController _sliderController;
 
@@ -20,7 +23,6 @@ namespace Asteroids.UI.Controllers
         [Inject] private readonly SO_StatsDisplayerConfiguration _displayerConfiguration;
         [Space]
         private StatConfiguration _statConfiguration;
-        public StatIdType Id { get; private set; }
 
         #endregion
 
@@ -31,25 +33,26 @@ namespace Asteroids.UI.Controllers
             _statConfiguration = statConfiguration;            
             Id = statConfiguration.Id;
 
-            SetName(_statConfiguration.Name);
-            SetValueLimits(_statConfiguration.MinValue, _statConfiguration.MaxValue);
-            SetValue(_statConfiguration.MinValue);
-        }
-
-        public void SetName(string name)
-        {
-            _nameText.text = name;
-        }
-        public void SetValueLimits(float minValue, float maxValue)
-        {
-            _sliderController.SetLimitValues(minValue, maxValue);
+            SetName(_statConfiguration.DisplayName);
+            SetValueLimits(_statConfiguration.ValueRange);
+            SetValue(_statConfiguration.ValueRange.Min,false);
         }
 
         #endregion
 
-        #region SetValue
+        #region Functionality
+        
+        public void SetName(string name)
+        {
+            _nameText.text = name;
+        }
+        
+        public void SetValueLimits(FloatRange range)
+        {
+            _sliderController.SetLimitValues(range.Min, range.Max);
+        }
 
-        public void SetValue(float value, bool progressively = false)
+        public void SetValue(float value, bool progressively)
         {
             if (_statConfiguration.IsReverseValue)
                 value = _sliderController.MaxValue - value;

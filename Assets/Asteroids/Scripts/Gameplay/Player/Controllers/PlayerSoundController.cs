@@ -78,6 +78,7 @@ namespace Asteroids.Gameplay.Player.Controllers
         {
             _soundManager.Play2DSounds(_shipData.SoundsOnShieldDown);
         }
+
         private void PlayShielRecoveredSound()
         {
             _soundManager.Play2DSounds(_shipData.SoundsOnShieldUp);

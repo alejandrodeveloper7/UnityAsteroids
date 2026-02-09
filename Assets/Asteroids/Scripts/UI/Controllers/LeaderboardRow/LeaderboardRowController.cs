@@ -14,7 +14,7 @@ namespace Asteroids.UI.Controllers
     {
         #region Fields
 
-        [Header("References")]
+        [Header("Gameplay References")]
         [SerializeField] private Image _panel;
         [SerializeField] private Image _medal;
         [Space]
@@ -53,7 +53,7 @@ namespace Asteroids.UI.Controllers
             bool hasMedal = medalSprite != null;
 
             _medal.gameObject.SetActive(hasMedal);
-            _positionText.gameObject.SetActive(!hasMedal);
+            _positionText.gameObject.SetActive(hasMedal is false);
 
             if (hasMedal)
                 _medal.sprite = medalSprite;

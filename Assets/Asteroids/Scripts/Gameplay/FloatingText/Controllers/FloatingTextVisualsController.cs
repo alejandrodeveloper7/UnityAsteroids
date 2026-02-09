@@ -45,11 +45,11 @@ namespace Asteroids.Gameplay.FloatingText.Controllers
             SetAlpha(0);
             transform.localScale = Vector3.zero;
 
-            _sequence.Append(transform.DOScale(1, configuration.TransitionDuration));
-            _sequence.Join(_text.DOFade(1, configuration.TransitionDuration));            
-            _sequence.AppendInterval(configuration.LifeTime);
-            _sequence.Append(_text.DOFade(0, configuration.TransitionDuration));
-            _sequence.Join(transform.DOScale(0, configuration.TransitionDuration));
+            _sequence.Append(transform.DOScale(1, configuration.EnterTransitionDuration));
+            _sequence.Join(_text.DOFade(1, configuration.EnterTransitionDuration));            
+            _sequence.AppendInterval(configuration.Duration);
+            _sequence.Append(_text.DOFade(0, configuration.ExitTransitionDuration));
+            _sequence.Join(transform.DOScale(0, configuration.ExitTransitionDuration));
 
             await _sequence.Play().AsyncWaitForCompletion();
         }

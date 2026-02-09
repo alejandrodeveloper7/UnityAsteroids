@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69a6c869f525da544bef0c3daf604217, type: 3}
+  m_Script: {fileID: 11500000, guid: 027db6bde78fe914aa559f82ac631fbb, type: 3}
   m_Name: ApiCallerCreatorConfiguration
   m_EditorClassIdentifier: 
   WindowTitle: ApiCaller Creator
   WindowMinSize: {x: 345, y: 205}
   TemplatesPath: ACG/Tools/Editor/ApiCallersCreator/Templates/
-  OutputPath: Scripts/ApiCallers/
+  OutputPath: Asteroids/Scripts/ApiCallers/
   InterfacePrefix: I
   ApiCallerSufix: ApiCaller
   ServiceSufix: ApiService

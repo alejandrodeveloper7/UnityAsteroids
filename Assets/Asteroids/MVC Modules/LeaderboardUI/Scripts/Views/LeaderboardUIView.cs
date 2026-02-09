@@ -34,11 +34,6 @@ namespace Asteroids.MVC.LeaderboardUI.Views
         protected override void GetReferences()
         {
             base.GetReferences();
-
-            // Not used thanks to Zenject injection
-            //_controller = GetComponent<IMainMenuUIController>();
-            //_model = _controller.Model;
-            //_configuration = _controller.ModuleConfigurationData;
         }
 
         protected override void Initialize()
@@ -52,12 +47,12 @@ namespace Asteroids.MVC.LeaderboardUI.Views
 
         protected override void RegisterListeners()
         {
-            // TODO: Add listeners for the events
+            _model.LeaderboardDataUpdated += OnLeaderboardDataUpdated;
         }
 
         protected override void UnRegisterListeners()
         {
-            // TODO: Remove listeners for the events
+            _model.LeaderboardDataUpdated -= OnLeaderboardDataUpdated;
         }
 
         #endregion
@@ -90,7 +85,10 @@ namespace Asteroids.MVC.LeaderboardUI.Views
 
         #region Event Callbacks
 
-        // TODO: Define here callbacks for the events
+        private void OnLeaderboardDataUpdated(Leaderboard data)
+        {
+            UpdateLeaderboardRowsData(data.Entry, _model.Username);
+        }
 
         #endregion
 
@@ -112,7 +110,7 @@ namespace Asteroids.MVC.LeaderboardUI.Views
 
         public void UpdateLeaderboardRowsData(List<LeaderboardEntry> data, string playerUserName)
         {
-            for (int i = 0; i < data.Count; i++) 
+            for (int i = 0; i < data.Count; i++)
             {
                 bool isPlayerScore = playerUserName == data[i].Name;
                 _rowControllers[i].SetData(i + 1, data[i], isPlayerScore);

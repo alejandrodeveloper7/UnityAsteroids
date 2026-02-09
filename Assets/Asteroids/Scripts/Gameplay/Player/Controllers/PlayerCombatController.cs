@@ -123,15 +123,15 @@ namespace Asteroids.Gameplay.Player.Controllers
         private void StartShooting()
         {
             _shootRoutine ??= StartCoroutine(ShootLoop());
-
         }
+        
         private void StopShooting()
         {
-            if (_shootRoutine != null)
-            {
-                StopCoroutine(_shootRoutine);
-                _shootRoutine = null;
-            }
+            if (_shootRoutine == null)
+                return;
+
+            StopCoroutine(_shootRoutine);
+            _shootRoutine = null;
         }
 
         private IEnumerator ShootLoop()

@@ -1,3 +1,4 @@
+using ACG.Core.Models;
 using Asteroids.Core.Interfaces.Enums;
 using System;
 
@@ -7,17 +8,15 @@ namespace Asteroids.Core.Interfaces.Models
     public sealed class StatConfiguration
     {
         public StatIdType Id;
-        public string Name;
-        public float MinValue;
-        public float MaxValue;
+        public string DisplayName;
+        public FloatRange ValueRange;
         public bool IsReverseValue;
 
-        public StatConfiguration(StatIdType id, string name, float minValue, float maxValue, bool isReverseValue)
+        public StatConfiguration(StatIdType id, string displayname, FloatRange valueRange, bool isReverseValue)
         {
             Id = id;
-            Name = name;
-            MinValue = minValue;
-            MaxValue = maxValue;
+            DisplayName = displayname;
+            ValueRange = valueRange;
             IsReverseValue = isReverseValue;
         }
     }

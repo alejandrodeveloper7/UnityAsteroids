@@ -1,4 +1,4 @@
-﻿//using ACG.Tools.Runtime.ApiCallers.PokemonApiCaller;
+﻿//using ACG.Tools.Runtime.ApiCallers.Pokemon;
 //using System.Threading.Tasks;
 //using ACG.Tools.Runtime.ApiCallersCreator.Models;
 //using ACG.Tools.Runtime.ApiCallersCreator.Enums;

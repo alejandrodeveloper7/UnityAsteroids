@@ -1,3 +1,4 @@
+using ACG.Core.Utils;
 using Asteroids.Core.Interfaces;
 using Asteroids.Core.Interfaces.Models;
 using Asteroids.Core.ScriptableObjects.Data;
@@ -79,15 +80,15 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
 
         private Vector2 GetRandomSpawnPosition()
         {
-            float minLimitX = 0f - _asteroidData.ScreenEdgeTeleportConfiguration.EdgeRepositionOffsetX;
-            float maxLimitX = 1f + _asteroidData.ScreenEdgeTeleportConfiguration.EdgeRepositionOffsetX;
-            float minLimitY = 0f - _asteroidData.ScreenEdgeTeleportConfiguration.EdgeRepositionOffsetY;
-            float maxLimitY = 1f + _asteroidData.ScreenEdgeTeleportConfiguration.EdgeRepositionOffsetY;
+            float minLimitX = 0f - _asteroidData.ScreenEdgeTeleportData.EdgeRepositionOffsetX;
+            float maxLimitX = 1f + _asteroidData.ScreenEdgeTeleportData.EdgeRepositionOffsetX;
+            float minLimitY = 0f - _asteroidData.ScreenEdgeTeleportData.EdgeRepositionOffsetY;
+            float maxLimitY = 1f + _asteroidData.ScreenEdgeTeleportData.EdgeRepositionOffsetY;
 
             float RandomValueX = Random.Range(minLimitX, maxLimitX);
             float RandomValueY = Random.Range(minLimitY, maxLimitY);
 
-            bool spawnOnXEdge = Random.value > 0.5f;
+            bool spawnOnXEdge = ProbabilityUtils.TryByOdds(2);
 
             if (spawnOnXEdge)
                 return Camera.main.ViewportToWorldPoint(new Vector2(maxLimitX, RandomValueY));
@@ -116,7 +117,7 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
             _rigidBody.velocity = Vector2.zero;
         }
         
-        public void Push(PushInfo data)
+        public void Push(PushData data)
         {
             _rigidBody.AddForce(data.HitDirection.normalized * data.PushForce, ForceMode2D.Impulse);
 
@@ -137,7 +138,7 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
 
         private void RandomizeInitialTorque() 
         {
-            _rigidBody.AddTorque(Random.Range(-_asteroidData.PosibleTorque, _asteroidData.PosibleTorque));
+            _rigidBody.AddTorque(Random.Range(_asteroidData.TorqueRange.Min, _asteroidData.TorqueRange.Max));
         }
 
         #endregion
