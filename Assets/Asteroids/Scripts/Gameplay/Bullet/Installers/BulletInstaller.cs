@@ -20,7 +20,6 @@ namespace Asteroids.Gameplay.Bullets.Intallers
 
             Container.Bind<PushOnContact>().FromComponentSibling();
             Container.Bind<DamageOnContact>().FromComponentSibling();
-            Container.Bind<PooledGameObjectController>().FromComponentSibling();
             Container.Bind<ScreenEdgeTeleport>().FromComponentSibling();
           
             Container.Bind<SpriteRenderer>().FromComponentSibling();

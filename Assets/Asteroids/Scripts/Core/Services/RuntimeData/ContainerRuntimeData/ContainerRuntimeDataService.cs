@@ -1,5 +1,4 @@
 using ACG.Tools.Runtime.ServicesCreator.Bases;
-using System;
 using Zenject;
 
 namespace Asteroids.Core.Services
@@ -10,10 +9,6 @@ namespace Asteroids.Core.Services
 
         public RuntimeDataContainer Data { get; private set; }
 
-        public string AuthToken { get { return Data.AuthToken; } set { Data.AuthToken = value; } }
-        public string RefreshToken { get { return Data.RefreshToken; } set { Data.RefreshToken = value; } }
-        public DateTime TokenExpiration { get { return Data.TokenExpiration; } set { Data.TokenExpiration = value; } }
-
         #endregion
 
         #region Constructors
@@ -22,8 +17,6 @@ namespace Asteroids.Core.Services
         public ContainerRuntimeDataService(RuntimeDataContainer container)
         {
             Data = container;
-
-            Initialize();
         }
 
         #endregion

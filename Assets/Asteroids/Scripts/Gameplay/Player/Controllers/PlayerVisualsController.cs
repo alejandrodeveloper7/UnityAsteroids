@@ -1,5 +1,6 @@
 using ACG.Core.Utils;
 using ACG.Scripts.Managers;
+using Asteroids.Core.Interfaces;
 using Asteroids.Core.ScriptableObjects.Data;
 using DG.Tweening;
 using System;
@@ -34,10 +35,8 @@ namespace Asteroids.Gameplay.Player.Controllers
         [Inject] private readonly ICameraFXManager _cameraFXManager;
         [Inject] private readonly IVFXManager _vFXManager;
 
-        [Header("Data")]
-        private SO_ShipData _shipData;
-
         [Header("Cache")]
+        private IShipData _shipData; // It's a good idea to cache it if you need to access it frequently.
         private Sequence _blinkSequence;
         private Sequence _invulnerabilityBlinkSequence;
 
@@ -85,9 +84,9 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         #region Event Callbacks
 
-        private void OnPlayerInitialized(SO_ShipData data)
+        private void OnPlayerInitialized()
         {
-            _shipData = data;
+            _shipData = _playerController.ShipData;
             Initialize();
         }
 
@@ -151,8 +150,8 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         private async void ActivateShield()
         {
-            _shieldFX.enabled = true;
             _blinkSequence?.Kill();
+            _shieldFX.enabled = true;
             await _shieldFX.DOFade(_shipData.ShieldBlinkAlphaRange.Max, _shipData.ShieldFadeInDuration).AsyncWaitForCompletion();
             PlayShieldBlinkSequenceLoop();
         }

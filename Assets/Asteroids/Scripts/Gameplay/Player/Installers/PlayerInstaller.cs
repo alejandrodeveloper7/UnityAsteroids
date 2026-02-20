@@ -18,7 +18,6 @@ namespace Asteroids.Gameplay.Player.Intallers
             Container.Bind<PlayerPhysicsController>().FromComponentSibling();
             Container.Bind<PlayerSoundController>().FromComponentSibling();
 
-            Container.Bind<PooledGameObjectController>().FromComponentSibling();
             Container.Bind<ScreenEdgeTeleport>().FromComponentSibling();
             
             Container.Bind<SpriteRenderer>().FromComponentSibling();

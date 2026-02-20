@@ -2,6 +2,7 @@ using ACG.Core.EventBus;
 using ACG.Scripts.Utilitys;
 using ACG.Tools.Runtime.Pooling.Gameplay;
 using Asteroids.Core.Events.GameFlow;
+using Asteroids.Core.Interfaces;
 using Asteroids.Core.ScriptableObjects.Data;
 using Asteroids.Gameplay.General.OnContact;
 using System;
@@ -22,7 +23,7 @@ namespace Asteroids.Gameplay.Bullets.Controllers
     {
         #region Fields and events
 
-        public event Action<SO_BulletData> BulletInitialized;
+        public event Action BulletInitialized;
         public event Action BulletReadyToBeRecycled;
 
         [Header("References")]
@@ -36,6 +37,7 @@ namespace Asteroids.Gameplay.Bullets.Controllers
 
         [Header("Data")]
         private SO_BulletData _bulletData;
+        public IBulletData BulletData => _bulletData;
 
         #endregion
 
@@ -49,7 +51,7 @@ namespace Asteroids.Gameplay.Bullets.Controllers
             _damageOnContact.SetData(_bulletData.Damage);
             _pushOnContact.SetData(_bulletData.PushForce, _bulletData.TorqueForce, (_bulletData.Speed * -transform.up).normalized);
 
-            BulletInitialized?.Invoke(_bulletData);
+            BulletInitialized?.Invoke();
         }
 
         #endregion

@@ -1,6 +1,5 @@
 using ACG.Scripts.Managers;
 using Asteroids.Core.Interfaces.Models;
-using Asteroids.Core.ScriptableObjects.Data;
 using Asteroids.Gameplay.General.OnContact;
 using UnityEngine;
 using Zenject;
@@ -21,9 +20,6 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
         [Inject] private readonly DamageOnContact _damageOnContact;
         [Space]
         [Inject] private readonly ISoundManager _soundManager;
-
-        [Header("Data")]
-        private SO_AsteroidData _asteroidData;
         
         #endregion     
 
@@ -31,8 +27,6 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
 
         private void OnEnable()
         {
-            _asteroidController.AsteroidInitialized += OnAsteroidInitialized;
-
             _asteroidHealthController.AsteroidDamaged += OnAsteroidDamaged;
             _asteroidHealthController.AsteroidDestroyed += OnAsteroidDestroyed;
 
@@ -41,8 +35,6 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
 
         private void OnDisable()
         {
-            _asteroidController.AsteroidInitialized -= OnAsteroidInitialized;
-
             _asteroidHealthController.AsteroidDamaged -= OnAsteroidDamaged;
             _asteroidHealthController.AsteroidDestroyed -= OnAsteroidDestroyed;
 
@@ -52,11 +44,6 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
         #endregion
 
         #region Event callbacks
-
-        private void OnAsteroidInitialized(SO_AsteroidData data, Vector2? position, Vector2? direction)
-        {
-            _asteroidData = data;
-        }
 
         private void OnAsteroidDamaged(Vector3 hitPoint)
         {
@@ -79,12 +66,12 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
 
         private void PlayDamageSound()
         {
-            _soundManager.Play2DSounds(_asteroidData.SoundsOnDamage);
+            _soundManager.Play2DSound(_asteroidController.AsteroidData.SoundsOnDamage);
         }
 
         private void PlayDestructionSound() 
         {
-            _soundManager.Play2DSounds(_asteroidData.SoundsOnDestruction);
+            _soundManager.Play2DSound(_asteroidController.AsteroidData.SoundsOnDestruction);
         }
         
         #endregion

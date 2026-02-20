@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Asteroids.Core.ScriptableObjects.Data
 {
     [CreateAssetMenu(fileName = "NewShip", menuName = "ScriptableObjects/Data/Ship")]
-    public class SO_ShipData : SO_DataBase, ISelectorElement, IHasStats
+    public class SO_ShipData : SO_DataBase, ISelectorElement, IHasStats, IShipData
     {
         #region Values
 

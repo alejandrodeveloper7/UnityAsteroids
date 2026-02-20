@@ -35,13 +35,13 @@ namespace ACG.Scripts.Managers
         public override void Initialize()
         {
             base.Initialize();
-            // TODO: Manual method to initialize the manager (called in start)
+            // TODO: Method for initial logic and event subscriptions (called by Zenject)
         }
 
         public override void Dispose()
         {
             base.Dispose();
-            // TODO: clean here all the listeners or elements that need be clean when the manager is destroyed
+            // TODO: Clean here all the listeners or elements that need be clean when the script is destroyed (called by Zenject)
         }
 
         #endregion
@@ -58,13 +58,7 @@ namespace ACG.Scripts.Managers
         protected override void Start()
         {
             base.Start();
-
-            Initialize();
-        }
-
-        private void OnDestroy()
-        {
-            Dispose();
+            // TODO: Add start logic here
         }
 
         #endregion

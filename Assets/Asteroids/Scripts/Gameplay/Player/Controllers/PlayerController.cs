@@ -3,6 +3,7 @@ using ACG.Core.Utils;
 using ACG.Scripts.Utilitys;
 using ACG.Tools.Runtime.Pooling.Gameplay;
 using Asteroids.Core.Events.GameFlow;
+using Asteroids.Core.Interfaces;
 using Asteroids.Core.Managers;
 using Asteroids.Core.ScriptableObjects.Data;
 using System;
@@ -20,7 +21,7 @@ namespace Asteroids.Gameplay.Player.Controllers
     {
         #region Fields and Events
 
-        public event Action<SO_ShipData> PlayerInitialized;
+        public event Action PlayerInitialized;
         public event Action PlayerReadyToBeRecycled;
 
         public event Action GamePaused;
@@ -38,6 +39,7 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         [Header("Data")]
         private SO_ShipData _shipData;
+        public IShipData ShipData => _shipData;
 
         #endregion
 
@@ -49,7 +51,7 @@ namespace Asteroids.Gameplay.Player.Controllers
 
             _screenEdgeTeleport.SetData(_shipData.ScreenEdgeTeleportData);
 
-            PlayerInitialized?.Invoke(_shipData);
+            PlayerInitialized?.Invoke();
         }
 
         #endregion

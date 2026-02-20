@@ -13,8 +13,14 @@ MonoBehaviour:
   m_Name: 03-OrangeShip
   m_EditorClassIdentifier: 
   _id: 3
+  _prefabData: {fileID: 11400000, guid: eba3a4c965da3b84f85785bdf6398f7b, type: 2}
+  _timeBeforeRecicle: 0.4
   _isActive: 1
   _sprite: {fileID: 21300000, guid: 4935c0cf667678f4cb9819f3979cc880, type: 3}
+  _healthPoints: 5
+  _movementSpeed: 5
+  _rotationSpeed: 75
+  _shieldRecoveryTime: 80
   _stats:
   - Id: 0
     PropertyName: HealthPoints
@@ -24,12 +30,6 @@ MonoBehaviour:
     PropertyName: MovementSpeed
   - Id: 3
     PropertyName: RotationSpeed
-  _prefabData: {fileID: 11400000, guid: eba3a4c965da3b84f85785bdf6398f7b, type: 2}
-  _timeBeforeRecicle: 0.4
-  _healthPoints: 5
-  _movementSpeed: 5
-  _rotationSpeed: 75
-  _shieldRecoveryTime: 80
   _color: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 1}
   _propulsionFireTransitionDuration: 0.5
   _propulsionFireLocalPosition: {x: 0, y: 0.569, z: 0}
@@ -37,8 +37,8 @@ MonoBehaviour:
   _invulnerabilityDuration: 4
   _invulnerabilityBlinksPerSecond: 2
   _shieldColor: {r: 1, g: 0.6862745, b: 0, a: 1}
-  _shieldFadeInDuration: 0.5
-  _shieldFadeOutDuration: 0.5
+  _shieldFadeInDuration: 0.8
+  _shieldFadeOutDuration: 0.8
   _shieldBlinkDuration: 0.3
   _shieldBlinkAlphaRange:
     Min: 0.5

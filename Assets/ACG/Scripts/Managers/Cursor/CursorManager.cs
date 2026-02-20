@@ -71,13 +71,7 @@ namespace ACG.Scripts.Managers
         protected override void Start()
         {
             base.Start();
-
-            Initialize();
-        }
-
-        private void OnDestroy()
-        {
-            Dispose();
+            // TODO: Add start logic here
         }
 
         private void Update()

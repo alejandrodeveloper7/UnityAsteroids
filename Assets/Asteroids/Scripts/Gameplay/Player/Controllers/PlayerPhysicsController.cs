@@ -1,4 +1,3 @@
-using Asteroids.Core.ScriptableObjects.Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,9 +26,6 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         //[Header("States")]
         public bool InCollisionCooldown { get; private set; }
-
-        [Header("Data")]
-        private SO_ShipData _shipData;
 
         [Header("Cache")]
         private Coroutine _cooldownCoroutine;
@@ -66,9 +62,8 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         #region Event callbacks
 
-        private void OnPlayerInitialized(SO_ShipData data)
+        private void OnPlayerInitialized()
         {
-            _shipData = data;
             SetCooldownState(false);
         }
 
@@ -142,7 +137,7 @@ namespace Asteroids.Gameplay.Player.Controllers
         private IEnumerator CooldownCoroutine()
         {
             SetCooldownState(true);
-            yield return new WaitForSeconds(_shipData.InvulnerabilityDuration);
+            yield return new WaitForSeconds(_playerController.ShipData.InvulnerabilityDuration);
             SetCooldownState(false);
             _cooldownCoroutine = null;
         }

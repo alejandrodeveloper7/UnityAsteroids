@@ -1,9 +1,11 @@
 using ACG.Tools.Runtime.ManagersCreator.Interfaces;
+using System;
 using UnityEngine;
+using Zenject;
 
 namespace ACG.Tools.Runtime.ManagersCreator.Bases
 {
-    public abstract class NoMonobehaviourSingletonManagerBase<T> : IManager where T : NoMonobehaviourSingletonManagerBase<T>, new()
+    public abstract class NoMonobehaviourSingletonManagerBase<T> : IManager, IDisposable, IInitializable where T : NoMonobehaviourSingletonManagerBase<T>, new()
     {
         #region Fields
 

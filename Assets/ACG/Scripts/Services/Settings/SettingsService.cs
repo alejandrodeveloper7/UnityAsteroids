@@ -1,5 +1,4 @@
 using ACG.Core.Keys;
-using ACG.Scripts.Managers;
 using ACG.Tools.Runtime.ServicesCreator.Bases;
 using System;
 using System.Collections.Generic;
@@ -28,8 +27,6 @@ namespace ACG.Scripts.Services
             _screenService = screenService;
             _soundService = soundService;
             _persistentDataService = persistentDataService;
-
-            Initialize();
         }
 
         #endregion
@@ -39,13 +36,13 @@ namespace ACG.Scripts.Services
         public override void Initialize()
         {
             base.Initialize();
-            // TODO: Method called in the constructor to initialize the Service
+            // TODO: Method for initial logic and event subscriptions (called by Zenject)
         }
 
         public override void Dispose()
         {
             base.Dispose();
-            // TODO: clean here all the elements that need be clean when the Service is destroyed
+            // TODO: Clean here all the listeners or elements that need be clean when the script is destroyed (called by Zenject)
         }
 
         #endregion

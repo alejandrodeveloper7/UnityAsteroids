@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17c219f573d8a2c409440ca93a9b0165, type: 3}
-  m_Name: FactoriesInstaller
+  m_Script: {fileID: 11500000, guid: e4c6db041f9e3ae45bd8e3b7b8b96c6a, type: 3}
+  m_Name: GlobalPoolingInstaller
   m_EditorClassIdentifier: 

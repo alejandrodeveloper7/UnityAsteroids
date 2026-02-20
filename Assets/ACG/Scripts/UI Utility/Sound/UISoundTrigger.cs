@@ -27,13 +27,13 @@ namespace ACG.Scripts.UIUtilitys.Sound
                 return;
 
             if (_clickSounds != null)
-                _soundManager.Play2DSounds(_clickSounds);
+                _soundManager.Play2DSound(_clickSounds);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (_hoverSounds != null)
-                _soundManager.Play2DSounds(_hoverSounds);
+                _soundManager.Play2DSound(_hoverSounds);
         }
 
         #endregion

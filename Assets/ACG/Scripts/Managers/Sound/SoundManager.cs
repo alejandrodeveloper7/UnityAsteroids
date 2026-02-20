@@ -81,13 +81,18 @@ namespace ACG.Scripts.Managers
         protected override void Start()
         {
             base.Start();
-
-            Initialize();
+            // TODO: Add start logic here
         }
 
-        private void OnDestroy()
+        #endregion
+
+        #region Parents management
+
+        private void Create3DSoundsGeneralParent()
         {
-            Dispose();
+            GameObject newGameObject = new(_soundSettings.Sound3DParentName);
+            newGameObject.transform.SetParent(transform);
+            _3dSoundsGeneralParent = newGameObject.transform;
         }
 
         #endregion
@@ -180,7 +185,7 @@ namespace ACG.Scripts.Managers
 
         #region Sound
 
-        public void Play2DSounds(List<SO_SoundData> data)
+        public void Play2DSound(List<SO_SoundData> data)
         {
             if (data is null || data.Count == 0)
                 return;
@@ -202,24 +207,16 @@ namespace ACG.Scripts.Managers
             audioSource.Play();
         }
 
-
-        private void Create3DSoundsGeneralParent()
-        {
-            GameObject newGameObject = new(_soundSettings.Sound3DParentName);
-            GameObject.DontDestroyOnLoad(newGameObject);
-            _3dSoundsGeneralParent = newGameObject.transform;
-        }
-
-        public void Play3DSounds(List<SO_SoundData> data, Vector3 position, Transform parent = null)
+        public void Play3DSound(List<SO_SoundData> data, Vector3 position, Transform parent = null, Space space = Space.World)
         {
             if (data is null || data.Count == 0)
                 return;
 
             foreach (SO_SoundData soundData in data)
-                _ = Play3DSound(soundData, position, parent);
+                _ = Play3DSound(soundData, position, parent, space);
         }
 
-        public async Task Play3DSound(SO_SoundData data, Vector3 position, Transform parent = null)
+        public async Task Play3DSound(SO_SoundData data, Vector3 position, Transform parent = null, Space space = Space.World)
         {
             if (data == null)
                 return;
@@ -227,18 +224,16 @@ namespace ACG.Scripts.Managers
             if (data.Delay > 0)
                 await TimingUtils.WaitSeconds(data.Delay);
 
-            GameObject new3DSound = FactoryManager.Instance.Get3DSoundInstance();
-
             if (parent == null)
-            {
-                new3DSound.transform.SetParent(_3dSoundsGeneralParent, false);
+                parent = _3dSoundsGeneralParent;
+
+            GameObject new3DSound = FactoryManager.Instance.Get3DSoundInstance();
+            new3DSound.transform.SetParent(parent, false);
+
+            if (space is Space.World)
                 new3DSound.transform.position = position;
-            }
             else
-            {
-                new3DSound.transform.SetParent(parent, false);
                 new3DSound.transform.localPosition = position;
-            }
 
             AudioSource audioSource = new3DSound.GetComponent<AudioSource>();
             data.ApplyConfiguration(audioSource);

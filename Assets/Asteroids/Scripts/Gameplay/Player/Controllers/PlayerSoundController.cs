@@ -1,5 +1,4 @@
 using ACG.Scripts.Managers;
-using Asteroids.Core.ScriptableObjects.Data;
 using UnityEngine;
 using Zenject;
 
@@ -18,17 +17,12 @@ namespace Asteroids.Gameplay.Player.Controllers
         [Space]
         [Inject] private readonly ISoundManager _soundManager;
 
-        [Header("Data")]
-        private SO_ShipData _shipData;
-
         #endregion
 
         #region Monobehaviour
 
         private void OnEnable()
         {
-            _playerController.PlayerInitialized += OnPlayerInitialized;
-
             _playerHealthController.PlayerDamaged += OnPlayerDamaged;
             _playerHealthController.PlayerShieldStateChanged += OnPlayerShieldStateChanged;
             _playerHealthController.PlayerDied += OnPlayerDied;
@@ -36,8 +30,6 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         private void OnDisable()
         {
-            _playerController.PlayerInitialized -= OnPlayerInitialized;
-
             _playerHealthController.PlayerDamaged -= OnPlayerDamaged;
             _playerHealthController.PlayerShieldStateChanged -= OnPlayerShieldStateChanged;
             _playerHealthController.PlayerDied -= OnPlayerDied;
@@ -46,11 +38,6 @@ namespace Asteroids.Gameplay.Player.Controllers
         #endregion
 
         #region Event callbacks 
-
-        private void OnPlayerInitialized(SO_ShipData data)
-        {
-            _shipData = data;
-        }
 
         private void OnPlayerDamaged()
         {
@@ -76,22 +63,22 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         private void PlayShielLostSound()
         {
-            _soundManager.Play2DSounds(_shipData.SoundsOnShieldDown);
+            _soundManager.Play2DSound(_playerController.ShipData.SoundsOnShieldDown);
         }
 
         private void PlayShielRecoveredSound()
         {
-            _soundManager.Play2DSounds(_shipData.SoundsOnShieldUp);
+            _soundManager.Play2DSound(_playerController.ShipData.SoundsOnShieldUp);
         }
 
         private void PlayDamageTakedSound()
         {
-            _soundManager.Play2DSounds(_shipData.SoundsOnDamage);
+            _soundManager.Play2DSound(_playerController.ShipData.SoundsOnDamage);
         }
         
         private void PlayDiedSound()
         {
-            _soundManager.Play2DSounds(_shipData.SoundsOnDestruction);
+            _soundManager.Play2DSound(_playerController.ShipData.SoundsOnDestruction);
         }
 
         #endregion

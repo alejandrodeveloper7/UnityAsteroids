@@ -1,6 +1,5 @@
 using Asteroids.Core.Interfaces;
 using Asteroids.Core.Interfaces.Models;
-using Asteroids.Core.ScriptableObjects.Data;
 using System;
 using UnityEngine;
 using Zenject;
@@ -25,9 +24,6 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
         [Header("States")]
         private bool _alive;
 
-        [Header("Data")]
-        private SO_AsteroidData _asteroidData;
-
         #endregion
 
         #region Initialization
@@ -35,7 +31,7 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
         private void Initialize()
         {
             _alive = true;
-            _health = _asteroidData.MaxHP;
+            _health = _asteroidController.AsteroidData.MaxHP;
         }
 
         #endregion
@@ -56,9 +52,8 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
 
         #region Event callbacks
 
-        private void OnAsteroidInitialized(SO_AsteroidData data, Vector2? position, Vector2? direction)
+        private void OnAsteroidInitialized(Vector2? position, Vector2? direction)
         {
-            _asteroidData = data;
             Initialize();
         }
 

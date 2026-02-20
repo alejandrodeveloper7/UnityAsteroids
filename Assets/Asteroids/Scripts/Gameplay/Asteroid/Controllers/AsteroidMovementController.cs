@@ -1,7 +1,6 @@
 using ACG.Core.Utils;
 using Asteroids.Core.Interfaces;
 using Asteroids.Core.Interfaces.Models;
-using Asteroids.Core.ScriptableObjects.Data;
 using UnityEngine;
 using Zenject;
 
@@ -20,9 +19,6 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
         [Inject] private readonly AsteroidController _asteroidController;
         [Space]
         [Inject] private readonly Rigidbody2D _rigidBody;
-
-        [Header("Data")]
-        private SO_AsteroidData _asteroidData;
 
         #endregion
 
@@ -55,9 +51,8 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
 
         #region Event callbacks
 
-        private void OnAsteroidInitialized(SO_AsteroidData data, Vector2? position, Vector2? direction)
+        private void OnAsteroidInitialized(Vector2? position, Vector2? direction)
         {
-            _asteroidData = data;
             Initialize(position, direction);
         }
 
@@ -80,10 +75,10 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
 
         private Vector2 GetRandomSpawnPosition()
         {
-            float minLimitX = 0f - _asteroidData.ScreenEdgeTeleportData.EdgeRepositionOffsetX;
-            float maxLimitX = 1f + _asteroidData.ScreenEdgeTeleportData.EdgeRepositionOffsetX;
-            float minLimitY = 0f - _asteroidData.ScreenEdgeTeleportData.EdgeRepositionOffsetY;
-            float maxLimitY = 1f + _asteroidData.ScreenEdgeTeleportData.EdgeRepositionOffsetY;
+            float minLimitX = 0f - _asteroidController.AsteroidData.ScreenEdgeTeleportData.EdgeRepositionOffsetX;
+            float maxLimitX = 1f + _asteroidController.AsteroidData.ScreenEdgeTeleportData.EdgeRepositionOffsetX;
+            float minLimitY = 0f - _asteroidController.AsteroidData.ScreenEdgeTeleportData.EdgeRepositionOffsetY;
+            float maxLimitY = 1f + _asteroidController.AsteroidData.ScreenEdgeTeleportData.EdgeRepositionOffsetY;
 
             float RandomValueX = Random.Range(minLimitX, maxLimitX);
             float RandomValueY = Random.Range(minLimitY, maxLimitY);
@@ -109,7 +104,7 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
             else
                 newDirection = Random.insideUnitCircle.normalized;          
 
-            _rigidBody.velocity = _asteroidData.Speed * newDirection;
+            _rigidBody.velocity = _asteroidController.AsteroidData.Speed * newDirection;
         }
 
         private void StopMovement()
@@ -138,7 +133,7 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
 
         private void RandomizeInitialTorque() 
         {
-            _rigidBody.AddTorque(Random.Range(_asteroidData.TorqueRange.Min, _asteroidData.TorqueRange.Max));
+            _rigidBody.AddTorque(_asteroidController.AsteroidData.TorqueRange.GetRandom());
         }
 
         #endregion

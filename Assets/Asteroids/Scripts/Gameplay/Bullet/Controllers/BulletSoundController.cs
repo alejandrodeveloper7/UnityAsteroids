@@ -1,5 +1,4 @@
 using ACG.Scripts.Managers;
-using Asteroids.Core.ScriptableObjects.Data;
 using UnityEngine;
 using Zenject;
 
@@ -15,9 +14,6 @@ namespace Asteroids.Gameplay.Bullets.Controllers
         [Inject] private readonly BulletController _bulletController;
         [Space]
         [Inject] private readonly ISoundManager _soundManager;
-
-        [Header("Data")]
-        private SO_BulletData _bulletData;
 
         #endregion
 
@@ -37,9 +33,8 @@ namespace Asteroids.Gameplay.Bullets.Controllers
 
         #region EventCallbacks
 
-        private void OnBulletInitialized(SO_BulletData data)
+        private void OnBulletInitialized()
         {
-            _bulletData = data;
 
             PlayShootedSound();
         }
@@ -50,7 +45,7 @@ namespace Asteroids.Gameplay.Bullets.Controllers
 
         private void PlayShootedSound()
         {
-            _soundManager.Play2DSounds(_bulletData.SoundsOnShoot);
+            _soundManager.Play2DSound(_bulletController.BulletData.SoundsOnShoot);
         }
 
         #endregion

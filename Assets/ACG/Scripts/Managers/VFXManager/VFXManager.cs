@@ -13,7 +13,7 @@ namespace ACG.Scripts.Managers
 
         [Header("References")]
         private Transform _particlesGeneralParent;
-        private Transform _decalsGeneralParent;
+        private Transform _detonablesGeneralParent;
 
         #endregion
 
@@ -21,7 +21,7 @@ namespace ACG.Scripts.Managers
 
         public VFXManager()
         {
-            Initialize();
+
         }
 
         #endregion
@@ -33,31 +33,43 @@ namespace ACG.Scripts.Managers
             base.Initialize();
 
             CreateParticlesGeneralParent();
-            CreateDecalsGeneralParent();
+            CreateDetonablesGeneralParent();
         }
 
         public override void Dispose()
         {
             base.Dispose();
-            // TODO: clean here all the listeners or elements that need be clean when the manager is destroyed
+
+            DestroyParticlesGeneralParent();
+            DestroyDetonablesGeneralParent();
         }
 
         #endregion
 
-        #region Parents Creation
+        #region Parents Management
 
         private void CreateParticlesGeneralParent()
         {
-            _particlesGeneralParent = new GameObject("particles_general_parent").transform;
+            _particlesGeneralParent = new GameObject("Particles_general_parent").transform;
             _particlesGeneralParent.transform.position = Vector3.zero;
             GameObject.DontDestroyOnLoad(_particlesGeneralParent.gameObject);
         }
 
-        private void CreateDecalsGeneralParent()
+        private void CreateDetonablesGeneralParent()
         {
-            _decalsGeneralParent = new GameObject("decals_general_parent").transform;
-            _decalsGeneralParent.transform.position = Vector3.zero;
-            GameObject.DontDestroyOnLoad(_decalsGeneralParent.gameObject);
+            _detonablesGeneralParent = new GameObject("Detonables_general_parent").transform;
+            _detonablesGeneralParent.transform.position = Vector3.zero;
+            GameObject.DontDestroyOnLoad(_detonablesGeneralParent.gameObject);
+        }
+
+        private void DestroyParticlesGeneralParent()
+        {
+            GameObject.Destroy(_particlesGeneralParent);
+        }
+
+        private void DestroyDetonablesGeneralParent()
+        {
+            GameObject.Destroy(_detonablesGeneralParent);
         }
 
         #endregion
@@ -124,7 +136,7 @@ namespace ACG.Scripts.Managers
             GameObject detonable = FactoryManager.Instance.GetGameObjectInstance(detonableData.PrefabData);
 
             if (parent == null)
-                parent = _particlesGeneralParent;
+                parent = _detonablesGeneralParent;
 
             detonable.transform.SetParent(parent, false);
 

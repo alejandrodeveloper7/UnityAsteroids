@@ -153,7 +153,7 @@ namespace ACG.Tools.Editor.ManagersCreator
                 .GetAssemblies()
                 .SelectMany(a => a.GetTypes())
                 .FirstOrDefault(t => t.FullName == fullTypeName);
-        
+
             if (managerType != null && managerType.IsSubclassOf(typeof(MonoBehaviour)))
             {
                 go.AddComponent(managerType);

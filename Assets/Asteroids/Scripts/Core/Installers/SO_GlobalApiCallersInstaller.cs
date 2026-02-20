@@ -5,8 +5,8 @@ using Zenject;
 
 namespace Asteroids.Core.Intallers
 {
-    [CreateAssetMenu(fileName = "ApiCallersInstaller", menuName = "Installers/ApiCallers")]
-    public class SO_ApiCallersInstaller : ScriptableObjectInstaller<SO_ApiCallersInstaller>
+    [CreateAssetMenu(fileName = "GlobalApiCallersInstaller", menuName = "Installers/GlobalApiCallers")]
+    public class SO_GlobalApiCallersInstaller : ScriptableObjectInstaller<SO_GlobalApiCallersInstaller>
     {
         #region Methods
 

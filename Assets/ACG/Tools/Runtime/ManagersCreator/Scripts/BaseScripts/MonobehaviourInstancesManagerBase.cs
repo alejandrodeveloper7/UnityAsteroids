@@ -1,9 +1,11 @@
 using ACG.Tools.Runtime.ManagersCreator.Interfaces;
+using System;
 using UnityEngine;
+using Zenject;
 
 namespace ACG.Tools.Runtime.ManagersCreator.Bases
 {
-    public class MonobehaviourInstancesManagerBase<T> : MonoBehaviour, IManager where T : MonobehaviourInstancesManagerBase<T>
+    public class MonobehaviourInstancesManagerBase<T> : MonoBehaviour, IManager, IDisposable, IInitializable where T : MonobehaviourInstancesManagerBase<T>
     {
         #region Initialization     
 

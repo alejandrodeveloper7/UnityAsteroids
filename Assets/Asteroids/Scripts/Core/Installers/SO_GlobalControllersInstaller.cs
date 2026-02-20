@@ -4,8 +4,8 @@ using Zenject;
 
 namespace Asteroids.Core.Intallers
 {
-    [CreateAssetMenu(fileName = "ControllersInstaller", menuName = "Installers/Constrollers")]
-    public class SO_ControllersInstaller : ScriptableObjectInstaller<SO_ControllersInstaller>
+    [CreateAssetMenu(fileName = "GlobalControllersInstaller", menuName = "Installers/GlobalConstrollers")]
+    public class SO_GlobalControllersInstaller : ScriptableObjectInstaller<SO_GlobalControllersInstaller>
     {
         #region Methods
 

@@ -13,8 +13,14 @@ MonoBehaviour:
   m_Name: 04-BlackShip
   m_EditorClassIdentifier: 
   _id: 4
+  _prefabData: {fileID: 11400000, guid: eba3a4c965da3b84f85785bdf6398f7b, type: 2}
+  _timeBeforeRecicle: 0.4
   _isActive: 1
   _sprite: {fileID: 21300000, guid: 15d9f07d37d7cff4abe4b4dc2daade76, type: 3}
+  _healthPoints: 1
+  _movementSpeed: 7
+  _rotationSpeed: 65
+  _shieldRecoveryTime: 12
   _stats:
   - Id: 0
     PropertyName: HealthPoints
@@ -24,12 +30,6 @@ MonoBehaviour:
     PropertyName: MovementSpeed
   - Id: 3
     PropertyName: RotationSpeed
-  _prefabData: {fileID: 11400000, guid: eba3a4c965da3b84f85785bdf6398f7b, type: 2}
-  _timeBeforeRecicle: 0.4
-  _healthPoints: 1
-  _movementSpeed: 7
-  _rotationSpeed: 65
-  _shieldRecoveryTime: 12
   _color: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 1}
   _propulsionFireTransitionDuration: 0.5
   _propulsionFireLocalPosition: {x: 0, y: 0.608, z: 0}
@@ -37,8 +37,8 @@ MonoBehaviour:
   _invulnerabilityDuration: 4
   _invulnerabilityBlinksPerSecond: 2
   _shieldColor: {r: 1, g: 1, b: 1, a: 1}
-  _shieldFadeInDuration: 0.5
-  _shieldFadeOutDuration: 0.5
+  _shieldFadeInDuration: 0.8
+  _shieldFadeOutDuration: 0.8
   _shieldBlinkDuration: 0.3
   _shieldBlinkAlphaRange:
     Min: 0.5

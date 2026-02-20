@@ -3,13 +3,14 @@ using ACG.Scripts.Models;
 using ACG.Scripts.ScriptableObjects.Data;
 using ACG.Tools.Runtime.Pooling.ScriptableObjects;
 using ACG.Tools.Runtime.SOCreator.Data;
+using Asteroids.Core.Interfaces;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Asteroids.Core.ScriptableObjects.Data
 {
     [CreateAssetMenu(fileName = "NewAsteroid", menuName = "ScriptableObjects/Data/Asteroid")]
-    public class SO_AsteroidData : SO_DataBase
+    public class SO_AsteroidData : SO_DataBase, IAsteroidData
     {
         #region Values
 

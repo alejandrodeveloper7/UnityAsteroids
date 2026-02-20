@@ -31,7 +31,6 @@ namespace Asteroids.Gameplay.Player.Controllers
         private float _nextShootTime;
 
         [Header("Data")]
-        private SO_ShipData _shipData;
         private SO_BulletData _bulletData;
 
         [Header("Cache")]
@@ -45,7 +44,7 @@ namespace Asteroids.Gameplay.Player.Controllers
         {
             _bulletData = _runtimeDataService.Data.SelectedBulletData;
 
-            _bulletSpawnPoint.transform.localPosition = _shipData.BulletsSpawnPointsLocalPosition;
+            _bulletSpawnPoint.transform.localPosition = _playerController.ShipData.BulletsSpawnPointsLocalPosition;
             _isAlive = true;
         }
 
@@ -77,9 +76,8 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         #region Event Callbacks
 
-        private void OnPlayerInitialized(SO_ShipData data)
+        private void OnPlayerInitialized()
         {
-            _shipData = data;
             Initialize();
         }
 

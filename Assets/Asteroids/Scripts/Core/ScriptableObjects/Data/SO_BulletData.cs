@@ -1,4 +1,3 @@
-using ACG.Core.Models;
 using ACG.Scripts.Models;
 using ACG.Scripts.ScriptableObjects.Data;
 using ACG.Tools.Runtime.Pooling.ScriptableObjects;
@@ -11,7 +10,7 @@ using UnityEngine;
 namespace Asteroids.Core.ScriptableObjects.Data
 {
     [CreateAssetMenu(fileName = "NewBullet", menuName = "ScriptableObjects/Data/Bullet")]
-    public class SO_BulletData : SO_DataBase, ISelectorElement, IHasStats
+    public class SO_BulletData : SO_DataBase, ISelectorElement, IHasStats, IBulletData
     {
         #region Values
 

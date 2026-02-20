@@ -1,4 +1,3 @@
-using Asteroids.Core.ScriptableObjects.Data;
 using System;
 using UnityEngine;
 using Zenject;
@@ -47,7 +46,7 @@ namespace Asteroids.Gameplay.Bullets.Controllers
 
         #region EventCallbacks
 
-        private void OnBulletInitialized(SO_BulletData data)
+        private void OnBulletInitialized()
         {
             TurnDetection(true);
         }

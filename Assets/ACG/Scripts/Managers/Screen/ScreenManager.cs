@@ -28,8 +28,6 @@ namespace ACG.Scripts.Managers
         {
             _screenService = screenService;
             _screenSettings = screenSettings;
-
-            Initialize();
         }
 
         #endregion

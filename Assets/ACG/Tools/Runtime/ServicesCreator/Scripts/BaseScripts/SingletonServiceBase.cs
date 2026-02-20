@@ -1,9 +1,11 @@
 using ACG.Tools.Runtime.ServicesCreator.Interfaces;
+using System;
 using UnityEngine;
+using Zenject;
 
 namespace ACG.Tools.Runtime.ServicesCreator.Bases
 {
-    public abstract class SingletonServiceBase<T> : IService where T : SingletonServiceBase<T>, new()
+    public abstract class SingletonServiceBase<T> : IService, IDisposable, IInitializable where T : SingletonServiceBase<T>, new()
     {
         private static T _instance;
         public static T Instance
@@ -24,7 +26,7 @@ namespace ACG.Tools.Runtime.ServicesCreator.Bases
         {
             if (_instance == null)
             {
-                _instance = new ();
+                _instance = new();
                 Debug.Log($"- {typeof(T).Name} - singleton service created and initialize");
             }
         }
@@ -34,13 +36,13 @@ namespace ACG.Tools.Runtime.ServicesCreator.Bases
             Dispose();
         }
 
-        public virtual void Initialize() 
+        public virtual void Initialize()
         {
             Application.quitting += OnAppQuit;
         }
 
-        public virtual void Dispose() 
-        {        
+        public virtual void Dispose()
+        {
             Application.quitting -= OnAppQuit;
         }
     }

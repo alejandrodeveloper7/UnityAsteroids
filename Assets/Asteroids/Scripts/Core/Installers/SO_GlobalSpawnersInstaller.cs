@@ -7,8 +7,8 @@ using Zenject;
 
 namespace Asteroids.Core.Intallers
 {
-    [CreateAssetMenu(fileName = "SpawnersInstaller", menuName = "Installers/Spawners")]
-    public class SO_SpawnersInstaller : ScriptableObjectInstaller<SO_SpawnersInstaller>
+    [CreateAssetMenu(fileName = "GlobalSpawnersInstaller", menuName = "Installers/GlobalSpawners")]
+    public class SO_GlobalSpawnersInstaller : ScriptableObjectInstaller<SO_GlobalSpawnersInstaller>
     {
         #region Methods
 

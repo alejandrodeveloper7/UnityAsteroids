@@ -1,9 +1,11 @@
 using ACG.Tools.Runtime.ServicesCreator.Interfaces;
+using System;
 using UnityEngine;
+using Zenject;
 
 namespace ACG.Tools.Runtime.ServicesCreator.Bases
 {
-    public abstract class InstancesServiceBase : IService
+    public abstract class InstancesServiceBase : IService, IDisposable, IInitializable
     {
         private void OnAppQuit()
         {

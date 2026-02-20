@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ecf296bcfe295bb429e921a842dba1b1, type: 3}
-  m_Name: SpawnersInstaller
+  m_Name: GlobalSpawnersInstaller
   m_EditorClassIdentifier: 

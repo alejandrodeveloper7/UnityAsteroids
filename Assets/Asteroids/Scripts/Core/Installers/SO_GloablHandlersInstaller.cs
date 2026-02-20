@@ -5,8 +5,8 @@ using Zenject;
 
 namespace Asteroids.Core.Intallers
 {
-    [CreateAssetMenu(fileName = "HandlersInstaller", menuName = "Installers/Handlers")]
-    public class SO_HandlersInstaller : ScriptableObjectInstaller<SO_HandlersInstaller>
+    [CreateAssetMenu(fileName = "GlobalHandlersInstaller", menuName = "Installers/GloablHandlers")]
+    public class SO_GloablHandlersInstaller : ScriptableObjectInstaller<SO_GloablHandlersInstaller>
     {
         #region Methods
 

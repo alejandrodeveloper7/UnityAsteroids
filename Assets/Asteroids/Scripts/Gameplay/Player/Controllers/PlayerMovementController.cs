@@ -1,4 +1,3 @@
-using Asteroids.Core.ScriptableObjects.Data;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -30,9 +29,6 @@ namespace Asteroids.Gameplay.Player.Controllers
         [Header("Cache")]
         private Coroutine _moveForwardCoroutine;
         private Coroutine _rotationCoroutine;
-
-        [Header("Data")]
-        private SO_ShipData _shipData;
 
         #endregion
 
@@ -73,9 +69,8 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         #region Event Callbacks
 
-        private void OnPlayerInitialized(SO_ShipData data)
+        private void OnPlayerInitialized()
         {
-            _shipData = data;
             Initialize();
         }
 
@@ -139,7 +134,7 @@ namespace Asteroids.Gameplay.Player.Controllers
         {
             while (_isMovingForward && _isAlive)
             {
-                _rigidBody.AddForce(_shipData.MovementSpeed * Time.deltaTime * -transform.up, ForceMode2D.Impulse);
+                _rigidBody.AddForce(_playerController.ShipData.MovementSpeed * Time.deltaTime * -transform.up, ForceMode2D.Impulse);
                 yield return null;
             }
 
@@ -174,7 +169,7 @@ namespace Asteroids.Gameplay.Player.Controllers
         {
             while (_rotationValue != 0 && _isAlive)
             {
-                transform.Rotate(0, 0, _rotationValue * _shipData.RotationSpeed * Time.fixedDeltaTime);
+                transform.Rotate(0, 0, _rotationValue * _playerController.ShipData.RotationSpeed * Time.fixedDeltaTime);
                 yield return new WaitForFixedUpdate();
             }
 

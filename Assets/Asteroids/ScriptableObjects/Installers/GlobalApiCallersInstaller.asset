@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63aa362bde46fe0498ce72fcf1f18fd0, type: 3}
-  m_Name: HandlersInstaller
+  m_Script: {fileID: 11500000, guid: 2d299761a4a9e0c45811da8012674cbb, type: 3}
+  m_Name: GlobalApiCallersInstaller
   m_EditorClassIdentifier: 

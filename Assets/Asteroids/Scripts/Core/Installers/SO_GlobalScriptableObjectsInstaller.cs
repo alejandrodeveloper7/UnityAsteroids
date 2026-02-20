@@ -2,7 +2,6 @@ using ACG.Scripts.ScriptableObjects.Collections;
 using ACG.Scripts.ScriptableObjects.Configurations;
 using ACG.Scripts.ScriptableObjects.Settings;
 using ACG.Tools.Runtime.ApiCallersCreator.ScriptableObjects;
-using ACG.Tools.Runtime.Pooling.ScriptableObjects;
 using Asteroids.Core.ScriptableObjects.Collections;
 using Asteroids.Core.ScriptableObjects.Configurations;
 using UnityEngine;
@@ -10,8 +9,8 @@ using Zenject;
 
 namespace Asteroids.Core.Intallers
 {
-    [CreateAssetMenu(fileName = "ScriptableObjectsInstaller", menuName = "Installers/ScriptableObjects")]
-    public class SO_ScriptableObjectsInstaller : ScriptableObjectInstaller<SO_ScriptableObjectsInstaller>
+    [CreateAssetMenu(fileName = "GlobalScriptableObjectsInstaller", menuName = "Installers/GlobalScriptableObjects")]
+    public class SO_GlobalScriptableObjectsInstaller : ScriptableObjectInstaller<SO_GlobalScriptableObjectsInstaller>
     {
         #region Fields
 
@@ -22,7 +21,8 @@ namespace Asteroids.Core.Intallers
         [SerializeField] private SO_MusicCollection _musicCollection;
 
         // These configuration ScriptableObjects are unique, so they can be injected.
-        // If you need multiple configurations, you cant inject them like this.
+        // If you need multiple configurations, you can`t inject them like this.
+
         // SO_StatsConfiguration is not injected because there are 2 different ones.
 
         [Header("Configurations")]
@@ -43,7 +43,6 @@ namespace Asteroids.Core.Intallers
         public override void InstallBindings()
         {
             //SO Settings
-            Container.Bind<SO_FactorySettings>().FromInstance(SO_FactorySettings.Instance).AsSingle();
             Container.Bind<SO_CursorSettings>().FromInstance(SO_CursorSettings.Instance).AsSingle();
             Container.Bind<SO_DebugSettings>().FromInstance(SO_DebugSettings.Instance).AsSingle();
             Container.Bind<SO_InputSettings>().FromInstance(SO_InputSettings.Instance).AsSingle();

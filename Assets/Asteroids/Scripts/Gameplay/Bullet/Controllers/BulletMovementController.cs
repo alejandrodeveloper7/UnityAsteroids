@@ -1,4 +1,3 @@
-using Asteroids.Core.ScriptableObjects.Data;
 using UnityEngine;
 using Zenject;
 
@@ -15,9 +14,6 @@ namespace Asteroids.Gameplay.Bullets.Controllers
         [Inject] private readonly BulletController _bulletController;
         [Space]
         [Inject] private readonly Rigidbody2D _rigidBody;
-
-        [Header("Data")]
-        private SO_BulletData _bulletData;
 
         #endregion
 
@@ -39,9 +35,8 @@ namespace Asteroids.Gameplay.Bullets.Controllers
 
         #region EventCallbacks
 
-        private void OnBulletInitialized(SO_BulletData data)
+        private void OnBulletInitialized()
         {
-            _bulletData = data;
             StartMovement();
         }
 
@@ -56,7 +51,7 @@ namespace Asteroids.Gameplay.Bullets.Controllers
 
         private void StartMovement()
         {
-            _rigidBody.velocity = _bulletData.Speed  * -transform.up;
+            _rigidBody.velocity = _bulletController.BulletData.Speed  * -transform.up;
         }
 
         private void StopMovement()

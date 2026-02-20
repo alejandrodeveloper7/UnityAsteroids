@@ -2,6 +2,7 @@ using ACG.Core.EventBus;
 using ACG.Scripts.Utilitys;
 using ACG.Tools.Runtime.Pooling.Gameplay;
 using Asteroids.Core.Events.Gameplay;
+using Asteroids.Core.Interfaces;
 using Asteroids.Core.ScriptableObjects.Data;
 using Asteroids.Gameplay.General.OnContact;
 using System;
@@ -21,7 +22,7 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
     {
         #region Fields and events
 
-        public event Action<SO_AsteroidData, Vector2?, Vector2?> AsteroidInitialized;
+        public event Action<Vector2?, Vector2?> AsteroidInitialized;
         public event Action AsteroidReadyToBeRecycled;
 
         [Header("References")]
@@ -33,6 +34,7 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
 
         [Header("Data")]
         private SO_AsteroidData _asteroidData;
+        public IAsteroidData AsteroidData => _asteroidData;
 
         #endregion
 
@@ -45,7 +47,7 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
             _screenEdgeTeleport.SetData(_asteroidData.ScreenEdgeTeleportData);
             _damageOnContact.SetData(_asteroidData.Damage);
 
-            AsteroidInitialized?.Invoke(_asteroidData, position, direction);
+            AsteroidInitialized?.Invoke(position, direction);
         }
 
         #endregion

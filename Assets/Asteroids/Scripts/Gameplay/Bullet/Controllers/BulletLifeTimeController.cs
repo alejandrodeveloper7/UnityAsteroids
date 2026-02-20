@@ -1,5 +1,4 @@
 using ACG.Core.Utils;
-using Asteroids.Core.ScriptableObjects.Data;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,9 +22,6 @@ namespace Asteroids.Gameplay.Bullets.Controllers
 
         [Header("Values")]
         private CancellationTokenSource _cancellationToken;
-
-        [Header("Data")]
-        private SO_BulletData _bulletData;
 
         #endregion
 
@@ -51,9 +47,8 @@ namespace Asteroids.Gameplay.Bullets.Controllers
 
         #region EventCallbacks
 
-        private void OnBulletInitialized(SO_BulletData data)
+        private void OnBulletInitialized()
         {
-            _bulletData = data;
             _ = StartLifeTime();
         }
 
@@ -77,7 +72,7 @@ namespace Asteroids.Gameplay.Bullets.Controllers
 
             try
             {
-                await TimingUtils.WaitSeconds(_bulletData.LifeTime, false, _cancellationToken.Token);
+                await TimingUtils.WaitSeconds(_bulletController.BulletData.LifeTime, false, _cancellationToken.Token);
                 LifeTimeCompleted?.Invoke();
             }
             catch (OperationCanceledException)

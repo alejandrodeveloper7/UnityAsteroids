@@ -30,7 +30,7 @@ namespace ACG.Scripts.UIUtilitys.Sound
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (_hoverSounds != null)
-                _soundManager.Play2DSounds(_hoverSounds);
+                _soundManager.Play2DSound(_hoverSounds);
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -52,7 +52,7 @@ namespace ACG.Scripts.UIUtilitys.Sound
             _isInteracting = false;
 
             if (_clickSounds != null)
-                _soundManager.Play2DSounds(_clickSounds);
+                _soundManager.Play2DSound(_clickSounds);
         }
 
         #endregion

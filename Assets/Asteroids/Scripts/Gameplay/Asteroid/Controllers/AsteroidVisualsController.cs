@@ -1,8 +1,8 @@
 using ACG.Core.Extensions;
 using ACG.Core.Utils;
 using ACG.Scripts.Managers;
+using Asteroids.Core.Interfaces;
 using Asteroids.Core.Interfaces.Models;
-using Asteroids.Core.ScriptableObjects.Data;
 using Asteroids.Gameplay.FloatingText.Spawners;
 using Asteroids.Gameplay.General.OnContact;
 using DG.Tweening;
@@ -33,11 +33,9 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
         [Inject] private readonly FloatingTextSpawner _floatingTextSpawner;
         [Space]
         [Inject] private readonly IVFXManager _vFXManager;
-
-        [Header("Data")]
-        private SO_AsteroidData _asteroidData;
-
+                
         [Header("Cache")]
+        private IAsteroidData _asteroidData; // It's a good idea to cache it if you need to access it frequently.
         private Sequence _damageFeedbackSequence;
 
         #endregion
@@ -80,9 +78,9 @@ namespace Asteroids.Gameplay.Asteroids.Controllers
 
         #region Event callbacks
 
-        private void OnAsteroidInitialized(SO_AsteroidData data, Vector2? position, Vector2? direction)
+        private void OnAsteroidInitialized(Vector2? position, Vector2? direction)
         {
-            _asteroidData = data;
+            _asteroidData = _asteroidController.AsteroidData;
             Initialize();
         }
 

@@ -3,7 +3,6 @@ using ACG.Scripts.Services;
 using Asteroids.Core.Events.Gameplay;
 using Asteroids.Core.Interfaces;
 using Asteroids.Core.Interfaces.Models;
-using Asteroids.Core.ScriptableObjects.Data;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -37,9 +36,6 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         [Header("Cache")]
         private Coroutine _currentShieldRecoveryCoroutine;
-        
-        [Header("Data")]
-        private SO_ShipData _shipData;
 
         #endregion
 
@@ -47,7 +43,7 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         private void Initialize()
         {
-            _health = _shipData.HealthPoints;
+            _health = _playerController.ShipData.HealthPoints;
 
             _isAlive = true;
             _shieldActive = true;
@@ -73,9 +69,8 @@ namespace Asteroids.Gameplay.Player.Controllers
 
         #region Event Callbacks
 
-        private void OnPlayerInitialized(SO_ShipData data)
+        private void OnPlayerInitialized()
         {
-            _shipData = data;
             Initialize();
         }
 
@@ -102,7 +97,7 @@ namespace Asteroids.Gameplay.Player.Controllers
         private void LoseShield()
         {
             _shieldActive = false;
-            _currentShieldRecoveryCoroutine = StartCoroutine(RecoverShieldAfterDelay(_shipData.ShieldRecoveryTime));
+            _currentShieldRecoveryCoroutine = StartCoroutine(RecoverShieldAfterDelay(_playerController.ShipData.ShieldRecoveryTime));
 
             PlayerShieldStateChanged?.Invoke(false);
             EventBusManager.GameplayBus.RaiseEvent(new PlayerShieldStateChanged(false));

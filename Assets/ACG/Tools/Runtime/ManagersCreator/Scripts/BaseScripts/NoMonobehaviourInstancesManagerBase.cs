@@ -1,9 +1,11 @@
 using ACG.Tools.Runtime.ManagersCreator.Interfaces;
+using System;
 using UnityEngine;
+using Zenject;
 
 namespace ACG.Tools.Runtime.ManagersCreator.Bases
 {
-    public class NoMonobehaviourInstancesManagerBase : IManager
+    public class NoMonobehaviourInstancesManagerBase : IManager, IDisposable, IInitializable
     {
         #region Initilization
 

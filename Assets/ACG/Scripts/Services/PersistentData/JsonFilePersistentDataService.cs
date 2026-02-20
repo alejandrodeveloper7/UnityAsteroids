@@ -19,8 +19,6 @@ namespace ACG.Scripts.Services
             basePath = Path.Combine(UnityEngine.Application.persistentDataPath, folderName);
             if (!Directory.Exists(basePath))
                 Directory.CreateDirectory(basePath);
-
-            Initialize();
         }
 
         #endregion
@@ -30,13 +28,13 @@ namespace ACG.Scripts.Services
         public override void Initialize()
         {
             base.Initialize();
-            // TODO: Method called in the constructor to initialize the Service
+            // TODO: Method for initial logic and event subscriptions (called by Zenject)
         }
 
         public override void Dispose()
         {
             base.Dispose();
-            // TODO: clean here all the elements that need be clean when the Service is destroyed
+            // TODO: Clean here all the listeners or elements that need be clean when the script is destroyed (called by Zenject)
         }
 
         #endregion

@@ -24,13 +24,13 @@ namespace CONST_RootNamespace.Core.Managers
       public override void Initialize()
       {
           base.Initialize();
-          // TODO: Add logic here that will be executed when the manager autoInitialize
+          // TODO: Method for initial logic and event subscriptions (called in constructor)
       }
 
       public override void Dispose()
       {
           base.Dispose();
-          // TODO: clean here all the listeners or elements that need be clean when the manager is destroyed
+          // TODO: Clean here all the listeners or elements that need be clean when the script is destroyed
       }
 
       #endregion
